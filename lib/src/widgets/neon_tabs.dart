@@ -1,0 +1,151 @@
+import 'package:flutter/material.dart';
+
+import '../theme/neon_palette.dart';
+
+/// Item de [NeonTabs] / [NeonSegmentedControl].
+class NeonTabItem {
+  const NeonTabItem({required this.label, this.icon});
+
+  final String label;
+  final IconData? icon;
+}
+
+/// Tabs horizontais com indicador em gradiente accent.
+class NeonTabs extends StatelessWidget {
+  const NeonTabs({
+    required this.items,
+    required this.selectedIndex,
+    required this.onChanged,
+    super.key,
+    this.accentColor,
+    this.isScrollable = false,
+  });
+
+  final List<NeonTabItem> items;
+  final int selectedIndex;
+  final ValueChanged<int> onChanged;
+  final Color? accentColor;
+  final bool isScrollable;
+
+  @override
+  Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Color accent = accentColor ?? p.accentCyan;
+
+    return DefaultTabController(
+      length: items.length,
+      initialIndex: selectedIndex.clamp(0, items.length - 1),
+      child: TabBar(
+        isScrollable: isScrollable,
+        onTap: onChanged,
+        labelColor: p.textPrimary,
+        unselectedLabelColor: p.textMuted,
+        indicatorSize: TabBarIndicatorSize.label,
+        indicator: UnderlineTabIndicator(
+          borderSide: BorderSide(color: accent, width: 2.5),
+          insets: const EdgeInsets.symmetric(horizontal: 4),
+        ),
+        overlayColor: WidgetStateProperty.all(accent.withValues(alpha: 0.08)),
+        splashBorderRadius: BorderRadius.circular(10),
+        tabs: items
+            .map(
+              (NeonTabItem it) => Tab(
+                icon: it.icon == null ? null : Icon(it.icon),
+                text: it.label,
+                iconMargin: const EdgeInsets.only(bottom: 4),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+}
+
+/// Segmented control compacto (pílula). Os itens dividem largura igualmente.
+class NeonSegmentedControl extends StatelessWidget {
+  const NeonSegmentedControl({
+    required this.items,
+    required this.selectedIndex,
+    required this.onChanged,
+    super.key,
+    this.accentColor,
+  });
+
+  final List<NeonTabItem> items;
+  final int selectedIndex;
+  final ValueChanged<int> onChanged;
+  final Color? accentColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Color accent = accentColor ?? p.accentCyan;
+
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: p.surface.withValues(alpha: 0.7),
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: p.surfaceOutline.withValues(alpha: 0.6)),
+      ),
+      child: Row(
+        children: List<Widget>.generate(items.length, (int i) {
+          final bool selected = i == selectedIndex;
+          final NeonTabItem it = items[i];
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => onChanged(i),
+              behavior: HitTestBehavior.opaque,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  gradient: selected
+                      ? LinearGradient(
+                          colors: <Color>[accent, p.accentMagenta],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        )
+                      : null,
+                  boxShadow: selected
+                      ? <BoxShadow>[
+                          BoxShadow(
+                            color: accent.withValues(alpha: 0.4),
+                            blurRadius: 12,
+                            spreadRadius: -2,
+                          ),
+                        ]
+                      : null,
+                ),
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    if (it.icon != null) ...<Widget>[
+                      Icon(
+                        it.icon,
+                        size: 16,
+                        color: selected ? p.textPrimary : p.textMuted,
+                      ),
+                      const SizedBox(width: 6),
+                    ],
+                    Text(
+                      it.label,
+                      style: TextStyle(
+                        color: selected ? p.textPrimary : p.textMuted,
+                        fontWeight:
+                            selected ? FontWeight.w600 : FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+}

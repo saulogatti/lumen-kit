@@ -10,9 +10,10 @@ Kit de UI com tema futurístico **dark neon** para Flutter — paleta opinativa,
 | Background  | `AnimatedGridBackground`, `GlowOrbSpec`                            |
 | Estrutura   | `NeonAppBar`, `NeonCard`                                           |
 | Ação        | `GradientCta`, `NeonButton`, `NeonIconButton`, `NeonFab`           |
-| Input       | `NeonTextField`                                                    |
+| Input       | `NeonTextField`, `NeonSwitch`, `NeonCheckbox`, `NeonRadio`, `NeonSlider`, `NeonDropdown`, `NeonSearchBar`, `NeonDatePicker` |
 | Feedback    | `StatusChip`, `NeonDialog`, `NeonSnackBar`, `NeonToast`, `NeonLinearProgress`, `NeonCircularProgress`, `NeonSkeleton`, `NeonTooltip` |
-| Navegação   | `NavigationCard`                                                   |
+| Navegação   | `NavigationCard`, `NeonTabs`, `NeonSegmentedControl`, `NeonBottomNavBar`, `NeonNavRail`, `NeonBottomSheet`, `NeonDrawer`, `NeonStepper` |
+| Display     | `NeonBadge`, `NeonTag`, `NeonAvatar`, `NeonListTile`, `NeonDivider`, `NeonExpansionTile`, `NeonDataTable`, `NeonTableRow` |
 
 Tudo desacoplado de domínio — recebe `child`, callbacks e tokens; não conhece nenhuma regra de negócio.
 
@@ -122,6 +123,76 @@ Row(
 - `outline` — borda glow + fundo translúcido. Ação secundária.
 - `ghost` — só texto/ícone na cor de accent. Ação terciária.
 
+## Inputs de seleção
+
+```dart
+NeonSwitch(value: on, onChanged: (v) => setState(() => on = v));
+
+NeonCheckbox(value: checked, tristate: true, onChanged: (v) => …);
+
+NeonRadio<String>(
+  value: 'a',
+  groupValue: selected,
+  label: 'Opção A',
+  onChanged: (v) => setState(() => selected = v ?? selected),
+);
+
+NeonDropdown<String>(
+  label: 'Accent',
+  value: current,
+  items: const [
+    NeonDropdownItem(value: 'cyan', label: 'Cyan'),
+    NeonDropdownItem(value: 'magenta', label: 'Magenta'),
+  ],
+  onChanged: (v) => setState(() => current = v ?? current),
+);
+
+NeonDatePicker(
+  label: 'Início',
+  value: date,
+  firstDate: DateTime(2020),
+  lastDate: DateTime(2030),
+  onChanged: (d) => setState(() => date = d),
+);
+```
+
+## Navegação
+
+```dart
+// Pílula compacta — ótima para alternar visões dentro de uma tela.
+NeonSegmentedControl(
+  selectedIndex: i,
+  onChanged: (v) => setState(() => i = v),
+  items: const [
+    NeonTabItem(label: 'Dia'),
+    NeonTabItem(label: 'Semana'),
+    NeonTabItem(label: 'Mês'),
+  ],
+);
+
+// Bottom nav com badge.
+Scaffold(
+  bottomNavigationBar: NeonBottomNavBar(
+    selectedIndex: tab,
+    onChanged: (v) => setState(() => tab = v),
+    items: const [
+      NeonNavItem(icon: Icons.home_outlined, label: 'Home'),
+      NeonNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
+      NeonNavItem(icon: Icons.person_outline, label: 'Conta'),
+    ],
+  ),
+);
+
+// Modal bottom sheet temático.
+showNeonBottomSheet<void>(
+  context: context,
+  builder: (_) => const Padding(
+    padding: EdgeInsets.all(20),
+    child: Text('Ações rápidas'),
+  ),
+);
+```
+
 ## Dialog estilizado
 
 ```dart
@@ -139,7 +210,7 @@ await showNeonDialog<void>(
 
 ## App de exemplo
 
-Há um app demo em [`example/`](example/) com uma única tela que exercita a maior parte dos componentes (cards, status, botões, icon buttons, FAB, text field, progress linear/circular, skeleton, snackbar, toast, dialog, navigation cards).
+Há um app demo em [`example/`](example/) com uma única tela que exercita todos os componentes do kit — cards, status, botões, icon buttons, FAB, inputs (texto, busca, switch, checkbox, radio, slider, dropdown, date picker), progresso linear/circular, skeleton, snackbar, toast, dialog, bottom sheet, tabs, segmented, bottom nav, drawer, stepper, avatar, badge, tag, list tile, divider, expansion tile, data table e navigation cards.
 
 ```bash
 cd example

@@ -8,42 +8,43 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 - [x] **Background**: `AnimatedGridBackground`, `GlowOrbSpec`
 - [x] **Estrutura**: `NeonAppBar`, `NeonCard`
 - [x] **Ações**: `GradientCta`, `NeonButton` (solid / outline / ghost), `NeonIconButton`, `NeonFab`
-- [x] **Input**: `NeonTextField`
-- [x] **Feedback**: `StatusChip`, `NeonDialog` (+ `showNeonDialog`)
-- [x] **Navegação**: `NavigationCard`
+- [x] **Input**: `NeonTextField`, `NeonSwitch`, `NeonCheckbox`, `NeonRadio`, `NeonSlider`, `NeonDropdown`, `NeonSearchBar`, `NeonDatePicker` (+ `showNeonDatePicker`)
+- [x] **Feedback**: `StatusChip`, `NeonDialog` (+ `showNeonDialog`), `NeonSnackBar` (+ `showNeonSnackBar`), `NeonToast`, `NeonProgressIndicator`, `NeonSkeleton`, `NeonTooltip`
+- [x] **Navegação**: `NavigationCard`, `NeonTabs`, `NeonSegmentedControl`, `NeonBottomNavBar`, `NeonNavRail`, `NeonBottomSheet` (+ `showNeonBottomSheet`), `NeonDrawer` (+ `NeonDrawerItem`), `NeonStepper`
+- [x] **Display**: `NeonBadge`, `NeonTag`, `NeonAvatar`, `NeonListTile`, `NeonDivider`, `NeonExpansionTile`, `NeonDataTable` (+ `NeonTableRow`)
 
 ## A fazer
 
 ### Inputs / formulários
-- [ ] `NeonSwitch`
-- [ ] `NeonCheckbox`
-- [ ] `NeonRadio`
-- [ ] `NeonSlider`
-- [ ] `NeonDropdown` / `NeonSelect`
-- [ ] `NeonSearchBar`
-- [ ] `NeonDatePicker` (wrapper temático)
+- [x] `NeonSwitch`
+- [x] `NeonCheckbox`
+- [x] `NeonRadio`
+- [x] `NeonSlider`
+- [x] `NeonDropdown` / `NeonSelect`
+- [x] `NeonSearchBar`
+- [x] `NeonDatePicker` (wrapper temático)
 
 ### Feedback / status
-- [ ] `NeonSnackBar` (+ `showNeonSnackBar`)
-- [ ] `NeonToast`
-- [ ] `NeonProgressIndicator` (linear e circular com glow)
-- [ ] `NeonSkeleton` / shimmer loader
-- [ ] `NeonTooltip`
+- [x] `NeonSnackBar` (+ `showNeonSnackBar`)
+- [x] `NeonToast`
+- [x] `NeonProgressIndicator` (linear e circular com glow)
+- [x] `NeonSkeleton` / shimmer loader
+- [x] `NeonTooltip`
 
 ### Navegação / layout
-- [ ] `NeonTabs` / `NeonSegmentedControl`
-- [ ] `NeonBottomNavBar` ou `NeonNavRail`
-- [ ] `NeonBottomSheet` (+ `showNeonBottomSheet`)
-- [ ] `NeonDrawer`
-- [ ] `NeonStepper`
+- [x] `NeonTabs` / `NeonSegmentedControl`
+- [x] `NeonBottomNavBar` ou `NeonNavRail`
+- [x] `NeonBottomSheet` (+ `showNeonBottomSheet`)
+- [x] `NeonDrawer`
+- [x] `NeonStepper`
 
 ### Display / dados
-- [ ] `NeonBadge` / `NeonTag` (variação menor que `StatusChip`)
-- [ ] `NeonAvatar`
-- [ ] `NeonListTile`
-- [ ] `NeonDivider` (com gradiente)
-- [ ] `NeonExpansionTile`
-- [ ] `NeonDataTable` (ou ao menos `NeonTableRow`)
+- [x] `NeonBadge` / `NeonTag` (variação menor que `StatusChip`)
+- [x] `NeonAvatar`
+- [x] `NeonListTile`
+- [x] `NeonDivider` (com gradiente)
+- [x] `NeonExpansionTile`
+- [x] `NeonDataTable` (ou ao menos `NeonTableRow`)
 
 ## Convenções
 
