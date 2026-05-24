@@ -137,6 +137,16 @@ await showNeonDialog<void>(
 );
 ```
 
+## App de exemplo
+
+Há um app demo em [`example/`](example/) com uma única tela que exercita a maior parte dos componentes (cards, status, botões, icon buttons, FAB, text field, progress linear/circular, skeleton, snackbar, toast, dialog, navigation cards).
+
+```bash
+cd example
+flutter pub get
+flutter run
+```
+
 ## Status
 
 Em desenvolvimento ativo — API ainda pode mudar entre versões `0.x`. Use `ref: <commit-sha>` ou tags (`ref: v0.1.0`) em produção para evitar quebras silenciosas vindas da `main`.
