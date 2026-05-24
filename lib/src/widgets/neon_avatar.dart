@@ -1,0 +1,110 @@
+import 'package:flutter/material.dart';
+
+import '../theme/neon_palette.dart';
+
+/// Avatar circular com borda em gradiente e glow opcional. Aceita imagem
+/// ([image]) ou caem nas iniciais ([initials]).
+class NeonAvatar extends StatelessWidget {
+  const NeonAvatar({
+    super.key,
+    this.image,
+    this.initials,
+    this.radius = 22,
+    this.accentColor,
+    this.statusColor,
+    this.showRing = true,
+  });
+
+  final ImageProvider? image;
+  final String? initials;
+  final double radius;
+  final Color? accentColor;
+
+  /// Pequeno indicador (presença) no canto inferior direito. Quando null, não
+  /// é desenhado.
+  final Color? statusColor;
+  final bool showRing;
+
+  @override
+  Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Color accent = accentColor ?? p.accentCyan;
+    final double size = radius * 2;
+
+    final Widget base = Container(
+      width: size,
+      height: size,
+      padding: EdgeInsets.all(showRing ? 2 : 0),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: showRing
+            ? LinearGradient(
+                colors: <Color>[accent, p.accentMagenta],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
+            : null,
+        boxShadow: showRing
+            ? <BoxShadow>[
+                BoxShadow(
+                  color: accent.withValues(alpha: 0.45),
+                  blurRadius: 12,
+                  spreadRadius: -2,
+                ),
+              ]
+            : null,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: p.surface,
+          image: image == null
+              ? null
+              : DecorationImage(image: image!, fit: BoxFit.cover),
+        ),
+        alignment: Alignment.center,
+        child: image != null
+            ? null
+            : Text(
+                (initials ?? '?').toUpperCase(),
+                style: TextStyle(
+                  color: p.textPrimary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: radius * 0.75,
+                ),
+              ),
+      ),
+    );
+
+    if (statusColor == null) return base;
+    final double dot = (size * 0.28).clamp(8, 18);
+    return SizedBox(
+      width: size,
+      height: size,
+      child: Stack(
+        children: <Widget>[
+          base,
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Container(
+              width: dot,
+              height: dot,
+              decoration: BoxDecoration(
+                color: statusColor,
+                shape: BoxShape.circle,
+                border: Border.all(color: p.backgroundDeep, width: 2),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: statusColor!.withValues(alpha: 0.6),
+                    blurRadius: 6,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

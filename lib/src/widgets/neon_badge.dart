@@ -1,0 +1,124 @@
+import 'package:flutter/material.dart';
+
+import '../theme/neon_palette.dart';
+
+/// Pequeno selo (geralmente para contadores) que pode ficar livre ou
+/// ancorado em [child] no canto superior direito.
+class NeonBadge extends StatelessWidget {
+  const NeonBadge({
+    required this.label,
+    super.key,
+    this.color,
+    this.child,
+    this.dot = false,
+  });
+
+  /// Modo "ponto" (sem texto), útil para indicar atividade.
+  const NeonBadge.dot({super.key, this.color, this.child})
+      : label = '',
+        dot = true;
+
+  final String label;
+  final Color? color;
+  final Widget? child;
+  final bool dot;
+
+  @override
+  Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Color c = color ?? p.danger;
+
+    final Widget badge = Container(
+      padding: dot
+          ? EdgeInsets.zero
+          : const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      constraints: dot
+          ? const BoxConstraints(minWidth: 10, minHeight: 10)
+          : const BoxConstraints(minWidth: 18, minHeight: 18),
+      decoration: BoxDecoration(
+        color: c,
+        borderRadius: BorderRadius.circular(dot ? 10 : 12),
+        boxShadow: <BoxShadow>[
+          BoxShadow(color: c.withValues(alpha: 0.6), blurRadius: 8),
+        ],
+      ),
+      alignment: Alignment.center,
+      child: dot
+          ? null
+          : Text(
+              label,
+              style: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                height: 1,
+              ),
+            ),
+    );
+
+    if (child == null) return badge;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: <Widget>[
+        child!,
+        Positioned(right: -4, top: -4, child: badge),
+      ],
+    );
+  }
+}
+
+/// Tag compacta — variação leve do `StatusChip`, sem ícone obrigatório e sem
+/// glow forte. Boa para metadados em listas.
+class NeonTag extends StatelessWidget {
+  const NeonTag({
+    required this.label,
+    super.key,
+    this.color,
+    this.icon,
+    this.onTap,
+  });
+
+  final String label;
+  final Color? color;
+  final IconData? icon;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Color c = color ?? p.accentCyan;
+
+    final Widget content = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: c.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: c.withValues(alpha: 0.55)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          if (icon != null) ...<Widget>[
+            Icon(icon, size: 12, color: c),
+            const SizedBox(width: 4),
+          ],
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: c,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (onTap == null) return content;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: content,
+    );
+  }
+}

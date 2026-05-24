@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+
+import '../theme/neon_palette.dart';
+
+/// Item exibido no [NeonDropdown]. Mantém o tipo do valor genérico.
+class NeonDropdownItem<T> {
+  const NeonDropdownItem({required this.value, required this.label, this.icon});
+
+  final T value;
+  final String label;
+  final IconData? icon;
+}
+
+/// Dropdown estilizado com a borda e o glow do tema. Substitui o
+/// [DropdownButton] padrão usando [DropdownButtonFormField].
+class NeonDropdown<T> extends StatelessWidget {
+  const NeonDropdown({
+    required this.value,
+    required this.items,
+    required this.onChanged,
+    super.key,
+    this.label,
+    this.hint,
+    this.icon,
+    this.accentColor,
+    this.errorText,
+  });
+
+  final T? value;
+  final List<NeonDropdownItem<T>> items;
+  final ValueChanged<T?>? onChanged;
+  final String? label;
+  final String? hint;
+  final IconData? icon;
+  final Color? accentColor;
+  final String? errorText;
+
+  @override
+  Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Color accent = accentColor ?? p.accentCyan;
+
+    return DropdownButtonFormField<T>(
+      initialValue: value,
+      onChanged: onChanged,
+      dropdownColor: p.surface,
+      iconEnabledColor: accent,
+      style: Theme.of(context).textTheme.titleMedium,
+      isExpanded: true,
+      borderRadius: BorderRadius.circular(12),
+      hint: hint == null
+          ? null
+          : Text(hint!, style: TextStyle(color: p.textMuted)),
+      items: items
+          .map(
+            (NeonDropdownItem<T> it) => DropdownMenuItem<T>(
+              value: it.value,
+              child: Row(
+                children: <Widget>[
+                  if (it.icon != null) ...<Widget>[
+                    Icon(it.icon, color: accent, size: 18),
+                    const SizedBox(width: 10),
+                  ],
+                  Flexible(
+                    child: Text(
+                      it.label,
+                      style: TextStyle(color: p.textPrimary),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+          .toList(),
+      decoration: InputDecoration(
+        labelText: label,
+        errorText: errorText,
+        prefixIcon: icon == null ? null : Icon(icon, color: accent),
+        filled: true,
+        fillColor: p.surface.withValues(alpha: 0.7),
+        labelStyle: TextStyle(color: p.textMuted),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: accent.withValues(alpha: 0.35)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: accent, width: 1.4),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: p.danger),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: p.danger, width: 1.4),
+        ),
+      ),
+    );
+  }
+}
