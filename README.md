@@ -11,7 +11,7 @@ Kit de UI com tema futurístico **dark neon** para Flutter — paleta opinativa,
 | Estrutura   | `NeonAppBar`, `NeonCard`                                           |
 | Ação        | `GradientCta`                                                      |
 | Input       | `NeonTextField`                                                    |
-| Feedback    | `StatusChip`, `NeonDialog` (+ `showNeonDialog`)                    |
+| Feedback    | `StatusChip`, `NeonDialog`, `NeonSnackBar`, `NeonToast`, `NeonLinearProgress`, `NeonCircularProgress`, `NeonSkeleton`, `NeonTooltip` |
 | Navegação   | `NavigationCard`                                                   |
 
 Tudo desacoplado de domínio — recebe `child`, callbacks e tokens; não conhece nenhuma regra de negócio.

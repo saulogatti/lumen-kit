@@ -1,0 +1,265 @@
+import 'package:flutter/material.dart';
+
+import '../theme/neon_palette.dart';
+
+/// Barra de progresso linear com gradiente neon e glow.
+///
+/// Se [value] for `null`, exibe animação indeterminada.
+class NeonLinearProgress extends StatelessWidget {
+  const NeonLinearProgress({
+    super.key,
+    this.value,
+    this.height = 6,
+    this.gradient,
+    this.glowColor,
+    this.trackColor,
+    this.borderRadius = 999,
+  });
+
+  /// Valor entre 0 e 1. `null` = indeterminado.
+  final double? value;
+
+  final double height;
+  final Gradient? gradient;
+  final Color? glowColor;
+  final Color? trackColor;
+  final double borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Gradient g = gradient ?? p.accentGradient;
+    final Color glow = glowColor ?? p.accentMagenta;
+    final Color track = trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: SizedBox(
+        height: height,
+        child: Stack(
+          children: <Widget>[
+            Container(color: track),
+            if (value != null)
+              FractionallySizedBox(
+                widthFactor: value!.clamp(0.0, 1.0),
+                child: _GlowBar(gradient: g, glow: glow),
+              )
+            else
+              _IndeterminateBar(gradient: g, glow: glow),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _GlowBar extends StatelessWidget {
+  const _GlowBar({required this.gradient, required this.glow});
+  final Gradient gradient;
+  final Color glow;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: gradient,
+        boxShadow: <BoxShadow>[
+          BoxShadow(color: glow.withValues(alpha: 0.55), blurRadius: 12),
+        ],
+      ),
+    );
+  }
+}
+
+class _IndeterminateBar extends StatefulWidget {
+  const _IndeterminateBar({required this.gradient, required this.glow});
+  final Gradient gradient;
+  final Color glow;
+
+  @override
+  State<_IndeterminateBar> createState() => _IndeterminateBarState();
+}
+
+class _IndeterminateBarState extends State<_IndeterminateBar>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1400),
+  )..repeat();
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _ctrl,
+      builder: (BuildContext ctx, _) {
+        return LayoutBuilder(
+          builder: (BuildContext _, BoxConstraints c) {
+            final double barWidth = c.maxWidth * 0.35;
+            final double dx = (c.maxWidth + barWidth) * _ctrl.value - barWidth;
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  left: dx,
+                  top: 0,
+                  bottom: 0,
+                  width: barWidth,
+                  child: _GlowBar(gradient: widget.gradient, glow: widget.glow),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+/// Spinner circular com gradiente neon. Se [value] for `null`, gira em
+/// loop; caso contrário, desenha um arco proporcional ao progresso.
+class NeonCircularProgress extends StatefulWidget {
+  const NeonCircularProgress({
+    super.key,
+    this.value,
+    this.size = 32,
+    this.strokeWidth = 3,
+    this.gradient,
+    this.glowColor,
+    this.trackColor,
+  });
+
+  final double? value;
+  final double size;
+  final double strokeWidth;
+  final Gradient? gradient;
+  final Color? glowColor;
+  final Color? trackColor;
+
+  @override
+  State<NeonCircularProgress> createState() => _NeonCircularProgressState();
+}
+
+class _NeonCircularProgressState extends State<NeonCircularProgress>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1100),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.value == null) _ctrl.repeat();
+  }
+
+  @override
+  void didUpdateWidget(covariant NeonCircularProgress old) {
+    super.didUpdateWidget(old);
+    if (widget.value == null && !_ctrl.isAnimating) _ctrl.repeat();
+    if (widget.value != null && _ctrl.isAnimating) _ctrl.stop();
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Gradient g = widget.gradient ?? p.accentGradient;
+    final Color glow = widget.glowColor ?? p.accentMagenta;
+    final Color track =
+        widget.trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
+
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: AnimatedBuilder(
+        animation: _ctrl,
+        builder: (BuildContext ctx, _) {
+          return CustomPaint(
+            painter: _NeonCircularPainter(
+              progress: widget.value,
+              rotation: _ctrl.value,
+              gradient: g,
+              glowColor: glow,
+              trackColor: track,
+              strokeWidth: widget.strokeWidth,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _NeonCircularPainter extends CustomPainter {
+  _NeonCircularPainter({
+    required this.progress,
+    required this.rotation,
+    required this.gradient,
+    required this.glowColor,
+    required this.trackColor,
+    required this.strokeWidth,
+  });
+
+  final double? progress;
+  final double rotation;
+  final Gradient gradient;
+  final Color glowColor;
+  final Color trackColor;
+  final double strokeWidth;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final double radius = (size.shortestSide - strokeWidth) / 2;
+    final Rect rect = Rect.fromCircle(center: center, radius: radius);
+
+    final Paint trackPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..color = trackColor;
+    canvas.drawCircle(center, radius, trackPaint);
+
+    final Paint glowPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round
+      ..shader = gradient.createShader(rect)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
+    final Paint arcPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round
+      ..shader = gradient.createShader(rect);
+
+    const double tau = 6.283185307179586;
+    final double startAngle;
+    final double sweep;
+    if (progress != null) {
+      startAngle = -tau / 4;
+      sweep = (progress!.clamp(0.0, 1.0)) * tau;
+    } else {
+      startAngle = rotation * tau - tau / 4;
+      sweep = tau * 0.75;
+    }
+
+    canvas.drawArc(rect, startAngle, sweep, false, glowPaint);
+    canvas.drawArc(rect, startAngle, sweep, false, arcPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _NeonCircularPainter old) =>
+      old.progress != progress ||
+      old.rotation != rotation ||
+      old.strokeWidth != strokeWidth ||
+      old.trackColor != trackColor;
+}
