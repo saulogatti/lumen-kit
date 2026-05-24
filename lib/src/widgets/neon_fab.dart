@@ -65,9 +65,7 @@ class NeonFab extends StatelessWidget {
     final Color fg = foregroundColor ?? palette.backgroundDeep;
     final bool extended = label != null;
 
-    final BorderRadius radius = extended
-        ? BorderRadius.circular(size / 2)
-        : BorderRadius.circular(size / 2);
+    final BorderRadius radius = BorderRadius.circular(size / 2);
 
     final Widget iconOrSpinner = busy
         ? SizedBox(
