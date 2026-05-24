@@ -9,7 +9,7 @@ Kit de UI com tema futurístico **dark neon** para Flutter — paleta opinativa,
 | Tema        | `AppColors`, `NeonPalette`, `NeonThemeExt`, `AppTheme`             |
 | Background  | `AnimatedGridBackground`, `GlowOrbSpec`                            |
 | Estrutura   | `NeonAppBar`, `NeonCard`                                           |
-| Ação        | `GradientCta`                                                      |
+| Ação        | `GradientCta`, `NeonButton`, `NeonIconButton`, `NeonFab`           |
 | Input       | `NeonTextField`                                                    |
 | Feedback    | `StatusChip`, `NeonDialog` (+ `showNeonDialog`)                    |
 | Navegação   | `NavigationCard`                                                   |
@@ -103,6 +103,24 @@ AnimatedGridBackground(
   child: child,
 );
 ```
+
+## Variantes de botão
+
+```dart
+Row(
+  children: <Widget>[
+    NeonButton(label: 'CONFIRMAR', icon: Icons.check, onPressed: () {}),
+    const SizedBox(width: 12),
+    NeonButton.outline(label: 'EDITAR', icon: Icons.edit, onPressed: () {}),
+    const SizedBox(width: 12),
+    NeonButton.ghost(label: 'cancelar', onPressed: () {}),
+  ],
+);
+```
+
+- `solid` — gradiente neon cheio (mesma identidade do `GradientCta`).
+- `outline` — borda glow + fundo translúcido. Ação secundária.
+- `ghost` — só texto/ícone na cor de accent. Ação terciária.
 
 ## Dialog estilizado
 
