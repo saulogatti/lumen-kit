@@ -1,0 +1,156 @@
+import 'package:flutter/material.dart';
+
+import '../theme/app_colors.dart';
+
+/// Card de navegação reutilizável da tela principal.
+/// Recebe o que mostrar e o que fazer ao tocar — não decide nada por si.
+class NavigationCard extends StatefulWidget {
+  const NavigationCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.accent,
+    required this.onTap,
+    super.key,
+    this.tag,
+  });
+
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final Color accent;
+  final VoidCallback onTap;
+  final String? tag;
+
+  @override
+  State<NavigationCard> createState() => _NavigationCardState();
+}
+
+class _NavigationCardState extends State<NavigationCard> {
+  bool _hovering = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme text = Theme.of(context).textTheme;
+    final Color accent = widget.accent;
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _hovering = true),
+      onExit: (_) => setState(() => _hovering = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOut,
+        transform: Matrix4.identity()..translateByDouble(0.0, _hovering ? -4.0 : 0.0, 0.0, 1.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: accent.withValues(alpha: _hovering ? 0.35 : 0.12),
+              blurRadius: _hovering ? 36 : 18,
+              spreadRadius: _hovering ? 1 : 0,
+              offset: const Offset(0, 12),
+            ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          child: InkWell(
+            onTap: widget.onTap,
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    AppColors.surface.withValues(alpha: 0.95),
+                    AppColors.backgroundMid.withValues(alpha: 0.85),
+                  ],
+                ),
+                border: Border.all(
+                  color: accent.withValues(alpha: _hovering ? 0.7 : 0.35),
+                  width: 1.2,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      _IconBadge(icon: widget.icon, accent: accent),
+                      const Spacer(),
+                      if (widget.tag != null) _Tag(label: widget.tag!, accent: accent),
+                    ],
+                  ),
+                  const SizedBox(height: 28),
+                  Text(widget.title, style: text.headlineMedium),
+                  const SizedBox(height: 10),
+                  Text(widget.subtitle, style: text.bodyMedium),
+                  const SizedBox(height: 24),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        'ACESSAR MÓDULO',
+                        style: text.labelLarge?.copyWith(color: accent),
+                      ),
+                      const SizedBox(width: 8),
+                      Icon(Icons.arrow_forward_rounded, size: 16, color: accent),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _IconBadge extends StatelessWidget {
+  const _IconBadge({required this.icon, required this.accent});
+
+  final IconData icon;
+  final Color accent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        color: accent.withValues(alpha: 0.12),
+        border: Border.all(color: accent.withValues(alpha: 0.45)),
+      ),
+      child: Icon(icon, color: accent, size: 28),
+    );
+  }
+}
+
+class _Tag extends StatelessWidget {
+  const _Tag({required this.label, required this.accent});
+
+  final String label;
+  final Color accent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: accent.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: accent.withValues(alpha: 0.4)),
+      ),
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: accent),
+      ),
+    );
+  }
+}
