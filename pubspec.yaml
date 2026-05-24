@@ -1,11 +1,11 @@
 name: neon_ui
 description: Tema futurístico reutilizável (cores, gradientes, glow orbs, widgets neon) para apps Flutter.
 version: 0.1.0
-publish_to: 'none'
+publish_to: "none"
 
 environment:
   sdk: ^3.12.0
-  flutter: ">=3.24.0"
+  flutter: ">=3.44.0"
 
 dependencies:
   flutter:

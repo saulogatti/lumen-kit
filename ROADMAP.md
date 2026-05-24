@@ -16,6 +16,7 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 ## A fazer
 
 ### Inputs / formulários
+
 - [x] `NeonSwitch`
 - [x] `NeonCheckbox`
 - [x] `NeonRadio`
@@ -25,6 +26,7 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 - [x] `NeonDatePicker` (wrapper temático)
 
 ### Feedback / status
+
 - [x] `NeonSnackBar` (+ `showNeonSnackBar`)
 - [x] `NeonToast`
 - [x] `NeonProgressIndicator` (linear e circular com glow)
@@ -32,6 +34,7 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 - [x] `NeonTooltip`
 
 ### Navegação / layout
+
 - [x] `NeonTabs` / `NeonSegmentedControl`
 - [x] `NeonBottomNavBar` ou `NeonNavRail`
 - [x] `NeonBottomSheet` (+ `showNeonBottomSheet`)
@@ -39,6 +42,7 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 - [x] `NeonStepper`
 
 ### Display / dados
+
 - [x] `NeonBadge` / `NeonTag` (variação menor que `StatusChip`)
 - [x] `NeonAvatar`
 - [x] `NeonListTile`
