@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 /// Dialog estilizado com surface gradiente, borda accent e tipografia do tema.
 /// Pode ser usado direto via [showNeonDialog].
 class NeonDialog extends StatelessWidget {
+  /// Cria um diálogo neon com conteúdo customizado.
   const NeonDialog({
     required this.title,
     required this.content,
@@ -15,14 +16,22 @@ class NeonDialog extends StatelessWidget {
     this.maxWidth = 460,
   });
 
+  /// Título exibido no cabeçalho do diálogo.
   final String title;
+
+  /// Conteúdo principal do diálogo.
   final Widget content;
+
+  /// Ações exibidas no rodapé, alinhadas à direita.
   final List<Widget> actions;
 
   /// Cor de destaque (borda + ícone). Default: [AppColors.accentCyan].
   final Color? accent;
 
+  /// Ícone opcional exibido antes do título.
   final IconData? icon;
+
+  /// Largura máxima do diálogo.
   final double maxWidth;
 
   @override
@@ -104,6 +113,9 @@ class NeonDialog extends StatelessWidget {
 }
 
 /// Helper para exibir um [NeonDialog] com `showDialog`.
+///
+/// Retorna o mesmo resultado de [showDialog]. [barrierDismissible] controla se
+/// o toque fora do diálogo fecha a rota modal.
 Future<T?> showNeonDialog<T>({
   required BuildContext context,
   required String title,

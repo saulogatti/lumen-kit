@@ -11,6 +11,7 @@ import '../theme/neon_palette.dart';
 /// NeonSkeleton.circle(size: 48);
 /// ```
 class NeonSkeleton extends StatefulWidget {
+  /// Cria um skeleton retangular.
   const NeonSkeleton({
     super.key,
     this.width,
@@ -20,21 +21,33 @@ class NeonSkeleton extends StatefulWidget {
     this.highlightColor,
   }) : shape = BoxShape.rectangle;
 
+  /// Cria um skeleton circular com largura e altura iguais a [size].
   const NeonSkeleton.circle({
     super.key,
     required double size,
     this.baseColor,
     this.highlightColor,
-  })  : width = size,
-        height = size,
-        borderRadius = 0,
-        shape = BoxShape.circle;
+  }) : width = size,
+       height = size,
+       borderRadius = 0,
+       shape = BoxShape.circle;
 
+  /// Largura do skeleton. Quando `null`, ocupa a largura imposta pelo pai.
   final double? width;
+
+  /// Altura do skeleton.
   final double height;
+
+  /// Raio dos cantos quando [shape] é [BoxShape.rectangle].
   final double borderRadius;
+
+  /// Forma visual do skeleton.
   final BoxShape shape;
+
+  /// Cor base do shimmer. Default: surface translúcida da paleta.
   final Color? baseColor;
+
+  /// Cor do brilho animado. Default: accent cyan translúcido da paleta.
   final Color? highlightColor;
 
   @override
@@ -57,10 +70,9 @@ class _NeonSkeletonState extends State<NeonSkeleton>
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color base =
-        widget.baseColor ?? p.surface.withValues(alpha: 0.55);
-    final Color highlight = widget.highlightColor ??
-        p.accentCyan.withValues(alpha: 0.25);
+    final Color base = widget.baseColor ?? p.surface.withValues(alpha: 0.55);
+    final Color highlight =
+        widget.highlightColor ?? p.accentCyan.withValues(alpha: 0.25);
 
     final BorderRadius radius = widget.shape == BoxShape.circle
         ? BorderRadius.zero

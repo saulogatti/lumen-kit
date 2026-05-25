@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 /// AppBar com identidade neon: transparente, com linha de gradiente inferior
 /// e tipografia consistente com o tema.
 class NeonAppBar extends StatelessWidget implements PreferredSizeWidget {
+  /// Cria uma app bar neon compatível com [Scaffold.appBar].
   const NeonAppBar({
     required this.title,
     super.key,
@@ -16,15 +17,25 @@ class NeonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showDivider = true,
   });
 
+  /// Título principal exibido na app bar.
   final String title;
+
+  /// Texto auxiliar exibido abaixo de [title].
   final String? subtitle;
+
+  /// Widget exibido antes do título.
   final Widget? leading;
+
+  /// Ações exibidas no lado direito.
   final List<Widget>? actions;
 
   /// Gradiente da linha decorativa inferior. Default: [AppColors.accentGradient].
   final Gradient? accentGradient;
 
+  /// Altura da área de conteúdo da app bar.
   final double height;
+
+  /// Se `true`, exibe a linha decorativa inferior.
   final bool showDivider;
 
   @override
@@ -65,19 +76,13 @@ class NeonAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                   if (actions != null)
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: actions!,
-                    ),
+                    Row(mainAxisSize: MainAxisSize.min, children: actions!),
                 ],
               ),
             ),
           ),
           if (showDivider)
-            Container(
-              height: 2,
-              decoration: BoxDecoration(gradient: g),
-            ),
+            Container(height: 2, decoration: BoxDecoration(gradient: g)),
         ],
       ),
     );

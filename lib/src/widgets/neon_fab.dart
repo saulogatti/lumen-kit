@@ -7,6 +7,7 @@ import '../theme/neon_palette.dart';
 /// - **Compacto** (default, só [icon]) — círculo com gradiente e glow.
 /// - **Estendido** (com [label]) — pílula com ícone + texto.
 class NeonFab extends StatelessWidget {
+  /// Cria um FAB compacto ou estendido quando [label] é informado.
   const NeonFab({
     required this.icon,
     required this.onPressed,
@@ -33,12 +34,18 @@ class NeonFab extends StatelessWidget {
     this.heroTag,
   }) : size = 56;
 
+  /// Ícone exibido no botão.
   final IconData icon;
+
+  /// Callback executado ao tocar no FAB.
+  ///
+  /// Quando `null`, o FAB fica visualmente desabilitado.
   final VoidCallback? onPressed;
 
   /// Se informado, vira FAB estendido (ícone + texto).
   final String? label;
 
+  /// Se `true`, exibe indicador de progresso e bloqueia o toque.
   final bool busy;
 
   /// Gradiente do botão. Default: `palette.accentGradient`.
@@ -85,10 +92,9 @@ class NeonFab extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   label!,
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelLarge
-                      ?.copyWith(color: fg),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelLarge?.copyWith(color: fg),
                 ),
               ],
             ),

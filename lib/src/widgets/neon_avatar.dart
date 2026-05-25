@@ -5,6 +5,7 @@ import '../theme/neon_palette.dart';
 /// Avatar circular com borda em gradiente e glow opcional. Aceita imagem
 /// ([image]) ou caem nas iniciais ([initials]).
 class NeonAvatar extends StatelessWidget {
+  /// Cria um avatar circular com imagem, iniciais ou fallback textual.
   const NeonAvatar({
     super.key,
     this.image,
@@ -15,14 +16,25 @@ class NeonAvatar extends StatelessWidget {
     this.showRing = true,
   });
 
+  /// Imagem exibida no avatar.
+  ///
+  /// Quando informada, tem precedência sobre [initials].
   final ImageProvider? image;
+
+  /// Iniciais exibidas quando [image] é `null`.
   final String? initials;
+
+  /// Raio do avatar em pixels lógicos.
   final double radius;
+
+  /// Override da cor de destaque do anel. Default: `palette.accentCyan`.
   final Color? accentColor;
 
   /// Pequeno indicador (presença) no canto inferior direito. Quando null, não
   /// é desenhado.
   final Color? statusColor;
+
+  /// Se `true`, desenha o anel em gradiente ao redor do avatar.
   final bool showRing;
 
   @override

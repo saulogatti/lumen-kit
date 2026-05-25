@@ -72,13 +72,17 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('neon_ui',
-                        style: TextStyle(
-                          color: p.textPrimary,
-                          fontWeight: FontWeight.w700,
-                        )),
-                    Text('demo gallery',
-                        style: TextStyle(color: p.textMuted, fontSize: 12)),
+                    Text(
+                      'neon_ui',
+                      style: TextStyle(
+                        color: p.textPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      'demo gallery',
+                      style: TextStyle(color: p.textMuted, fontSize: 12),
+                    ),
                   ],
                 ),
               ),
@@ -110,8 +114,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
         onChanged: (int i) => setState(() => _bottomNav = i),
         items: const <NeonNavItem>[
           NeonNavItem(icon: Icons.dashboard_outlined, label: 'Home'),
-          NeonNavItem(
-              icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
+          NeonNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
           NeonNavItem(icon: Icons.person_outline, label: 'Conta'),
         ],
       ),
@@ -137,8 +140,10 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: const <Widget>[
-                    Text('Serviço de telemetria',
-                        style: TextStyle(fontSize: 16)),
+                    Text(
+                      'Serviço de telemetria',
+                      style: TextStyle(fontSize: 16),
+                    ),
                     SizedBox(height: 8),
                     Text(
                       'Streaming de eventos em tempo real, 124 conexões ativas.',
@@ -186,10 +191,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     icon: Icons.edit,
                     onPressed: () {},
                   ),
-                  NeonButton.ghost(
-                    label: 'cancelar',
-                    onPressed: () {},
-                  ),
+                  NeonButton.ghost(label: 'cancelar', onPressed: () {}),
                 ],
               ),
             ),
@@ -298,8 +300,10 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Text('Volume (${(_slider * 100).round()}%)',
-                      style: TextStyle(color: p.textMuted)),
+                  Text(
+                    'Volume (${(_slider * 100).round()}%)',
+                    style: TextStyle(color: p.textMuted),
+                  ),
                   NeonSlider(
                     value: _slider,
                     onChanged: (double v) => setState(() => _slider = v),
@@ -310,17 +314,20 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     value: _dropdown,
                     items: const <NeonDropdownItem<String>>[
                       NeonDropdownItem<String>(
-                          value: 'cyan',
-                          label: 'Cyan',
-                          icon: Icons.circle_outlined),
+                        value: 'cyan',
+                        label: 'Cyan',
+                        icon: Icons.circle_outlined,
+                      ),
                       NeonDropdownItem<String>(
-                          value: 'magenta',
-                          label: 'Magenta',
-                          icon: Icons.circle_outlined),
+                        value: 'magenta',
+                        label: 'Magenta',
+                        icon: Icons.circle_outlined,
+                      ),
                       NeonDropdownItem<String>(
-                          value: 'blue',
-                          label: 'Blue',
-                          icon: Icons.circle_outlined),
+                        value: 'blue',
+                        label: 'Blue',
+                        icon: Icons.circle_outlined,
+                      ),
                     ],
                     onChanged: (String? v) =>
                         setState(() => _dropdown = v ?? _dropdown),
@@ -448,23 +455,29 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            const Text('Ações rápidas',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                )),
+                            const Text(
+                              'Ações rápidas',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                             const SizedBox(height: 12),
                             NeonListTile(
-                              leading: Icon(Icons.share_outlined,
-                                  color: p.accentCyan),
+                              leading: Icon(
+                                Icons.share_outlined,
+                                color: p.accentCyan,
+                              ),
                               title: 'Compartilhar',
                               subtitle: 'Gera um link de convite',
                               onTap: () => Navigator.pop(context),
                             ),
                             const SizedBox(height: 8),
                             NeonListTile(
-                              leading: Icon(Icons.delete_outline,
-                                  color: p.danger),
+                              leading: Icon(
+                                Icons.delete_outline,
+                                color: p.danger,
+                              ),
                               title: 'Remover',
                               onTap: () => Navigator.pop(context),
                             ),
@@ -530,19 +543,22 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   ),
                   const NeonBadge(
                     label: '12',
-                    child: Icon(Icons.notifications_outlined,
-                        color: Colors.white70, size: 30),
+                    child: Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.white70,
+                      size: 30,
+                    ),
                   ),
                   NeonBadge.dot(
                     color: p.success,
-                    child: const Icon(Icons.mail_outline,
-                        color: Colors.white70, size: 30),
+                    child: const Icon(
+                      Icons.mail_outline,
+                      color: Colors.white70,
+                      size: 30,
+                    ),
                   ),
                   const NeonTag(label: 'novo', icon: Icons.fiber_new_outlined),
-                  NeonTag(
-                    label: 'beta',
-                    color: p.accentMagenta,
-                  ),
+                  NeonTag(label: 'beta', color: p.accentMagenta),
                 ],
               ),
             ),
@@ -551,8 +567,10 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               Column(
                 children: <Widget>[
                   NeonListTile(
-                    leading:
-                        Icon(Icons.dashboard_outlined, color: p.accentCyan),
+                    leading: Icon(
+                      Icons.dashboard_outlined,
+                      color: p.accentCyan,
+                    ),
                     title: 'Dashboard',
                     subtitle: 'visão geral em tempo real',
                     trailing: const NeonTag(label: 'live'),
@@ -561,8 +579,10 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   ),
                   const SizedBox(height: 8),
                   NeonListTile(
-                    leading: Icon(Icons.settings_outlined,
-                        color: p.accentMagenta),
+                    leading: Icon(
+                      Icons.settings_outlined,
+                      color: p.accentMagenta,
+                    ),
                     title: 'Configurações',
                     subtitle: 'tokens, paleta e integrações',
                     onTap: () {},
@@ -580,7 +600,9 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         title: 'Webhook de eventos',
                         subtitle: 'POST → https://hooks.example.com',
                         trailing: const NeonTag(
-                            label: 'ativo', icon: Icons.check_circle_outline),
+                          label: 'ativo',
+                          icon: Icons.check_circle_outline,
+                        ),
                         onTap: () {},
                       ),
                       const SizedBox(height: 6),
@@ -603,23 +625,33 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   DataColumn(label: Text('Latência'), numeric: true),
                 ],
                 rows: const <DataRow>[
-                  DataRow(cells: <DataCell>[
-                    DataCell(Text('api')),
-                    DataCell(StatusChip(label: 'OK', tone: StatusTone.success)),
-                    DataCell(Text('42ms')),
-                  ]),
-                  DataRow(cells: <DataCell>[
-                    DataCell(Text('worker')),
-                    DataCell(StatusChip(
-                        label: 'ALERTA', tone: StatusTone.warning)),
-                    DataCell(Text('118ms')),
-                  ]),
-                  DataRow(cells: <DataCell>[
-                    DataCell(Text('cache')),
-                    DataCell(StatusChip(
-                        label: 'FALHA', tone: StatusTone.danger)),
-                    DataCell(Text('—')),
-                  ]),
+                  DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text('api')),
+                      DataCell(
+                        StatusChip(label: 'OK', tone: StatusTone.success),
+                      ),
+                      DataCell(Text('42ms')),
+                    ],
+                  ),
+                  DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text('worker')),
+                      DataCell(
+                        StatusChip(label: 'ALERTA', tone: StatusTone.warning),
+                      ),
+                      DataCell(Text('118ms')),
+                    ],
+                  ),
+                  DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text('cache')),
+                      DataCell(
+                        StatusChip(label: 'FALHA', tone: StatusTone.danger),
+                      ),
+                      DataCell(Text('—')),
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -20,6 +20,7 @@ enum NeonButtonVariant {
 /// Para o CTA primário com gradiente cheio, prefira [NeonButtonVariant.solid]
 /// (ou o atalho histórico `GradientCta`).
 class NeonButton extends StatelessWidget {
+  /// Cria um botão neon na [variant] informada.
   const NeonButton({
     required this.label,
     required this.onPressed,
@@ -56,16 +57,28 @@ class NeonButton extends StatelessWidget {
     this.expand = false,
   }) : variant = NeonButtonVariant.ghost;
 
+  /// Texto exibido no botão.
   final String label;
+
+  /// Callback executado ao tocar no botão.
+  ///
+  /// Quando `null`, o botão fica visualmente desabilitado.
   final VoidCallback? onPressed;
+
+  /// Variante visual aplicada ao botão.
   final NeonButtonVariant variant;
+
+  /// Ícone opcional exibido antes de [label].
   final IconData? icon;
+
+  /// Se `true`, exibe indicador de progresso e bloqueia o toque.
   final bool busy;
 
   /// Override do accent. Default: `palette.accentCyan` para outline/ghost,
   /// `palette.accentGradient` para solid.
   final Color? accentColor;
 
+  /// Raio dos cantos do botão em pixels lógicos.
   final double borderRadius;
 
   /// Se `true`, ocupa toda a largura disponível.
@@ -99,7 +112,11 @@ class NeonButton extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(BuildContext context, NeonPalette palette, Color accent) {
+  Widget _buildContent(
+    BuildContext context,
+    NeonPalette palette,
+    Color accent,
+  ) {
     final Color fg = switch (variant) {
       NeonButtonVariant.solid => palette.backgroundDeep,
       NeonButtonVariant.outline || NeonButtonVariant.ghost => accent,
@@ -123,8 +140,9 @@ class NeonButton extends StatelessWidget {
 
     return Row(
       mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-      mainAxisAlignment:
-          expand ? MainAxisAlignment.center : MainAxisAlignment.start,
+      mainAxisAlignment: expand
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.start,
       children: children,
     );
   }
@@ -143,8 +161,9 @@ class NeonButton extends StatelessWidget {
         boxShadow: enabled
             ? <BoxShadow>[
                 BoxShadow(
-                  color: (accentColor ?? palette.accentMagenta)
-                      .withValues(alpha: 0.35),
+                  color: (accentColor ?? palette.accentMagenta).withValues(
+                    alpha: 0.35,
+                  ),
                   blurRadius: 18,
                   offset: const Offset(0, 6),
                 ),

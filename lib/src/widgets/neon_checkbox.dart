@@ -4,6 +4,7 @@ import '../theme/neon_palette.dart';
 
 /// Checkbox quadrado com borda accent e marcador em gradiente quando ativo.
 class NeonCheckbox extends StatelessWidget {
+  /// Cria um checkbox neon.
   const NeonCheckbox({
     required this.value,
     required this.onChanged,
@@ -13,10 +14,23 @@ class NeonCheckbox extends StatelessWidget {
     this.tristate = false,
   });
 
+  /// Valor atual do checkbox.
+  ///
+  /// Quando [tristate] é `true`, `null` representa o estado indeterminado.
   final bool? value;
+
+  /// Callback chamado com o próximo valor ao tocar no checkbox.
+  ///
+  /// Quando `null`, o checkbox fica visualmente desabilitado.
   final ValueChanged<bool?>? onChanged;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Texto opcional exibido ao lado do checkbox.
   final String? label;
+
+  /// Se `true`, alterna entre `false`, `true` e `null`.
   final bool tristate;
 
   @override
@@ -75,16 +89,10 @@ class NeonCheckbox extends StatelessWidget {
             : null,
       ),
       child: isIndeterminate
-          ? Center(
-              child: Container(
-                width: 10,
-                height: 2,
-                color: p.textPrimary,
-              ),
-            )
+          ? Center(child: Container(width: 10, height: 2, color: p.textPrimary))
           : isChecked
-              ? Icon(Icons.check_rounded, size: 16, color: p.textPrimary)
-              : null,
+          ? Icon(Icons.check_rounded, size: 16, color: p.textPrimary)
+          : null,
     );
 
     final Widget content = Opacity(
@@ -104,11 +112,9 @@ class NeonCheckbox extends StatelessWidget {
                     Flexible(
                       child: Text(
                         label!,
-                        style:
-                            Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color:
-                                      disabled ? p.textMuted : p.textPrimary,
-                                ),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: disabled ? p.textMuted : p.textPrimary,
+                        ),
                       ),
                     ),
                   ],

@@ -4,6 +4,7 @@ import '../theme/app_colors.dart';
 
 /// CTA primário com gradiente neon. Reutilizado em todas as telas.
 class GradientCta extends StatelessWidget {
+  /// Cria um CTA primário com gradiente.
   const GradientCta({
     required this.label,
     required this.onPressed,
@@ -16,9 +17,18 @@ class GradientCta extends StatelessWidget {
     this.borderRadius = 14,
   });
 
+  /// Texto exibido no CTA.
   final String label;
+
+  /// Callback executado ao tocar no CTA.
+  ///
+  /// Quando `null`, o CTA fica visualmente desabilitado.
   final VoidCallback? onPressed;
+
+  /// Ícone opcional exibido antes de [label].
   final IconData? icon;
+
+  /// Se `true`, exibe indicador de progresso e bloqueia o toque.
   final bool busy;
 
   /// Gradiente do botão. Default: [AppColors.accentGradient].
@@ -30,6 +40,7 @@ class GradientCta extends StatelessWidget {
   /// Cor do texto/ícone. Default: [AppColors.backgroundDeep].
   final Color? foregroundColor;
 
+  /// Raio dos cantos do botão em pixels lógicos.
   final double borderRadius;
 
   @override
@@ -69,20 +80,16 @@ class GradientCta extends StatelessWidget {
                   SizedBox(
                     width: 16,
                     height: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: fg,
-                    ),
+                    child: CircularProgressIndicator(strokeWidth: 2, color: fg),
                   )
                 else if (icon != null)
                   Icon(icon, color: fg, size: 18),
                 if (busy || icon != null) const SizedBox(width: 10),
                 Text(
                   label,
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelLarge
-                      ?.copyWith(color: fg),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelLarge?.copyWith(color: fg),
                 ),
               ],
             ),

@@ -5,6 +5,7 @@ import '../theme/neon_palette.dart';
 /// Tooltip estilizado seguindo a identidade neon (surface translúcida, borda
 /// accent + glow). Wrapper fino sobre o [Tooltip] do Material.
 class NeonTooltip extends StatelessWidget {
+  /// Cria um tooltip neon para envolver [child].
   const NeonTooltip({
     required this.message,
     required this.child,
@@ -15,11 +16,22 @@ class NeonTooltip extends StatelessWidget {
     this.preferBelow,
   });
 
+  /// Mensagem exibida pelo tooltip.
   final String message;
+
+  /// Widget que dispara a exibição do tooltip.
   final Widget child;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Tempo de espera antes de exibir o tooltip.
   final Duration waitDuration;
+
+  /// Tempo em que o tooltip permanece visível.
   final Duration showDuration;
+
+  /// Preferência de posicionamento repassada ao [Tooltip].
   final bool? preferBelow;
 
   @override
@@ -34,10 +46,9 @@ class NeonTooltip extends StatelessWidget {
       preferBelow: preferBelow,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       margin: const EdgeInsets.symmetric(horizontal: 8),
-      textStyle: Theme.of(context)
-          .textTheme
-          .bodySmall
-          ?.copyWith(color: p.textPrimary),
+      textStyle: Theme.of(
+        context,
+      ).textTheme.bodySmall?.copyWith(color: p.textPrimary),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: LinearGradient(

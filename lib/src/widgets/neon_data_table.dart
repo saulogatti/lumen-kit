@@ -7,6 +7,7 @@ import '../theme/neon_palette.dart';
 /// Material; quem precisar de algo mais simples pode montar com
 /// [NeonTableRow] dentro de uma [Column].
 class NeonDataTable extends StatelessWidget {
+  /// Cria uma [DataTable] com o tema visual neon.
   const NeonDataTable({
     required this.columns,
     required this.rows,
@@ -16,10 +17,19 @@ class NeonDataTable extends StatelessWidget {
     this.sortAscending = true,
   });
 
+  /// Colunas repassadas para [DataTable.columns].
   final List<DataColumn> columns;
+
+  /// Linhas repassadas para [DataTable.rows].
   final List<DataRow> rows;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Índice da coluna atualmente ordenada.
   final int? sortColumnIndex;
+
+  /// Se `true`, indica ordenação ascendente.
   final bool sortAscending;
 
   @override
@@ -69,6 +79,7 @@ class NeonDataTable extends StatelessWidget {
 /// Linha "à mão" para quem quer compor uma tabela leve sem [DataTable] (ex:
 /// dentro de cartões). Cada célula é um widget e flex configurável.
 class NeonTableRow extends StatelessWidget {
+  /// Cria uma linha flexível para composição manual de tabelas.
   const NeonTableRow({
     required this.cells,
     super.key,
@@ -78,29 +89,35 @@ class NeonTableRow extends StatelessWidget {
     this.accentColor,
   });
 
+  /// Células exibidas na linha.
   final List<Widget> cells;
+
+  /// Se `true`, aplica estilo visual de cabeçalho e desativa o toque.
   final bool isHeader;
+
+  /// Callback executado ao tocar na linha.
+  ///
+  /// Ignorado quando [isHeader] é `true`.
   final VoidCallback? onTap;
 
   /// Mesma cardinalidade de [cells]; default todas com flex 1.
   final List<int>? flex;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
 
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final Color accent = accentColor ?? p.accentCyan;
-    final List<int> flexValues =
-        flex ?? List<int>.filled(cells.length, 1);
+    final List<int> flexValues = flex ?? List<int>.filled(cells.length, 1);
 
     final Widget row = Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: isHeader ? accent.withValues(alpha: 0.1) : null,
         border: Border(
-          bottom: BorderSide(
-            color: p.surfaceOutline.withValues(alpha: 0.35),
-          ),
+          bottom: BorderSide(color: p.surfaceOutline.withValues(alpha: 0.35)),
         ),
       ),
       child: DefaultTextStyle.merge(

@@ -8,6 +8,7 @@ import '../theme/neon_palette.dart';
 /// quaisquer widgets — geralmente um header customizado seguido de
 /// [NeonDrawerItem]s.
 class NeonDrawer extends StatelessWidget {
+  /// Cria um drawer neon com lista de [children].
   const NeonDrawer({
     required this.children,
     super.key,
@@ -17,10 +18,19 @@ class NeonDrawer extends StatelessWidget {
     this.width = 300,
   });
 
+  /// Widgets exibidos na área rolável do drawer.
   final List<Widget> children;
+
+  /// Cabeçalho opcional exibido antes da lista.
   final Widget? header;
+
+  /// Rodapé opcional exibido após a lista.
   final Widget? footer;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Largura do drawer em pixels lógicos.
   final double width;
 
   @override
@@ -80,6 +90,7 @@ class NeonDrawer extends StatelessWidget {
 
 /// Item padronizado para [NeonDrawer], com glow no estado selecionado.
 class NeonDrawerItem extends StatelessWidget {
+  /// Cria um item interativo para uso dentro de [NeonDrawer].
   const NeonDrawerItem({
     required this.icon,
     required this.label,
@@ -90,11 +101,24 @@ class NeonDrawerItem extends StatelessWidget {
     this.trailing,
   });
 
+  /// Ícone exibido antes do texto.
   final IconData icon;
+
+  /// Texto principal do item.
   final String label;
+
+  /// Callback executado ao tocar no item.
+  ///
+  /// Quando `null`, o item fica visualmente desabilitado.
   final VoidCallback? onTap;
+
+  /// Se `true`, aplica destaque visual de seleção.
   final bool selected;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Widget opcional exibido no fim da linha.
   final Widget? trailing;
 
   @override
@@ -112,8 +136,7 @@ class NeonDrawerItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 180),
-            padding:
-                const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               color: selected
@@ -143,8 +166,7 @@ class NeonDrawerItem extends StatelessWidget {
                     label,
                     style: TextStyle(
                       color: selected ? p.textPrimary : p.textSecondary,
-                      fontWeight:
-                          selected ? FontWeight.w600 : FontWeight.w500,
+                      fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                     ),
                   ),
                 ),

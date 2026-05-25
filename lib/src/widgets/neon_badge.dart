@@ -5,6 +5,7 @@ import '../theme/neon_palette.dart';
 /// Pequeno selo (geralmente para contadores) que pode ficar livre ou
 /// ancorado em [child] no canto superior direito.
 class NeonBadge extends StatelessWidget {
+  /// Cria um badge com texto ou ancorado em [child].
   const NeonBadge({
     required this.label,
     super.key,
@@ -15,12 +16,19 @@ class NeonBadge extends StatelessWidget {
 
   /// Modo "ponto" (sem texto), útil para indicar atividade.
   const NeonBadge.dot({super.key, this.color, this.child})
-      : label = '',
-        dot = true;
+    : label = '',
+      dot = true;
 
+  /// Texto exibido dentro do badge quando [dot] é `false`.
   final String label;
+
+  /// Cor de fundo do badge. Default: `palette.danger`.
   final Color? color;
+
+  /// Widget opcional usado como âncora para posicionar o badge.
   final Widget? child;
+
+  /// Se `true`, renderiza apenas um ponto sem [label].
   final bool dot;
 
   @override
@@ -70,6 +78,7 @@ class NeonBadge extends StatelessWidget {
 /// Tag compacta — variação leve do `StatusChip`, sem ícone obrigatório e sem
 /// glow forte. Boa para metadados em listas.
 class NeonTag extends StatelessWidget {
+  /// Cria uma tag compacta para metadados ou filtros.
   const NeonTag({
     required this.label,
     super.key,
@@ -78,9 +87,18 @@ class NeonTag extends StatelessWidget {
     this.onTap,
   });
 
+  /// Texto exibido na tag.
   final String label;
+
+  /// Cor de destaque da tag. Default: `palette.accentCyan`.
   final Color? color;
+
+  /// Ícone opcional exibido antes de [label].
   final IconData? icon;
+
+  /// Callback executado ao tocar na tag.
+  ///
+  /// Quando `null`, a tag é renderizada sem comportamento interativo.
   final VoidCallback? onTap;
 
   @override

@@ -4,13 +4,22 @@ import '../theme/app_colors.dart';
 import 'status_chip.dart';
 
 /// Posição vertical do toast na tela.
-enum NeonToastPosition { top, bottom }
+enum NeonToastPosition {
+  /// Toast alinhado próximo ao topo, respeitando o padding seguro.
+  top,
+
+  /// Toast alinhado próximo à base, respeitando o padding seguro.
+  bottom,
+}
 
 /// Exibe um toast flutuante sobre o app via `Overlay`, sem depender de
 /// `ScaffoldMessenger`. Útil para feedbacks rápidos em telas sem `Scaffold`
 /// (ex.: splash, onboarding).
 ///
 /// Retorna um [Future] que completa quando o toast some.
+///
+/// [tone] define cor e ícone padrão, [position] escolhe o alinhamento vertical
+/// e [margin] controla a distância horizontal e vertical das bordas seguras.
 Future<void> showNeonToast({
   required BuildContext context,
   required String message,
@@ -102,8 +111,9 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
       left: widget.margin,
       right: widget.margin,
       top: top ? widget.margin + MediaQuery.of(context).padding.top : null,
-      bottom:
-          top ? null : widget.margin + MediaQuery.of(context).padding.bottom,
+      bottom: top
+          ? null
+          : widget.margin + MediaQuery.of(context).padding.bottom,
       child: IgnorePointer(
         child: FadeTransition(
           opacity: anim,
@@ -117,7 +127,9 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
                 color: Colors.transparent,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 18, vertical: 12),
+                    horizontal: 18,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(999),
                     gradient: LinearGradient(
@@ -148,9 +160,7 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
                       Flexible(
                         child: Text(
                           widget.message,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
+                          style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(color: AppColors.textPrimary),
                         ),
                       ),

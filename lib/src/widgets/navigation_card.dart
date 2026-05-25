@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 /// Card de navegação reutilizável da tela principal.
 /// Recebe o que mostrar e o que fazer ao tocar — não decide nada por si.
 class NavigationCard extends StatefulWidget {
+  /// Cria um card de navegação com destaque visual e hover.
   const NavigationCard({
     required this.title,
     required this.subtitle,
@@ -15,11 +16,22 @@ class NavigationCard extends StatefulWidget {
     this.tag,
   });
 
+  /// Título do módulo ou destino.
   final String title;
+
+  /// Descrição curta exibida abaixo do título.
   final String subtitle;
+
+  /// Ícone usado no badge visual do card.
   final IconData icon;
+
+  /// Cor de destaque do card.
   final Color accent;
+
+  /// Callback executado ao tocar no card.
   final VoidCallback onTap;
+
+  /// Tag opcional exibida no canto superior direito.
   final String? tag;
 
   @override
@@ -41,7 +53,8 @@ class _NavigationCardState extends State<NavigationCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
         curve: Curves.easeOut,
-        transform: Matrix4.identity()..translateByDouble(0.0, _hovering ? -4.0 : 0.0, 0.0, 1.0),
+        transform: Matrix4.identity()
+          ..translateByDouble(0.0, _hovering ? -4.0 : 0.0, 0.0, 1.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: <BoxShadow>[
@@ -83,7 +96,8 @@ class _NavigationCardState extends State<NavigationCard> {
                     children: <Widget>[
                       _IconBadge(icon: widget.icon, accent: accent),
                       const Spacer(),
-                      if (widget.tag != null) _Tag(label: widget.tag!, accent: accent),
+                      if (widget.tag != null)
+                        _Tag(label: widget.tag!, accent: accent),
                     ],
                   ),
                   const SizedBox(height: 28),
@@ -98,7 +112,11 @@ class _NavigationCardState extends State<NavigationCard> {
                         style: text.labelLarge?.copyWith(color: accent),
                       ),
                       const SizedBox(width: 8),
-                      Icon(Icons.arrow_forward_rounded, size: 16, color: accent),
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 16,
+                        color: accent,
+                      ),
                     ],
                   ),
                 ],

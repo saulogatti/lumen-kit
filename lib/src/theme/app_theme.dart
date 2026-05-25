@@ -10,7 +10,10 @@ class AppTheme {
   /// Tema dark default usando a paleta padrão.
   static ThemeData get dark => fromPalette(NeonPalette.defaultDark());
 
-  /// Constrói um [ThemeData] dark a partir de uma [NeonPalette] customizada.
+  /// Constrói um [ThemeData] dark a partir da paleta [p].
+  ///
+  /// Registra [NeonThemeExt] em [ThemeData.extensions] para que os widgets do
+  /// kit acessem os mesmos tokens via [NeonThemeExt.of].
   static ThemeData fromPalette(NeonPalette p) {
     final ColorScheme scheme = ColorScheme.dark(
       primary: p.accentCyan,
@@ -47,11 +50,7 @@ class AppTheme {
         fontSize: 16,
         fontWeight: FontWeight.w500,
       ),
-      bodyMedium: TextStyle(
-        color: p.textSecondary,
-        fontSize: 14,
-        height: 1.45,
-      ),
+      bodyMedium: TextStyle(color: p.textSecondary, fontSize: 14, height: 1.45),
       bodySmall: TextStyle(
         color: p.textMuted,
         fontSize: 12,
@@ -79,9 +78,7 @@ class AppTheme {
       ),
       iconTheme: IconThemeData(color: p.accentCyan),
       dividerColor: p.surfaceOutline,
-      extensions: <ThemeExtension<dynamic>>[
-        NeonThemeExt(palette: p),
-      ],
+      extensions: <ThemeExtension<dynamic>>[NeonThemeExt(palette: p)],
     );
   }
 }

@@ -4,14 +4,19 @@ import '../theme/neon_palette.dart';
 
 /// Item de [NeonTabs] / [NeonSegmentedControl].
 class NeonTabItem {
+  /// Cria um item de tab com texto e ícone opcional.
   const NeonTabItem({required this.label, this.icon});
 
+  /// Texto exibido na tab.
   final String label;
+
+  /// Ícone opcional exibido acima ou antes de [label].
   final IconData? icon;
 }
 
 /// Tabs horizontais com indicador em gradiente accent.
 class NeonTabs extends StatelessWidget {
+  /// Cria uma barra de tabs controlada por [selectedIndex].
   const NeonTabs({
     required this.items,
     required this.selectedIndex,
@@ -21,10 +26,21 @@ class NeonTabs extends StatelessWidget {
     this.isScrollable = false,
   });
 
+  /// Itens exibidos na barra.
   final List<NeonTabItem> items;
+
+  /// Índice da tab selecionada.
+  ///
+  /// O índice é limitado ao intervalo válido antes de inicializar o controller.
   final int selectedIndex;
+
+  /// Callback chamado com o índice da tab tocada.
   final ValueChanged<int> onChanged;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Se `true`, permite rolagem horizontal das tabs.
   final bool isScrollable;
 
   @override
@@ -63,6 +79,7 @@ class NeonTabs extends StatelessWidget {
 
 /// Segmented control compacto (pílula). Os itens dividem largura igualmente.
 class NeonSegmentedControl extends StatelessWidget {
+  /// Cria um controle segmentado com seleção por índice.
   const NeonSegmentedControl({
     required this.items,
     required this.selectedIndex,
@@ -71,9 +88,16 @@ class NeonSegmentedControl extends StatelessWidget {
     this.accentColor,
   });
 
+  /// Segmentos exibidos no controle.
   final List<NeonTabItem> items;
+
+  /// Índice do segmento selecionado.
   final int selectedIndex;
+
+  /// Callback chamado com o índice do segmento tocado.
   final ValueChanged<int> onChanged;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
 
   @override
@@ -135,8 +159,9 @@ class NeonSegmentedControl extends StatelessWidget {
                       it.label,
                       style: TextStyle(
                         color: selected ? p.textPrimary : p.textMuted,
-                        fontWeight:
-                            selected ? FontWeight.w600 : FontWeight.w500,
+                        fontWeight: selected
+                            ? FontWeight.w600
+                            : FontWeight.w500,
                       ),
                     ),
                   ],

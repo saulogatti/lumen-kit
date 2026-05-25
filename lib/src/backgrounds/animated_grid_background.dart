@@ -5,6 +5,9 @@ import '../theme/app_colors.dart';
 /// Configuração de um glow orb posicionado no fundo.
 @immutable
 class GlowOrbSpec {
+  /// Cria a configuração de um orb de brilho.
+  ///
+  /// Os campos de posição seguem a mesma semântica de [Positioned].
   const GlowOrbSpec({
     required this.color,
     required this.size,
@@ -15,18 +18,34 @@ class GlowOrbSpec {
     this.opacity = 0.35,
   });
 
+  /// Cor base usada no centro do gradiente radial.
   final Color color;
+
+  /// Diâmetro do orb em pixels lógicos.
   final double size;
+
+  /// Distância opcional até o topo do [Stack].
   final double? top;
+
+  /// Distância opcional até a direita do [Stack].
   final double? right;
+
+  /// Distância opcional até a base do [Stack].
   final double? bottom;
+
+  /// Distância opcional até a esquerda do [Stack].
   final double? left;
+
+  /// Opacidade aplicada ao centro do orb.
   final double opacity;
 }
 
 /// Pano de fundo decorativo com grade futurística, gradiente e glow orbs.
 /// Totalmente parametrizável — defaults reproduzem o visual original do tema.
 class AnimatedGridBackground extends StatelessWidget {
+  /// Cria um fundo decorativo para envolver [child].
+  ///
+  /// Quando não recebe customizações, usa o gradiente e os orbs padrão do kit.
   const AnimatedGridBackground({
     required this.child,
     super.key,
@@ -38,6 +57,7 @@ class AnimatedGridBackground extends StatelessWidget {
     this.showGrid = true,
   });
 
+  /// Conteúdo renderizado acima do gradiente, grid e orbs.
   final Widget child;
 
   /// Gradiente de fundo. Default: [AppColors.backgroundGradient].
@@ -60,12 +80,7 @@ class AnimatedGridBackground extends StatelessWidget {
   final bool showGrid;
 
   static const List<GlowOrbSpec> _defaultOrbs = <GlowOrbSpec>[
-    GlowOrbSpec(
-      color: AppColors.accentCyan,
-      size: 320,
-      top: -120,
-      right: -80,
-    ),
+    GlowOrbSpec(color: AppColors.accentCyan, size: 320, top: -120, right: -80),
     GlowOrbSpec(
       color: AppColors.accentMagenta,
       size: 360,

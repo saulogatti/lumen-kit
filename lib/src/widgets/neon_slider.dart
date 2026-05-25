@@ -4,6 +4,7 @@ import '../theme/neon_palette.dart';
 
 /// Slider com track em gradiente accent e thumb com glow.
 class NeonSlider extends StatelessWidget {
+  /// Cria um slider neon.
   const NeonSlider({
     required this.value,
     required this.onChanged,
@@ -15,12 +16,29 @@ class NeonSlider extends StatelessWidget {
     this.accentColor,
   });
 
+  /// Valor atual do slider.
+  ///
+  /// O valor é limitado visualmente ao intervalo entre [min] e [max].
   final double value;
+
+  /// Callback chamado quando o usuário muda o valor.
+  ///
+  /// Quando `null`, o slider fica visualmente desabilitado.
   final ValueChanged<double>? onChanged;
+
+  /// Menor valor permitido.
   final double min;
+
+  /// Maior valor permitido.
   final double max;
+
+  /// Número opcional de divisões discretas do intervalo.
   final int? divisions;
+
+  /// Texto exibido no indicador de valor do [Slider].
   final String? label;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
 
   @override
@@ -37,10 +55,9 @@ class NeonSlider extends StatelessWidget {
         thumbColor: accent,
         overlayColor: accent.withValues(alpha: 0.18),
         valueIndicatorColor: p.surface,
-        valueIndicatorTextStyle:
-            Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: p.textPrimary,
-                ),
+        valueIndicatorTextStyle: Theme.of(
+          context,
+        ).textTheme.bodySmall?.copyWith(color: p.textPrimary),
         thumbShape: _GlowThumbShape(glow: accent),
         trackShape: const RoundedRectSliderTrackShape(),
       ),
@@ -94,7 +111,8 @@ class _GlowThumbShape extends SliderComponentShape {
     final Paint thumbPaint = Paint()..color = glow;
     canvas.drawCircle(center, _radius, thumbPaint);
 
-    final Paint innerPaint = Paint()..color = Colors.white.withValues(alpha: 0.85);
+    final Paint innerPaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.85);
     canvas.drawCircle(center, _radius * 0.45, innerPaint);
   }
 }

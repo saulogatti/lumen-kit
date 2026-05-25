@@ -4,9 +4,13 @@ import '../theme/neon_palette.dart';
 
 /// Definição de cada step.
 class NeonStep {
+  /// Cria a definição de um passo do [NeonStepper].
   const NeonStep({required this.title, this.subtitle, this.content});
 
+  /// Título exibido no step.
   final String title;
+
+  /// Texto auxiliar exibido abaixo de [title].
   final String? subtitle;
 
   /// Conteúdo exibido abaixo do título quando o step está ativo (apenas no
@@ -14,12 +18,20 @@ class NeonStep {
   final Widget? content;
 }
 
-enum NeonStepperDirection { horizontal, vertical }
+/// Direção de apresentação do [NeonStepper].
+enum NeonStepperDirection {
+  /// Mostra os steps em linha como indicador de progresso.
+  horizontal,
+
+  /// Mostra os steps em coluna e expande o conteúdo do step ativo.
+  vertical,
+}
 
 /// Stepper temático com bolas conectadas por linhas em gradiente. Modo
 /// `horizontal` é puramente indicador; o `vertical` expande o conteúdo do
 /// step ativo.
 class NeonStepper extends StatelessWidget {
+  /// Cria um stepper neon controlado por [currentStep].
   const NeonStepper({
     required this.steps,
     required this.currentStep,
@@ -29,10 +41,19 @@ class NeonStepper extends StatelessWidget {
     this.accentColor,
   });
 
+  /// Lista de steps exibidos.
   final List<NeonStep> steps;
+
+  /// Índice do step atual.
   final int currentStep;
+
+  /// Direção visual do stepper.
   final NeonStepperDirection direction;
+
+  /// Callback chamado com o índice do step tocado.
   final ValueChanged<int>? onStepTapped;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
 
   @override
@@ -100,10 +121,7 @@ class NeonStepper extends StatelessWidget {
       }
     }
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: nodes,
-    );
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: nodes);
   }
 
   Widget _buildVertical(BuildContext context) {
@@ -155,12 +173,9 @@ class NeonStepper extends StatelessWidget {
               const SizedBox(width: 14),
               Expanded(
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(bottom: isLast ? 0 : 18, top: 4),
+                  padding: EdgeInsets.only(bottom: isLast ? 0 : 18, top: 4),
                   child: InkWell(
-                    onTap: onStepTapped == null
-                        ? null
-                        : () => onStepTapped!(i),
+                    onTap: onStepTapped == null ? null : () => onStepTapped!(i),
                     borderRadius: BorderRadius.circular(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,10 +193,7 @@ class NeonStepper extends StatelessWidget {
                           const SizedBox(height: 2),
                           Text(
                             s.subtitle!,
-                            style: TextStyle(
-                              color: p.textMuted,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(color: p.textMuted, fontSize: 12),
                           ),
                         ],
                         if (current && s.content != null) ...<Widget>[

@@ -5,6 +5,7 @@ import '../theme/neon_palette.dart';
 /// ListTile temático com surface translúcida, borda accent suave e estado
 /// selecionado destacado por glow.
 class NeonListTile extends StatelessWidget {
+  /// Cria um item de lista neon.
   const NeonListTile({
     required this.title,
     super.key,
@@ -18,14 +19,31 @@ class NeonListTile extends StatelessWidget {
     this.dense = false,
   });
 
+  /// Texto principal do item.
   final String title;
+
+  /// Texto auxiliar exibido abaixo de [title].
   final String? subtitle;
+
+  /// Widget opcional exibido antes do texto.
   final Widget? leading;
+
+  /// Widget opcional exibido no fim da linha.
   final Widget? trailing;
+
+  /// Callback executado ao tocar no item.
   final VoidCallback? onTap;
+
+  /// Callback executado no toque longo.
   final VoidCallback? onLongPress;
+
+  /// Se `true`, aplica destaque visual de seleção.
   final bool selected;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Se `true`, reduz o espaçamento vertical.
   final bool dense;
 
   @override
@@ -79,18 +97,17 @@ class NeonListTile extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: p.textPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        color: p.textPrimary,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     if (subtitle != null) ...<Widget>[
                       const SizedBox(height: 2),
                       Text(
                         subtitle!,
-                        style:
-                            Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: p.textMuted,
-                                ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(color: p.textMuted),
                       ),
                     ],
                   ],

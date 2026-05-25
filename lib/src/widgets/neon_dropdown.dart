@@ -4,16 +4,23 @@ import '../theme/neon_palette.dart';
 
 /// Item exibido no [NeonDropdown]. Mantém o tipo do valor genérico.
 class NeonDropdownItem<T> {
+  /// Cria um item de dropdown com [value] e [label].
   const NeonDropdownItem({required this.value, required this.label, this.icon});
 
+  /// Valor retornado quando este item é selecionado.
   final T value;
+
+  /// Texto exibido na lista de opções.
   final String label;
+
+  /// Ícone opcional exibido antes de [label].
   final IconData? icon;
 }
 
 /// Dropdown estilizado com a borda e o glow do tema. Substitui o
 /// [DropdownButton] padrão usando [DropdownButtonFormField].
 class NeonDropdown<T> extends StatelessWidget {
+  /// Cria um dropdown neon para valores do tipo [T].
   const NeonDropdown({
     required this.value,
     required this.items,
@@ -26,13 +33,30 @@ class NeonDropdown<T> extends StatelessWidget {
     this.errorText,
   });
 
+  /// Valor atualmente selecionado.
   final T? value;
+
+  /// Opções exibidas pelo dropdown.
   final List<NeonDropdownItem<T>> items;
+
+  /// Callback chamado quando a seleção muda.
+  ///
+  /// Quando `null`, o dropdown fica desabilitado pelo [DropdownButtonFormField].
   final ValueChanged<T?>? onChanged;
+
+  /// Rótulo exibido pelo campo.
   final String? label;
+
+  /// Texto exibido quando nenhum valor foi selecionado.
   final String? hint;
+
+  /// Ícone opcional exibido no início do campo.
   final IconData? icon;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Mensagem de erro exibida abaixo do campo.
   final String? errorText;
 
   @override

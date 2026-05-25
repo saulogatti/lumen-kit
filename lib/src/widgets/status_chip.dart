@@ -3,9 +3,26 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 /// Tom semântico para um chip de status.
-enum StatusTone { neutral, info, success, warning, danger }
+enum StatusTone {
+  /// Estado neutro ou sem prioridade.
+  neutral,
 
+  /// Estado informativo.
+  info,
+
+  /// Estado de sucesso.
+  success,
+
+  /// Estado de atenção ou alerta.
+  warning,
+
+  /// Estado de erro ou perigo.
+  danger,
+}
+
+/// Chip compacto que comunica um status por cor semântica.
 class StatusChip extends StatelessWidget {
+  /// Cria um chip de status com [label] e [tone].
   const StatusChip({
     required this.label,
     required this.tone,
@@ -13,8 +30,15 @@ class StatusChip extends StatelessWidget {
     this.icon,
   });
 
+  /// Texto exibido no chip.
   final String label;
+
+  /// Tom semântico usado para escolher a cor do chip.
   final StatusTone tone;
+
+  /// Ícone opcional exibido antes de [label].
+  ///
+  /// Quando `null`, o chip exibe um ponto colorido.
   final IconData? icon;
 
   Color get _color {

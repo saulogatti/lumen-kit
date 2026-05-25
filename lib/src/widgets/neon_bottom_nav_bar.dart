@@ -4,9 +4,13 @@ import '../theme/neon_palette.dart';
 
 /// Item de [NeonBottomNavBar] / [NeonNavRail].
 class NeonNavItem {
+  /// Cria um item compartilhado pela navegação inferior e lateral.
   const NeonNavItem({required this.icon, required this.label, this.badge});
 
+  /// Ícone exibido no item de navegação.
   final IconData icon;
+
+  /// Texto exibido abaixo do ícone.
   final String label;
 
   /// Pequeno texto exibido como badge sobre o ícone (ex: "3", "•").
@@ -15,6 +19,9 @@ class NeonNavItem {
 
 /// Barra inferior com 3-5 itens, item selecionado destacado com pílula glow.
 class NeonBottomNavBar extends StatelessWidget {
+  /// Cria uma barra de navegação inferior.
+  ///
+  /// Use entre 3 e 5 [items] para manter a leitura e o toque confortáveis.
   const NeonBottomNavBar({
     required this.items,
     required this.selectedIndex,
@@ -23,9 +30,16 @@ class NeonBottomNavBar extends StatelessWidget {
     this.accentColor,
   });
 
+  /// Itens exibidos na barra.
   final List<NeonNavItem> items;
+
+  /// Índice do item atualmente selecionado.
   final int selectedIndex;
+
+  /// Callback chamado com o índice do item tocado.
   final ValueChanged<int> onChanged;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
 
   @override
@@ -102,8 +116,9 @@ class NeonBottomNavBar extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11,
                           color: selected ? p.textPrimary : p.textMuted,
-                          fontWeight:
-                              selected ? FontWeight.w600 : FontWeight.w500,
+                          fontWeight: selected
+                              ? FontWeight.w600
+                              : FontWeight.w500,
                         ),
                       ),
                     ],
@@ -120,6 +135,7 @@ class NeonBottomNavBar extends StatelessWidget {
 
 /// Variante lateral (tablet / desktop).
 class NeonNavRail extends StatelessWidget {
+  /// Cria a variante lateral da navegação neon.
   const NeonNavRail({
     required this.items,
     required this.selectedIndex,
@@ -130,11 +146,22 @@ class NeonNavRail extends StatelessWidget {
     this.trailing,
   });
 
+  /// Itens exibidos no rail.
   final List<NeonNavItem> items;
+
+  /// Índice do item atualmente selecionado.
   final int selectedIndex;
+
+  /// Callback chamado com o índice do item tocado.
   final ValueChanged<int> onChanged;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Widget opcional exibido acima da lista.
   final Widget? leading;
+
+  /// Widget opcional exibido abaixo da lista.
   final Widget? trailing;
 
   @override
@@ -195,8 +222,7 @@ class NeonNavRail extends StatelessWidget {
                               it.label,
                               style: TextStyle(
                                 fontSize: 11,
-                                color:
-                                    selected ? p.textPrimary : p.textMuted,
+                                color: selected ? p.textPrimary : p.textMuted,
                               ),
                             ),
                           ],

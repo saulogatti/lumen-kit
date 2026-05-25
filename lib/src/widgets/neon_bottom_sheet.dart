@@ -4,6 +4,9 @@ import '../theme/neon_palette.dart';
 
 /// Abre um modal bottom sheet com a estética do tema neon (gradiente de fundo,
 /// borda accent no topo e handle).
+///
+/// [builder] cria o conteúdo interno. As flags [isScrollControlled],
+/// [isDismissible] e [enableDrag] são repassadas ao [showModalBottomSheet].
 Future<T?> showNeonBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -22,10 +25,8 @@ Future<T?> showNeonBottomSheet<T>({
     enableDrag: enableDrag,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: 0.55),
-    builder: (BuildContext ctx) => _NeonBottomSheetShell(
-      accent: accent,
-      child: builder(ctx),
-    ),
+    builder: (BuildContext ctx) =>
+        _NeonBottomSheetShell(accent: accent, child: builder(ctx)),
   );
 }
 

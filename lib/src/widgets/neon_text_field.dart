@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 /// TextField estilizado para o formulário de cadastro.
 /// Mantém o próprio controller para preservar foco/cursor entre rebuilds.
 class NeonTextField extends StatefulWidget {
+  /// Cria um campo de texto controlado internamente.
   const NeonTextField({
     required this.label,
     required this.initialValue,
@@ -17,13 +18,28 @@ class NeonTextField extends StatefulWidget {
     this.suffix,
   });
 
+  /// Rótulo exibido pelo campo.
   final String label;
+
+  /// Valor usado para inicializar o controller interno.
   final String initialValue;
+
+  /// Callback chamado quando o texto muda.
   final ValueChanged<String> onChanged;
+
+  /// Mensagem de erro exibida abaixo do campo.
   final String? errorText;
+
+  /// Ícone opcional exibido antes do texto.
   final IconData? icon;
+
+  /// Se `true`, oculta o texto digitado.
   final bool obscure;
+
+  /// Tipo de teclado solicitado ao sistema.
   final TextInputType? keyboardType;
+
+  /// Widget opcional exibido no final do campo.
   final Widget? suffix;
 
   @override
@@ -31,8 +47,9 @@ class NeonTextField extends StatefulWidget {
 }
 
 class _NeonTextFieldState extends State<NeonTextField> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.initialValue);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialValue,
+  );
 
   @override
   void dispose() {

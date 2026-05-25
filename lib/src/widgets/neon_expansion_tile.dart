@@ -5,6 +5,7 @@ import '../theme/neon_palette.dart';
 /// Tile expansível com header em surface, ícone com rotação animada e borda
 /// accent quando aberto.
 class NeonExpansionTile extends StatefulWidget {
+  /// Cria um tile expansível com [children] revelados ao abrir.
   const NeonExpansionTile({
     required this.title,
     required this.children,
@@ -16,12 +17,25 @@ class NeonExpansionTile extends StatefulWidget {
     this.onExpansionChanged,
   });
 
+  /// Título exibido no cabeçalho.
   final String title;
+
+  /// Texto auxiliar exibido abaixo de [title].
   final String? subtitle;
+
+  /// Widget opcional exibido antes do texto.
   final Widget? leading;
+
+  /// Conteúdo exibido quando o tile está expandido.
   final List<Widget> children;
+
+  /// Se `true`, inicia o tile expandido.
   final bool initiallyExpanded;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Callback chamado sempre que o estado expandido muda.
   final ValueChanged<bool>? onExpansionChanged;
 
   @override
@@ -85,10 +99,7 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
             onTap: _toggle,
             borderRadius: BorderRadius.circular(14),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 12,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               child: Row(
                 children: <Widget>[
                   if (widget.leading != null) ...<Widget>[
@@ -101,9 +112,7 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
                       children: <Widget>[
                         Text(
                           widget.title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall
+                          style: Theme.of(context).textTheme.titleSmall
                               ?.copyWith(
                                 color: p.textPrimary,
                                 fontWeight: FontWeight.w600,
@@ -113,10 +122,7 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
                           const SizedBox(height: 2),
                           Text(
                             widget.subtitle!,
-                            style: TextStyle(
-                              color: p.textMuted,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(color: p.textMuted, fontSize: 12),
                           ),
                         ],
                       ],
@@ -131,10 +137,7 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
             ),
           ),
           SizeTransition(
-            sizeFactor: CurvedAnimation(
-              parent: _ctrl,
-              curve: Curves.easeOut,
-            ),
+            sizeFactor: CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
               child: Column(

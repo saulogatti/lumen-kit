@@ -5,6 +5,30 @@ import '../theme/app_colors.dart';
 /// Container base do tema neon: gradiente sutil + borda accent + opcional onTap.
 /// Use como peça fundamental para qualquer tela — cards, painéis, seções.
 class NeonCard extends StatelessWidget {
+  /// Conteúdo exibido dentro do card.
+  final Widget child;
+
+  /// Cor de destaque (borda + glow). Default: [AppColors.accentCyan].
+  final Color? accent;
+
+  /// Espaçamento interno aplicado ao [child].
+  final EdgeInsetsGeometry padding;
+
+  /// Raio dos cantos do card em pixels lógicos.
+  final double borderRadius;
+
+  /// Callback executado ao tocar no card.
+  ///
+  /// Quando `null`, o card é renderizado sem comportamento interativo.
+  final VoidCallback? onTap;
+
+  /// Opacidade da borda de destaque.
+  final double borderOpacity;
+
+  /// Se `true`, adiciona um leve glow ao redor do card.
+  final bool glow;
+
+  /// Cria um card neon com [child] como conteúdo.
   const NeonCard({
     required this.child,
     super.key,
@@ -15,19 +39,6 @@ class NeonCard extends StatelessWidget {
     this.borderOpacity = 0.35,
     this.glow = false,
   });
-
-  final Widget child;
-
-  /// Cor de destaque (borda + glow). Default: [AppColors.accentCyan].
-  final Color? accent;
-
-  final EdgeInsetsGeometry padding;
-  final double borderRadius;
-  final VoidCallback? onTap;
-  final double borderOpacity;
-
-  /// Se `true`, adiciona um leve glow ao redor do card.
-  final bool glow;
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +70,7 @@ class NeonCard extends StatelessWidget {
         : Material(
             color: Colors.transparent,
             borderRadius: radius,
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: radius,
-              child: content,
-            ),
+            child: InkWell(onTap: onTap, borderRadius: radius, child: content),
           );
 
     if (!glow) return body;

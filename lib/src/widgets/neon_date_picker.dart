@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../theme/neon_palette.dart';
 
-/// Abre o [showDatePicker] padrão aplicando o tema neon (accents, surface
-/// translúcida, borda em cyan).
+/// Abre o [showDatePicker] padrão aplicando o tema neon.
+///
+/// Usa [initialDate] como data inicial e limita a seleção ao intervalo entre
+/// [firstDate] e [lastDate]. [accentColor] substitui o accent padrão e
+/// [helpText] é repassado ao picker do Material.
 Future<DateTime?> showNeonDatePicker({
   required BuildContext context,
   required DateTime initialDate,
@@ -44,6 +47,7 @@ Future<DateTime?> showNeonDatePicker({
 
 /// Campo somente-leitura que abre o [showNeonDatePicker] ao ser tocado.
 class NeonDatePicker extends StatelessWidget {
+  /// Cria um campo somente-leitura que abre um date picker ao toque.
   const NeonDatePicker({
     required this.value,
     required this.firstDate,
@@ -56,13 +60,30 @@ class NeonDatePicker extends StatelessWidget {
     this.format,
   });
 
+  /// Data atualmente selecionada.
   final DateTime? value;
+
+  /// Primeira data permitida no picker.
   final DateTime firstDate;
+
+  /// Última data permitida no picker.
   final DateTime lastDate;
+
+  /// Callback chamado quando uma nova data é escolhida.
+  ///
+  /// Quando `null`, o campo fica visualmente desabilitado.
   final ValueChanged<DateTime>? onChanged;
+
+  /// Rótulo exibido pelo campo.
   final String? label;
+
+  /// Texto exibido quando [value] é `null`.
   final String? hint;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Formatador usado para exibir [value].
   final String Function(DateTime)? format;
 
   String _defaultFormat(DateTime d) =>
@@ -115,10 +136,9 @@ class NeonDatePicker extends StatelessWidget {
           isEmpty: text == null,
           child: Text(
             text ?? '',
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(color: p.textPrimary),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(color: p.textPrimary),
           ),
         ),
       ),

@@ -16,6 +16,7 @@ enum NeonIconButtonVariant {
 
 /// Botão circular/quadrado contendo apenas um ícone, no estilo neon.
 class NeonIconButton extends StatelessWidget {
+  /// Cria um botão de ícone na variante [variant].
   const NeonIconButton({
     required this.icon,
     required this.onPressed,
@@ -29,6 +30,7 @@ class NeonIconButton extends StatelessWidget {
     this.shape = NeonIconButtonShape.circle,
   });
 
+  /// Atalho para [NeonIconButtonVariant.solid].
   const NeonIconButton.solid({
     required this.icon,
     required this.onPressed,
@@ -41,6 +43,7 @@ class NeonIconButton extends StatelessWidget {
     this.shape = NeonIconButtonShape.circle,
   }) : variant = NeonIconButtonVariant.solid;
 
+  /// Atalho para [NeonIconButtonVariant.ghost].
   const NeonIconButton.ghost({
     required this.icon,
     required this.onPressed,
@@ -53,16 +56,30 @@ class NeonIconButton extends StatelessWidget {
     this.shape = NeonIconButtonShape.circle,
   }) : variant = NeonIconButtonVariant.ghost;
 
+  /// Ícone exibido no botão.
   final IconData icon;
+
+  /// Callback executado ao tocar no botão.
+  ///
+  /// Quando `null`, o botão fica visualmente desabilitado.
   final VoidCallback? onPressed;
+
+  /// Variante visual aplicada ao botão.
   final NeonIconButtonVariant variant;
+
+  /// Mensagem opcional exibida em um [Tooltip].
   final String? tooltip;
+
+  /// Se `true`, exibe indicador de progresso e bloqueia o toque.
   final bool busy;
+
+  /// Override do accent. Default: `palette.accentCyan`.
   final Color? accentColor;
 
   /// Tamanho da área total (largura = altura).
   final double size;
 
+  /// Tamanho do ícone ou do indicador de progresso.
   final double iconSize;
 
   /// Formato do botão: círculo ou quadrado arredondado.
@@ -95,49 +112,49 @@ class NeonIconButton extends StatelessWidget {
 
     final Widget body = switch (variant) {
       NeonIconButtonVariant.solid => Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            gradient: palette.accentGradient,
-            borderRadius: radius,
-            boxShadow: enabled
-                ? <BoxShadow>[
-                    BoxShadow(
-                      color: (accentColor ?? palette.accentMagenta)
-                          .withValues(alpha: 0.35),
-                      blurRadius: 16,
-                      offset: const Offset(0, 5),
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          gradient: palette.accentGradient,
+          borderRadius: radius,
+          boxShadow: enabled
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: (accentColor ?? palette.accentMagenta).withValues(
+                      alpha: 0.35,
                     ),
-                  ]
-                : null,
-          ),
-          child: content,
+                    blurRadius: 16,
+                    offset: const Offset(0, 5),
+                  ),
+                ]
+              : null,
         ),
+        child: content,
+      ),
       NeonIconButtonVariant.outline => Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            color: palette.surface.withValues(alpha: 0.35),
-            borderRadius: radius,
-            border:
-                Border.all(color: accent.withValues(alpha: 0.85), width: 1.2),
-            boxShadow: enabled
-                ? <BoxShadow>[
-                    BoxShadow(
-                      color: accent.withValues(alpha: 0.25),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ]
-                : null,
-          ),
-          child: content,
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: palette.surface.withValues(alpha: 0.35),
+          borderRadius: radius,
+          border: Border.all(color: accent.withValues(alpha: 0.85), width: 1.2),
+          boxShadow: enabled
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.25),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : null,
         ),
+        child: content,
+      ),
       NeonIconButtonVariant.ghost => SizedBox(
-          width: size,
-          height: size,
-          child: content,
-        ),
+        width: size,
+        height: size,
+        child: content,
+      ),
     };
 
     Widget interactive = Opacity(
@@ -162,4 +179,10 @@ class NeonIconButton extends StatelessWidget {
 }
 
 /// Formato do [NeonIconButton].
-enum NeonIconButtonShape { circle, rounded }
+enum NeonIconButtonShape {
+  /// Botão circular.
+  circle,
+
+  /// Botão quadrado com cantos arredondados.
+  rounded,
+}

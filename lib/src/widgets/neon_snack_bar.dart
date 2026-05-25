@@ -10,6 +10,9 @@ typedef NeonSnackTone = StatusTone;
 ///
 /// Reutiliza o `SnackBar` do Material mas troca o conteúdo por uma surface
 /// com borda accent + glow, no estilo do resto do kit.
+///
+/// [tone] define cor e ícone padrão, [duration] controla o tempo de exibição e
+/// [action] adiciona uma ação textual no fim do snackbar.
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
   required BuildContext context,
   required String message,
@@ -55,10 +58,9 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
           Expanded(
             child: Text(
               message,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppColors.textPrimary),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppColors.textPrimary),
             ),
           ),
           if (action != null) ...<Widget>[

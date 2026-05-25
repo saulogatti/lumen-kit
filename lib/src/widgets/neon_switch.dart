@@ -4,6 +4,7 @@ import '../theme/neon_palette.dart';
 
 /// Switch estilizado com track translúcida, thumb em accent e glow quando ativo.
 class NeonSwitch extends StatelessWidget {
+  /// Cria um switch neon.
   const NeonSwitch({
     required this.value,
     required this.onChanged,
@@ -12,9 +13,18 @@ class NeonSwitch extends StatelessWidget {
     this.label,
   });
 
+  /// Valor atual do switch.
   final bool value;
+
+  /// Callback chamado com o valor invertido ao tocar no switch.
+  ///
+  /// Quando `null`, o switch fica visualmente desabilitado.
   final ValueChanged<bool>? onChanged;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Texto opcional exibido ao lado do switch.
   final String? label;
 
   @override
@@ -97,8 +107,8 @@ class NeonSwitch extends StatelessWidget {
           child: Text(
             label!,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: disabled ? p.textMuted : p.textPrimary,
-                ),
+              color: disabled ? p.textMuted : p.textPrimary,
+            ),
           ),
         ),
       ],

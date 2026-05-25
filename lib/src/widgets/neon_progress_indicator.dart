@@ -6,6 +6,7 @@ import '../theme/neon_palette.dart';
 ///
 /// Se [value] for `null`, exibe animação indeterminada.
 class NeonLinearProgress extends StatelessWidget {
+  /// Cria uma barra de progresso linear.
   const NeonLinearProgress({
     super.key,
     this.value,
@@ -19,10 +20,19 @@ class NeonLinearProgress extends StatelessWidget {
   /// Valor entre 0 e 1. `null` = indeterminado.
   final double? value;
 
+  /// Altura da barra em pixels lógicos.
   final double height;
+
+  /// Gradiente da porção preenchida. Default: `palette.accentGradient`.
   final Gradient? gradient;
+
+  /// Cor do glow da porção preenchida. Default: `palette.accentMagenta`.
   final Color? glowColor;
+
+  /// Cor da trilha de fundo.
   final Color? trackColor;
+
+  /// Raio dos cantos da barra.
   final double borderRadius;
 
   @override
@@ -123,6 +133,7 @@ class _IndeterminateBarState extends State<_IndeterminateBar>
 /// Spinner circular com gradiente neon. Se [value] for `null`, gira em
 /// loop; caso contrário, desenha um arco proporcional ao progresso.
 class NeonCircularProgress extends StatefulWidget {
+  /// Cria um indicador circular de progresso.
   const NeonCircularProgress({
     super.key,
     this.value,
@@ -133,11 +144,22 @@ class NeonCircularProgress extends StatefulWidget {
     this.trackColor,
   });
 
+  /// Valor entre 0 e 1. `null` = indeterminado.
   final double? value;
+
+  /// Largura e altura do indicador.
   final double size;
+
+  /// Espessura do arco.
   final double strokeWidth;
+
+  /// Gradiente do arco ativo. Default: `palette.accentGradient`.
   final Gradient? gradient;
+
+  /// Cor do glow do arco ativo. Default: `palette.accentMagenta`.
   final Color? glowColor;
+
+  /// Cor da trilha circular de fundo.
   final Color? trackColor;
 
   @override

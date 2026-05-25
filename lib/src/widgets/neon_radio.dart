@@ -5,6 +5,7 @@ import '../theme/neon_palette.dart';
 /// Radio circular com glow no estado selecionado. Genérico em [T] para casar
 /// com o `groupValue` do chamador.
 class NeonRadio<T> extends StatelessWidget {
+  /// Cria uma opção de radio para valores do tipo [T].
   const NeonRadio({
     required this.value,
     required this.groupValue,
@@ -14,10 +15,23 @@ class NeonRadio<T> extends StatelessWidget {
     this.label,
   });
 
+  /// Valor representado por esta opção.
   final T value;
+
+  /// Valor atualmente selecionado no grupo.
+  ///
+  /// A opção fica selecionada quando [value] é igual a [groupValue].
   final T? groupValue;
+
+  /// Callback chamado com [value] ao tocar nesta opção.
+  ///
+  /// Quando `null`, o radio fica visualmente desabilitado.
   final ValueChanged<T?>? onChanged;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
+
+  /// Texto opcional exibido ao lado do radio.
   final String? label;
 
   @override
@@ -35,9 +49,7 @@ class NeonRadio<T> extends StatelessWidget {
         shape: BoxShape.circle,
         color: p.surface.withValues(alpha: 0.7),
         border: Border.all(
-          color: selected
-              ? accent
-              : p.surfaceOutline.withValues(alpha: 0.9),
+          color: selected ? accent : p.surfaceOutline.withValues(alpha: 0.9),
           width: 1.4,
         ),
         boxShadow: selected
@@ -84,11 +96,9 @@ class NeonRadio<T> extends StatelessWidget {
                     Flexible(
                       child: Text(
                         label!,
-                        style:
-                            Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color:
-                                      disabled ? p.textMuted : p.textPrimary,
-                                ),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: disabled ? p.textMuted : p.textPrimary,
+                        ),
                       ),
                     ),
                   ],

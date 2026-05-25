@@ -5,6 +5,7 @@ import '../theme/neon_palette.dart';
 /// Divider em gradiente accent que desbota nas pontas. Suporta orientação
 /// horizontal (default) ou vertical, e um [label] opcional centralizado.
 class NeonDivider extends StatelessWidget {
+  /// Cria um divisor neon horizontal ou vertical.
   const NeonDivider({
     super.key,
     this.thickness = 1,
@@ -15,11 +16,22 @@ class NeonDivider extends StatelessWidget {
     this.accentColor,
   });
 
+  /// Espessura da linha em pixels lógicos.
   final double thickness;
+
+  /// Espaço antes da linha no eixo principal.
   final double indent;
+
+  /// Espaço depois da linha no eixo principal.
   final double endIndent;
+
+  /// Se `true`, desenha o divisor na vertical.
   final bool vertical;
+
+  /// Texto central exibido apenas no modo horizontal.
   final String? label;
+
+  /// Override da cor de destaque. Default: `palette.accentCyan`.
   final Color? accentColor;
 
   @override
@@ -51,9 +63,7 @@ class NeonDivider extends StatelessWidget {
 
     final Widget line = Container(
       height: thickness,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: colors),
-      ),
+      decoration: BoxDecoration(gradient: LinearGradient(colors: colors)),
     );
 
     if (label == null) {
