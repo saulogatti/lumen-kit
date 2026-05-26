@@ -5,17 +5,20 @@ import 'neon_palette.dart';
 /// Tema central da aplicação. Mantém ThemeData isolado da camada de UI
 /// para que telas não conheçam detalhes de estilo globais.
 class AppTheme {
-  const AppTheme._();
-
   /// Tema dark default usando a paleta padrão.
   static ThemeData get dark => fromPalette(NeonPalette.defaultDark());
+
+  const AppTheme._();
 
   /// Constrói um [ThemeData] dark a partir da paleta [p].
   ///
   /// Registra [NeonThemeExt] em [ThemeData.extensions] para que os widgets do
   /// kit acessem os mesmos tokens via [NeonThemeExt.of].
   static ThemeData fromPalette(NeonPalette p) {
-    final ColorScheme scheme = ColorScheme.dark(
+    final ColorScheme scheme = ColorScheme.fromSeed(
+      dynamicSchemeVariant: .vibrant,
+      brightness: Brightness.light,
+      seedColor: p.accentCyan,
       primary: p.accentCyan,
       secondary: p.accentMagenta,
       surface: p.surface,
@@ -66,7 +69,7 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       colorScheme: scheme,
       scaffoldBackgroundColor: p.backgroundDeep,
       textTheme: textTheme,

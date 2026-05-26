@@ -51,6 +51,26 @@ class NeonPalette {
     accentGradient: AppColors.accentGradient,
   );
 
+  factory NeonPalette.light() => const NeonPalette(
+    backgroundDeep: Color(0xFFF5F5F5),
+    backgroundMid: Color(0xFFFFFFFF),
+    backgroundSoft: Color(0xFFFAFAFA),
+    surface: Color(0xFFFEFEFE),
+    surfaceOutline: Color(0xff00000015),
+    surfaceHighlight: Color(0xff00000008),
+    accentCyan: AppColors.accentCyan,
+    accentMagenta: AppColors.accentMagenta,
+    accentBlue: AppColors.accentBlue,
+    textPrimary: Color(0xFF0D0D0D),
+    textSecondary: Color(0xFF424242),
+    textMuted: Color(0xFF858585),
+    success: AppColors.success,
+    warning: AppColors.warning,
+    danger: AppColors.danger,
+    backgroundGradient: AppColors.backgroundGradient,
+    accentGradient: AppColors.accentGradient,
+  );
+
   /// Tom mais profundo do fundo da aplicação.
   final Color backgroundDeep;
 
