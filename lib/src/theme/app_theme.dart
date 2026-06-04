@@ -6,18 +6,23 @@ import 'neon_palette.dart';
 /// para que telas não conheçam detalhes de estilo globais.
 class AppTheme {
   /// Tema dark default usando a paleta padrão.
-  static ThemeData get dark => fromPalette(NeonPalette.defaultDark());
-
+  static ThemeData get dark =>
+      fromPalette(NeonPalette.defaultDark(), brightness: Brightness.dark);
+  static ThemeData get light =>
+      fromPalette(NeonPalette.light(), brightness: Brightness.light);
   const AppTheme._();
 
   /// Constrói um [ThemeData] dark a partir da paleta [p].
   ///
   /// Registra [NeonThemeExt] em [ThemeData.extensions] para que os widgets do
   /// kit acessem os mesmos tokens via [NeonThemeExt.of].
-  static ThemeData fromPalette(NeonPalette p) {
+  static ThemeData fromPalette(
+    NeonPalette p, {
+    Brightness brightness = Brightness.light,
+  }) {
     final ColorScheme scheme = ColorScheme.fromSeed(
       dynamicSchemeVariant: .vibrant,
-      brightness: Brightness.light,
+      brightness: brightness,
       seedColor: p.accentCyan,
       primary: p.accentCyan,
       secondary: p.accentMagenta,
@@ -69,7 +74,7 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.light,
+      brightness: brightness,
       colorScheme: scheme,
       scaffoldBackgroundColor: p.backgroundDeep,
       textTheme: textTheme,

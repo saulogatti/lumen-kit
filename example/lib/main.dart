@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 import 'package:neon_ui/neon_ui.dart';
 
 void main() => runApp(const NeonExampleApp());
+
+class MyWidget extends StatelessWidget {
+  @Preview(name: 'Constructor preview')
+  const MyWidget.preview({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'neon_ui example',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.dark,
+      home: const _GalleryScreen(),
+    );
+  }
+}
 
 class NeonExampleApp extends StatelessWidget {
   const NeonExampleApp({super.key});
@@ -11,7 +27,7 @@ class NeonExampleApp extends StatelessWidget {
     return MaterialApp(
       title: 'neon_ui example',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
+      theme: AppTheme.light,
       home: const _GalleryScreen(),
     );
   }

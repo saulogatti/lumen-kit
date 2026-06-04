@@ -6,71 +6,6 @@ import 'app_colors.dart';
 /// outras accents) sem alterar os tokens default de [AppColors].
 @immutable
 class NeonPalette {
-  /// Cria uma paleta completa para o tema neon.
-  ///
-  /// Todos os tokens são obrigatórios para manter os widgets independentes de
-  /// fallbacks globais e permitir temas alternativos consistentes.
-  const NeonPalette({
-    required this.backgroundDeep,
-    required this.backgroundMid,
-    required this.backgroundSoft,
-    required this.surface,
-    required this.surfaceOutline,
-    required this.surfaceHighlight,
-    required this.accentCyan,
-    required this.accentMagenta,
-    required this.accentBlue,
-    required this.textPrimary,
-    required this.textSecondary,
-    required this.textMuted,
-    required this.success,
-    required this.warning,
-    required this.danger,
-    required this.backgroundGradient,
-    required this.accentGradient,
-  });
-
-  /// Paleta default — mesmas cores expostas em [AppColors].
-  factory NeonPalette.defaultDark() => const NeonPalette(
-    backgroundDeep: AppColors.backgroundDeep,
-    backgroundMid: AppColors.backgroundMid,
-    backgroundSoft: AppColors.backgroundSoft,
-    surface: AppColors.surface,
-    surfaceOutline: AppColors.surfaceOutline,
-    surfaceHighlight: AppColors.surfaceHighlight,
-    accentCyan: AppColors.accentCyan,
-    accentMagenta: AppColors.accentMagenta,
-    accentBlue: AppColors.accentBlue,
-    textPrimary: AppColors.textPrimary,
-    textSecondary: AppColors.textSecondary,
-    textMuted: AppColors.textMuted,
-    success: AppColors.success,
-    warning: AppColors.warning,
-    danger: AppColors.danger,
-    backgroundGradient: AppColors.backgroundGradient,
-    accentGradient: AppColors.accentGradient,
-  );
-
-  factory NeonPalette.light() => const NeonPalette(
-    backgroundDeep: Color(0xFFF5F5F5),
-    backgroundMid: Color(0xFFFFFFFF),
-    backgroundSoft: Color(0xFFFAFAFA),
-    surface: Color(0xFFFEFEFE),
-    surfaceOutline: Color(0xff00000015),
-    surfaceHighlight: Color(0xff00000008),
-    accentCyan: AppColors.accentCyan,
-    accentMagenta: AppColors.accentMagenta,
-    accentBlue: AppColors.accentBlue,
-    textPrimary: Color(0xFF0D0D0D),
-    textSecondary: Color(0xFF424242),
-    textMuted: Color(0xFF858585),
-    success: AppColors.success,
-    warning: AppColors.warning,
-    danger: AppColors.danger,
-    backgroundGradient: AppColors.backgroundGradient,
-    accentGradient: AppColors.accentGradient,
-  );
-
   /// Tom mais profundo do fundo da aplicação.
   final Color backgroundDeep;
 
@@ -122,6 +57,71 @@ class NeonPalette {
   /// Gradiente de destaque usado em CTAs, indicadores e elementos ativos.
   final LinearGradient accentGradient;
 
+  /// Cria uma paleta completa para o tema neon.
+  ///
+  /// Todos os tokens são obrigatórios para manter os widgets independentes de
+  /// fallbacks globais e permitir temas alternativos consistentes.
+  const NeonPalette({
+    required this.backgroundDeep,
+    required this.backgroundMid,
+    required this.backgroundSoft,
+    required this.surface,
+    required this.surfaceOutline,
+    required this.surfaceHighlight,
+    required this.accentCyan,
+    required this.accentMagenta,
+    required this.accentBlue,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.textMuted,
+    required this.success,
+    required this.warning,
+    required this.danger,
+    required this.backgroundGradient,
+    required this.accentGradient,
+  });
+
+  /// Paleta default — mesmas cores expostas em [AppColors].
+  factory NeonPalette.defaultDark() => const NeonPalette(
+    backgroundDeep: AppColors.backgroundDeep,
+    backgroundMid: AppColors.backgroundMid,
+    backgroundSoft: AppColors.backgroundSoft,
+    surface: AppColors.surface,
+    surfaceOutline: AppColors.surfaceOutline,
+    surfaceHighlight: AppColors.surfaceHighlight,
+    accentCyan: AppColors.accentCyan,
+    accentMagenta: AppColors.accentMagenta,
+    accentBlue: AppColors.accentBlue,
+    textPrimary: AppColors.textPrimary,
+    textSecondary: AppColors.textSecondary,
+    textMuted: AppColors.textMuted,
+    success: AppColors.success,
+    warning: AppColors.warning,
+    danger: AppColors.danger,
+    backgroundGradient: AppColors.backgroundGradient,
+    accentGradient: AppColors.accentGradient,
+  );
+
+  factory NeonPalette.light() => const NeonPalette(
+    backgroundDeep: Color(0xFFF5F5F5),
+    backgroundMid: Color(0xFFFFFFFF),
+    backgroundSoft: Color(0xFFFAFAFA),
+    surface: Color(0xFFFEFEFE),
+    surfaceOutline: Color(0xff000015),
+    surfaceHighlight: Color(0xff000008),
+    accentCyan: AppColors.accentCyan,
+    accentMagenta: AppColors.accentMagenta,
+    accentBlue: AppColors.accentBlue,
+    textPrimary: Color(0xFF0D0D0D),
+    textSecondary: Color(0xFF424242),
+    textMuted: Color(0xFF858585),
+    success: AppColors.success,
+    warning: AppColors.warning,
+    danger: AppColors.danger,
+    backgroundGradient: AppColors.backgroundGradient,
+    accentGradient: AppColors.accentGradient,
+  );
+
   /// Retorna uma nova paleta preservando os tokens não informados.
   NeonPalette copyWith({
     Color? backgroundDeep,
@@ -165,21 +165,11 @@ class NeonPalette {
 /// ThemeExtension para acessar a paleta via `Theme.of(context).extension<NeonThemeExt>()`.
 @immutable
 class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
-  /// Cria uma extensão de tema que transporta a [palette].
-  const NeonThemeExt({required this.palette});
-
   /// Paleta disponível para os widgets que leem o [ThemeData] atual.
   final NeonPalette palette;
 
-  /// Obtém a extensão neon registrada no [Theme] mais próximo.
-  ///
-  /// Falha em modo debug se [NeonThemeExt] não tiver sido adicionada ao
-  /// [ThemeData.extensions].
-  static NeonThemeExt of(BuildContext context) {
-    final NeonThemeExt? ext = Theme.of(context).extension<NeonThemeExt>();
-    assert(ext != null, 'NeonThemeExt não está registrado no ThemeData.');
-    return ext!;
-  }
+  /// Cria uma extensão de tema que transporta a [palette].
+  const NeonThemeExt({required this.palette});
 
   @override
   NeonThemeExt copyWith({NeonPalette? palette}) =>
@@ -189,5 +179,15 @@ class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
   NeonThemeExt lerp(ThemeExtension<NeonThemeExt>? other, double t) {
     if (other is! NeonThemeExt) return this;
     return t < 0.5 ? this : other;
+  }
+
+  /// Obtém a extensão neon registrada no [Theme] mais próximo.
+  ///
+  /// Falha em modo debug se [NeonThemeExt] não tiver sido adicionada ao
+  /// [ThemeData.extensions].
+  static NeonThemeExt of(BuildContext context) {
+    final NeonThemeExt? ext = Theme.of(context).extension<NeonThemeExt>();
+    assert(ext != null, 'NeonThemeExt não está registrado no ThemeData.');
+    return ext!;
   }
 }
