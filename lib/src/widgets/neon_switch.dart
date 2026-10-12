@@ -21,7 +21,7 @@ class NeonSwitch extends StatelessWidget {
   /// Quando `null`, o switch fica visualmente desabilitado.
   final ValueChanged<bool>? onChanged;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Texto opcional exibido ao lado do switch.
@@ -30,7 +30,7 @@ class NeonSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
     final double opacity = disabled ? 0.55 : 1;
 
@@ -76,7 +76,7 @@ class NeonSwitch extends StatelessWidget {
                 shape: BoxShape.circle,
                 gradient: value
                     ? LinearGradient(
-                        colors: <Color>[accent, p.accentMagenta],
+                        colors: <Color>[accent, p.secondary],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       )
@@ -106,9 +106,8 @@ class NeonSwitch extends StatelessWidget {
         Flexible(
           child: Text(
             label!,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: disabled ? p.textMuted : p.textPrimary,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: disabled ? p.textMuted : p.textPrimary),
           ),
         ),
       ],

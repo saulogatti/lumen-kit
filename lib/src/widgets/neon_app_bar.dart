@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 
 /// AppBar com identidade neon: transparente, com linha de gradiente inferior
 /// e tipografia consistente com o tema.
@@ -29,7 +29,7 @@ class NeonAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Ações exibidas no lado direito.
   final List<Widget>? actions;
 
-  /// Gradiente da linha decorativa inferior. Default: [AppColors.accentGradient].
+  /// Gradiente da linha decorativa inferior. Default: `palette.accentGradient`.
   final Gradient? accentGradient;
 
   /// Altura da área de conteúdo da app bar.
@@ -44,7 +44,8 @@ class NeonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme text = Theme.of(context).textTheme;
-    final Gradient g = accentGradient ?? AppColors.accentGradient;
+    final Gradient g =
+        accentGradient ?? NeonThemeExt.of(context).palette.accentGradient;
 
     return Material(
       color: Colors.transparent,

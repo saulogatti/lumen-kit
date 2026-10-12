@@ -32,7 +32,7 @@ class NeonExpansionTile extends StatefulWidget {
   /// Se `true`, inicia o tile expandido.
   final bool initiallyExpanded;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Callback chamado sempre que o estado expandido muda.
@@ -70,7 +70,7 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = widget.accentColor ?? p.accentCyan;
+    final Color accent = widget.accentColor ?? p.primary;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),

@@ -51,7 +51,7 @@ class NeonFab extends StatelessWidget {
   /// Gradiente do botão. Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Cor do glow (boxShadow). Default: `palette.accentMagenta`.
+  /// Cor do glow (boxShadow). Default: `palette.secondary`.
   final Color? glowColor;
 
   /// Cor do texto/ícone. Default: `palette.backgroundDeep`.
@@ -68,7 +68,7 @@ class NeonFab extends StatelessWidget {
     final NeonPalette palette = NeonThemeExt.of(context).palette;
     final bool enabled = onPressed != null && !busy;
     final Gradient g = gradient ?? palette.accentGradient;
-    final Color glow = glowColor ?? palette.accentMagenta;
+    final Color glow = glowColor ?? palette.secondary;
     final Color fg = foregroundColor ?? palette.backgroundDeep;
     final bool extended = label != null;
 
@@ -92,9 +92,8 @@ class NeonFab extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   label!,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.labelLarge?.copyWith(color: fg),
+                  style: Theme.of(context).textTheme.labelLarge
+                      ?.copyWith(color: fg),
                 ),
               ],
             ),

@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 import 'status_chip.dart';
 
 /// Posição vertical do toast na tela.
@@ -30,7 +30,8 @@ Future<void> showNeonToast({
   double margin = 24,
 }) async {
   final OverlayState overlay = Overlay.of(context, rootOverlay: true);
-  final Color accent = _toneColor(tone);
+  final NeonPalette p = NeonThemeExt.of(context).palette;
+  final Color accent = tone.colorOf(p);
 
   late final OverlayEntry entry;
   entry = OverlayEntry(
@@ -106,6 +107,7 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
       reverseCurve: Curves.easeInCubic,
     );
     final bool top = widget.position == NeonToastPosition.top;
+    final NeonPalette p = NeonThemeExt.of(context).palette;
 
     return Positioned(
       left: widget.margin,
@@ -136,8 +138,8 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: <Color>[
-                        AppColors.surface.withValues(alpha: 0.98),
-                        AppColors.backgroundMid.withValues(alpha: 0.95),
+                        p.surface.withValues(alpha: 0.98),
+                        p.backgroundMid.withValues(alpha: 0.95),
                       ],
                     ),
                     border: Border.all(
@@ -161,7 +163,7 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
                         child: Text(
                           widget.message,
                           style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(color: AppColors.textPrimary),
+                              ?.copyWith(color: p.textPrimary),
                         ),
                       ),
                     ],
@@ -173,21 +175,6 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
         ),
       ),
     );
-  }
-}
-
-Color _toneColor(StatusTone tone) {
-  switch (tone) {
-    case StatusTone.neutral:
-      return AppColors.textMuted;
-    case StatusTone.info:
-      return AppColors.accentCyan;
-    case StatusTone.success:
-      return AppColors.success;
-    case StatusTone.warning:
-      return AppColors.warning;
-    case StatusTone.danger:
-      return AppColors.danger;
   }
 }
 

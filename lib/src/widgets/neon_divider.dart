@@ -31,17 +31,17 @@ class NeonDivider extends StatelessWidget {
   /// Texto central exibido apenas no modo horizontal.
   final String? label;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final List<Color> colors = <Color>[
       accent.withValues(alpha: 0),
       accent.withValues(alpha: 0.65),
-      p.accentMagenta.withValues(alpha: 0.65),
+      p.secondary.withValues(alpha: 0.65),
       accent.withValues(alpha: 0),
     ];
 

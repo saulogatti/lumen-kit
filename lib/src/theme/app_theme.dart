@@ -8,24 +8,52 @@ class AppTheme {
   /// Tema dark default usando a paleta padrão.
   static ThemeData get dark =>
       fromPalette(NeonPalette.defaultDark(), brightness: Brightness.dark);
+
+  /// Tema claro usando a paleta clara padrão.
   static ThemeData get light =>
       fromPalette(NeonPalette.light(), brightness: Brightness.light);
   const AppTheme._();
 
-  /// Constrói um [ThemeData] dark a partir da paleta [p].
+  /// Atalho para trocar as cores do kit inteiro a partir de uma ou duas
+  /// cores. Equivale a `fromPalette(NeonPalette.fromSeed(...))`.
+  static ThemeData fromSeed({
+    required Color primary,
+    Color? secondary,
+    Color? tertiary,
+    Brightness brightness = Brightness.dark,
+  }) => fromPalette(
+    NeonPalette.fromSeed(
+      primary: primary,
+      secondary: secondary,
+      tertiary: tertiary,
+      brightness: brightness,
+    ),
+    brightness: brightness,
+  );
+
+  /// Atalho para usar um [NeonPreset].
+  static ThemeData fromPreset(
+    NeonPreset preset, {
+    Brightness brightness = Brightness.dark,
+  }) => fromPalette(
+    preset.palette(brightness: brightness),
+    brightness: brightness,
+  );
+
+  /// Constrói um [ThemeData] a partir da paleta [p].
   ///
   /// Registra [NeonThemeExt] em [ThemeData.extensions] para que os widgets do
   /// kit acessem os mesmos tokens via [NeonThemeExt.of].
   static ThemeData fromPalette(
     NeonPalette p, {
-    Brightness brightness = Brightness.light,
+    Brightness brightness = Brightness.dark,
   }) {
     final ColorScheme scheme = ColorScheme.fromSeed(
       dynamicSchemeVariant: .vibrant,
       brightness: brightness,
-      seedColor: p.accentCyan,
-      primary: p.accentCyan,
-      secondary: p.accentMagenta,
+      seedColor: p.primary,
+      primary: p.primary,
+      secondary: p.secondary,
       surface: p.surface,
       onPrimary: p.backgroundDeep,
       onSecondary: p.textPrimary,
@@ -65,7 +93,7 @@ class AppTheme {
         letterSpacing: 0.6,
       ),
       labelLarge: TextStyle(
-        color: p.accentCyan,
+        color: p.primary,
         fontSize: 12,
         fontWeight: FontWeight.w600,
         letterSpacing: 1.6,
@@ -84,7 +112,7 @@ class AppTheme {
         centerTitle: false,
         foregroundColor: p.textPrimary,
       ),
-      iconTheme: IconThemeData(color: p.accentCyan),
+      iconTheme: IconThemeData(color: p.primary),
       dividerColor: p.surfaceOutline,
       extensions: <ThemeExtension<dynamic>>[NeonThemeExt(palette: p)],
     );

@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 
 /// Card de navegação reutilizável da tela principal.
 /// Recebe o que mostrar e o que fazer ao tocar — não decide nada por si.
@@ -45,6 +45,7 @@ class _NavigationCardState extends State<NavigationCard> {
   Widget build(BuildContext context) {
     final TextTheme text = Theme.of(context).textTheme;
     final Color accent = widget.accent;
+    final NeonPalette p = NeonThemeExt.of(context).palette;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -80,8 +81,8 @@ class _NavigationCardState extends State<NavigationCard> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: <Color>[
-                    AppColors.surface.withValues(alpha: 0.95),
-                    AppColors.backgroundMid.withValues(alpha: 0.85),
+                    p.surface.withValues(alpha: 0.95),
+                    p.backgroundMid.withValues(alpha: 0.85),
                   ],
                 ),
                 border: Border.all(

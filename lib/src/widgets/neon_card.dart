@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 
 /// Container base do tema neon: gradiente sutil + borda accent + opcional onTap.
 /// Use como peça fundamental para qualquer tela — cards, painéis, seções.
@@ -8,7 +8,7 @@ class NeonCard extends StatelessWidget {
   /// Conteúdo exibido dentro do card.
   final Widget child;
 
-  /// Cor de destaque (borda + glow). Default: [AppColors.accentCyan].
+  /// Cor de destaque (borda + glow). Default: `palette.primary`.
   final Color? accent;
 
   /// Espaçamento interno aplicado ao [child].
@@ -42,7 +42,8 @@ class NeonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color a = accent ?? AppColors.accentCyan;
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Color a = accent ?? p.primary;
     final BorderRadius radius = BorderRadius.circular(borderRadius);
 
     final Widget content = Container(
@@ -53,8 +54,8 @@ class NeonCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: <Color>[
-            AppColors.surface.withValues(alpha: 0.95),
-            AppColors.backgroundMid.withValues(alpha: 0.85),
+            p.surface.withValues(alpha: 0.95),
+            p.backgroundMid.withValues(alpha: 0.85),
           ],
         ),
         border: Border.all(

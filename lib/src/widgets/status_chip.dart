@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 
 /// Tom semântico para um chip de status.
 enum StatusTone {
@@ -18,6 +18,18 @@ enum StatusTone {
 
   /// Estado de erro ou perigo.
   danger,
+}
+
+/// Resolve a cor de um [StatusTone] a partir da paleta ativa.
+extension StatusToneColor on StatusTone {
+  /// Cor do tom na paleta [p].
+  Color colorOf(NeonPalette p) => switch (this) {
+    StatusTone.neutral => p.textMuted,
+    StatusTone.info => p.primary,
+    StatusTone.success => p.success,
+    StatusTone.warning => p.warning,
+    StatusTone.danger => p.danger,
+  };
 }
 
 /// Chip compacto que comunica um status por cor semântica.
@@ -41,24 +53,9 @@ class StatusChip extends StatelessWidget {
   /// Quando `null`, o chip exibe um ponto colorido.
   final IconData? icon;
 
-  Color get _color {
-    switch (tone) {
-      case StatusTone.neutral:
-        return AppColors.textMuted;
-      case StatusTone.info:
-        return AppColors.accentCyan;
-      case StatusTone.success:
-        return AppColors.success;
-      case StatusTone.warning:
-        return AppColors.warning;
-      case StatusTone.danger:
-        return AppColors.danger;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final Color c = _color;
+    final Color c = tone.colorOf(NeonThemeExt.of(context).palette);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(

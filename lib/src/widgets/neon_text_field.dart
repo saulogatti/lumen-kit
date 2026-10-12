@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 
 /// TextField estilizado para o formulário de cadastro.
 /// Mantém o próprio controller para preservar foco/cursor entre rebuilds.
@@ -59,6 +59,7 @@ class _NeonTextFieldState extends State<NeonTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
     return TextField(
       controller: _controller,
       onChanged: widget.onChanged,
@@ -70,28 +71,26 @@ class _NeonTextFieldState extends State<NeonTextField> {
         errorText: widget.errorText,
         prefixIcon: widget.icon == null
             ? null
-            : Icon(widget.icon, color: AppColors.accentCyan),
+            : Icon(widget.icon, color: p.primary),
         suffixIcon: widget.suffix,
         filled: true,
-        fillColor: AppColors.surface.withValues(alpha: 0.7),
-        labelStyle: const TextStyle(color: AppColors.textMuted),
+        fillColor: p.surface.withValues(alpha: 0.7),
+        labelStyle: TextStyle(color: p.textMuted),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.accentCyan.withValues(alpha: 0.35),
-          ),
+          borderSide: BorderSide(color: p.primary.withValues(alpha: 0.35)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.accentCyan, width: 1.4),
+          borderSide: BorderSide(color: p.primary, width: 1.4),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.danger),
+          borderSide: BorderSide(color: p.danger),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.danger, width: 1.4),
+          borderSide: BorderSide(color: p.danger, width: 1.4),
         ),
       ),
     );

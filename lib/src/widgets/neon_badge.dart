@@ -90,7 +90,7 @@ class NeonTag extends StatelessWidget {
   /// Texto exibido na tag.
   final String label;
 
-  /// Cor de destaque da tag. Default: `palette.accentCyan`.
+  /// Cor de destaque da tag. Default: `palette.primary`.
   final Color? color;
 
   /// Ícone opcional exibido antes de [label].
@@ -104,7 +104,7 @@ class NeonTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color c = color ?? p.accentCyan;
+    final Color c = color ?? p.primary;
 
     final Widget content = Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

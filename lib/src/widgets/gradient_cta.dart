@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 
 /// CTA primário com gradiente neon. Reutilizado em todas as telas.
 class GradientCta extends StatelessWidget {
@@ -31,13 +31,13 @@ class GradientCta extends StatelessWidget {
   /// Se `true`, exibe indicador de progresso e bloqueia o toque.
   final bool busy;
 
-  /// Gradiente do botão. Default: [AppColors.accentGradient].
+  /// Gradiente do botão. Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Cor do glow (boxShadow). Default: [AppColors.accentMagenta].
+  /// Cor do glow (boxShadow). Default: `palette.secondary`.
   final Color? glowColor;
 
-  /// Cor do texto/ícone. Default: [AppColors.backgroundDeep].
+  /// Cor do texto/ícone. Default: `palette.backgroundDeep`.
   final Color? foregroundColor;
 
   /// Raio dos cantos do botão em pixels lógicos.
@@ -45,10 +45,11 @@ class GradientCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NeonPalette p = NeonThemeExt.of(context).palette;
     final bool enabled = onPressed != null && !busy;
-    final Gradient g = gradient ?? AppColors.accentGradient;
-    final Color glow = glowColor ?? AppColors.accentMagenta;
-    final Color fg = foregroundColor ?? AppColors.backgroundDeep;
+    final Gradient g = gradient ?? p.accentGradient;
+    final Color glow = glowColor ?? p.secondary;
+    final Color fg = foregroundColor ?? p.backgroundDeep;
 
     return Opacity(
       opacity: enabled ? 1.0 : 0.55,
@@ -87,9 +88,8 @@ class GradientCta extends StatelessWidget {
                 if (busy || icon != null) const SizedBox(width: 10),
                 Text(
                   label,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.labelLarge?.copyWith(color: fg),
+                  style: Theme.of(context).textTheme.labelLarge
+                      ?.copyWith(color: fg),
                 ),
               ],
             ),

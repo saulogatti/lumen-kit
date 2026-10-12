@@ -27,7 +27,7 @@ class NeonDrawer extends StatelessWidget {
   /// Rodapé opcional exibido após a lista.
   final Widget? footer;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Largura do drawer em pixels lógicos.
@@ -36,7 +36,7 @@ class NeonDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return Drawer(
       backgroundColor: Colors.transparent,
@@ -115,7 +115,7 @@ class NeonDrawerItem extends StatelessWidget {
   /// Se `true`, aplica destaque visual de seleção.
   final bool selected;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Widget opcional exibido no fim da linha.
@@ -124,7 +124,7 @@ class NeonDrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final bool disabled = onTap == null;
 
     return Padding(

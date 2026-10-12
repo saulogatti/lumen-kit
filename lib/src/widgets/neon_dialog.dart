@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 
 /// Dialog estilizado com surface gradiente, borda accent e tipografia do tema.
 /// Pode ser usado direto via [showNeonDialog].
@@ -25,7 +25,7 @@ class NeonDialog extends StatelessWidget {
   /// Ações exibidas no rodapé, alinhadas à direita.
   final List<Widget> actions;
 
-  /// Cor de destaque (borda + ícone). Default: [AppColors.accentCyan].
+  /// Cor de destaque (borda + ícone). Default: `palette.primary`.
   final Color? accent;
 
   /// Ícone opcional exibido antes do título.
@@ -37,7 +37,8 @@ class NeonDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme text = Theme.of(context).textTheme;
-    final Color a = accent ?? AppColors.accentCyan;
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Color a = accent ?? p.primary;
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -52,8 +53,8 @@ class NeonDialog extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: <Color>[
-                AppColors.surface.withValues(alpha: 0.98),
-                AppColors.backgroundMid.withValues(alpha: 0.95),
+                p.surface.withValues(alpha: 0.98),
+                p.backgroundMid.withValues(alpha: 0.95),
               ],
             ),
             border: Border.all(color: a.withValues(alpha: 0.5), width: 1.2),

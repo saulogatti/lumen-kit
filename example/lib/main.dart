@@ -19,16 +19,30 @@ class MyWidget extends StatelessWidget {
   }
 }
 
+/// Preset e brilho atuais da galeria. Trocar qualquer um re-tematiza o app
+/// inteiro (com transição animada via [NeonThemeExt.lerp]).
+final ValueNotifier<({NeonPreset preset, Brightness brightness})> _themeConfig =
+    ValueNotifier<({NeonPreset preset, Brightness brightness})>((
+      preset: NeonPreset.neon,
+      brightness: Brightness.light,
+    ));
+
 class NeonExampleApp extends StatelessWidget {
   const NeonExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'neon_ui example',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      home: const _GalleryScreen(),
+    return ValueListenableBuilder<({NeonPreset preset, Brightness brightness})>(
+      valueListenable: _themeConfig,
+      builder: (BuildContext context, config, _) => MaterialApp(
+        title: 'neon_ui example',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.fromPreset(
+          config.preset,
+          brightness: config.brightness,
+        ),
+        home: const _GalleryScreen(),
+      ),
     );
   }
 }
@@ -148,6 +162,49 @@ class _GalleryScreenState extends State<_GalleryScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
           children: <Widget>[
+            _section(
+              'Paleta',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: <Widget>[
+                      for (final NeonPreset preset in NeonPreset.values)
+                        NeonTag(
+                          label: preset.name,
+                          color: preset.primary,
+                          icon: _themeConfig.value.preset == preset
+                              ? Icons.check_rounded
+                              : null,
+                          onTap: () => _themeConfig.value = (
+                            preset: preset,
+                            brightness: _themeConfig.value.brightness,
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: <Widget>[
+                      NeonSwitch(
+                        value: _themeConfig.value.brightness == Brightness.dark,
+                        onChanged: (bool dark) => _themeConfig.value = (
+                          preset: _themeConfig.value.preset,
+                          brightness: dark ? Brightness.dark : Brightness.light,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        'modo escuro',
+                        style: TextStyle(color: p.textSecondary),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             _section(
               'Cards & status',
               NeonCard(
@@ -301,7 +358,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         value: 'b',
                         groupValue: _radio,
                         label: 'Magenta',
-                        accentColor: p.accentMagenta,
+                        accentColor: p.secondary,
                         onChanged: (String? v) =>
                             setState(() => _radio = v ?? _radio),
                       ),
@@ -309,7 +366,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         value: 'c',
                         groupValue: _radio,
                         label: 'Blue',
-                        accentColor: p.accentBlue,
+                        accentColor: p.tertiary,
                         onChanged: (String? v) =>
                             setState(() => _radio = v ?? _radio),
                       ),
@@ -482,7 +539,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                             NeonListTile(
                               leading: Icon(
                                 Icons.share_outlined,
-                                color: p.accentCyan,
+                                color: p.primary,
                               ),
                               title: 'Compartilhar',
                               subtitle: 'Gera um link de convite',
@@ -574,7 +631,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     ),
                   ),
                   const NeonTag(label: 'novo', icon: Icons.fiber_new_outlined),
-                  NeonTag(label: 'beta', color: p.accentMagenta),
+                  NeonTag(label: 'beta', color: p.secondary),
                 ],
               ),
             ),
@@ -583,10 +640,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               Column(
                 children: <Widget>[
                   NeonListTile(
-                    leading: Icon(
-                      Icons.dashboard_outlined,
-                      color: p.accentCyan,
-                    ),
+                    leading: Icon(Icons.dashboard_outlined, color: p.primary),
                     title: 'Dashboard',
                     subtitle: 'visão geral em tempo real',
                     trailing: const NeonTag(label: 'live'),
@@ -595,10 +649,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   ),
                   const SizedBox(height: 8),
                   NeonListTile(
-                    leading: Icon(
-                      Icons.settings_outlined,
-                      color: p.accentMagenta,
-                    ),
+                    leading: Icon(Icons.settings_outlined, color: p.secondary),
                     title: 'Configurações',
                     subtitle: 'tokens, paleta e integrações',
                     onTap: () {},
@@ -607,7 +658,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   NeonExpansionTile(
                     title: 'Integrações',
                     subtitle: 'webhooks, SSO, API keys',
-                    leading: Icon(Icons.hub_outlined, color: p.accentCyan),
+                    leading: Icon(Icons.hub_outlined, color: p.primary),
                     initiallyExpanded: _expanded,
                     onExpansionChanged: (bool v) =>
                         setState(() => _expanded = v),
@@ -679,7 +730,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     title: 'Dashboard',
                     subtitle: 'visão geral em tempo real',
                     icon: Icons.dashboard_outlined,
-                    accent: AppColors.accentCyan,
+                    accent: p.primary,
                     onTap: () {},
                   ),
                   const SizedBox(height: 12),
@@ -687,7 +738,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     title: 'Configurações',
                     subtitle: 'tokens, paleta e integrações',
                     icon: Icons.settings_outlined,
-                    accent: AppColors.accentMagenta,
+                    accent: p.secondary,
                     onTap: () {},
                   ),
                 ],

@@ -26,7 +26,7 @@ class NeonLinearProgress extends StatelessWidget {
   /// Gradiente da porção preenchida. Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Cor do glow da porção preenchida. Default: `palette.accentMagenta`.
+  /// Cor do glow da porção preenchida. Default: `palette.secondary`.
   final Color? glowColor;
 
   /// Cor da trilha de fundo.
@@ -39,7 +39,7 @@ class NeonLinearProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final Gradient g = gradient ?? p.accentGradient;
-    final Color glow = glowColor ?? p.accentMagenta;
+    final Color glow = glowColor ?? p.secondary;
     final Color track = trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
 
     return ClipRRect(
@@ -156,7 +156,7 @@ class NeonCircularProgress extends StatefulWidget {
   /// Gradiente do arco ativo. Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Cor do glow do arco ativo. Default: `palette.accentMagenta`.
+  /// Cor do glow do arco ativo. Default: `palette.secondary`.
   final Color? glowColor;
 
   /// Cor da trilha circular de fundo.
@@ -196,7 +196,7 @@ class _NeonCircularProgressState extends State<NeonCircularProgress>
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final Gradient g = widget.gradient ?? p.accentGradient;
-    final Color glow = widget.glowColor ?? p.accentMagenta;
+    final Color glow = widget.glowColor ?? p.secondary;
     final Color track =
         widget.trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
 

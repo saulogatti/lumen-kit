@@ -53,7 +53,7 @@ class NeonStepper extends StatelessWidget {
   /// Callback chamado com o índice do step tocado.
   final ValueChanged<int>? onStepTapped;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
@@ -65,7 +65,7 @@ class NeonStepper extends StatelessWidget {
 
   Widget _buildHorizontal(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     final List<Widget> nodes = <Widget>[];
     for (int i = 0; i < steps.length; i++) {
@@ -126,7 +126,7 @@ class NeonStepper extends StatelessWidget {
 
   Widget _buildVertical(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +159,7 @@ class NeonStepper extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: i < currentStep
-                                ? <Color>[accent, p.accentMagenta]
+                                ? <Color>[accent, p.secondary]
                                 : <Color>[
                                     p.surfaceOutline.withValues(alpha: 0.7),
                                     p.surfaceOutline.withValues(alpha: 0.4),
@@ -241,7 +241,7 @@ class _StepCircle extends StatelessWidget {
         shape: BoxShape.circle,
         gradient: active
             ? LinearGradient(
-                colors: <Color>[accent, palette.accentMagenta],
+                colors: <Color>[accent, palette.secondary],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )
@@ -296,7 +296,7 @@ class _Connector extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: active
-              ? <Color>[accent, palette.accentMagenta]
+              ? <Color>[accent, palette.secondary]
               : <Color>[
                   palette.surfaceOutline.withValues(alpha: 0.6),
                   palette.surfaceOutline.withValues(alpha: 0.3),

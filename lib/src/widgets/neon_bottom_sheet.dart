@@ -16,7 +16,7 @@ Future<T?> showNeonBottomSheet<T>({
   bool enableDrag = true,
 }) {
   final NeonPalette p = NeonThemeExt.of(context).palette;
-  final Color accent = accentColor ?? p.accentCyan;
+  final Color accent = accentColor ?? p.primary;
 
   return showModalBottomSheet<T>(
     context: context,

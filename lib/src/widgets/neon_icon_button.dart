@@ -73,7 +73,7 @@ class NeonIconButton extends StatelessWidget {
   /// Se `true`, exibe indicador de progresso e bloqueia o toque.
   final bool busy;
 
-  /// Override do accent. Default: `palette.accentCyan`.
+  /// Override do accent. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Tamanho da área total (largura = altura).
@@ -89,7 +89,7 @@ class NeonIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final NeonPalette palette = NeonThemeExt.of(context).palette;
     final bool enabled = onPressed != null && !busy;
-    final Color accent = accentColor ?? palette.accentCyan;
+    final Color accent = accentColor ?? palette.primary;
 
     final BorderRadius radius = switch (shape) {
       NeonIconButtonShape.circle => BorderRadius.circular(size / 2),
@@ -120,7 +120,7 @@ class NeonIconButton extends StatelessWidget {
           boxShadow: enabled
               ? <BoxShadow>[
                   BoxShadow(
-                    color: (accentColor ?? palette.accentMagenta).withValues(
+                    color: (accentColor ?? palette.secondary).withValues(
                       alpha: 0.35,
                     ),
                     blurRadius: 16,

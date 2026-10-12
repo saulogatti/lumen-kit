@@ -37,7 +37,7 @@ class NeonTabs extends StatelessWidget {
   /// Callback chamado com o índice da tab tocada.
   final ValueChanged<int> onChanged;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Se `true`, permite rolagem horizontal das tabs.
@@ -46,7 +46,7 @@ class NeonTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return DefaultTabController(
       length: items.length,
@@ -97,13 +97,13 @@ class NeonSegmentedControl extends StatelessWidget {
   /// Callback chamado com o índice do segmento tocado.
   final ValueChanged<int> onChanged;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return Container(
       padding: const EdgeInsets.all(4),
@@ -127,7 +127,7 @@ class NeonSegmentedControl extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   gradient: selected
                       ? LinearGradient(
-                          colors: <Color>[accent, p.accentMagenta],
+                          colors: <Color>[accent, p.secondary],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         )

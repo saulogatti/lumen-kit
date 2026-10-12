@@ -4,6 +4,9 @@ import 'app_colors.dart';
 
 /// Paleta instanciável do tema neon. Permite criar variantes (ex. branca, com
 /// outras accents) sem alterar os tokens default de [AppColors].
+///
+/// Para trocar as cores sem configurar token por token, use
+/// [NeonPalette.fromSeed] ou um [NeonPreset].
 @immutable
 class NeonPalette {
   /// Tom mais profundo do fundo da aplicação.
@@ -25,13 +28,13 @@ class NeonPalette {
   final Color surfaceHighlight;
 
   /// Accent primário usado em bordas, ícones e estados ativos.
-  final Color accentCyan;
+  final Color primary;
 
   /// Accent secundário usado em glows e composições de gradiente.
-  final Color accentMagenta;
+  final Color secondary;
 
-  /// Accent intermediário que conecta cyan e magenta nos gradientes.
-  final Color accentBlue;
+  /// Accent intermediário que conecta [primary] e [secondary] nos gradientes.
+  final Color tertiary;
 
   /// Cor de maior contraste para títulos e conteúdo principal.
   final Color textPrimary;
@@ -51,16 +54,16 @@ class NeonPalette {
   /// Cor semântica para estados de erro ou perigo.
   final Color danger;
 
-  /// Gradiente padrão de fundo da aplicação.
-  final LinearGradient backgroundGradient;
-
-  /// Gradiente de destaque usado em CTAs, indicadores e elementos ativos.
-  final LinearGradient accentGradient;
+  final LinearGradient? _backgroundGradient;
+  final LinearGradient? _accentGradient;
 
   /// Cria uma paleta completa para o tema neon.
   ///
-  /// Todos os tokens são obrigatórios para manter os widgets independentes de
-  /// fallbacks globais e permitir temas alternativos consistentes.
+  /// Os gradientes são opcionais: quando omitidos, são derivados dos tons de
+  /// fundo e dos accents, e acompanham qualquer troca feita via [copyWith].
+  ///
+  /// [accentCyan], [accentMagenta] e [accentBlue] são aliases antigos de
+  /// [primary], [secondary] e [tertiary], mantidos só por compatibilidade.
   const NeonPalette({
     required this.backgroundDeep,
     required this.backgroundMid,
@@ -68,18 +71,29 @@ class NeonPalette {
     required this.surface,
     required this.surfaceOutline,
     required this.surfaceHighlight,
-    required this.accentCyan,
-    required this.accentMagenta,
-    required this.accentBlue,
+    Color? primary,
+    Color? secondary,
+    Color? tertiary,
     required this.textPrimary,
     required this.textSecondary,
     required this.textMuted,
     required this.success,
     required this.warning,
     required this.danger,
-    required this.backgroundGradient,
-    required this.accentGradient,
-  });
+    this._backgroundGradient,
+    this._accentGradient,
+    @Deprecated('Use primary') Color? accentCyan,
+    @Deprecated('Use secondary') Color? accentMagenta,
+    @Deprecated('Use tertiary') Color? accentBlue,
+  }) : assert(
+         (primary ?? accentCyan) != null &&
+             (secondary ?? accentMagenta) != null &&
+             (tertiary ?? accentBlue) != null,
+         'primary, secondary e tertiary são obrigatórios.',
+       ),
+       primary = primary ?? accentCyan ?? const Color(0x00000000),
+       secondary = secondary ?? accentMagenta ?? const Color(0x00000000),
+       tertiary = tertiary ?? accentBlue ?? const Color(0x00000000);
 
   /// Paleta default — mesmas cores expostas em [AppColors].
   factory NeonPalette.defaultDark() => const NeonPalette(
@@ -89,9 +103,9 @@ class NeonPalette {
     surface: AppColors.surface,
     surfaceOutline: AppColors.surfaceOutline,
     surfaceHighlight: AppColors.surfaceHighlight,
-    accentCyan: AppColors.accentCyan,
-    accentMagenta: AppColors.accentMagenta,
-    accentBlue: AppColors.accentBlue,
+    primary: AppColors.accentCyan,
+    secondary: AppColors.accentMagenta,
+    tertiary: AppColors.accentBlue,
     textPrimary: AppColors.textPrimary,
     textSecondary: AppColors.textSecondary,
     textMuted: AppColors.textMuted,
@@ -102,27 +116,123 @@ class NeonPalette {
     accentGradient: AppColors.accentGradient,
   );
 
+  /// Variante clara com os accents default.
   factory NeonPalette.light() => const NeonPalette(
     backgroundDeep: Color(0xFFF5F5F5),
     backgroundMid: Color(0xFFFFFFFF),
     backgroundSoft: Color(0xFFFAFAFA),
     surface: Color(0xFFFEFEFE),
-    surfaceOutline: Color(0xff000015),
-    surfaceHighlight: Color(0xff000008),
-    accentCyan: AppColors.accentCyan,
-    accentMagenta: AppColors.accentMagenta,
-    accentBlue: AppColors.accentBlue,
+    surfaceOutline: Color(0x15000000),
+    surfaceHighlight: Color(0x08000000),
+    primary: AppColors.accentCyan,
+    secondary: AppColors.accentMagenta,
+    tertiary: AppColors.accentBlue,
     textPrimary: Color(0xFF0D0D0D),
     textSecondary: Color(0xFF424242),
     textMuted: Color(0xFF858585),
     success: AppColors.success,
     warning: AppColors.warning,
     danger: AppColors.danger,
-    backgroundGradient: AppColors.backgroundGradient,
     accentGradient: AppColors.accentGradient,
   );
 
+  /// Gera uma paleta completa a partir de uma ou duas cores.
+  ///
+  /// Fundos, superfícies, contornos e textos recebem um leve tom de
+  /// [primary]/[tertiary], para que o visual continue coeso com a cor
+  /// escolhida. Quando omitidos, [secondary] é o complementar de [primary] e
+  /// [tertiary] é o meio do caminho entre os dois. As cores semânticas
+  /// (success / warning / danger) seguem os defaults do kit.
+  ///
+  /// ```dart
+  /// AppTheme.fromPalette(
+  ///   NeonPalette.fromSeed(primary: Colors.greenAccent),
+  ///   brightness: Brightness.dark,
+  /// );
+  /// ```
+  factory NeonPalette.fromSeed({
+    required Color primary,
+    Color? secondary,
+    Color? tertiary,
+    Brightness brightness = Brightness.dark,
+  }) {
+    final HSLColor p = HSLColor.fromColor(primary);
+    final HSLColor s = secondary != null
+        ? HSLColor.fromColor(secondary)
+        : p.withHue((p.hue + 150) % 360);
+    final Color sec = s.toColor();
+    // Meio do caminho pelo arco mais curto do círculo de matiz: laranja +
+    // rosa dá vermelho, não ciano.
+    final double delta = ((s.hue - p.hue + 540) % 360) - 180;
+    final Color ter =
+        tertiary ??
+        HSLColor.lerp(
+          p,
+          s,
+          0.5,
+        )!.withHue((p.hue + delta / 2 + 360) % 360).toColor();
+
+    // Fundos e textos herdam o matiz do accent intermediário, como o default
+    // (azul escuro sob cyan + magenta).
+    final double hue = HSLColor.fromColor(ter).hue;
+    Color tone(double saturation, double lightness, [double alpha = 1]) =>
+        HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
+
+    final bool dark = brightness == Brightness.dark;
+    return NeonPalette(
+      backgroundDeep: dark ? tone(0.5, 0.04) : tone(0.3, 0.96),
+      backgroundMid: dark ? tone(0.5, 0.09) : tone(0.3, 1),
+      backgroundSoft: dark ? tone(0.5, 0.15) : tone(0.3, 0.98),
+      surface: dark ? tone(0.5, 0.15) : tone(0.3, 0.995),
+      surfaceOutline: primary.withValues(alpha: dark ? 0.2 : 0.25),
+      surfaceHighlight: primary.withValues(alpha: dark ? 0.1 : 0.06),
+      primary: primary,
+      secondary: sec,
+      tertiary: ter,
+      textPrimary: dark ? tone(1, 0.96) : tone(0.3, 0.06),
+      textSecondary: dark ? tone(1, 0.96, 0.7) : tone(0.15, 0.27),
+      textMuted: dark ? tone(1, 0.96, 0.5) : tone(0.1, 0.52),
+      success: AppColors.success,
+      warning: AppColors.warning,
+      danger: AppColors.danger,
+    );
+  }
+
+  /// Alias antigo de [primary].
+  @Deprecated('Use primary')
+  Color get accentCyan => primary;
+
+  /// Alias antigo de [secondary].
+  @Deprecated('Use secondary')
+  Color get accentMagenta => secondary;
+
+  /// Alias antigo de [tertiary].
+  @Deprecated('Use tertiary')
+  Color get accentBlue => tertiary;
+
+  /// Gradiente padrão de fundo da aplicação.
+  LinearGradient get backgroundGradient =>
+      _backgroundGradient ??
+      LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: <Color>[backgroundDeep, backgroundMid, backgroundSoft],
+        stops: const <double>[0.0, 0.55, 1.0],
+      );
+
+  /// Gradiente de destaque usado em CTAs, indicadores e elementos ativos.
+  LinearGradient get accentGradient =>
+      _accentGradient ??
+      LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: <Color>[primary, tertiary, secondary],
+      );
+
   /// Retorna uma nova paleta preservando os tokens não informados.
+  ///
+  /// Se algum tom de fundo ou accent mudar e o gradiente correspondente não
+  /// for informado, o gradiente é recalculado a partir das novas cores.
   NeonPalette copyWith({
     Color? backgroundDeep,
     Color? backgroundMid,
@@ -130,9 +240,9 @@ class NeonPalette {
     Color? surface,
     Color? surfaceOutline,
     Color? surfaceHighlight,
-    Color? accentCyan,
-    Color? accentMagenta,
-    Color? accentBlue,
+    Color? primary,
+    Color? secondary,
+    Color? tertiary,
     Color? textPrimary,
     Color? textSecondary,
     Color? textMuted,
@@ -141,25 +251,115 @@ class NeonPalette {
     Color? danger,
     LinearGradient? backgroundGradient,
     LinearGradient? accentGradient,
-  }) => NeonPalette(
-    backgroundDeep: backgroundDeep ?? this.backgroundDeep,
-    backgroundMid: backgroundMid ?? this.backgroundMid,
-    backgroundSoft: backgroundSoft ?? this.backgroundSoft,
-    surface: surface ?? this.surface,
-    surfaceOutline: surfaceOutline ?? this.surfaceOutline,
-    surfaceHighlight: surfaceHighlight ?? this.surfaceHighlight,
-    accentCyan: accentCyan ?? this.accentCyan,
-    accentMagenta: accentMagenta ?? this.accentMagenta,
-    accentBlue: accentBlue ?? this.accentBlue,
-    textPrimary: textPrimary ?? this.textPrimary,
-    textSecondary: textSecondary ?? this.textSecondary,
-    textMuted: textMuted ?? this.textMuted,
-    success: success ?? this.success,
-    warning: warning ?? this.warning,
-    danger: danger ?? this.danger,
-    backgroundGradient: backgroundGradient ?? this.backgroundGradient,
-    accentGradient: accentGradient ?? this.accentGradient,
-  );
+    @Deprecated('Use primary') Color? accentCyan,
+    @Deprecated('Use secondary') Color? accentMagenta,
+    @Deprecated('Use tertiary') Color? accentBlue,
+  }) {
+    primary ??= accentCyan;
+    secondary ??= accentMagenta;
+    tertiary ??= accentBlue;
+    final bool backgroundChanged =
+        backgroundDeep != null ||
+        backgroundMid != null ||
+        backgroundSoft != null;
+    final bool accentChanged =
+        primary != null || secondary != null || tertiary != null;
+    return NeonPalette(
+      backgroundDeep: backgroundDeep ?? this.backgroundDeep,
+      backgroundMid: backgroundMid ?? this.backgroundMid,
+      backgroundSoft: backgroundSoft ?? this.backgroundSoft,
+      surface: surface ?? this.surface,
+      surfaceOutline: surfaceOutline ?? this.surfaceOutline,
+      surfaceHighlight: surfaceHighlight ?? this.surfaceHighlight,
+      primary: primary ?? this.primary,
+      secondary: secondary ?? this.secondary,
+      tertiary: tertiary ?? this.tertiary,
+      textPrimary: textPrimary ?? this.textPrimary,
+      textSecondary: textSecondary ?? this.textSecondary,
+      textMuted: textMuted ?? this.textMuted,
+      success: success ?? this.success,
+      warning: warning ?? this.warning,
+      danger: danger ?? this.danger,
+      backgroundGradient:
+          backgroundGradient ??
+          (backgroundChanged ? null : _backgroundGradient),
+      accentGradient:
+          accentGradient ?? (accentChanged ? null : _accentGradient),
+    );
+  }
+
+  /// Interpola duas paletas, permitindo que trocas de tema sejam animadas.
+  static NeonPalette lerp(NeonPalette a, NeonPalette b, double t) {
+    Color c(Color x, Color y) => Color.lerp(x, y, t)!;
+    return NeonPalette(
+      backgroundDeep: c(a.backgroundDeep, b.backgroundDeep),
+      backgroundMid: c(a.backgroundMid, b.backgroundMid),
+      backgroundSoft: c(a.backgroundSoft, b.backgroundSoft),
+      surface: c(a.surface, b.surface),
+      surfaceOutline: c(a.surfaceOutline, b.surfaceOutline),
+      surfaceHighlight: c(a.surfaceHighlight, b.surfaceHighlight),
+      primary: c(a.primary, b.primary),
+      secondary: c(a.secondary, b.secondary),
+      tertiary: c(a.tertiary, b.tertiary),
+      textPrimary: c(a.textPrimary, b.textPrimary),
+      textSecondary: c(a.textSecondary, b.textSecondary),
+      textMuted: c(a.textMuted, b.textMuted),
+      success: c(a.success, b.success),
+      warning: c(a.warning, b.warning),
+      danger: c(a.danger, b.danger),
+      backgroundGradient: LinearGradient.lerp(
+        a.backgroundGradient,
+        b.backgroundGradient,
+        t,
+      ),
+      accentGradient: LinearGradient.lerp(
+        a.accentGradient,
+        b.accentGradient,
+        t,
+      ),
+    );
+  }
+}
+
+/// Paletas prontas. Cada preset gera uma [NeonPalette] clara ou escura.
+enum NeonPreset {
+  /// Cyan + magenta original do kit.
+  neon(Color(0xFF00E5FF), Color(0xFFB14BFF)),
+
+  /// Verde terminal com toque de ciano.
+  matrix(Color(0xFF39FF14), Color(0xFF00FFC6)),
+
+  /// Laranja e rosa de pôr do sol oitentista.
+  synthwave(Color(0xFFFF8A00), Color(0xFFFF2E88)),
+
+  /// Violeta e azul elétrico.
+  ultraviolet(Color(0xFF8C5BFF), Color(0xFF2E9BFF)),
+
+  /// Vermelho e âmbar.
+  ember(Color(0xFFFF3B3B), Color(0xFFFFB020));
+
+  const NeonPreset(this.primary, this.secondary);
+
+  /// Accent primário do preset.
+  final Color primary;
+
+  /// Accent secundário do preset.
+  final Color secondary;
+
+  /// Gera a paleta do preset. [NeonPreset.neon] devolve exatamente
+  /// [NeonPalette.defaultDark] / [NeonPalette.light].
+  NeonPalette palette({Brightness brightness = Brightness.dark}) {
+    if (this == NeonPreset.neon) {
+      return brightness == Brightness.dark
+          ? NeonPalette.defaultDark()
+          : NeonPalette.light();
+    }
+    return NeonPalette.fromSeed(
+      primary: primary,
+      secondary: secondary,
+      brightness: brightness,
+    );
+  }
 }
 
 /// ThemeExtension para acessar a paleta via `Theme.of(context).extension<NeonThemeExt>()`.
@@ -178,7 +378,7 @@ class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
   @override
   NeonThemeExt lerp(ThemeExtension<NeonThemeExt>? other, double t) {
     if (other is! NeonThemeExt) return this;
-    return t < 0.5 ? this : other;
+    return NeonThemeExt(palette: NeonPalette.lerp(palette, other.palette, t));
   }
 
   /// Obtém a extensão neon registrada no [Theme] mais próximo.

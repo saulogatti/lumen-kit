@@ -4,7 +4,7 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 
 ## Já implementado
 
-- [x] **Tema**: `AppColors`, `NeonPalette`, `NeonThemeExt`, `AppTheme`
+- [x] **Tema**: `AppColors`, `NeonPalette` (+ `fromSeed`), `NeonPreset`, `NeonThemeExt`, `AppTheme`
 - [x] **Background**: `AnimatedGridBackground`, `GlowOrbSpec`
 - [x] **Estrutura**: `NeonAppBar`, `NeonCard`
 - [x] **Ações**: `GradientCta`, `NeonButton` (solid / outline / ghost), `NeonIconButton`, `NeonFab`
@@ -53,7 +53,7 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 ## Convenções
 
 - Arquivo por widget em `lib/src/widgets/`.
-- Paleta sempre acessada via `NeonThemeExt.of(context).palette` — nunca importar `AppColors` diretamente em widgets novos.
+- Paleta sempre acessada via `NeonThemeExt.of(context).palette` — nunca importar `AppColors` diretamente em widgets (senão a cor ignora `AppTheme.fromSeed` e os presets).
 - Exportar em `lib/neon_ui.dart`.
 - Estados padrão a suportar quando fizer sentido: `onPressed == null` → desabilitado (opacidade 0.55), `busy: true` → spinner inline.
 - Documentar uso mínimo no `README.md` quando o componente sair do roadmap.

@@ -38,13 +38,13 @@ class NeonSlider extends StatelessWidget {
   /// Texto exibido no indicador de valor do [Slider].
   final String? label;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
 
     return SliderTheme(
@@ -55,9 +55,8 @@ class NeonSlider extends StatelessWidget {
         thumbColor: accent,
         overlayColor: accent.withValues(alpha: 0.18),
         valueIndicatorColor: p.surface,
-        valueIndicatorTextStyle: Theme.of(
-          context,
-        ).textTheme.bodySmall?.copyWith(color: p.textPrimary),
+        valueIndicatorTextStyle: Theme.of(context).textTheme.bodySmall
+            ?.copyWith(color: p.textPrimary),
         thumbShape: _GlowThumbShape(glow: accent),
         trackShape: const RoundedRectSliderTrackShape(),
       ),

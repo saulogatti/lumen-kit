@@ -72,7 +72,7 @@ class _NeonSkeletonState extends State<NeonSkeleton>
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final Color base = widget.baseColor ?? p.surface.withValues(alpha: 0.55);
     final Color highlight =
-        widget.highlightColor ?? p.accentCyan.withValues(alpha: 0.25);
+        widget.highlightColor ?? p.primary.withValues(alpha: 0.25);
 
     final BorderRadius radius = widget.shape == BoxShape.circle
         ? BorderRadius.zero

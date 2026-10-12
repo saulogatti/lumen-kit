@@ -23,7 +23,7 @@ class NeonDataTable extends StatelessWidget {
   /// Linhas repassadas para [DataTable.rows].
   final List<DataRow> rows;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Índice da coluna atualmente ordenada.
@@ -35,7 +35,7 @@ class NeonDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return Container(
       decoration: BoxDecoration(
@@ -103,13 +103,13 @@ class NeonTableRow extends StatelessWidget {
   /// Mesma cardinalidade de [cells]; default todas com flex 1.
   final List<int>? flex;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final List<int> flexValues = flex ?? List<int>.filled(cells.length, 1);
 
     final Widget row = Container(

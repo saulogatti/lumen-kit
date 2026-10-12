@@ -39,13 +39,13 @@ class NeonBottomNavBar extends StatelessWidget {
   /// Callback chamado com o índice do item tocado.
   final ValueChanged<int> onChanged;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return Container(
       decoration: BoxDecoration(
@@ -155,7 +155,7 @@ class NeonNavRail extends StatelessWidget {
   /// Callback chamado com o índice do item tocado.
   final ValueChanged<int> onChanged;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Widget opcional exibido acima da lista.
@@ -167,7 +167,7 @@ class NeonNavRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return Container(
       width: 84,

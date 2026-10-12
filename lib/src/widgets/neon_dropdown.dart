@@ -53,7 +53,7 @@ class NeonDropdown<T> extends StatelessWidget {
   /// Ícone opcional exibido no início do campo.
   final IconData? icon;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Mensagem de erro exibida abaixo do campo.
@@ -62,7 +62,7 @@ class NeonDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return DropdownButtonFormField<T>(
       initialValue: value,

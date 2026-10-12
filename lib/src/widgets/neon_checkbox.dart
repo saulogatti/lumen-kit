@@ -24,7 +24,7 @@ class NeonCheckbox extends StatelessWidget {
   /// Quando `null`, o checkbox fica visualmente desabilitado.
   final ValueChanged<bool?>? onChanged;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Texto opcional exibido ao lado do checkbox.
@@ -36,7 +36,7 @@ class NeonCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
     final bool isChecked = value == true;
     final bool isIndeterminate = value == null && tristate;
@@ -64,7 +64,7 @@ class NeonCheckbox extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
         gradient: isChecked || isIndeterminate
             ? LinearGradient(
-                colors: <Color>[accent, p.accentMagenta],
+                colors: <Color>[accent, p.secondary],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )

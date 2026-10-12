@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 import 'status_chip.dart';
 
 /// Tom semântico do snackbar — usa as mesmas cores de [StatusTone].
@@ -21,7 +21,8 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
   Duration duration = const Duration(seconds: 4),
   SnackBarAction? action,
 }) {
-  final Color accent = _toneColor(tone);
+  final NeonPalette p = NeonThemeExt.of(context).palette;
+  final Color accent = tone.colorOf(p);
 
   final SnackBar bar = SnackBar(
     behavior: SnackBarBehavior.floating,
@@ -38,8 +39,8 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: <Color>[
-            AppColors.surface.withValues(alpha: 0.98),
-            AppColors.backgroundMid.withValues(alpha: 0.95),
+            p.surface.withValues(alpha: 0.98),
+            p.backgroundMid.withValues(alpha: 0.95),
           ],
         ),
         border: Border.all(color: accent.withValues(alpha: 0.55), width: 1.2),
@@ -58,9 +59,8 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
           Expanded(
             child: Text(
               message,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.textPrimary),
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(color: p.textPrimary),
             ),
           ),
           if (action != null) ...<Widget>[
@@ -77,21 +77,6 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
   );
 
   return ScaffoldMessenger.of(context).showSnackBar(bar);
-}
-
-Color _toneColor(NeonSnackTone tone) {
-  switch (tone) {
-    case StatusTone.neutral:
-      return AppColors.textMuted;
-    case StatusTone.info:
-      return AppColors.accentCyan;
-    case StatusTone.success:
-      return AppColors.success;
-    case StatusTone.warning:
-      return AppColors.warning;
-    case StatusTone.danger:
-      return AppColors.danger;
-  }
 }
 
 IconData _toneIcon(NeonSnackTone tone) {

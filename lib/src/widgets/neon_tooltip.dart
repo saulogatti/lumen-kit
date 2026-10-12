@@ -22,7 +22,7 @@ class NeonTooltip extends StatelessWidget {
   /// Widget que dispara a exibição do tooltip.
   final Widget child;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Tempo de espera antes de exibir o tooltip.
@@ -37,7 +37,7 @@ class NeonTooltip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
 
     return Tooltip(
       message: message,
@@ -46,9 +46,8 @@ class NeonTooltip extends StatelessWidget {
       preferBelow: preferBelow,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       margin: const EdgeInsets.symmetric(horizontal: 8),
-      textStyle: Theme.of(
-        context,
-      ).textTheme.bodySmall?.copyWith(color: p.textPrimary),
+      textStyle: Theme.of(context).textTheme.bodySmall
+          ?.copyWith(color: p.textPrimary),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: LinearGradient(

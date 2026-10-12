@@ -27,7 +27,7 @@ class NeonAvatar extends StatelessWidget {
   /// Raio do avatar em pixels lógicos.
   final double radius;
 
-  /// Override da cor de destaque do anel. Default: `palette.accentCyan`.
+  /// Override da cor de destaque do anel. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Pequeno indicador (presença) no canto inferior direito. Quando null, não
@@ -40,7 +40,7 @@ class NeonAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final double size = radius * 2;
 
     final Widget base = Container(
@@ -51,7 +51,7 @@ class NeonAvatar extends StatelessWidget {
         shape: BoxShape.circle,
         gradient: showRing
             ? LinearGradient(
-                colors: <Color>[accent, p.accentMagenta],
+                colors: <Color>[accent, p.secondary],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )

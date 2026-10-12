@@ -40,7 +40,7 @@ class NeonListTile extends StatelessWidget {
   /// Se `true`, aplica destaque visual de seleção.
   final bool selected;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Se `true`, reduz o espaçamento vertical.
@@ -49,7 +49,7 @@ class NeonListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final bool disabled = onTap == null && onLongPress == null;
 
     return Opacity(
@@ -105,9 +105,8 @@ class NeonListTile extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         subtitle!,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodySmall?.copyWith(color: p.textMuted),
+                        style: Theme.of(context).textTheme.bodySmall
+                            ?.copyWith(color: p.textMuted),
                       ),
                     ],
                   ],

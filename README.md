@@ -6,7 +6,7 @@ Kit de UI com tema futurístico **dark neon** para Flutter — paleta opinativa,
 
 | Categoria   | Componentes                                                        |
 |-------------|--------------------------------------------------------------------|
-| Tema        | `AppColors`, `NeonPalette`, `NeonThemeExt`, `AppTheme`             |
+| Tema        | `AppColors`, `NeonPalette`, `NeonPreset`, `NeonThemeExt`, `AppTheme` |
 | Background  | `AnimatedGridBackground`, `GlowOrbSpec`                            |
 | Estrutura   | `NeonAppBar`, `NeonCard`                                           |
 | Ação        | `GradientCta`, `NeonButton`, `NeonIconButton`, `NeonFab`           |
@@ -73,16 +73,36 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-## Customizando a paleta
+## Trocando as cores
+
+Todos os widgets leem a paleta do tema, então trocar o tema troca o kit inteiro.
+Do mais simples ao mais detalhado:
 
 ```dart
-final palette = NeonPalette.defaultDark().copyWith(
-  accentCyan: Colors.greenAccent,
-  accentMagenta: Colors.orangeAccent,
+// 1. Preset pronto: neon (default), matrix, synthwave, ultraviolet, ember.
+MaterialApp(theme: AppTheme.fromPreset(NeonPreset.matrix), home: ...);
+
+// 2. Uma ou duas cores: fundos, superfícies, textos, glows e gradientes
+//    são derivados automaticamente.
+MaterialApp(
+  theme: AppTheme.fromSeed(
+    primary: Colors.greenAccent,
+    secondary: Colors.orangeAccent, // opcional
+    brightness: Brightness.dark,     // ou Brightness.light
+  ),
+  home: ...,
 );
 
+// 3. Ajuste fino de tokens específicos (gradientes se recalculam sozinhos).
+final palette = NeonPalette.defaultDark().copyWith(primary: Colors.greenAccent);
 MaterialApp(theme: AppTheme.fromPalette(palette), home: ...);
 ```
+
+Trocas de tema em runtime são animadas (`NeonThemeExt.lerp` interpola a
+paleta). O app de `example/` tem um seletor de preset e modo claro/escuro.
+
+> `accentCyan`, `accentMagenta` e `accentBlue` viraram `primary`, `secondary`
+> e `tertiary`. Os nomes antigos continuam funcionando como `@Deprecated`.
 
 Dentro de qualquer widget, acesse via extension:
 

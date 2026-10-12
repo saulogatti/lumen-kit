@@ -16,7 +16,7 @@ Future<DateTime?> showNeonDatePicker({
   String? helpText,
 }) {
   final NeonPalette p = NeonThemeExt.of(context).palette;
-  final Color accent = accentColor ?? p.accentCyan;
+  final Color accent = accentColor ?? p.primary;
 
   return showDatePicker(
     context: context,
@@ -80,7 +80,7 @@ class NeonDatePicker extends StatelessWidget {
   /// Texto exibido quando [value] é `null`.
   final String? hint;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Formatador usado para exibir [value].
@@ -94,7 +94,7 @@ class NeonDatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
     final String? text = value == null
         ? null
@@ -136,9 +136,8 @@ class NeonDatePicker extends StatelessWidget {
           isEmpty: text == null,
           child: Text(
             text ?? '',
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(color: p.textPrimary),
+            style: Theme.of(context).textTheme.titleMedium
+                ?.copyWith(color: p.textPrimary),
           ),
         ),
       ),

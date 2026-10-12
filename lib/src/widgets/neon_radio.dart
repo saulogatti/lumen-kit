@@ -28,7 +28,7 @@ class NeonRadio<T> extends StatelessWidget {
   /// Quando `null`, o radio fica visualmente desabilitado.
   final ValueChanged<T?>? onChanged;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Texto opcional exibido ao lado do radio.
@@ -37,7 +37,7 @@ class NeonRadio<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.accentCyan;
+    final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
     final bool selected = value == groupValue;
 
@@ -70,7 +70,7 @@ class NeonRadio<T> extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: LinearGradient(
-              colors: <Color>[accent, p.accentMagenta],
+              colors: <Color>[accent, p.secondary],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

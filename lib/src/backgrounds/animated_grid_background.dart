@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/neon_palette.dart';
 
 /// Configuração de um glow orb posicionado no fundo.
 @immutable
@@ -60,17 +60,17 @@ class AnimatedGridBackground extends StatelessWidget {
   /// Conteúdo renderizado acima do gradiente, grid e orbs.
   final Widget child;
 
-  /// Gradiente de fundo. Default: [AppColors.backgroundGradient].
+  /// Gradiente de fundo. Default: `palette.backgroundGradient`.
   final Gradient? gradient;
 
-  /// Lista de orbs. Default: cyan no canto superior direito e magenta no
-  /// inferior esquerdo (mesmo visual original).
+  /// Lista de orbs. Default: `palette.primary` no canto superior direito e
+  /// `palette.secondary` no inferior esquerdo.
   final List<GlowOrbSpec>? orbs;
 
   /// Distância em px entre linhas da grid.
   final double gridSpacing;
 
-  /// Cor das linhas da grid. Default: [AppColors.accentCyan].
+  /// Cor das linhas da grid. Default: `palette.primary`.
   final Color? gridColor;
 
   /// Opacidade das linhas da grid (0..1).
@@ -79,21 +79,17 @@ class AnimatedGridBackground extends StatelessWidget {
   /// Se `false`, omite a grid e mantém só gradiente + orbs.
   final bool showGrid;
 
-  static const List<GlowOrbSpec> _defaultOrbs = <GlowOrbSpec>[
-    GlowOrbSpec(color: AppColors.accentCyan, size: 320, top: -120, right: -80),
-    GlowOrbSpec(
-      color: AppColors.accentMagenta,
-      size: 360,
-      bottom: -160,
-      left: -100,
-    ),
+  static List<GlowOrbSpec> _defaultOrbs(NeonPalette p) => <GlowOrbSpec>[
+    GlowOrbSpec(color: p.primary, size: 320, top: -120, right: -80),
+    GlowOrbSpec(color: p.secondary, size: 360, bottom: -160, left: -100),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final List<GlowOrbSpec> orbList = orbs ?? _defaultOrbs;
-    final Color effectiveGridColor = gridColor ?? AppColors.accentCyan;
-    final Gradient effectiveGradient = gradient ?? AppColors.backgroundGradient;
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final List<GlowOrbSpec> orbList = orbs ?? _defaultOrbs(p);
+    final Color effectiveGridColor = gridColor ?? p.primary;
+    final Gradient effectiveGradient = gradient ?? p.backgroundGradient;
 
     return DecoratedBox(
       decoration: BoxDecoration(gradient: effectiveGradient),

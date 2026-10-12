@@ -28,7 +28,7 @@ class NeonSearchBar extends StatefulWidget {
   /// Valor usado para inicializar o controller interno.
   final String initialValue;
 
-  /// Override da cor de destaque. Default: `palette.accentCyan`.
+  /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
 
   /// Se `true`, solicita foco automaticamente.
@@ -62,7 +62,7 @@ class _NeonSearchBarState extends State<NeonSearchBar> {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color accent = widget.accentColor ?? p.accentCyan;
+    final Color accent = widget.accentColor ?? p.primary;
     final bool hasText = _controller.text.isNotEmpty;
 
     return TextField(
