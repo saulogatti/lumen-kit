@@ -21,6 +21,7 @@ export 'src/widgets/gradient_cta.dart';
 export 'src/widgets/navigation_card.dart';
 export 'src/widgets/neon_app_bar.dart';
 export 'src/widgets/neon_avatar.dart';
+export 'src/widgets/neon_avatar_group.dart';
 export 'src/widgets/neon_badge.dart';
 export 'src/widgets/neon_bottom_nav_bar.dart';
 export 'src/widgets/neon_bottom_sheet.dart';
