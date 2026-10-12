@@ -71,6 +71,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   String _dropdown = 'cyan';
   String _search = '';
   DateTime? _date;
+  TimeOfDay? _time;
+  RangeValues _price = const RangeValues(80, 320);
+  String? _size = 'm';
+  Set<String> _filters = <String>{'promo'};
+  int _qty = 1;
+  double _rating = 4;
+  bool _overlay = false;
 
   // Navegação
   int _tab = 0;
@@ -396,6 +403,21 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     value: _slider,
                     onChanged: (double v) => setState(() => _slider = v),
                   ),
+                  Text(
+                    'Preço (R\$ ${_price.start.round()} – '
+                    'R\$ ${_price.end.round()})',
+                    style: TextStyle(color: p.textMuted),
+                  ),
+                  NeonRangeSlider(
+                    values: _price,
+                    max: 500,
+                    divisions: 50,
+                    labels: RangeLabels(
+                      'R\$ ${_price.start.round()}',
+                      'R\$ ${_price.end.round()}',
+                    ),
+                    onChanged: (RangeValues v) => setState(() => _price = v),
+                  ),
                   const SizedBox(height: 4),
                   NeonDropdown<String>(
                     label: 'Accent padrão',
@@ -428,7 +450,188 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     lastDate: DateTime(2030),
                     onChanged: (DateTime v) => setState(() => _date = v),
                   ),
+                  const SizedBox(height: 16),
+                  NeonTimePicker(
+                    label: 'Horário',
+                    value: _time,
+                    onChanged: (TimeOfDay v) => setState(() => _time = v),
+                  ),
                 ],
+              ),
+            ),
+            _section(
+              'Chips, quantidade & avaliação',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 16,
+                children: <Widget>[
+                  NeonChoiceChips<String>(
+                    value: _size,
+                    onChanged: (String? v) => setState(() => _size = v),
+                    items: const <NeonChipItem<String>>[
+                      NeonChipItem<String>(value: 'p', label: 'P'),
+                      NeonChipItem<String>(value: 'm', label: 'M'),
+                      NeonChipItem<String>(value: 'g', label: 'G'),
+                      NeonChipItem<String>(
+                        value: 'gg',
+                        label: 'GG',
+                        enabled: false,
+                      ),
+                    ],
+                  ),
+                  NeonFilterChips<String>(
+                    values: _filters,
+                    onChanged: (Set<String> v) => setState(() => _filters = v),
+                    items: const <NeonChipItem<String>>[
+                      NeonChipItem<String>(value: 'promo', label: 'Promoção'),
+                      NeonChipItem<String>(
+                        value: 'frete',
+                        label: 'Frete grátis',
+                        icon: Icons.local_shipping_outlined,
+                      ),
+                      NeonChipItem<String>(value: 'novo', label: 'Lançamento'),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      NeonQuantityStepper(
+                        value: _qty,
+                        min: 1,
+                        max: 10,
+                        semanticLabel: 'Quantidade',
+                        onChanged: (int v) => setState(() => _qty = v),
+                      ),
+                      const Spacer(),
+                      NeonRating(
+                        value: _rating,
+                        allowHalf: true,
+                        semanticLabel: 'Avaliação',
+                        onChanged: (double v) => setState(() => _rating = v),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    spacing: 8,
+                    children: <Widget>[
+                      const NeonRating(value: 4.3, size: 16),
+                      Text(
+                        '4.3 (128 avaliações)',
+                        style: TextStyle(color: p.textMuted, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            _section(
+              'Menu & loading',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 16,
+                children: <Widget>[
+                  NeonCard(
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            'Card com menu de ações',
+                            style: TextStyle(color: p.textSecondary),
+                          ),
+                        ),
+                        NeonMenuButton<String>(
+                          items: _menuItems,
+                          onSelected: (String v) => showNeonToast(
+                            context: context,
+                            message: 'Ação: $v',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  NeonContextMenu<String>(
+                    items: _menuItems,
+                    onSelected: (String v) =>
+                        showNeonToast(context: context, message: 'Ação: $v'),
+                    child: NeonLoadingOverlay(
+                      loading: _overlay,
+                      message: 'Sincronizando…',
+                      borderRadius: NeonStyle.of(context).radius(20),
+                      child: NeonCard(
+                        child: SizedBox(
+                          height: 120,
+                          child: Center(
+                            child: NeonSwitch(
+                              value: _overlay,
+                              label: 'Overlay por 3s (clique direito: menu)',
+                              onChanged: (bool v) async {
+                                setState(() => _overlay = v);
+                                await Future<void>.delayed(
+                                  const Duration(seconds: 3),
+                                );
+                                if (mounted) setState(() => _overlay = false);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  NeonButton.outline(
+                    label: 'ENVIAR (tela cheia)',
+                    icon: Icons.send_rounded,
+                    onPressed: () async {
+                      await showNeonLoading<void>(
+                        context: context,
+                        message: 'Enviando formulário…',
+                        task: () =>
+                            Future<void>.delayed(const Duration(seconds: 2)),
+                      );
+                      if (!context.mounted) return;
+                      showNeonSnackBar(
+                        context: context,
+                        message: 'Formulário enviado',
+                        tone: StatusTone.success,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            _section(
+              'Carrossel',
+              NeonCarousel(
+                itemCount: 4,
+                height: 150,
+                itemBuilder: (BuildContext context, int i) {
+                  final List<Color> c = <Color>[
+                    p.primary,
+                    p.secondary,
+                    p.tertiary,
+                    p.success,
+                  ];
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: <Color>[
+                          c[i].withValues(alpha: 0.55),
+                          p.surface,
+                        ],
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Slide ${i + 1}',
+                        style: TextStyle(
+                          color: p.textPrimary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
             _section(
@@ -647,6 +850,21 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   ),
                   const NeonTag(label: 'novo', icon: Icons.fiber_new_outlined),
                   NeonTag(label: 'beta', color: p.secondary),
+                  NeonAvatarGroup(
+                    maxVisible: 3,
+                    total: 12,
+                    semanticLabel: '12 participantes',
+                    onOverflowTap: () => showNeonToast(
+                      context: context,
+                      message: '+9 participantes',
+                    ),
+                    avatars: const <NeonAvatar>[
+                      NeonAvatar(initials: 'SG'),
+                      NeonAvatar(initials: 'NU'),
+                      NeonAvatar(initials: 'AB'),
+                      NeonAvatar(initials: 'CD'),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -789,3 +1007,25 @@ class _GalleryScreenState extends State<_GalleryScreen> {
     );
   }
 }
+
+const List<NeonMenuEntry<String>> _menuItems = <NeonMenuEntry<String>>[
+  NeonMenuItem<String>(value: 'editar', label: 'Editar', icon: Icons.edit),
+  NeonMenuItem<String>(
+    value: 'duplicar',
+    label: 'Duplicar',
+    icon: Icons.copy_rounded,
+  ),
+  NeonMenuItem<String>(
+    value: 'arquivar',
+    label: 'Arquivar',
+    icon: Icons.archive_outlined,
+    enabled: false,
+  ),
+  NeonMenuDivider<String>(),
+  NeonMenuItem<String>(
+    value: 'excluir',
+    label: 'Excluir',
+    icon: Icons.delete_outline,
+    destructive: true,
+  ),
+];
