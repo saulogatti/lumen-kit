@@ -42,6 +42,7 @@ export 'src/widgets/neon_loading_overlay.dart';
 export 'src/widgets/neon_menu.dart';
 export 'src/widgets/neon_page_indicator.dart';
 export 'src/widgets/neon_progress_indicator.dart';
+export 'src/widgets/neon_quantity_stepper.dart';
 export 'src/widgets/neon_radio.dart';
 export 'src/widgets/neon_search_bar.dart';
 export 'src/widgets/neon_skeleton.dart';
