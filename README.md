@@ -27,6 +27,30 @@ dependencies:
       ref: main
 ```
 
+## Só os componentes (sem o tema)
+
+Se o seu app já tem o próprio `ThemeData`, importe só os widgets:
+
+```dart
+import 'package:neon_ui/components.dart';
+```
+
+Esse import não traz `AppTheme` nem `AppColors` (nada de conflito de nomes) e
+não exige registrar nada no tema: os widgets usam a paleta default, clara ou
+escura conforme o brilho do seu tema. Para outras cores ou outro estilo em
+uma parte da tela, sem tocar no `ThemeData`, use `NeonScope`:
+
+```dart
+NeonScope(
+  palette: NeonPalette.fromSeed(primary: Colors.teal),
+  style: NeonStyle.flat,
+  child: NeonButton(label: 'Salvar', onPressed: salvar),
+)
+```
+
+Tipografia vem do `textTheme` do seu app. O import completo
+(`package:neon_ui/neon_ui.dart`) continua igual, com tudo.
+
 ## Uso mínimo
 
 ```dart
