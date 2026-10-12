@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Paleta de cores da aplicação (tema futurístico).
 /// Centraliza tokens visuais para reuso e fácil manutenção.
