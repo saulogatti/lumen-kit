@@ -1,32 +1,33 @@
 ---
 name: neon-ui
-description: Aplica o kit neon_ui (saulogatti/flutter-neon-ui) em um app Flutter existente — instala via git, escolhe o import, configura tema/preset/NeonScope e troca widgets Material pelos equivalentes Neon.
+description: Apply the neon_ui kit (saulogatti/flutter-neon-ui) to an existing Flutter app — install it from git, pick the import, set up theme/preset/NeonScope, and swap Material widgets for their Neon equivalents.
 ---
 
-# Aplicar o neon_ui em um app Flutter
+# Applying neon_ui to a Flutter app
 
-Use quando o usuário pedir para usar o `neon_ui` / "componentes neon" /
-"esse kit" em um app Flutter que não é o próprio repositório do kit. Para
-alterar o kit em si, leia o `AGENTS.md` do repositório.
+Use this when the user asks to use `neon_ui`, "the neon components" or
+"this kit" in a Flutter app that is not the kit's own repository. To change
+the kit itself, read the repository's `AGENTS.md`. Talk to the user in
+their language; the kit's own docs and comments are in Portuguese.
 
-O mapeamento completo de widgets (Material → Neon, com assinaturas) está em
-[`references/widgets.md`](references/widgets.md). Leia antes de trocar
-qualquer widget; as APIs **não** são cópias das do Material.
+The full widget map (Material → Neon, with signatures) is in
+[`references/widgets.md`](references/widgets.md). Read it before swapping
+any widget: the APIs are **not** copies of Material's.
 
-## 1. Inspecione o app antes de mexer
+## 1. Inspect the app first
 
-Descubra, no `pubspec.yaml` e no código:
+Find out, from `pubspec.yaml` and the code:
 
-- Versões: o kit exige Dart `^3.13.0` e Flutter `>=3.47.0`. Se o app trava
-  numa versão menor, pare e avise; não há como contornar.
-- **Qual biblioteca Material o app importa.** `grep -rn
+- Versions: the kit needs Dart `^3.13.0` and Flutter `>=3.47.0`. If the app
+  is pinned below that, stop and tell the user; there is no workaround.
+- **Which Material library the app imports.** `grep -rn
   "package:flutter/material.dart\|package:material_ui/material_ui.dart" lib`.
-  Isso decide o passo 3 e é o erro mais caro de pular.
-- Se já existe `ThemeData` próprio, `ThemeExtension`s, e classes chamadas
-  `AppTheme` ou `AppColors` (colisão de nome com o kit).
-- Se o app tem modo claro e escuro (`theme` + `darkTheme`/`themeMode`).
+  This decides step 3 and is the most expensive thing to skip.
+- Whether it already has its own `ThemeData`, `ThemeExtension`s, or
+  classes named `AppTheme` or `AppColors` (name clash with the kit).
+- Whether it has light and dark modes (`theme` + `darkTheme`/`themeMode`).
 
-## 2. Instale
+## 2. Install
 
 ```yaml
 dependencies:
@@ -34,26 +35,27 @@ dependencies:
   neon_ui:
     git:
       url: https://github.com/saulogatti/flutter-neon-ui.git
-      ref: main   # para builds reproduzíveis, fixe um SHA de commit
+      ref: main   # pin a commit SHA for reproducible builds
 ```
 
-`flutter pub get`. O pacote não está no pub.dev.
+Run `flutter pub get`. The package is not on pub.dev.
 
-## 3. Material: o app precisa usar `material_ui`
+## 3. Material: the app must use `material_ui`
 
-O kit é construído sobre o pacote `material_ui`, não sobre
-`package:flutter/material.dart`. São bibliotecas diferentes com tipos
-diferentes. Num app que usa `flutter/material.dart`, verificado no Flutter
-3.47:
+The kit is built on the `material_ui` package, not on
+`package:flutter/material.dart`. They are separate libraries with distinct
+types. In an app that uses `flutter/material.dart` (verified on Flutter
+3.47):
 
-- `MaterialApp(theme: AppTheme.dark)` **não compila** (`ThemeData` de um
-  não é o `ThemeData` do outro).
-- Os widgets neon não enxergam o `Theme` do app: caem na paleta default
-  **clara**, mesmo com o app em `ThemeData.dark()`.
-- `NeonTextField` (e tudo que usa `TextField`/`InkWell` do material_ui sem
-  um `Material` do material_ui acima) quebra com "No Material widget found".
+- `MaterialApp(theme: AppTheme.dark)` **does not compile** (one
+  `ThemeData` is not the other).
+- Neon widgets can't see the app's `Theme`: they fall back to the default
+  **light** palette even when the app uses `ThemeData.dark()`.
+- `NeonTextField` (and anything using material_ui's `TextField`/`InkWell`
+  without a material_ui `Material` above it) throws "No Material widget
+  found".
 
-Portanto, o caminho padrão é migrar o app:
+So the default path is to migrate the app:
 
 ```bash
 grep -rl "package:flutter/material.dart" lib test \
@@ -61,33 +63,33 @@ grep -rl "package:flutter/material.dart" lib test \
 flutter analyze
 ```
 
-`material_ui` reexporta `package:flutter/widgets.dart`, então imports
-duplicados de `widgets.dart` podem virar aviso de import desnecessário;
-limpe-os. Se o app depende de pacotes de terceiros que entregam widgets de
-`flutter/material` (ex.: um date picker de outro pacote), eles continuam
-funcionando, mas não herdam o tema; avise o usuário.
+`material_ui` re-exports `package:flutter/widgets.dart`, so existing
+`widgets.dart` imports may become unnecessary-import warnings; remove them.
+Third-party packages that ship `flutter/material` widgets (e.g. another
+package's date picker) keep working but won't inherit the theme; tell the
+user.
 
-Se o usuário **recusar** a migração, pare e explique: não há modo suportado
-de misturar. Envolver os widgets neon num `Material` do `material_ui` só
-troca o erro por "No MaterialLocalizations found", e o tema do app continua
-invisível para eles.
+If the user **refuses** the migration, stop and explain: there is no
+supported way to mix them. Wrapping neon widgets in a material_ui
+`Material` only turns the error into "No MaterialLocalizations found", and
+the app's theme stays invisible to them.
 
-## 4. Escolha o import
+## 4. Pick the import
 
-| Situação | Import |
+| Situation | Import |
 |---|---|
-| App novo, ou o usuário quer o visual do kit no app inteiro | `package:neon_ui/neon_ui.dart` (inclui `AppTheme`, `AppColors`) |
-| App já tem `ThemeData` próprio, ou tem classes `AppTheme`/`AppColors` | `package:neon_ui/components.dart` (só widgets, `NeonPalette`, `NeonStyle`, `NeonScope`, `NeonThemeExt`) |
+| New app, or the user wants the kit's look across the whole app | `package:neon_ui/neon_ui.dart` (includes `AppTheme`, `AppColors`) |
+| App already has its own `ThemeData`, or has `AppTheme`/`AppColors` classes | `package:neon_ui/components.dart` (widgets, `NeonPalette`, `NeonStyle`, `NeonScope`, `NeonThemeExt` only) |
 
-Na dúvida, `components.dart`: nunca colide e não exige tema.
+When in doubt, `components.dart`: it never clashes and needs no theme.
 
-## 5. Configure o tema
+## 5. Set up the theme
 
-Os widgets acham paleta e estilo nesta ordem: `NeonScope` mais próximo →
-`NeonThemeExt` registrado no `ThemeData` → paleta default (escura ou clara
-conforme o brilho do tema) com estilo `neon`. Escolha um caminho:
+Widgets resolve palette and style in this order: nearest `NeonScope` →
+`NeonThemeExt` registered on `ThemeData` → default palette (dark or light,
+following the theme's brightness) with the `neon` style. Pick one path:
 
-**A. Tema do kit no app inteiro** (import `neon_ui.dart`):
+**A. The kit's theme for the whole app** (import `neon_ui.dart`):
 
 ```dart
 MaterialApp(
@@ -100,20 +102,20 @@ MaterialApp(
 
 - Presets (`NeonPreset`): `neon` (cyan/magenta, default), `matrix`,
   `synthwave`, `ultraviolet`, `ember`.
-- Cor da marca do usuário: `AppTheme.fromSeed(primary: marca, secondary:
-  opcional, brightness: ...)`. Fundos, textos e gradientes são derivados.
-- Token a token: `AppTheme.fromPalette(NeonPalette.defaultDark().copyWith(primary: ...))`.
-- Estilo além da cor, em qualquer um dos três: `style: NeonStyle.flat`
-  (`neon`, `flat`, `glass`, `soft`, `brutal`, ou `NeonStyle.soft.copyWith(...)`).
-  App corporativo/sóbrio → `flat` ou `soft`; o glow do `neon` é bem
-  opinativo, confirme com o usuário antes de impor.
+- The user's brand color: `AppTheme.fromSeed(primary: brand, secondary:
+  optional, brightness: ...)`. Backgrounds, text and gradients are derived.
+- Token by token: `AppTheme.fromPalette(NeonPalette.defaultDark().copyWith(primary: ...))`.
+- Style beyond color, on any of the three: `style: NeonStyle.flat`
+  (`neon`, `flat`, `glass`, `soft`, `brutal`, or `NeonStyle.soft.copyWith(...)`).
+  Corporate/sober app → `flat` or `soft`; the `neon` glow is very
+  opinionated, so confirm with the user before imposing it.
 
-**B. Manter o `ThemeData` do app e só registrar o kit** (import
-`components.dart`): adicione a extensão ao tema existente, sem perder as
-outras.
+**B. Keep the app's `ThemeData` and just register the kit** (import
+`components.dart`): add the extension to the existing theme without
+dropping the others.
 
 ```dart
-ThemeData comNeon(ThemeData base) => base.copyWith(
+ThemeData withNeon(ThemeData base) => base.copyWith(
   extensions: [
     ...base.extensions.values,
     NeonThemeExt(
@@ -126,60 +128,61 @@ ThemeData comNeon(ThemeData base) => base.copyWith(
   ],
 );
 
-MaterialApp(theme: comNeon(temaClaro), darkTheme: comNeon(temaEscuro), ...);
+MaterialApp(theme: withNeon(lightTheme), darkTheme: withNeon(darkTheme), ...);
 ```
 
-Isso deixa o `ColorScheme`, a tipografia e os widgets Material do app
-intactos; os neon passam a seguir a cor do app.
+This leaves the app's `ColorScheme`, typography and Material widgets
+untouched; the neon widgets follow the app's color.
 
-**C. Só uma parte da tela diferente**: `NeonScope(palette: ..., style: ...,
-child: ...)`. Tem prioridade sobre o tema.
+**C. Only part of a screen looks different**: `NeonScope(palette: ...,
+style: ..., child: ...)`. It takes precedence over the theme.
 
-**D. Nada**: com `components.dart` e sem registrar nada, funciona com a
-paleta default. Aceitável para protótipo, não para entregar.
+**D. Nothing**: with `components.dart` and nothing registered, it works with
+the default palette. Fine for a prototype, not for shipping.
 
-## 6. Troque os widgets
+## 6. Swap the widgets
 
-Siga [`references/widgets.md`](references/widgets.md). Regras:
+Follow [`references/widgets.md`](references/widgets.md). Rules:
 
-- Troque por tela, não o app inteiro de uma vez; rode `flutter analyze` a
-  cada tela.
-- Os widgets neon são **controlados**: recebem `value`/`selectedIndex` e
-  `onChanged`, sem controller interno (exceto `NeonTextField`, que aceita
-  `controller`). Ao trocar `TabBar`+`TabController`, mova o índice para o
-  estado da tela.
-- Desabilitar = `onPressed`/`onChanged: null`. Carregando = `busy: true` nos
-  botões, em vez de trocar o filho por um `CircularProgressIndicator`.
-- Muitos widgets recebem `String` onde o Material recebe `Widget` (`title`
-  de `NeonAppBar`, `NeonListTile`, `NeonDialog`, `NeonExpansionTile`;
-  `label` dos botões). Se o original monta um `Text` com estilo especial,
-  avise que o estilo vem do tema agora.
-- Funções `showDialog`/`showModalBottomSheet`/`showDatePicker`/... têm
-  versões `showNeonX` com o mesmo papel; prefira-as a envolver o widget neon
-  em `showDialog` na mão.
-- Não troque o que não tem equivalente (Autocomplete, Stepper com
-  conteúdo horizontal, tabelas paginadas…); deixe o Material e diga quais
-  ficaram de fora.
-- Fundo do kit: envolva o `body` com `AnimatedGridBackground(child: ...)`.
-  Ele respeita o estilo (grid, pontos ou liso).
-- Componente próprio do app que precisa combinar com o kit: use
+- Go screen by screen, not the whole app at once; run `flutter analyze`
+  after each screen.
+- Neon widgets are **controlled**: they take `value`/`selectedIndex` and
+  `onChanged`, with no internal controller (except `NeonTextField`, which
+  accepts a `controller`). When replacing `TabBar` + `TabController`, move
+  the index into the screen's state.
+- Disabled = `onPressed`/`onChanged: null`. Loading = `busy: true` on
+  buttons, instead of swapping the child for a `CircularProgressIndicator`.
+- Many widgets take a `String` where Material takes a `Widget` (`title` on
+  `NeonAppBar`, `NeonListTile`, `NeonDialog`, `NeonExpansionTile`; `label`
+  on buttons). If the original builds a specially styled `Text`, tell the
+  user the style now comes from the theme.
+- `showDialog`/`showModalBottomSheet`/`showDatePicker`/... have `showNeonX`
+  versions with the same role; prefer them over wrapping a neon widget in
+  `showDialog` by hand.
+- Don't replace what has no equivalent (Autocomplete, paginated tables…);
+  keep Material and say which ones were left out.
+- Kit background: wrap the `body` in `AnimatedGridBackground(child: ...)`.
+  It follows the style (grid, dots or plain).
+- An app's own component that must match the kit: use
   `NeonThemeExt.of(context).palette`, `NeonStyle.of(context)`,
-  `NeonDecorations.panel/selectable/input`, `NeonPressable`. Nunca cores
-  fixas ou `AppColors` (ignoram preset, seed e modo claro).
+  `NeonDecorations.panel/selectable/input`, `NeonPressable`. Never hardcoded
+  colors or `AppColors` (they ignore presets, seed and light mode).
 
-## 7. Verifique
+## 7. Verify
 
-1. `flutter analyze` sem erros novos.
-2. `flutter test`. Testes que procuram `find.byType(ElevatedButton)`,
-   `find.byType(TextField)` etc. vão quebrar onde o widget foi trocado;
-   atualize para o tipo neon (`find.byType(NeonButton)`) ou para
-   `find.text`/`find.bySemanticsLabel`. Testes que usam
-   `MaterialApp`/`ThemeData` de `flutter/material.dart` precisam do mesmo
-   import de `material_ui` do passo 3.
-3. Rode o app nos dois brilhos se ele tem modo claro. No claro, bordas de
-   alguns controles antigos do kit (radio, checkbox, switch, trilho de
-   slider/progress, tabs, stepper, data table) saem quase pretas: bug
-   conhecido do kit (`surfaceOutline.withValues(alpha:)`), não do app.
-   Reporte em vez de "consertar" no app.
-4. Resuma para o usuário: import escolhido, caminho de tema (A/B/C), widgets
-   trocados, o que ficou Material e por quê.
+1. `flutter analyze` with no new errors.
+2. `flutter test`. Tests that look for `find.byType(ElevatedButton)`,
+   `find.byType(TextField)` etc. break where the widget was swapped; update
+   them to the neon type (`find.byType(NeonButton)`) or to
+   `find.text`/`find.bySemanticsLabel`. Tests using `MaterialApp`/`ThemeData`
+   from `flutter/material.dart` need the same `material_ui` import as step 3.
+   Never `await` a `showNeonX(...)` call directly in a test: the `Future`
+   only completes when the route closes, so the test hangs. Use
+   `unawaited(...)` and pump.
+3. Run the app in both brightnesses if it has a light mode. In light mode,
+   borders of some older kit controls (radio, checkbox, switch,
+   slider/progress track, tabs, stepper, data table) come out nearly black:
+   a known kit bug (`surfaceOutline.withValues(alpha:)`), not the app's.
+   Report it instead of "fixing" it in the app.
+4. Summarize for the user: import chosen, theme path (A/B/C), widgets
+   swapped, what stayed Material and why.
