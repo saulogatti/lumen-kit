@@ -391,13 +391,58 @@ class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
     );
   }
 
-  /// Obtém a extensão neon registrada no [Theme] mais próximo.
+  /// Obtém a paleta e o estilo neon ativos para [context].
   ///
-  /// Falha em modo debug se [NeonThemeExt] não tiver sido adicionada ao
-  /// [ThemeData.extensions].
+  /// Ordem de busca: o [NeonScope] mais próximo, depois a extensão registrada
+  /// no [ThemeData], e por fim a paleta default ([NeonPalette.defaultDark] ou
+  /// [NeonPalette.light], conforme o brilho do tema do app) com
+  /// [NeonStyle.neon]. Assim os widgets funcionam em apps que mantêm o
+  /// próprio `ThemeData` e nunca registram nada do kit.
   static NeonThemeExt of(BuildContext context) {
-    final NeonThemeExt? ext = Theme.of(context).extension<NeonThemeExt>();
-    assert(ext != null, 'NeonThemeExt não está registrado no ThemeData.');
-    return ext!;
+    final NeonScope? scope = context
+        .dependOnInheritedWidgetOfExactType<NeonScope>();
+    if (scope != null) return scope.data;
+    final ThemeData theme = Theme.of(context);
+    return theme.extension<NeonThemeExt>() ??
+        (theme.brightness == Brightness.dark ? _fallbackDark : _fallbackLight);
   }
+
+  static final NeonThemeExt _fallbackDark = NeonThemeExt(
+    palette: NeonPalette.defaultDark(),
+  );
+  static final NeonThemeExt _fallbackLight = NeonThemeExt(
+    palette: NeonPalette.light(),
+  );
+}
+
+/// Define paleta e estilo neon para uma subárvore sem mexer no `ThemeData`.
+///
+/// Útil quando o app tem o próprio tema e só quer usar alguns componentes do
+/// kit com outras cores:
+///
+/// ```dart
+/// NeonScope(
+///   palette: NeonPalette.fromSeed(primary: Colors.teal),
+///   style: NeonStyle.flat,
+///   child: NeonButton(label: 'Salvar', onPressed: salvar),
+/// )
+/// ```
+///
+/// Tem prioridade sobre a [NeonThemeExt] registrada no tema.
+class NeonScope extends InheritedWidget {
+  /// Cria um escopo com [palette] e [style] para [child].
+  NeonScope({
+    required NeonPalette palette,
+    NeonStyle style = NeonStyle.neon,
+    required super.child,
+    super.key,
+  }) : data = NeonThemeExt(palette: palette, style: style);
+
+  /// Paleta e estilo fornecidos à subárvore.
+  final NeonThemeExt data;
+
+  @override
+  bool updateShouldNotify(NeonScope oldWidget) =>
+      oldWidget.data.palette != data.palette ||
+      oldWidget.data.style != data.style;
 }

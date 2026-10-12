@@ -55,6 +55,6 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 - Arquivo por widget em `lib/src/widgets/`.
 - Paleta sempre acessada via `NeonThemeExt.of(context).palette` — nunca importar `AppColors` diretamente em widgets (senão a cor ignora `AppTheme.fromSeed` e os presets).
 - Sombra, gradiente, raio e borda sempre via `NeonStyle.of(context)` (`shadows`, `fill`, `radius`, `borderAll`, `surfaceAlpha`) — nunca `BoxShadow`/`BorderRadius.circular` crus, senão o widget ignora o estilo.
-- Exportar em `lib/neon_ui.dart`.
+- Exportar widgets em `lib/components.dart` (o `lib/neon_ui.dart` reexporta). Nada de tema global (`AppTheme`/`AppColors`) dentro de widgets.
 - Estados padrão a suportar quando fizer sentido: `onPressed == null` → desabilitado (opacidade 0.55), `busy: true` → spinner inline.
 - Documentar uso mínimo no `README.md` quando o componente sair do roadmap.
