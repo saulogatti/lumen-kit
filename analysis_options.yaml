@@ -7,9 +7,6 @@ analyzer:
     strict-casts: true
     strict-inference: true
 
-formatter:
-  page_width: 100
-
 linter:
   rules:
     - always_declare_return_types
