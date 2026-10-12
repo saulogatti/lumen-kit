@@ -49,6 +49,7 @@ export 'src/widgets/neon_stepper.dart';
 export 'src/widgets/neon_switch.dart';
 export 'src/widgets/neon_tabs.dart';
 export 'src/widgets/neon_text_field.dart';
+export 'src/widgets/neon_time_picker.dart';
 export 'src/widgets/neon_toast.dart';
 export 'src/widgets/neon_tooltip.dart';
 export 'src/widgets/status_chip.dart';
