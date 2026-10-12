@@ -112,15 +112,15 @@ Future<T?> showNeonMenu<T>({
 /// Posição para [showNeonMenu] num ponto global da tela (ex.:
 /// `TapUpDetails.globalPosition` de um clique direito).
 RelativeRect neonMenuPositionAt(BuildContext context, Offset globalPosition) {
-  final RenderBox overlay =
+  final overlay =
       Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
   final Offset local = overlay.globalToLocal(globalPosition);
   return RelativeRect.fromRect(local & Size.zero, Offset.zero & overlay.size);
 }
 
 RelativeRect _anchorBelow(BuildContext context) {
-  final RenderBox box = context.findRenderObject()! as RenderBox;
-  final RenderBox overlay =
+  final box = context.findRenderObject()! as RenderBox;
+  final overlay =
       Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
   final Offset topLeft = box.localToGlobal(
     Offset(0, box.size.height),
@@ -251,7 +251,9 @@ class NeonMenuButton<T> extends StatelessWidget {
                 accentColor: accentColor,
                 initialValue: initialValue,
               );
-              if (!context.mounted) return;
+              if (!context.mounted) {
+                return;
+              }
               if (value == null) {
                 onCanceled?.call();
               } else {
@@ -297,15 +299,19 @@ class NeonContextMenu<T> extends StatelessWidget {
       accentColor: accentColor,
       position: neonMenuPositionAt(context, global),
     );
-    if (value != null && context.mounted) onSelected?.call(value);
+    if (value != null && context.mounted) {
+      onSelected?.call(value);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (onSelected == null) return child;
+    if (onSelected == null) {
+      return child;
+    }
     return Semantics(
       onLongPress: () {
-        final RenderBox box = context.findRenderObject()! as RenderBox;
+        final box = context.findRenderObject()! as RenderBox;
         _open(context, box.localToGlobal(box.size.center(Offset.zero)));
       },
       child: GestureDetector(

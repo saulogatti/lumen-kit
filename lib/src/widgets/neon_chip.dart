@@ -240,7 +240,7 @@ class NeonFilterChips<T> extends StatelessWidget {
                 : (bool on) {
                     // Cascata dentro de ternário pega a expressão inteira;
                     // por isso o if explícito.
-                    final Set<T> next = <T>{...values};
+                    final next = <T>{...values};
                     if (on) {
                       next.add(item.value);
                     } else {

@@ -61,7 +61,9 @@ class NeonPageIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController? c = controller;
-    if (c == null) return _build(context, index.toDouble(), animated: true);
+    if (c == null) {
+      return _build(context, index.toDouble(), animated: true);
+    }
     return AnimatedBuilder(
       animation: c,
       builder: (BuildContext context, _) =>
@@ -104,7 +106,9 @@ class NeonPageIndicator extends StatelessWidget {
           ),
         ),
       );
-      if (onDotTapped == null) return body;
+      if (onDotTapped == null) {
+        return body;
+      }
       return NeonPressable(
         onTap: () => onDotTapped!(i),
         borderRadius: BorderRadius.circular(12),
@@ -122,7 +126,9 @@ class NeonPageIndicator extends StatelessWidget {
       spacing: onDotTapped == null ? spacing : 0,
       children: <Widget>[for (int i = 0; i < count; i++) dot(i)],
     );
-    if (onDotTapped != null || count == 0) return row;
+    if (onDotTapped != null || count == 0) {
+      return row;
+    }
     return Semantics(
       container: true,
       label: label(current, count),
@@ -204,7 +210,9 @@ class _NeonCarouselState extends State<NeonCarousel> {
   void didUpdateWidget(covariant NeonCarousel old) {
     super.didUpdateWidget(old);
     final PageController? own = _own;
-    if (own == null) return;
+    if (own == null) {
+      return;
+    }
     if (widget.controller != null) {
       _own = null;
     } else if (old.viewportFraction != widget.viewportFraction) {
@@ -264,7 +272,9 @@ class _NeonCarouselState extends State<NeonCarousel> {
           ),
         ),
       );
-      if (widget.inactiveScale >= 1) return card;
+      if (widget.inactiveScale >= 1) {
+        return card;
+      }
       return AnimatedBuilder(
         animation: controller,
         child: card,
@@ -309,7 +319,9 @@ class _NeonCarouselState extends State<NeonCarousel> {
 double _pageOf(PageController c) {
   if (c.hasClients && c.positions.length == 1) {
     final ScrollPosition pos = c.position;
-    if (pos.hasContentDimensions) return c.page ?? c.initialPage.toDouble();
+    if (pos.hasContentDimensions) {
+      return c.page ?? c.initialPage.toDouble();
+    }
   }
   return c.initialPage.toDouble();
 }

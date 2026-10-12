@@ -80,7 +80,9 @@ class NeonCard extends StatelessWidget {
             child: content,
           );
 
-    if (!glow) return body;
+    if (!glow) {
+      return body;
+    }
 
     return DecoratedBox(
       decoration: BoxDecoration(

@@ -102,7 +102,7 @@ SliderThemeData _neonSliderTheme(
   NeonPalette p,
   Color accent,
 ) {
-  final bool glow = NeonStyle.of(context).shadow == NeonShadowKind.glow;
+  final glow = NeonStyle.of(context).shadow == NeonShadowKind.glow;
   return SliderTheme.of(context).copyWith(
     trackHeight: 4,
     activeTrackColor: accent,

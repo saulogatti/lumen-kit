@@ -325,7 +325,9 @@ class _NeonCircularPainter extends CustomPainter {
       sweep = tau * 0.75;
     }
 
-    if (showGlow) canvas.drawArc(rect, startAngle, sweep, false, glowPaint);
+    if (showGlow) {
+      canvas.drawArc(rect, startAngle, sweep, false, glowPaint);
+    }
     canvas.drawArc(rect, startAngle, sweep, false, arcPaint);
   }
 

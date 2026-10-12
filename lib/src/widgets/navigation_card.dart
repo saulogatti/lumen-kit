@@ -57,7 +57,9 @@ class _NavigationCardState extends State<NavigationCard> {
 
     // Hover e foco de teclado levantam o card do mesmo jeito.
     void highlight(bool on) {
-      if (_hovering != on) setState(() => _hovering = on);
+      if (_hovering != on) {
+        setState(() => _hovering = on);
+      }
     }
 
     return AnimatedContainer(

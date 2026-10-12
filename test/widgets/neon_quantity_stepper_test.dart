@@ -8,7 +8,7 @@ void main() {
   testWidgets('NeonQuantityStepper soma, subtrai e respeita min/max', (
     WidgetTester tester,
   ) async {
-    int qtd = 1;
+    var qtd = 1;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
@@ -27,7 +27,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(qtd, 1, reason: '− desabilitado no mínimo');
 
-    for (int i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
       await tester.tap(find.byIcon(Icons.add_rounded));
       await tester.pumpAndSettle();
     }
@@ -42,7 +42,7 @@ void main() {
   testWidgets('step não estoura o máximo e format muda o texto', (
     WidgetTester tester,
   ) async {
-    final List<int> calls = <int>[];
+    final calls = <int>[];
     await pumpBare(
       tester,
       NeonQuantityStepper(
@@ -62,7 +62,7 @@ void main() {
     WidgetTester tester,
   ) async {
     final SemanticsHandle handle = tester.ensureSemantics();
-    final List<int> calls = <int>[];
+    final calls = <int>[];
     await pumpBare(
       tester,
       NeonQuantityStepper(

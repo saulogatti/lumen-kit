@@ -81,7 +81,9 @@ class NeonAvatarGroup extends StatelessWidget {
     final double outer = (radius + _ring) * 2;
     final double stepX = outer * (1 - overlap);
     final int slots = visible + (extra > 0 ? 1 : 0);
-    if (slots == 0) return const SizedBox.shrink();
+    if (slots == 0) {
+      return const SizedBox.shrink();
+    }
 
     Widget ringed(Widget child) => Container(
       width: outer,

@@ -31,7 +31,7 @@ void main() {
   testWidgets('allowHalf: metade esquerda dá meia estrela', (
     WidgetTester tester,
   ) async {
-    final List<double> calls = <double>[];
+    final calls = <double>[];
     await pumpBare(
       tester,
       NeonRating(value: 0, allowHalf: true, size: 40, onChanged: calls.add),

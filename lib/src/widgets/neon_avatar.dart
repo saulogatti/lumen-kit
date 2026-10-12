@@ -89,7 +89,9 @@ class NeonAvatar extends StatelessWidget {
       ),
     );
 
-    if (statusColor == null) return base;
+    if (statusColor == null) {
+      return base;
+    }
     final double dot = (size * 0.28).clamp(8, 18);
     return SizedBox(
       width: size,

@@ -384,7 +384,9 @@ class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
 
   @override
   NeonThemeExt lerp(ThemeExtension<NeonThemeExt>? other, double t) {
-    if (other is! NeonThemeExt) return this;
+    if (other is! NeonThemeExt) {
+      return this;
+    }
     return NeonThemeExt(
       palette: NeonPalette.lerp(palette, other.palette, t),
       style: t < 0.5 ? style : other.style,
@@ -401,7 +403,9 @@ class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
   static NeonThemeExt of(BuildContext context) {
     final NeonScope? scope = context
         .dependOnInheritedWidgetOfExactType<NeonScope>();
-    if (scope != null) return scope.data;
+    if (scope != null) {
+      return scope.data;
+    }
     final ThemeData theme = Theme.of(context);
     return theme.extension<NeonThemeExt>() ??
         (theme.brightness == Brightness.dark ? _fallbackDark : _fallbackLight);

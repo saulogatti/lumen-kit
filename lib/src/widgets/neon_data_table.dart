@@ -138,7 +138,9 @@ class NeonTableRow extends StatelessWidget {
       ),
     );
 
-    if (onTap == null || isHeader) return row;
+    if (onTap == null || isHeader) {
+      return row;
+    }
     return NeonPressable(onTap: onTap, child: row);
   }
 }

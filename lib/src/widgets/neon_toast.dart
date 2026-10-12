@@ -40,9 +40,13 @@ Future<void> showNeonToast({
 
   late final OverlayEntry entry;
   void finish() {
-    if (entry.mounted) entry.remove();
+    if (entry.mounted) {
+      entry.remove();
+    }
     entry.dispose();
-    if (!done.isCompleted) done.complete();
+    if (!done.isCompleted) {
+      done.complete();
+    }
   }
 
   entry = OverlayEntry(
@@ -112,7 +116,9 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
   }
 
   Future<void> _hide() async {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     await _ctrl.reverse();
     // O OverlayEntry é removido fora do frame de build.
     widget.onDone();

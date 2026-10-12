@@ -70,7 +70,7 @@ class NeonQuantityStepper extends StatelessWidget {
     final NeonStyle s = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final int current = _clamp(value);
-    final bool enabled = onChanged != null;
+    final enabled = onChanged != null;
     final bool canDec = enabled && current > min;
     final bool canInc = enabled && (max == null || current < max!);
     final VoidCallback? dec = canDec

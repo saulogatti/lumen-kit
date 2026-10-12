@@ -38,7 +38,7 @@ void main() {
   testWidgets('total conta pessoas fora da amostra e +N é tocável', (
     WidgetTester tester,
   ) async {
-    int taps = 0;
+    var taps = 0;
     await pumpBare(
       tester,
       NeonAvatarGroup(

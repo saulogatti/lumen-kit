@@ -165,7 +165,7 @@ Future<T> showNeonLoading<T>({
 }) async {
   final NeonThemeExt ext = NeonThemeExt.of(context);
   final NavigatorState navigator = Navigator.of(context, rootNavigator: true);
-  final DialogRoute<void> route = DialogRoute<void>(
+  final route = DialogRoute<void>(
     context: context,
     barrierDismissible: false,
     barrierColor: barrierColor ?? _defaultBarrier(ext.palette),
@@ -192,6 +192,8 @@ Future<T> showNeonLoading<T>({
   } finally {
     // removeRoute em vez de pop: não fecha por engano outra rota que tenha
     // sido aberta por cima durante a tarefa.
-    if (route.isActive) navigator.removeRoute(route);
+    if (route.isActive) {
+      navigator.removeRoute(route);
+    }
   }
 }

@@ -68,7 +68,7 @@ class NeonRating extends StatelessWidget {
     final Color idle = p.textMuted.withValues(alpha: 0.6);
     final double current = value.clamp(0, max.toDouble());
     final double step = allowHalf ? 0.5 : 1;
-    final bool interactive = onChanged != null;
+    final interactive = onChanged != null;
     final List<Shadow>? glow = s.shadow == NeonShadowKind.glow
         ? <Shadow>[
             Shadow(
@@ -96,9 +96,11 @@ class NeonRating extends StatelessWidget {
           ],
         ),
       );
-      if (!interactive) return body;
+      if (!interactive) {
+        return body;
+      }
 
-      final BorderRadius r = BorderRadius.circular(size / 2);
+      final r = BorderRadius.circular(size / 2);
       if (!allowHalf) {
         return NeonPressable(
           onTap: () => onChanged!(i + 1.0),

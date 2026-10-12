@@ -62,7 +62,7 @@ void main() {
   testWidgets('showNeonTimePicker aplica o accent no ponteiro', (
     WidgetTester tester,
   ) async {
-    const Color accent = Color(0xFFFF2E88);
+    const accent = Color(0xFFFF2E88);
     late BuildContext ctx;
     await pumpBare(
       tester,
@@ -73,7 +73,7 @@ void main() {
         },
       ),
     );
-    showNeonTimePicker(
+    await showNeonTimePicker(
       context: ctx,
       initialTime: const TimeOfDay(hour: 10, minute: 0),
       accentColor: accent,

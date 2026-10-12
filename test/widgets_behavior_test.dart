@@ -48,7 +48,7 @@ void main() {
     );
 
     var done = false;
-    showNeonToast(
+    await showNeonToast(
       context: ctx,
       message: 'salvo',
       duration: const Duration(seconds: 1),

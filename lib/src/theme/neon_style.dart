@@ -148,7 +148,9 @@ class NeonStyle {
   /// Glows pequenos (blur < 10, ex. pontos de status) são decorativos e só
   /// existem no estilo [NeonShadowKind.glow].
   List<BoxShadow>? shadows(List<BoxShadow>? glows) {
-    if (glows == null || shadow == NeonShadowKind.none) return null;
+    if (glows == null || shadow == NeonShadowKind.none) {
+      return null;
+    }
     final out = <BoxShadow>[
       for (final BoxShadow s in glows)
         if (shadow == NeonShadowKind.glow || s.blurRadius >= 10) _adapt(s),
@@ -203,7 +205,9 @@ class NeonStyle {
 
   /// Borda uniforme com espessura e opacidade ajustadas ao estilo.
   Border borderAll({Color color = const Color(0xFF000000), double width = 1}) {
-    if (borderScale == 0) return const Border();
+    if (borderScale == 0) {
+      return const Border();
+    }
     return Border.all(
       color: color.withValues(alpha: (color.a * borderOpacity).clamp(0.0, 1.0)),
       width: width * borderScale,
@@ -212,7 +216,9 @@ class NeonStyle {
 
   /// Envolve uma superfície com blur de fundo quando [blurSigma] > 0.
   Widget frost({required Widget child, BorderRadius? borderRadius}) {
-    if (blurSigma <= 0) return child;
+    if (blurSigma <= 0) {
+      return child;
+    }
     return ClipRRect(
       borderRadius: borderRadius ?? BorderRadius.zero,
       child: BackdropFilter(

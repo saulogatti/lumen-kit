@@ -55,7 +55,9 @@ class NeonActionContent extends StatelessWidget {
         ? null
         : Icon(icon, color: color, size: iconSize);
 
-    if (label == null) return leading ?? const SizedBox.shrink();
+    if (label == null) {
+      return leading ?? const SizedBox.shrink();
+    }
 
     return Row(
       mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,

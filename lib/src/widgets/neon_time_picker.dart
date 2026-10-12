@@ -119,7 +119,7 @@ class NeonTimePicker extends StatelessWidget {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
-    final bool disabled = onChanged == null;
+    final disabled = onChanged == null;
     final String? text = value == null
         ? null
         : (format?.call(value!) ??
@@ -141,7 +141,9 @@ class NeonTimePicker extends StatelessWidget {
                 accentColor: accent,
                 use24HourFormat: use24HourFormat,
               );
-              if (picked != null) onChanged!(picked);
+              if (picked != null) {
+                onChanged!(picked);
+              }
             },
       child: InputDecorator(
         decoration: NeonDecorations.input(

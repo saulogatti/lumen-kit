@@ -46,7 +46,7 @@ void main() {
   testWidgets('allowDeselect manda null ao tocar no marcado', (
     WidgetTester tester,
   ) async {
-    final List<String?> calls = <String?>[];
+    final calls = <String?>[];
     await pumpBare(
       tester,
       NeonChoiceChips<String>(
@@ -63,8 +63,8 @@ void main() {
   testWidgets('NeonFilterChips alterna vários valores e mostra o check', (
     WidgetTester tester,
   ) async {
-    Set<String> values = <String>{'p'};
-    final Set<String> original = values;
+    var values = <String>{'p'};
+    final original = values;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(

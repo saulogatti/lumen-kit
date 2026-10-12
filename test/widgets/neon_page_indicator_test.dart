@@ -25,7 +25,7 @@ void main() {
   testWidgets('NeonPageIndicator segue o PageController e toque troca página', (
     WidgetTester tester,
   ) async {
-    final PageController pages = PageController();
+    final pages = PageController();
     addTearDown(pages.dispose);
     await pumpBare(
       tester,
@@ -66,7 +66,7 @@ void main() {
   testWidgets('NeonCarousel troca de página pelos pontos e avisa', (
     WidgetTester tester,
   ) async {
-    final List<int> changes = <int>[];
+    final changes = <int>[];
     await pumpBare(
       tester,
       SizedBox(
@@ -93,7 +93,7 @@ void main() {
   testWidgets('NeonCarousel troca de controller sem quebrar', (
     WidgetTester tester,
   ) async {
-    final PageController external = PageController();
+    final external = PageController();
     addTearDown(external.dispose);
     Widget build(PageController? c) => bareApp(
       SizedBox(

@@ -10,7 +10,7 @@ void main() {
   testWidgets('NeonLoadingOverlay bloqueia toques só enquanto carrega', (
     WidgetTester tester,
   ) async {
-    int taps = 0;
+    var taps = 0;
     Widget build(bool loading) => bareApp(
       NeonLoadingOverlay(
         loading: loading,
@@ -52,9 +52,9 @@ void main() {
       ),
     );
 
-    final Completer<int> job = Completer<int>();
+    final job = Completer<int>();
     int? result;
-    showNeonLoading<int>(
+    await showNeonLoading<int>(
       context: ctx,
       message: 'Enviando…',
       task: () => job.future,
@@ -90,7 +90,7 @@ void main() {
     );
 
     Object? error;
-    showNeonLoading<void>(
+    await showNeonLoading<void>(
       context: ctx,
       message: 'Enviando…',
       task: () async => throw StateError('falhou'),

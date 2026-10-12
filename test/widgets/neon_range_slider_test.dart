@@ -8,7 +8,7 @@ void main() {
   testWidgets('NeonRangeSlider arrasta os thumbs e informa o intervalo', (
     WidgetTester tester,
   ) async {
-    RangeValues values = const RangeValues(20, 80);
+    var values = const RangeValues(20, 80);
     RangeValues? ended;
     await tester.pumpWidget(
       bareApp(
@@ -31,7 +31,7 @@ void main() {
     // Arrasta o thumb da direita para perto do fim.
     final double trackStart = box.left + 24;
     final double trackWidth = box.width - 48;
-    final Offset endThumb = Offset(
+    final endThumb = Offset(
       trackStart + trackWidth * 0.8,
       box.center.dy,
     );
@@ -73,7 +73,7 @@ void main() {
   testWidgets('NeonRangeSlider usa o accent do tema nos trilhos', (
     WidgetTester tester,
   ) async {
-    const Color teal = Color(0xFF00BFA5);
+    const teal = Color(0xFF00BFA5);
     await pumpBare(
       tester,
       NeonScope(

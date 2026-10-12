@@ -43,7 +43,7 @@ void main() {
     WidgetTester tester,
   ) async {
     String? picked;
-    int canceled = 0;
+    var canceled = 0;
     await pumpBare(
       tester,
       NeonMenuButton<String>(
@@ -84,7 +84,7 @@ void main() {
   testWidgets('NeonContextMenu abre com toque longo e clique direito', (
     WidgetTester tester,
   ) async {
-    final List<String> picked = <String>[];
+    final picked = <String>[];
     await pumpBare(
       tester,
       NeonContextMenu<String>(

@@ -84,7 +84,9 @@ class NeonBadge extends StatelessWidget {
             ),
     );
 
-    if (child == null) return badge;
+    if (child == null) {
+      return badge;
+    }
     return Stack(
       clipBehavior: Clip.none,
       children: <Widget>[
@@ -151,7 +153,9 @@ class NeonTag extends StatelessWidget {
       ),
     );
 
-    if (onTap == null) return content;
+    if (onTap == null) {
+      return content;
+    }
     return NeonPressable(
       onTap: onTap,
       borderRadius: style.radius(20),

@@ -29,7 +29,9 @@ abstract final class NeonMotion {
     double rest = 0.5,
   }) {
     if (active && !reduced(context)) {
-      if (!controller.isAnimating) controller.repeat();
+      if (!controller.isAnimating) {
+        controller.repeat();
+      }
     } else {
       controller
         ..stop()

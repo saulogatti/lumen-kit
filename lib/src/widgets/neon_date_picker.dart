@@ -116,7 +116,9 @@ class NeonDatePicker extends StatelessWidget {
                 lastDate: lastDate,
                 accentColor: accent,
               );
-              if (picked != null) onChanged!(picked);
+              if (picked != null) {
+                onChanged!(picked);
+              }
             },
       child: InputDecorator(
         decoration: NeonDecorations.input(

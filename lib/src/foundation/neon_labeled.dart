@@ -28,7 +28,9 @@ class NeonLabeled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (label == null) return control;
+    if (label == null) {
+      return control;
+    }
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final Widget text = Text(
       label!,
