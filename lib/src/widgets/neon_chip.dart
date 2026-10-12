@@ -67,7 +67,7 @@ class NeonChip extends StatelessWidget {
           border: s.borderAll(
             color: selected
                 ? accent.withValues(alpha: 0.8)
-                : p.surfaceOutline.withValues(alpha: 0.9),
+                : accent.withValues(alpha: 0.35),
             width: 1.2,
           ),
           boxShadow: s.shadows(
@@ -89,7 +89,7 @@ class NeonChip extends StatelessWidget {
             if (leading != null) Icon(leading, size: 16, color: fg),
             Text(
               label,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: fg,
                 fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
               ),

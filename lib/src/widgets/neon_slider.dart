@@ -117,6 +117,9 @@ SliderThemeData _neonSliderTheme(
     rangeThumbShape: _GlowRangeThumbShape(glow: accent, showGlow: glow),
     rangeTrackShape: const RoundedRectRangeSliderTrackShape(),
     rangeValueIndicatorShape: const PaddleRangeSliderValueIndicatorShape(),
+    // Com divisions, os ticks do Material viram um pontilhado sobre o
+    // trilho; o thumb já mostra onde o valor encaixa.
+    rangeTickMarkShape: const RoundRangeSliderTickMarkShape(tickMarkRadius: 0),
   );
 }
 

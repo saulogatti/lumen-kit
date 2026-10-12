@@ -55,6 +55,10 @@ void main() {
 
     await tester.tap(find.byType(NeonMenuButton<String>));
     await tester.pumpAndSettle();
+    final Opacity dim = tester.widget(
+      find.ancestor(of: find.text('Arquivar'), matching: find.byType(Opacity)),
+    );
+    expect(dim.opacity, kNeonDisabledOpacity);
     await tester.tap(find.text('Arquivar'), warnIfMissed: false);
     await tester.pumpAndSettle();
     expect(picked, isNull);

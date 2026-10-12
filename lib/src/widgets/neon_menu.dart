@@ -156,7 +156,7 @@ class _NeonMenuRow<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color fg = selected ? selectedColor : color;
-    return Row(
+    final Widget row = Row(
       spacing: 12,
       children: <Widget>[
         if (item.icon != null) Icon(item.icon, size: 18, color: iconColor),
@@ -173,6 +173,9 @@ class _NeonMenuRow<T> extends StatelessWidget {
         if (selected) Icon(Icons.check_rounded, size: 18, color: fg),
       ],
     );
+    return item.enabled
+        ? row
+        : Opacity(opacity: kNeonDisabledOpacity, child: row);
   }
 }
 

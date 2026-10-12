@@ -28,6 +28,7 @@ class NeonLoadingOverlay extends StatelessWidget {
     this.message,
     this.accentColor,
     this.barrierColor,
+    this.borderRadius,
   });
 
   /// Se `true`, mostra a camada e bloqueia [child].
@@ -45,6 +46,10 @@ class NeonLoadingOverlay extends StatelessWidget {
   /// Cor do véu sobre [child]. Default: `palette.backgroundDeep` translúcido.
   final Color? barrierColor;
 
+  /// Recorte do véu, para acompanhar os cantos de [child] (ex.: um card).
+  /// Use `NeonStyle.of(context).radius(...)` para seguir o estilo.
+  final BorderRadius? borderRadius;
+
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
@@ -55,25 +60,29 @@ class NeonLoadingOverlay extends StatelessWidget {
           child: ExcludeSemantics(excluding: loading, child: child),
         ),
         Positioned.fill(
-          child: AnimatedSwitcher(
-            duration: NeonMotion.duration(context, kNeonMediumDuration),
-            child: loading
-                ? Stack(
-                    key: const ValueKey<bool>(true),
-                    children: <Widget>[
-                      ModalBarrier(
-                        dismissible: false,
-                        color: barrierColor ?? _defaultBarrier(p),
-                      ),
-                      Center(
-                        child: NeonLoadingPanel(
-                          message: message,
-                          accentColor: accentColor,
+          child: ClipRRect(
+            borderRadius: borderRadius ?? BorderRadius.zero,
+            clipBehavior: borderRadius == null ? Clip.none : Clip.antiAlias,
+            child: AnimatedSwitcher(
+              duration: NeonMotion.duration(context, kNeonMediumDuration),
+              child: loading
+                  ? Stack(
+                      key: const ValueKey<bool>(true),
+                      children: <Widget>[
+                        ModalBarrier(
+                          dismissible: false,
+                          color: barrierColor ?? _defaultBarrier(p),
                         ),
-                      ),
-                    ],
-                  )
-                : const SizedBox.shrink(key: ValueKey<bool>(false)),
+                        Center(
+                          child: NeonLoadingPanel(
+                            message: message,
+                            accentColor: accentColor,
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(key: ValueKey<bool>(false)),
+            ),
           ),
         ),
       ],
