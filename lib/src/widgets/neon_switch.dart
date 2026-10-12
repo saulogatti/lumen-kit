@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Switch estilizado com track translúcida, thumb em accent e glow quando ativo.
 class NeonSwitch extends StatelessWidget {
@@ -30,6 +31,7 @@ class NeonSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
     final double opacity = disabled ? 0.55 : 1;
@@ -47,23 +49,25 @@ class NeonSwitch extends StatelessWidget {
           decoration: BoxDecoration(
             color: value
                 ? accent.withValues(alpha: 0.25)
-                : p.surface.withValues(alpha: 0.7),
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(
+                : p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
+            borderRadius: style.radius(30),
+            border: style.borderAll(
               color: value
                   ? accent.withValues(alpha: 0.9)
                   : p.surfaceOutline.withValues(alpha: 0.8),
               width: 1.2,
             ),
-            boxShadow: value
-                ? <BoxShadow>[
-                    BoxShadow(
-                      color: accent.withValues(alpha: 0.45),
-                      blurRadius: 14,
-                      spreadRadius: -2,
-                    ),
-                  ]
-                : null,
+            boxShadow: style.shadows(
+              value
+                  ? <BoxShadow>[
+                      BoxShadow(
+                        color: accent.withValues(alpha: 0.45),
+                        blurRadius: 14,
+                        spreadRadius: -2,
+                      ),
+                    ]
+                  : null,
+            ),
           ),
           child: AnimatedAlign(
             duration: const Duration(milliseconds: 220),
@@ -74,22 +78,26 @@ class NeonSwitch extends StatelessWidget {
               height: 22,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: value
-                    ? LinearGradient(
-                        colors: <Color>[accent, p.secondary],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      )
-                    : null,
+                gradient: style.fill(
+                  value
+                      ? LinearGradient(
+                          colors: <Color>[accent, p.secondary],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        )
+                      : null,
+                ),
                 color: value ? null : p.textMuted.withValues(alpha: 0.85),
-                boxShadow: value
-                    ? <BoxShadow>[
-                        BoxShadow(
-                          color: accent.withValues(alpha: 0.55),
-                          blurRadius: 8,
-                        ),
-                      ]
-                    : null,
+                boxShadow: style.shadows(
+                  value
+                      ? <BoxShadow>[
+                          BoxShadow(
+                            color: accent.withValues(alpha: 0.55),
+                            blurRadius: 8,
+                          ),
+                        ]
+                      : null,
+                ),
               ),
             ),
           ),

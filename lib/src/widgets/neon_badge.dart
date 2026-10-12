@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Pequeno selo (geralmente para contadores) que pode ficar livre ou
 /// ancorado em [child] no canto superior direito.
@@ -34,6 +35,7 @@ class NeonBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color c = color ?? p.danger;
 
     final Widget badge = Container(
@@ -45,10 +47,10 @@ class NeonBadge extends StatelessWidget {
           : const BoxConstraints(minWidth: 18, minHeight: 18),
       decoration: BoxDecoration(
         color: c,
-        borderRadius: BorderRadius.circular(dot ? 10 : 12),
-        boxShadow: <BoxShadow>[
+        borderRadius: style.radius(dot ? 10 : 12),
+        boxShadow: style.shadows(<BoxShadow>[
           BoxShadow(color: c.withValues(alpha: 0.6), blurRadius: 8),
-        ],
+        ]),
       ),
       alignment: Alignment.center,
       child: dot
@@ -104,14 +106,15 @@ class NeonTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color c = color ?? p.primary;
 
     final Widget content = Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: c.withValues(alpha: 0.14),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: c.withValues(alpha: 0.55)),
+        borderRadius: style.radius(20),
+        border: style.borderAll(color: c.withValues(alpha: 0.55)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -135,7 +138,7 @@ class NeonTag extends StatelessWidget {
     if (onTap == null) return content;
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: style.radius(20),
       child: content,
     );
   }

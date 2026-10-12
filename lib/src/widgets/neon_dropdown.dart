@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Item exibido no [NeonDropdown]. Mantém o tipo do valor genérico.
 class NeonDropdownItem<T> {
@@ -62,6 +63,7 @@ class NeonDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return DropdownButtonFormField<T>(
@@ -71,7 +73,7 @@ class NeonDropdown<T> extends StatelessWidget {
       iconEnabledColor: accent,
       style: Theme.of(context).textTheme.titleMedium,
       isExpanded: true,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: style.radius(12),
       hint: hint == null
           ? null
           : Text(hint!, style: TextStyle(color: p.textMuted)),
@@ -102,22 +104,22 @@ class NeonDropdown<T> extends StatelessWidget {
         errorText: errorText,
         prefixIcon: icon == null ? null : Icon(icon, color: accent),
         filled: true,
-        fillColor: p.surface.withValues(alpha: 0.7),
+        fillColor: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
         labelStyle: TextStyle(color: p.textMuted),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: style.radius(12),
           borderSide: BorderSide(color: accent.withValues(alpha: 0.35)),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: style.radius(12),
           borderSide: BorderSide(color: accent, width: 1.4),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: style.radius(12),
           borderSide: BorderSide(color: p.danger),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: style.radius(12),
           borderSide: BorderSide(color: p.danger, width: 1.4),
         ),
       ),

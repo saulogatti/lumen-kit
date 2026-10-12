@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Variantes visuais do [NeonButton].
 enum NeonButtonVariant {
@@ -87,6 +88,7 @@ class NeonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette palette = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final bool enabled = onPressed != null && !busy;
     final Color accent = accentColor ?? palette.primary;
 
@@ -94,7 +96,13 @@ class NeonButton extends StatelessWidget {
 
     final Widget body = switch (variant) {
       NeonButtonVariant.solid => _solid(context, palette, content, enabled),
-      NeonButtonVariant.outline => _outline(palette, accent, content, enabled),
+      NeonButtonVariant.outline => _outline(
+        context,
+        palette,
+        accent,
+        content,
+        enabled,
+      ),
       NeonButtonVariant.ghost => _ghost(content),
     };
 
@@ -102,10 +110,10 @@ class NeonButton extends StatelessWidget {
       opacity: enabled ? 1.0 : 0.55,
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: style.radius(borderRadius),
         child: InkWell(
           onTap: enabled ? onPressed : null,
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: style.radius(borderRadius),
           child: body,
         ),
       ),
@@ -153,48 +161,58 @@ class NeonButton extends StatelessWidget {
     Widget content,
     bool enabled,
   ) {
+    final NeonStyle style = NeonStyle.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
       decoration: BoxDecoration(
-        gradient: palette.accentGradient,
-        borderRadius: BorderRadius.circular(borderRadius),
-        boxShadow: enabled
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: (accentColor ?? palette.secondary).withValues(
-                    alpha: 0.35,
+        gradient: style.fill(palette.accentGradient),
+        borderRadius: style.radius(borderRadius),
+        boxShadow: style.shadows(
+          enabled
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: (accentColor ?? palette.secondary).withValues(
+                      alpha: 0.35,
+                    ),
+                    blurRadius: 18,
+                    offset: const Offset(0, 6),
                   ),
-                  blurRadius: 18,
-                  offset: const Offset(0, 6),
-                ),
-              ]
-            : null,
+                ]
+              : null,
+        ),
       ),
       child: content,
     );
   }
 
   Widget _outline(
+    BuildContext context,
     NeonPalette palette,
     Color accent,
     Widget content,
     bool enabled,
   ) {
+    final NeonStyle style = NeonStyle.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       decoration: BoxDecoration(
-        color: palette.surface.withValues(alpha: 0.35),
-        borderRadius: BorderRadius.circular(borderRadius),
-        border: Border.all(color: accent.withValues(alpha: 0.85), width: 1.2),
-        boxShadow: enabled
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.25),
-                  blurRadius: 14,
-                  offset: const Offset(0, 4),
-                ),
-              ]
-            : null,
+        color: palette.surface.withValues(alpha: style.surfaceAlpha(0.35)),
+        borderRadius: style.radius(borderRadius),
+        border: style.borderAll(
+          color: accent.withValues(alpha: 0.85),
+          width: 1.2,
+        ),
+        boxShadow: style.shadows(
+          enabled
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.25),
+                    blurRadius: 14,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : null,
+        ),
       ),
       child: content,
     );

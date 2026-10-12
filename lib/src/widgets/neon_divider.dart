@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Divider em gradiente accent que desbota nas pontas. Suporta orientação
 /// horizontal (default) ou vertical, e um [label] opcional centralizado.
@@ -37,6 +38,7 @@ class NeonDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final List<Color> colors = <Color>[
       accent.withValues(alpha: 0),
@@ -51,10 +53,12 @@ class NeonDivider extends StatelessWidget {
         child: Container(
           width: thickness,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: colors,
+            gradient: style.fill(
+              LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: colors,
+              ),
             ),
           ),
         ),
@@ -63,7 +67,9 @@ class NeonDivider extends StatelessWidget {
 
     final Widget line = Container(
       height: thickness,
-      decoration: BoxDecoration(gradient: LinearGradient(colors: colors)),
+      decoration: BoxDecoration(
+        gradient: style.fill(LinearGradient(colors: colors)),
+      ),
     );
 
     if (label == null) {

@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// ListTile temático com surface translúcida, borda accent suave e estado
 /// selecionado destacado por glow.
@@ -49,6 +50,7 @@ class NeonListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onTap == null && onLongPress == null;
 
@@ -57,7 +59,7 @@ class NeonListTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         onLongPress: onLongPress,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: style.radius(14),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           padding: EdgeInsets.symmetric(
@@ -65,24 +67,26 @@ class NeonListTile extends StatelessWidget {
             vertical: dense ? 8 : 12,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: style.radius(14),
             color: selected
                 ? accent.withValues(alpha: 0.14)
-                : p.surface.withValues(alpha: 0.5),
-            border: Border.all(
+                : p.surface.withValues(alpha: style.surfaceAlpha(0.5)),
+            border: style.borderAll(
               color: selected
                   ? accent.withValues(alpha: 0.6)
                   : p.surfaceOutline.withValues(alpha: 0.45),
             ),
-            boxShadow: selected
-                ? <BoxShadow>[
-                    BoxShadow(
-                      color: accent.withValues(alpha: 0.28),
-                      blurRadius: 14,
-                      spreadRadius: -3,
-                    ),
-                  ]
-                : null,
+            boxShadow: style.shadows(
+              selected
+                  ? <BoxShadow>[
+                      BoxShadow(
+                        color: accent.withValues(alpha: 0.28),
+                        blurRadius: 14,
+                        spreadRadius: -3,
+                      ),
+                    ]
+                  : null,
+            ),
           ),
           child: Row(
             children: <Widget>[

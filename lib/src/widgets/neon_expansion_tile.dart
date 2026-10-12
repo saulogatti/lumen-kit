@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Tile expansível com header em surface, ícone com rotação animada e borda
 /// accent quando aberto.
@@ -70,34 +71,37 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = widget.accentColor ?? p.primary;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        color: p.surface.withValues(alpha: 0.55),
-        border: Border.all(
+        borderRadius: style.radius(14),
+        color: p.surface.withValues(alpha: style.surfaceAlpha(0.55)),
+        border: style.borderAll(
           color: _expanded
               ? accent.withValues(alpha: 0.6)
               : p.surfaceOutline.withValues(alpha: 0.45),
         ),
-        boxShadow: _expanded
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.2),
-                  blurRadius: 14,
-                  spreadRadius: -3,
-                ),
-              ]
-            : null,
+        boxShadow: style.shadows(
+          _expanded
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.2),
+                    blurRadius: 14,
+                    spreadRadius: -3,
+                  ),
+                ]
+              : null,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           InkWell(
             onTap: _toggle,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: style.radius(14),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               child: Row(

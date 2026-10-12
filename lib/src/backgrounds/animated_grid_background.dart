@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Configuração de um glow orb posicionado no fundo.
 @immutable
@@ -64,7 +65,8 @@ class AnimatedGridBackground extends StatelessWidget {
   final Gradient? gradient;
 
   /// Lista de orbs. Default: `palette.primary` no canto superior direito e
-  /// `palette.secondary` no inferior esquerdo.
+  /// `palette.secondary` no inferior esquerdo, ou nenhum quando
+  /// [NeonStyle.orbs] é `false`.
   final List<GlowOrbSpec>? orbs;
 
   /// Distância em px entre linhas da grid.
@@ -76,7 +78,8 @@ class AnimatedGridBackground extends StatelessWidget {
   /// Opacidade das linhas da grid (0..1).
   final double gridOpacity;
 
-  /// Se `false`, omite a grid e mantém só gradiente + orbs.
+  /// Se `false`, omite a grid/pontos e mantém só gradiente + orbs. O tipo de
+  /// decoração (grid, pontos ou nenhuma) vem de [NeonStyle.background].
   final bool showGrid;
 
   static List<GlowOrbSpec> _defaultOrbs(NeonPalette p) => <GlowOrbSpec>[
@@ -87,7 +90,11 @@ class AnimatedGridBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final List<GlowOrbSpec> orbList = orbs ?? _defaultOrbs(p);
+    final NeonStyle style = NeonStyle.of(context);
+    final List<GlowOrbSpec> orbList =
+        orbs ?? (style.orbs ? _defaultOrbs(p) : const <GlowOrbSpec>[]);
+    final bool drawPattern =
+        showGrid && style.background != NeonBackgroundKind.plain;
     final Color effectiveGridColor = gridColor ?? p.primary;
     final Gradient effectiveGradient = gradient ?? p.backgroundGradient;
 
@@ -95,12 +102,13 @@ class AnimatedGridBackground extends StatelessWidget {
       decoration: BoxDecoration(gradient: effectiveGradient),
       child: Stack(
         children: <Widget>[
-          if (showGrid)
+          if (drawPattern)
             Positioned.fill(
               child: CustomPaint(
                 painter: _GridPainter(
                   spacing: gridSpacing,
                   color: effectiveGridColor.withValues(alpha: gridOpacity),
+                  dots: style.background == NeonBackgroundKind.dots,
                 ),
               ),
             ),
@@ -145,10 +153,15 @@ class _GlowOrb extends StatelessWidget {
 }
 
 class _GridPainter extends CustomPainter {
-  _GridPainter({required this.spacing, required this.color});
+  _GridPainter({
+    required this.spacing,
+    required this.color,
+    required this.dots,
+  });
 
   final double spacing;
   final Color color;
+  final bool dots;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -156,6 +169,16 @@ class _GridPainter extends CustomPainter {
       ..color = color
       ..strokeWidth = 1;
 
+    if (dots) {
+      // Pontos ficam mais discretos que linhas; compensa na opacidade.
+      paint.color = color.withValues(alpha: (color.a * 3).clamp(0.0, 1.0));
+      for (double x = 0; x <= size.width; x += spacing / 2) {
+        for (double y = 0; y <= size.height; y += spacing / 2) {
+          canvas.drawCircle(Offset(x, y), 1.2, paint);
+        }
+      }
+      return;
+    }
     for (double x = 0; x <= size.width; x += spacing) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), paint);
     }
@@ -166,5 +189,5 @@ class _GridPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _GridPainter old) =>
-      old.spacing != spacing || old.color != color;
+      old.spacing != spacing || old.color != color || old.dots != dots;
 }

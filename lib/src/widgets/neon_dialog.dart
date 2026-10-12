@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Dialog estilizado com surface gradiente, borda accent e tipografia do tema.
 /// Pode ser usado direto via [showNeonDialog].
@@ -38,6 +39,7 @@ class NeonDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme text = Theme.of(context).textTheme;
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color a = accent ?? p.primary;
 
     return Dialog(
@@ -45,67 +47,77 @@ class NeonDialog extends StatelessWidget {
       insetPadding: const EdgeInsets.all(24),
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: maxWidth),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                p.surface.withValues(alpha: 0.98),
-                p.backgroundMid.withValues(alpha: 0.95),
-              ],
-            ),
-            border: Border.all(color: a.withValues(alpha: 0.5), width: 1.2),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: a.withValues(alpha: 0.25),
-                blurRadius: 32,
-                offset: const Offset(0, 16),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  if (icon != null) ...<Widget>[
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: a.withValues(alpha: 0.12),
-                        border: Border.all(color: a.withValues(alpha: 0.45)),
-                      ),
-                      child: Icon(icon, color: a, size: 22),
-                    ),
-                    const SizedBox(width: 14),
-                  ],
-                  Expanded(child: Text(title, style: text.headlineMedium)),
-                ],
-              ),
-              const SizedBox(height: 18),
-              DefaultTextStyle.merge(
-                style: text.bodyMedium ?? const TextStyle(),
-                child: content,
-              ),
-              if (actions.isNotEmpty) ...<Widget>[
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    for (int i = 0; i < actions.length; i++) ...<Widget>[
-                      if (i > 0) const SizedBox(width: 12),
-                      actions[i],
-                    ],
+        child: style.frost(
+          borderRadius: style.radius(20),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: style.radius(20),
+              gradient: style.fill(
+                LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    p.surface.withValues(alpha: style.surfaceAlpha(0.98)),
+                    p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
                   ],
                 ),
+              ),
+              border: style.borderAll(
+                color: a.withValues(alpha: 0.5),
+                width: 1.2,
+              ),
+              boxShadow: style.shadows(<BoxShadow>[
+                BoxShadow(
+                  color: a.withValues(alpha: 0.25),
+                  blurRadius: 32,
+                  offset: const Offset(0, 16),
+                ),
+              ]),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    if (icon != null) ...<Widget>[
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: style.radius(12),
+                          color: a.withValues(alpha: 0.12),
+                          border: style.borderAll(
+                            color: a.withValues(alpha: 0.45),
+                          ),
+                        ),
+                        child: Icon(icon, color: a, size: 22),
+                      ),
+                      const SizedBox(width: 14),
+                    ],
+                    Expanded(child: Text(title, style: text.headlineMedium)),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                DefaultTextStyle.merge(
+                  style: text.bodyMedium ?? const TextStyle(),
+                  child: content,
+                ),
+                if (actions.isNotEmpty) ...<Widget>[
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      for (int i = 0; i < actions.length; i++) ...<Widget>[
+                        if (i > 0) const SizedBox(width: 12),
+                        actions[i],
+                      ],
+                    ],
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

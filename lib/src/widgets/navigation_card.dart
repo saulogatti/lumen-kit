@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Card de navegação reutilizável da tela principal.
 /// Recebe o que mostrar e o que fazer ao tocar — não decide nada por si.
@@ -46,6 +47,7 @@ class _NavigationCardState extends State<NavigationCard> {
     final TextTheme text = Theme.of(context).textTheme;
     final Color accent = widget.accent;
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -57,35 +59,39 @@ class _NavigationCardState extends State<NavigationCard> {
         transform: Matrix4.identity()
           ..translateByDouble(0.0, _hovering ? -4.0 : 0.0, 0.0, 1.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: <BoxShadow>[
+          borderRadius: style.radius(20),
+          boxShadow: style.shadows(<BoxShadow>[
             BoxShadow(
               color: accent.withValues(alpha: _hovering ? 0.35 : 0.12),
               blurRadius: _hovering ? 36 : 18,
               spreadRadius: _hovering ? 1 : 0,
               offset: const Offset(0, 12),
             ),
-          ],
+          ]),
         ),
         child: Material(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: style.radius(20),
           child: InkWell(
             onTap: widget.onTap,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: style.radius(20),
             child: Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    p.surface.withValues(alpha: 0.95),
-                    p.backgroundMid.withValues(alpha: 0.85),
-                  ],
+                borderRadius: style.radius(20),
+                gradient: style.fill(
+                  LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                      p.surface.withValues(alpha: style.surfaceAlpha(0.95)),
+                      p.backgroundMid.withValues(
+                        alpha: style.surfaceAlpha(0.85),
+                      ),
+                    ],
+                  ),
                 ),
-                border: Border.all(
+                border: style.borderAll(
                   color: accent.withValues(alpha: _hovering ? 0.7 : 0.35),
                   width: 1.2,
                 ),
@@ -138,13 +144,14 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NeonStyle style = NeonStyle.of(context);
     return Container(
       width: 56,
       height: 56,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: style.radius(14),
         color: accent.withValues(alpha: 0.12),
-        border: Border.all(color: accent.withValues(alpha: 0.45)),
+        border: style.borderAll(color: accent.withValues(alpha: 0.45)),
       ),
       child: Icon(icon, color: accent, size: 28),
     );
@@ -159,12 +166,13 @@ class _Tag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NeonStyle style = NeonStyle.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: accent.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: accent.withValues(alpha: 0.4)),
+        borderRadius: style.radius(999),
+        border: style.borderAll(color: accent.withValues(alpha: 0.4)),
       ),
       child: Text(
         label,

@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Skeleton/shimmer no estilo neon. Use enquanto o conteúdo real está
 /// carregando.
@@ -70,13 +71,16 @@ class _NeonSkeletonState extends State<NeonSkeleton>
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    final Color base = widget.baseColor ?? p.surface.withValues(alpha: 0.55);
+    final NeonStyle style = NeonStyle.of(context);
+    final Color base =
+        widget.baseColor ??
+        p.surface.withValues(alpha: style.surfaceAlpha(0.55));
     final Color highlight =
         widget.highlightColor ?? p.primary.withValues(alpha: 0.25);
 
     final BorderRadius radius = widget.shape == BoxShape.circle
         ? BorderRadius.zero
-        : BorderRadius.circular(widget.borderRadius);
+        : style.radius(widget.borderRadius);
 
     return AnimatedBuilder(
       animation: _ctrl,

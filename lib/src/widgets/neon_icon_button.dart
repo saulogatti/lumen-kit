@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Variantes visuais do [NeonIconButton].
 enum NeonIconButtonVariant {
@@ -88,12 +89,13 @@ class NeonIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette palette = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final bool enabled = onPressed != null && !busy;
     final Color accent = accentColor ?? palette.primary;
 
     final BorderRadius radius = switch (shape) {
-      NeonIconButtonShape.circle => BorderRadius.circular(size / 2),
-      NeonIconButtonShape.rounded => BorderRadius.circular(12),
+      NeonIconButtonShape.circle => style.radius(size / 2),
+      NeonIconButtonShape.rounded => style.radius(12),
     };
 
     final Color fg = variant == NeonIconButtonVariant.solid
@@ -115,19 +117,21 @@ class NeonIconButton extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          gradient: palette.accentGradient,
+          gradient: style.fill(palette.accentGradient),
           borderRadius: radius,
-          boxShadow: enabled
-              ? <BoxShadow>[
-                  BoxShadow(
-                    color: (accentColor ?? palette.secondary).withValues(
-                      alpha: 0.35,
+          boxShadow: style.shadows(
+            enabled
+                ? <BoxShadow>[
+                    BoxShadow(
+                      color: (accentColor ?? palette.secondary).withValues(
+                        alpha: 0.35,
+                      ),
+                      blurRadius: 16,
+                      offset: const Offset(0, 5),
                     ),
-                    blurRadius: 16,
-                    offset: const Offset(0, 5),
-                  ),
-                ]
-              : null,
+                  ]
+                : null,
+          ),
         ),
         child: content,
       ),
@@ -135,18 +139,23 @@ class NeonIconButton extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: palette.surface.withValues(alpha: 0.35),
+          color: palette.surface.withValues(alpha: style.surfaceAlpha(0.35)),
           borderRadius: radius,
-          border: Border.all(color: accent.withValues(alpha: 0.85), width: 1.2),
-          boxShadow: enabled
-              ? <BoxShadow>[
-                  BoxShadow(
-                    color: accent.withValues(alpha: 0.25),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ]
-              : null,
+          border: style.borderAll(
+            color: accent.withValues(alpha: 0.85),
+            width: 1.2,
+          ),
+          boxShadow: style.shadows(
+            enabled
+                ? <BoxShadow>[
+                    BoxShadow(
+                      color: accent.withValues(alpha: 0.25),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : null,
+          ),
         ),
         child: content,
       ),

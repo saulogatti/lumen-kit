@@ -6,7 +6,7 @@ Kit de UI com tema futurístico **dark neon** para Flutter — paleta opinativa,
 
 | Categoria   | Componentes                                                        |
 |-------------|--------------------------------------------------------------------|
-| Tema        | `AppColors`, `NeonPalette`, `NeonPreset`, `NeonThemeExt`, `AppTheme` |
+| Tema        | `AppColors`, `NeonPalette`, `NeonPreset`, `NeonStyle`, `NeonThemeExt`, `AppTheme` |
 | Background  | `AnimatedGridBackground`, `GlowOrbSpec`                            |
 | Estrutura   | `NeonAppBar`, `NeonCard`                                           |
 | Ação        | `GradientCta`, `NeonButton`, `NeonIconButton`, `NeonFab`           |
@@ -110,6 +110,35 @@ Dentro de qualquer widget, acesse via extension:
 final p = NeonThemeExt.of(context).palette;
 return Container(color: p.surface);
 ```
+
+## Trocando o estilo (além da cor)
+
+O "neon" (glow, gradientes, grid) é só um dos estilos. `NeonStyle` controla
+sombra, preenchimento, superfície, borda e fundo, e combina com qualquer paleta:
+
+| Estilo   | Visual                                                        |
+|----------|---------------------------------------------------------------|
+| `neon`   | Glow colorido, gradientes, grid + orbs (default)              |
+| `flat`   | Sem glow nem gradiente, sombra neutra, fundo liso             |
+| `glass`  | Superfícies translúcidas com blur, glow suave                 |
+| `soft`   | Cantos bem redondos, sombras difusas, sem borda, fundo pontilhado |
+| `brutal` | Cantos retos, borda grossa, sombra dura deslocada             |
+
+```dart
+MaterialApp(
+  theme: AppTheme.fromPreset(NeonPreset.matrix, style: NeonStyle.flat),
+  home: ...,
+);
+
+// Ajuste fino a partir de um preset.
+final style = NeonStyle.soft.copyWith(
+  background: NeonBackgroundKind.grid,
+  radiusScale: 1.2,
+);
+```
+
+As animações dos widgets (hover, transições, toasts) continuam iguais em todos
+os estilos.
 
 ## Background configurável
 

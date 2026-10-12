@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Item de [NeonBottomNavBar] / [NeonNavRail].
 class NeonNavItem {
@@ -45,11 +46,12 @@ class NeonBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return Container(
       decoration: BoxDecoration(
-        color: p.backgroundMid.withValues(alpha: 0.95),
+        color: p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
         border: Border(
           top: BorderSide(color: p.surfaceOutline.withValues(alpha: 0.5)),
         ),
@@ -64,7 +66,7 @@ class NeonBottomNavBar extends StatelessWidget {
             return Expanded(
               child: InkWell(
                 onTap: () => onChanged(i),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: style.radius(20),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.symmetric(
@@ -72,24 +74,26 @@ class NeonBottomNavBar extends StatelessWidget {
                     horizontal: 6,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: style.radius(20),
                     color: selected
                         ? accent.withValues(alpha: 0.16)
                         : Colors.transparent,
-                    border: Border.all(
+                    border: style.borderAll(
                       color: selected
                           ? accent.withValues(alpha: 0.55)
                           : Colors.transparent,
                     ),
-                    boxShadow: selected
-                        ? <BoxShadow>[
-                            BoxShadow(
-                              color: accent.withValues(alpha: 0.3),
-                              blurRadius: 12,
-                              spreadRadius: -2,
-                            ),
-                          ]
-                        : null,
+                    boxShadow: style.shadows(
+                      selected
+                          ? <BoxShadow>[
+                              BoxShadow(
+                                color: accent.withValues(alpha: 0.3),
+                                blurRadius: 12,
+                                spreadRadius: -2,
+                              ),
+                            ]
+                          : null,
+                    ),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -167,12 +171,13 @@ class NeonNavRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return Container(
       width: 84,
       decoration: BoxDecoration(
-        color: p.backgroundMid.withValues(alpha: 0.95),
+        color: p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
         border: Border(
           right: BorderSide(color: p.surfaceOutline.withValues(alpha: 0.5)),
         ),
@@ -196,16 +201,16 @@ class NeonNavRail extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: InkWell(
                       onTap: () => onChanged(i),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: style.radius(16),
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: style.radius(16),
                           color: selected
                               ? accent.withValues(alpha: 0.16)
                               : Colors.transparent,
-                          border: Border.all(
+                          border: style.borderAll(
                             color: selected
                                 ? accent.withValues(alpha: 0.55)
                                 : Colors.transparent,
@@ -252,14 +257,15 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NeonStyle style = NeonStyle.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: <BoxShadow>[
+        borderRadius: style.radius(8),
+        boxShadow: style.shadows(<BoxShadow>[
           BoxShadow(color: color.withValues(alpha: 0.6), blurRadius: 6),
-        ],
+        ]),
       ),
       child: Text(
         text,

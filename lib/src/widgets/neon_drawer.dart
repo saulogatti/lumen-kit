@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Drawer lateral com fundo em gradiente e borda accent vertical.
 ///
@@ -36,6 +37,7 @@ class NeonDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return Drawer(
@@ -44,13 +46,15 @@ class NeonDrawer extends StatelessWidget {
       width: width,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[
-              p.backgroundMid.withValues(alpha: 0.98),
-              p.backgroundDeep.withValues(alpha: 0.98),
-            ],
+          gradient: style.fill(
+            LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.98)),
+                p.backgroundDeep.withValues(alpha: 0.98),
+              ],
+            ),
           ),
           border: Border(
             right: BorderSide(
@@ -58,13 +62,13 @@ class NeonDrawer extends StatelessWidget {
               width: 1.2,
             ),
           ),
-          boxShadow: <BoxShadow>[
+          boxShadow: style.shadows(<BoxShadow>[
             BoxShadow(
               color: accent.withValues(alpha: 0.25),
               blurRadius: 24,
               offset: const Offset(4, 0),
             ),
-          ],
+          ]),
         ),
         child: SafeArea(
           child: Column(
@@ -124,6 +128,7 @@ class NeonDrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onTap == null;
 
@@ -133,29 +138,31 @@ class NeonDrawerItem extends StatelessWidget {
         opacity: disabled ? 0.55 : 1,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: style.radius(14),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 180),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: style.radius(14),
               color: selected
                   ? accent.withValues(alpha: 0.16)
                   : Colors.transparent,
-              border: Border.all(
+              border: style.borderAll(
                 color: selected
                     ? accent.withValues(alpha: 0.55)
                     : Colors.transparent,
               ),
-              boxShadow: selected
-                  ? <BoxShadow>[
-                      BoxShadow(
-                        color: accent.withValues(alpha: 0.3),
-                        blurRadius: 12,
-                        spreadRadius: -2,
-                      ),
-                    ]
-                  : null,
+              boxShadow: style.shadows(
+                selected
+                    ? <BoxShadow>[
+                        BoxShadow(
+                          color: accent.withValues(alpha: 0.3),
+                          blurRadius: 12,
+                          spreadRadius: -2,
+                        ),
+                      ]
+                    : null,
+              ),
             ),
             child: Row(
               children: <Widget>[

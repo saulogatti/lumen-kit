@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import 'neon_palette.dart';
+import 'neon_style.dart';
 
 /// Tema central da aplicação. Mantém ThemeData isolado da camada de UI
 /// para que telas não conheçam detalhes de estilo globais.
@@ -21,6 +22,7 @@ class AppTheme {
     Color? secondary,
     Color? tertiary,
     Brightness brightness = Brightness.dark,
+    NeonStyle style = NeonStyle.neon,
   }) => fromPalette(
     NeonPalette.fromSeed(
       primary: primary,
@@ -29,15 +31,18 @@ class AppTheme {
       brightness: brightness,
     ),
     brightness: brightness,
+    style: style,
   );
 
   /// Atalho para usar um [NeonPreset].
   static ThemeData fromPreset(
     NeonPreset preset, {
     Brightness brightness = Brightness.dark,
+    NeonStyle style = NeonStyle.neon,
   }) => fromPalette(
     preset.palette(brightness: brightness),
     brightness: brightness,
+    style: style,
   );
 
   /// Constrói um [ThemeData] a partir da paleta [p].
@@ -47,6 +52,7 @@ class AppTheme {
   static ThemeData fromPalette(
     NeonPalette p, {
     Brightness brightness = Brightness.dark,
+    NeonStyle style = NeonStyle.neon,
   }) {
     final ColorScheme scheme = ColorScheme.fromSeed(
       dynamicSchemeVariant: .vibrant,
@@ -114,7 +120,9 @@ class AppTheme {
       ),
       iconTheme: IconThemeData(color: p.primary),
       dividerColor: p.surfaceOutline,
-      extensions: <ThemeExtension<dynamic>>[NeonThemeExt(palette: p)],
+      extensions: <ThemeExtension<dynamic>>[
+        NeonThemeExt(palette: p, style: style),
+      ],
     );
   }
 }

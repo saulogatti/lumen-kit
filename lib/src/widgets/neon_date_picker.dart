@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Abre o [showDatePicker] padrão aplicando o tema neon.
 ///
@@ -94,6 +95,7 @@ class NeonDatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
     final String? text = value == null
@@ -103,7 +105,7 @@ class NeonDatePicker extends StatelessWidget {
     return Opacity(
       opacity: disabled ? 0.55 : 1,
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: style.radius(12),
         onTap: disabled
             ? null
             : () async {
@@ -122,14 +124,14 @@ class NeonDatePicker extends StatelessWidget {
             hintText: hint,
             prefixIcon: Icon(Icons.calendar_today_rounded, color: accent),
             filled: true,
-            fillColor: p.surface.withValues(alpha: 0.7),
+            fillColor: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
             labelStyle: TextStyle(color: p.textMuted),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: style.radius(12),
               borderSide: BorderSide(color: accent.withValues(alpha: 0.35)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: style.radius(12),
               borderSide: BorderSide(color: accent, width: 1.4),
             ),
           ),

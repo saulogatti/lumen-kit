@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Barra de progresso linear com gradiente neon e glow.
 ///
@@ -38,12 +39,13 @@ class NeonLinearProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Gradient g = gradient ?? p.accentGradient;
     final Color glow = glowColor ?? p.secondary;
     final Color track = trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius),
+      borderRadius: style.radius(borderRadius),
       child: SizedBox(
         height: height,
         child: Stack(
@@ -70,12 +72,13 @@ class _GlowBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NeonStyle style = NeonStyle.of(context);
     return DecoratedBox(
       decoration: BoxDecoration(
-        gradient: gradient,
-        boxShadow: <BoxShadow>[
+        gradient: style.fill(gradient),
+        boxShadow: style.shadows(<BoxShadow>[
           BoxShadow(color: glow.withValues(alpha: 0.55), blurRadius: 12),
-        ],
+        ]),
       ),
     );
   }
@@ -195,6 +198,7 @@ class _NeonCircularProgressState extends State<NeonCircularProgress>
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Gradient g = widget.gradient ?? p.accentGradient;
     final Color glow = widget.glowColor ?? p.secondary;
     final Color track =
@@ -210,7 +214,8 @@ class _NeonCircularProgressState extends State<NeonCircularProgress>
             painter: _NeonCircularPainter(
               progress: widget.value,
               rotation: _ctrl.value,
-              gradient: g,
+              gradient: style.fill(g)!,
+              showGlow: style.shadow == NeonShadowKind.glow,
               glowColor: glow,
               trackColor: track,
               strokeWidth: widget.strokeWidth,
@@ -227,6 +232,7 @@ class _NeonCircularPainter extends CustomPainter {
     required this.progress,
     required this.rotation,
     required this.gradient,
+    required this.showGlow,
     required this.glowColor,
     required this.trackColor,
     required this.strokeWidth,
@@ -235,6 +241,7 @@ class _NeonCircularPainter extends CustomPainter {
   final double? progress;
   final double rotation;
   final Gradient gradient;
+  final bool showGlow;
   final Color glowColor;
   final Color trackColor;
   final double strokeWidth;
@@ -274,7 +281,7 @@ class _NeonCircularPainter extends CustomPainter {
       sweep = tau * 0.75;
     }
 
-    canvas.drawArc(rect, startAngle, sweep, false, glowPaint);
+    if (showGlow) canvas.drawArc(rect, startAngle, sweep, false, glowPaint);
     canvas.drawArc(rect, startAngle, sweep, false, arcPaint);
   }
 
@@ -283,5 +290,7 @@ class _NeonCircularPainter extends CustomPainter {
       old.progress != progress ||
       old.rotation != rotation ||
       old.strokeWidth != strokeWidth ||
-      old.trackColor != trackColor;
+      old.trackColor != trackColor ||
+      old.gradient != gradient ||
+      old.showGlow != showGlow;
 }
