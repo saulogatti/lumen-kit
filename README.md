@@ -9,11 +9,11 @@ Kit de UI com tema futurístico **dark neon** para Flutter — paleta opinativa,
 | Tema        | `AppColors`, `NeonPalette`, `NeonPreset`, `NeonStyle`, `NeonThemeExt`, `AppTheme` |
 | Background  | `AnimatedGridBackground`, `GlowOrbSpec`                            |
 | Estrutura   | `NeonAppBar`, `NeonCard`                                           |
-| Ação        | `GradientCta`, `NeonButton`, `NeonIconButton`, `NeonFab`           |
-| Input       | `NeonTextField`, `NeonSwitch`, `NeonCheckbox`, `NeonRadio`, `NeonSlider`, `NeonDropdown`, `NeonSearchBar`, `NeonDatePicker` |
-| Feedback    | `StatusChip`, `NeonDialog`, `NeonSnackBar`, `NeonToast`, `NeonLinearProgress`, `NeonCircularProgress`, `NeonSkeleton`, `NeonTooltip` |
-| Navegação   | `NavigationCard`, `NeonTabs`, `NeonSegmentedControl`, `NeonBottomNavBar`, `NeonNavRail`, `NeonBottomSheet`, `NeonDrawer`, `NeonStepper` |
-| Display     | `NeonBadge`, `NeonTag`, `NeonAvatar`, `NeonListTile`, `NeonDivider`, `NeonExpansionTile`, `NeonDataTable`, `NeonTableRow` |
+| Ação        | `GradientCta`, `NeonButton`, `NeonIconButton`, `NeonFab`, `NeonMenuButton`, `NeonContextMenu` |
+| Input       | `NeonTextField`, `NeonSwitch`, `NeonCheckbox`, `NeonRadio`, `NeonSlider`, `NeonRangeSlider`, `NeonDropdown`, `NeonSearchBar`, `NeonDatePicker`, `NeonTimePicker`, `NeonChip` (+ `NeonChoiceChips`, `NeonFilterChips`), `NeonQuantityStepper`, `NeonRating` |
+| Feedback    | `StatusChip`, `NeonDialog`, `NeonSnackBar`, `NeonToast`, `NeonLinearProgress`, `NeonCircularProgress`, `NeonSkeleton`, `NeonTooltip`, `NeonLoadingOverlay` (+ `showNeonLoading`) |
+| Navegação   | `NavigationCard`, `NeonTabs`, `NeonSegmentedControl`, `NeonBottomNavBar`, `NeonNavRail`, `NeonBottomSheet`, `NeonDrawer`, `NeonStepper`, `NeonPageIndicator`, `NeonCarousel` |
+| Display     | `NeonBadge`, `NeonTag`, `NeonAvatar`, `NeonAvatarGroup`, `NeonListTile`, `NeonDivider`, `NeonExpansionTile`, `NeonDataTable`, `NeonTableRow` |
 
 Tudo desacoplado de domínio — recebe `child`, callbacks e tokens; não conhece nenhuma regra de negócio.
 
@@ -259,6 +259,91 @@ NeonDatePicker(
   lastDate: DateTime(2030),
   onChanged: (d) => setState(() => date = d),
 );
+
+NeonTimePicker(
+  label: 'Horário',
+  value: time,
+  onChanged: (t) => setState(() => time = t),
+);
+
+NeonRangeSlider(
+  values: preco,
+  max: 500,
+  divisions: 50,
+  onChanged: (v) => setState(() => preco = v),
+  onChangeEnd: (v) => buscar(v), // dispara a busca só ao soltar
+);
+```
+
+## Chips, quantidade e avaliação
+
+```dart
+// Escolha única.
+NeonChoiceChips<String>(
+  value: tamanho,
+  onChanged: (v) => setState(() => tamanho = v),
+  items: const [
+    NeonChipItem(value: 'p', label: 'P'),
+    NeonChipItem(value: 'm', label: 'M'),
+  ],
+);
+
+// Filtros (vários marcados). Recebe e devolve um Set novo.
+NeonFilterChips<String>(
+  values: filtros,
+  onChanged: (v) => setState(() => filtros = v),
+  items: const [
+    NeonChipItem(value: 'promo', label: 'Promoção'),
+    NeonChipItem(value: 'frete', label: 'Frete grátis'),
+  ],
+);
+
+NeonQuantityStepper(value: qtd, min: 1, max: 10, onChanged: (v) => setState(() => qtd = v));
+
+NeonRating(value: nota, allowHalf: true, onChanged: (v) => setState(() => nota = v));
+NeonRating(value: 4.3, size: 16); // somente leitura, com fração
+```
+
+## Menu, loading e carrossel
+
+```dart
+// O "⋮" de card / app bar.
+NeonMenuButton<String>(
+  items: const [
+    NeonMenuItem(value: 'edit', label: 'Editar', icon: Icons.edit),
+    NeonMenuDivider(),
+    NeonMenuItem(value: 'del', label: 'Excluir', destructive: true),
+  ],
+  onSelected: (v) => …,
+);
+
+// Clique direito (desktop/web) ou toque longo (mobile).
+NeonContextMenu<String>(items: itens, onSelected: …, child: linha);
+
+// Bloqueia a tela durante o submit e devolve o resultado da tarefa.
+final ok = await showNeonLoading(
+  context: context,
+  message: 'Enviando…',
+  task: () => api.enviar(form),
+);
+
+// Ou só uma área, controlada por estado.
+NeonLoadingOverlay(loading: salvando, message: 'Salvando…', child: form);
+
+// Galeria / onboarding com os pontinhos de página.
+NeonCarousel(
+  itemCount: fotos.length,
+  itemBuilder: (context, i) => Image.network(fotos[i], fit: BoxFit.cover),
+);
+// Ou só os pontos, ligados ao seu PageView.
+NeonPageIndicator(count: 4, controller: pageController);
+
+// Avatares empilhados com "+N".
+NeonAvatarGroup(
+  avatars: [for (final u in membros) NeonAvatar(initials: u.iniciais)],
+  maxVisible: 3,
+  total: totalDeMembros,
+);
 ```
 
 ## Navegação
@@ -315,7 +400,7 @@ await showNeonDialog<void>(
 
 ## App de exemplo
 
-Há um app demo em [`example/`](example/) com uma única tela que exercita todos os componentes do kit — cards, status, botões, icon buttons, FAB, inputs (texto, busca, switch, checkbox, radio, slider, dropdown, date picker), progresso linear/circular, skeleton, snackbar, toast, dialog, bottom sheet, tabs, segmented, bottom nav, drawer, stepper, avatar, badge, tag, list tile, divider, expansion tile, data table e navigation cards.
+Há um app demo em [`example/`](example/) com uma única tela que exercita todos os componentes do kit — cards, status, botões, icon buttons, FAB, inputs (texto, busca, switch, checkbox, radio, slider, range slider, dropdown, date e time picker), chips de escolha e filtro, quantity stepper, rating, menu de ações e de contexto, loading overlay, carrossel, progresso linear/circular, skeleton, snackbar, toast, dialog, bottom sheet, tabs, segmented, bottom nav, drawer, stepper, avatar, avatar group, badge, tag, list tile, divider, expansion tile, data table e navigation cards.
 
 ```bash
 cd example
