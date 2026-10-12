@@ -149,7 +149,7 @@ class NeonStyle {
   /// existem no estilo [NeonShadowKind.glow].
   List<BoxShadow>? shadows(List<BoxShadow>? glows) {
     if (glows == null || shadow == NeonShadowKind.none) return null;
-    final List<BoxShadow> out = <BoxShadow>[
+    final out = <BoxShadow>[
       for (final BoxShadow s in glows)
         if (shadow == NeonShadowKind.glow || s.blurRadius >= 10) _adapt(s),
     ];

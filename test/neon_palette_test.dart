@@ -5,7 +5,7 @@ import 'package:neon_ui/neon_ui.dart';
 void main() {
   group('NeonPalette', () {
     test('defaultDark mantém exatamente os tokens de AppColors', () {
-      final NeonPalette p = NeonPalette.defaultDark();
+      final p = NeonPalette.defaultDark();
       expect(p.primary, AppColors.accentCyan);
       expect(p.secondary, AppColors.accentMagenta);
       expect(p.tertiary, AppColors.accentBlue);
@@ -14,8 +14,8 @@ void main() {
     });
 
     test('fromSeed deriva accents e gradientes da cor informada', () {
-      const Color green = Color(0xFF39FF14);
-      final NeonPalette p = NeonPalette.fromSeed(primary: green);
+      const green = Color(0xFF39FF14);
+      final p = NeonPalette.fromSeed(primary: green);
       expect(p.primary, green);
       expect(p.secondary, isNot(green));
       expect(p.accentGradient.colors, <Color>[
@@ -25,7 +25,7 @@ void main() {
       ]);
       expect(p.backgroundDeep.computeLuminance(), lessThan(0.01));
 
-      final NeonPalette light = NeonPalette.fromSeed(
+      final light = NeonPalette.fromSeed(
         primary: green,
         brightness: Brightness.light,
       );
@@ -53,7 +53,7 @@ void main() {
     });
 
     test('light() usa contorno translúcido e fundo claro', () {
-      final NeonPalette p = NeonPalette.light();
+      final p = NeonPalette.light();
       expect(p.surfaceOutline.a, lessThan(0.2));
       expect(
         p.backgroundGradient.colors.first.computeLuminance(),
@@ -65,7 +65,7 @@ void main() {
   testWidgets('widgets seguem a paleta do tema, não AppColors', (
     WidgetTester tester,
   ) async {
-    const Color orange = Color(0xFFFF8A00);
+    const orange = Color(0xFFFF8A00);
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.fromSeed(primary: orange),
@@ -78,7 +78,6 @@ void main() {
                 NeonTextField(
                   label: 'nome',
                   icon: Icons.person,
-                  initialValue: '',
                   onChanged: _ignore,
                 ),
               ],

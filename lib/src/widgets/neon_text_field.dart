@@ -11,6 +11,7 @@ import '../theme/neon_style.dart';
 /// Sem [controller], mantém um controller interno inicializado com
 /// [initialValue] para preservar foco/cursor entre rebuilds.
 class NeonTextField extends StatefulWidget {
+
   /// Cria um campo de texto neon.
   const NeonTextField({
     required this.label,
@@ -40,7 +41,6 @@ class NeonTextField extends StatefulWidget {
     this.autofillHints,
     this.accentColor,
   });
-
   /// Rótulo exibido pelo campo.
   final String label;
 
@@ -128,23 +128,6 @@ class _NeonTextFieldState extends State<NeonTextField> {
       (_internal ??= TextEditingController(text: widget.initialValue));
 
   @override
-  void didUpdateWidget(NeonTextField oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Passou a usar controller interno: herda o texto do externo antigo.
-    if (oldWidget.controller != null && widget.controller == null) {
-      _internal ??= TextEditingController.fromValue(
-        oldWidget.controller!.value,
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    _internal?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
@@ -183,5 +166,22 @@ class _NeonTextFieldState extends State<NeonTextField> {
         suffixIcon: widget.suffix,
       ).copyWith(alignLabelWithHint: (widget.maxLines ?? 2) > 1),
     );
+  }
+
+  @override
+  void didUpdateWidget(NeonTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Passou a usar controller interno: herda o texto do externo antigo.
+    if (oldWidget.controller != null && widget.controller == null) {
+      _internal ??= TextEditingController.fromValue(
+        oldWidget.controller!.value,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _internal?.dispose();
+    super.dispose();
   }
 }

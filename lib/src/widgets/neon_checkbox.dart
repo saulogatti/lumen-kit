@@ -43,8 +43,8 @@ class NeonCheckbox extends StatelessWidget {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
-    final bool disabled = onChanged == null;
-    final bool isChecked = value == true;
+    final disabled = onChanged == null;
+    final isChecked = value == true;
     final bool isIndeterminate = value == null && tristate;
 
     // false → true → null (tristate) → false.

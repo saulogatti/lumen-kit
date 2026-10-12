@@ -37,7 +37,7 @@ class NeonSwitch extends StatelessWidget {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
-    final bool disabled = onChanged == null;
+    final disabled = onChanged == null;
     final Duration duration = NeonMotion.duration(context, kNeonMediumDuration);
 
     final Widget track = AnimatedContainer(

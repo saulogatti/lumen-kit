@@ -79,7 +79,7 @@ class NeonFab extends StatelessWidget {
     final Gradient g = gradient ?? palette.accentGradient;
     final Color glow = glowColor ?? palette.secondary;
     final Color fg = foregroundColor ?? palette.backgroundDeep;
-    final bool extended = label != null;
+    final extended = label != null;
 
     final BorderRadius radius = style.radius(size / 2);
 

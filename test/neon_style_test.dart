@@ -39,7 +39,7 @@ void main() {
     });
 
     test('fill vira cor sólida quando gradients é falso', () {
-      const LinearGradient g = LinearGradient(
+      const g = LinearGradient(
         colors: <Color>[Color(0xFF111111), Color(0xFF222222)],
       );
       expect(NeonStyle.neon.fill(g), g);

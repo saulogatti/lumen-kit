@@ -6,14 +6,14 @@ import 'neon_style.dart';
 /// Tema central da aplicação. Mantém ThemeData isolado da camada de UI
 /// para que telas não conheçam detalhes de estilo globais.
 class AppTheme {
+  const AppTheme._();
   /// Tema dark default usando a paleta padrão.
   static ThemeData get dark =>
-      fromPalette(NeonPalette.defaultDark(), brightness: Brightness.dark);
+      fromPalette(NeonPalette.defaultDark());
 
   /// Tema claro usando a paleta clara padrão.
   static ThemeData get light =>
       fromPalette(NeonPalette.light(), brightness: Brightness.light);
-  const AppTheme._();
 
   /// Atalho para trocar as cores do kit inteiro a partir de uma ou duas
   /// cores. Equivale a `fromPalette(NeonPalette.fromSeed(...))`.
@@ -54,7 +54,7 @@ class AppTheme {
     Brightness brightness = Brightness.dark,
     NeonStyle style = NeonStyle.neon,
   }) {
-    final ColorScheme scheme = ColorScheme.fromSeed(
+    final scheme = ColorScheme.fromSeed(
       dynamicSchemeVariant: .vibrant,
       brightness: brightness,
       seedColor: p.primary,
@@ -68,7 +68,7 @@ class AppTheme {
       onError: p.textPrimary,
     );
 
-    final TextTheme textTheme = TextTheme(
+    final textTheme = TextTheme(
       displaySmall: TextStyle(
         color: p.textPrimary,
         fontSize: 32,

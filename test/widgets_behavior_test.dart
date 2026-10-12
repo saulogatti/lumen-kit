@@ -16,7 +16,7 @@ void main() {
   testWidgets('NeonTabs acompanha selectedIndex vindo de fora', (
     WidgetTester tester,
   ) async {
-    const List<NeonTabItem> items = <NeonTabItem>[
+    const items = <NeonTabItem>[
       NeonTabItem(label: 'A'),
       NeonTabItem(label: 'B'),
       NeonTabItem(label: 'C'),
@@ -47,7 +47,7 @@ void main() {
       ),
     );
 
-    bool done = false;
+    var done = false;
     showNeonToast(
       context: ctx,
       message: 'salvo',
@@ -80,7 +80,7 @@ void main() {
       ),
     );
 
-    int undo = 0;
+    var undo = 0;
     showNeonSnackBar(
       context: ctx,
       message: 'apagado',
@@ -157,7 +157,7 @@ void main() {
   testWidgets('NeonSwitch alterna pelo teclado (antes era GestureDetector)', (
     WidgetTester tester,
   ) async {
-    bool value = false;
+    var value = false;
     await tester.pumpWidget(
       _app(
         StatefulBuilder(
@@ -195,8 +195,8 @@ void main() {
   testWidgets('NeonTextField aceita controller e valida dentro de Form', (
     WidgetTester tester,
   ) async {
-    final GlobalKey<FormState> form = GlobalKey<FormState>();
-    final TextEditingController controller = TextEditingController(text: 'x');
+    final form = GlobalKey<FormState>();
+    final controller = TextEditingController(text: 'x');
     addTearDown(controller.dispose);
 
     await tester.pumpWidget(

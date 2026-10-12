@@ -151,7 +151,7 @@ class NeonSegmentedControl extends StatelessWidget {
       ),
       child: Row(
         children: List<Widget>.generate(items.length, (int i) {
-          final bool selected = i == selectedIndex;
+          final selected = i == selectedIndex;
           final NeonTabItem it = items[i];
           final Color fg = selected ? p.textPrimary : p.textMuted;
           return Expanded(

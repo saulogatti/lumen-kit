@@ -65,7 +65,7 @@ class NeonBottomNavBar extends StatelessWidget {
         top: false,
         child: Row(
           children: List<Widget>.generate(items.length, (int i) {
-            final bool selected = i == selectedIndex;
+            final selected = i == selectedIndex;
             final NeonNavItem it = items[i];
             return Expanded(
               child: NeonPressable(
@@ -159,7 +159,7 @@ class NeonNavRail extends StatelessWidget {
                 itemCount: items.length,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 itemBuilder: (BuildContext _, int i) {
-                  final bool selected = i == selectedIndex;
+                  final selected = i == selectedIndex;
                   final NeonNavItem it = items[i];
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),

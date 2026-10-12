@@ -47,7 +47,7 @@ class NeonSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final Color accent = accentColor ?? p.primary;
-    final bool disabled = onChanged == null;
+    final disabled = onChanged == null;
 
     return SliderTheme(
       data: _neonSliderTheme(context, p, accent),

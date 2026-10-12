@@ -10,53 +10,6 @@ import 'neon_style.dart';
 /// [NeonPalette.fromSeed] ou um [NeonPreset].
 @immutable
 class NeonPalette {
-  /// Tom mais profundo do fundo da aplicação.
-  final Color backgroundDeep;
-
-  /// Tom intermediário usado em gradientes de fundo.
-  final Color backgroundMid;
-
-  /// Tom mais claro do fundo, usado para suavizar o gradiente.
-  final Color backgroundSoft;
-
-  /// Cor base para cards, overlays e superfícies elevadas.
-  final Color surface;
-
-  /// Contorno translúcido usado em bordas de superfícies.
-  final Color surfaceOutline;
-
-  /// Realce sutil aplicado dentro de superfícies translúcidas.
-  final Color surfaceHighlight;
-
-  /// Accent primário usado em bordas, ícones e estados ativos.
-  final Color primary;
-
-  /// Accent secundário usado em glows e composições de gradiente.
-  final Color secondary;
-
-  /// Accent intermediário que conecta [primary] e [secondary] nos gradientes.
-  final Color tertiary;
-
-  /// Cor de maior contraste para títulos e conteúdo principal.
-  final Color textPrimary;
-
-  /// Cor de contraste médio para textos de apoio.
-  final Color textSecondary;
-
-  /// Cor de menor contraste para legendas, hints e conteúdo auxiliar.
-  final Color textMuted;
-
-  /// Cor semântica para estados de sucesso.
-  final Color success;
-
-  /// Cor semântica para estados de alerta.
-  final Color warning;
-
-  /// Cor semântica para estados de erro ou perigo.
-  final Color danger;
-
-  final LinearGradient? _backgroundGradient;
-  final LinearGradient? _accentGradient;
 
   /// Cria uma paleta completa para o tema neon.
   ///
@@ -157,7 +110,7 @@ class NeonPalette {
     Color? tertiary,
     Brightness brightness = Brightness.dark,
   }) {
-    final HSLColor p = HSLColor.fromColor(primary);
+    final p = HSLColor.fromColor(primary);
     final HSLColor s = secondary != null
         ? HSLColor.fromColor(secondary)
         : p.withHue((p.hue + 150) % 360);
@@ -179,7 +132,7 @@ class NeonPalette {
     Color tone(double saturation, double lightness, [double alpha = 1]) =>
         HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
 
-    final bool dark = brightness == Brightness.dark;
+    final dark = brightness == Brightness.dark;
     return NeonPalette(
       backgroundDeep: dark ? tone(0.5, 0.04) : tone(0.3, 0.96),
       backgroundMid: dark ? tone(0.5, 0.09) : tone(0.3, 1),
@@ -198,6 +151,53 @@ class NeonPalette {
       danger: AppColors.danger,
     );
   }
+  /// Tom mais profundo do fundo da aplicação.
+  final Color backgroundDeep;
+
+  /// Tom intermediário usado em gradientes de fundo.
+  final Color backgroundMid;
+
+  /// Tom mais claro do fundo, usado para suavizar o gradiente.
+  final Color backgroundSoft;
+
+  /// Cor base para cards, overlays e superfícies elevadas.
+  final Color surface;
+
+  /// Contorno translúcido usado em bordas de superfícies.
+  final Color surfaceOutline;
+
+  /// Realce sutil aplicado dentro de superfícies translúcidas.
+  final Color surfaceHighlight;
+
+  /// Accent primário usado em bordas, ícones e estados ativos.
+  final Color primary;
+
+  /// Accent secundário usado em glows e composições de gradiente.
+  final Color secondary;
+
+  /// Accent intermediário que conecta [primary] e [secondary] nos gradientes.
+  final Color tertiary;
+
+  /// Cor de maior contraste para títulos e conteúdo principal.
+  final Color textPrimary;
+
+  /// Cor de contraste médio para textos de apoio.
+  final Color textSecondary;
+
+  /// Cor de menor contraste para legendas, hints e conteúdo auxiliar.
+  final Color textMuted;
+
+  /// Cor semântica para estados de sucesso.
+  final Color success;
+
+  /// Cor semântica para estados de alerta.
+  final Color warning;
+
+  /// Cor semântica para estados de erro ou perigo.
+  final Color danger;
+
+  final LinearGradient? _backgroundGradient;
+  final LinearGradient? _accentGradient;
 
   /// Alias antigo de [primary].
   @Deprecated('Use primary')
@@ -366,14 +366,14 @@ enum NeonPreset {
 /// ThemeExtension para acessar a paleta via `Theme.of(context).extension<NeonThemeExt>()`.
 @immutable
 class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
+
+  /// Cria uma extensão de tema que transporta a [palette] e o [style].
+  const NeonThemeExt({required this.palette, this.style = NeonStyle.neon});
   /// Paleta disponível para os widgets que leem o [ThemeData] atual.
   final NeonPalette palette;
 
   /// Estilo de efeitos (sombra, borda, fundo…) usado pelos widgets.
   final NeonStyle style;
-
-  /// Cria uma extensão de tema que transporta a [palette] e o [style].
-  const NeonThemeExt({required this.palette, this.style = NeonStyle.neon});
 
   @override
   NeonThemeExt copyWith({NeonPalette? palette, NeonStyle? style}) =>

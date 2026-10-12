@@ -41,7 +41,7 @@ class _NeonBottomSheetShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
-    final BorderRadius sheetRadius = BorderRadius.vertical(
+    final sheetRadius = BorderRadius.vertical(
       top: Radius.circular(24 * style.radiusScale),
     );
     return style.frost(

@@ -8,6 +8,20 @@ import '../theme/neon_style.dart';
 /// ListTile temático com surface translúcida, borda accent suave e estado
 /// selecionado destacado por glow.
 class NeonListTile extends StatelessWidget {
+
+  /// Cria um item de lista neon.
+  const NeonListTile({
+    required this.title,
+    super.key,
+    this.subtitle,
+    this.leading,
+    this.trailing,
+    this.onTap,
+    this.onLongPress,
+    this.selected = false,
+    this.accentColor,
+    this.dense = false,
+  });
   /// Texto principal do item.
   final String title;
 
@@ -34,20 +48,6 @@ class NeonListTile extends StatelessWidget {
 
   /// Se `true`, reduz o espaçamento vertical.
   final bool dense;
-
-  /// Cria um item de lista neon.
-  const NeonListTile({
-    required this.title,
-    super.key,
-    this.subtitle,
-    this.leading,
-    this.trailing,
-    this.onTap,
-    this.onLongPress,
-    this.selected = false,
-    this.accentColor,
-    this.dense = false,
-  });
 
   @override
   Widget build(BuildContext context) {

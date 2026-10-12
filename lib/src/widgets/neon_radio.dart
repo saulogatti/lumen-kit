@@ -44,8 +44,8 @@ class NeonRadio<T> extends StatelessWidget {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
-    final bool disabled = onChanged == null;
-    final bool selected = value == groupValue;
+    final disabled = onChanged == null;
+    final selected = value == groupValue;
 
     final Widget circle = AnimatedContainer(
       duration: NeonMotion.duration(context, kNeonFastDuration),

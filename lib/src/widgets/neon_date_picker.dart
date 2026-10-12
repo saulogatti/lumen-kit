@@ -99,7 +99,7 @@ class NeonDatePicker extends StatelessWidget {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
-    final bool disabled = onChanged == null;
+    final disabled = onChanged == null;
     final String? text = value == null
         ? null
         : (format ?? _defaultFormat)(value!);

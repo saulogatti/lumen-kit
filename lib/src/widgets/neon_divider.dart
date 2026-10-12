@@ -40,7 +40,7 @@ class NeonDivider extends StatelessWidget {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
-    final List<Color> colors = <Color>[
+    final colors = <Color>[
       accent.withValues(alpha: 0),
       accent.withValues(alpha: 0.65),
       p.secondary.withValues(alpha: 0.65),

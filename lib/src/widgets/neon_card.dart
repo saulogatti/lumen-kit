@@ -8,6 +8,18 @@ import '../theme/neon_style.dart';
 /// Container base do tema neon: gradiente sutil + borda accent + opcional onTap.
 /// Use como peça fundamental para qualquer tela — cards, painéis, seções.
 class NeonCard extends StatelessWidget {
+
+  /// Cria um card neon com [child] como conteúdo.
+  const NeonCard({
+    required this.child,
+    super.key,
+    this.accent,
+    this.padding = const EdgeInsets.all(20),
+    this.borderRadius = 20,
+    this.onTap,
+    this.borderOpacity = 0.35,
+    this.glow = false,
+  });
   /// Conteúdo exibido dentro do card.
   final Widget child;
 
@@ -30,18 +42,6 @@ class NeonCard extends StatelessWidget {
 
   /// Se `true`, adiciona um leve glow ao redor do card.
   final bool glow;
-
-  /// Cria um card neon com [child] como conteúdo.
-  const NeonCard({
-    required this.child,
-    super.key,
-    this.accent,
-    this.padding = const EdgeInsets.all(20),
-    this.borderRadius = 20,
-    this.onTap,
-    this.borderOpacity = 0.35,
-    this.glow = false,
-  });
 
   @override
   Widget build(BuildContext context) {

@@ -36,7 +36,7 @@ Future<void> showNeonToast({
 }) {
   final OverlayState overlay = Overlay.of(context, rootOverlay: true);
   final NeonPalette p = NeonThemeExt.of(context).palette;
-  final Completer<void> done = Completer<void>();
+  final done = Completer<void>();
 
   late final OverlayEntry entry;
   void finish() {
@@ -128,7 +128,7 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
 
   @override
   Widget build(BuildContext context) {
-    final bool top = widget.position == NeonToastPosition.top;
+    final top = widget.position == NeonToastPosition.top;
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final EdgeInsets safe = MediaQuery.paddingOf(context);

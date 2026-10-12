@@ -45,7 +45,7 @@ void main() {
   testWidgets('NeonScope aplica paleta e estilo só na subárvore', (
     WidgetTester tester,
   ) async {
-    const Color teal = Color(0xFF00BFA5);
+    const teal = Color(0xFF00BFA5);
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light,

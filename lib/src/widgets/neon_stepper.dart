@@ -72,10 +72,10 @@ class NeonStepper extends StatelessWidget {
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
-    final List<Widget> nodes = <Widget>[];
-    for (int i = 0; i < steps.length; i++) {
+    final nodes = <Widget>[];
+    for (var i = 0; i < steps.length; i++) {
       final bool active = i <= currentStep;
-      final bool current = i == currentStep;
+      final current = i == currentStep;
       nodes.add(
         NeonPressable(
           onTap: onStepTapped == null ? null : () => onStepTapped!(i),
@@ -140,9 +140,9 @@ class NeonStepper extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List<Widget>.generate(steps.length, (int i) {
         final NeonStep s = steps[i];
-        final bool current = i == currentStep;
+        final current = i == currentStep;
         final bool active = i <= currentStep;
-        final bool isLast = i == steps.length - 1;
+        final isLast = i == steps.length - 1;
         return IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

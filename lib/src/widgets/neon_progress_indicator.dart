@@ -292,29 +292,29 @@ class _NeonCircularPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Offset center = Offset(size.width / 2, size.height / 2);
+    final center = Offset(size.width / 2, size.height / 2);
     final double radius = (size.shortestSide - strokeWidth) / 2;
-    final Rect rect = Rect.fromCircle(center: center, radius: radius);
+    final rect = Rect.fromCircle(center: center, radius: radius);
 
-    final Paint trackPaint = Paint()
+    final trackPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..color = trackColor;
     canvas.drawCircle(center, radius, trackPaint);
 
-    final Paint glowPaint = Paint()
+    final glowPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round
       ..shader = gradient.createShader(rect)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
-    final Paint arcPaint = Paint()
+    final arcPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round
       ..shader = gradient.createShader(rect);
 
-    const double tau = 6.283185307179586;
+    const tau = 6.283185307179586;
     final double startAngle;
     final double sweep;
     if (progress != null) {

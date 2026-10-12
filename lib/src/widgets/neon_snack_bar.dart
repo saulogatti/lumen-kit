@@ -28,7 +28,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
   final Color accent = tone.colorOf(p);
   final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
 
-  final SnackBar bar = SnackBar(
+  final bar = SnackBar(
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     elevation: 0,
