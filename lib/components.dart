@@ -27,6 +27,7 @@ export 'src/widgets/neon_bottom_sheet.dart';
 export 'src/widgets/neon_button.dart';
 export 'src/widgets/neon_card.dart';
 export 'src/widgets/neon_checkbox.dart';
+export 'src/widgets/neon_chip.dart';
 export 'src/widgets/neon_data_table.dart';
 export 'src/widgets/neon_date_picker.dart';
 export 'src/widgets/neon_dialog.dart';
