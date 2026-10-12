@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -74,9 +75,13 @@ class _NeonSearchBarState extends State<NeonSearchBar> {
       onSubmitted: widget.onSubmitted,
       style: Theme.of(context).textTheme.titleMedium,
       textInputAction: TextInputAction.search,
-      decoration: InputDecoration(
-        hintText: widget.hint,
-        hintStyle: TextStyle(color: p.textMuted),
+      decoration: NeonDecorations.input(
+        p,
+        style,
+        accent: accent,
+        radius: 28,
+        hint: widget.hint,
+        enabledBorderAlpha: 0.3,
         prefixIcon: Icon(Icons.search_rounded, color: accent),
         suffixIcon: hasText
             ? IconButton(
@@ -85,19 +90,9 @@ class _NeonSearchBarState extends State<NeonSearchBar> {
                 tooltip: 'Limpar',
               )
             : null,
-        filled: true,
-        fillColor: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: style.radius(28),
-          borderSide: BorderSide(color: accent.withValues(alpha: 0.3)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: style.radius(28),
-          borderSide: BorderSide(color: accent, width: 1.4),
         ),
       ),
     );

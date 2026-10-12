@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -51,52 +52,36 @@ class NeonDialog extends StatelessWidget {
           borderRadius: style.radius(20),
           child: Container(
             padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              borderRadius: style.radius(20),
-              gradient: style.fill(
-                LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    p.surface.withValues(alpha: style.surfaceAlpha(0.98)),
-                    p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
-                  ],
-                ),
-              ),
-              border: style.borderAll(
-                color: a.withValues(alpha: 0.5),
-                width: 1.2,
-              ),
-              boxShadow: style.shadows(<BoxShadow>[
-                BoxShadow(
-                  color: a.withValues(alpha: 0.25),
-                  blurRadius: 32,
-                  offset: const Offset(0, 16),
-                ),
-              ]),
+            decoration: NeonDecorations.panel(
+              p,
+              style,
+              accent: a,
+              radius: 20,
+              borderAlpha: 0.5,
+              glowAlpha: 0.25,
+              glowBlur: 32,
+              glowOffset: const Offset(0, 16),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Row(
+                  spacing: 14,
                   children: <Widget>[
-                    if (icon != null) ...<Widget>[
+                    if (icon != null)
                       Container(
                         width: 40,
                         height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: style.radius(12),
-                          color: a.withValues(alpha: 0.12),
-                          border: style.borderAll(
-                            color: a.withValues(alpha: 0.45),
-                          ),
-                        ),
+                        decoration: NeonDecorations.iconBox(style, accent: a),
                         child: Icon(icon, color: a, size: 22),
                       ),
-                      const SizedBox(width: 14),
-                    ],
-                    Expanded(child: Text(title, style: text.headlineMedium)),
+                    Expanded(
+                      child: Semantics(
+                        header: true,
+                        child: Text(title, style: text.headlineMedium),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 18),
@@ -106,14 +91,12 @@ class NeonDialog extends StatelessWidget {
                 ),
                 if (actions.isNotEmpty) ...<Widget>[
                   const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      for (int i = 0; i < actions.length; i++) ...<Widget>[
-                        if (i > 0) const SizedBox(width: 12),
-                        actions[i],
-                      ],
-                    ],
+                  // Wrap: ações longas quebram linha em vez de estourar.
+                  Wrap(
+                    alignment: WrapAlignment.end,
+                    spacing: 12,
+                    runSpacing: 8,
+                    children: actions,
                   ),
                 ],
               ],

@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -50,29 +51,14 @@ class NeonTooltip extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 8),
       textStyle: Theme.of(context).textTheme.bodySmall
           ?.copyWith(color: p.textPrimary),
-      decoration: BoxDecoration(
-        borderRadius: style.radius(10),
-        gradient: style.fill(
-          LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[
-              p.surface.withValues(alpha: style.surfaceAlpha(0.98)),
-              p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
-            ],
-          ),
-        ),
-        border: style.borderAll(
-          color: accent.withValues(alpha: 0.55),
-          width: 1,
-        ),
-        boxShadow: style.shadows(<BoxShadow>[
-          BoxShadow(
-            color: accent.withValues(alpha: 0.3),
-            blurRadius: 14,
-            offset: const Offset(0, 6),
-          ),
-        ]),
+      decoration: NeonDecorations.panel(
+        p,
+        style,
+        accent: accent,
+        radius: 10,
+        borderWidth: 1,
+        glowBlur: 14,
+        glowOffset: const Offset(0, 6),
       ),
       child: child,
     );

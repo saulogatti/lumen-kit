@@ -1,5 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_labeled.dart';
+import '../foundation/neon_pressable.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -44,7 +48,7 @@ class NeonRadio<T> extends StatelessWidget {
     final bool selected = value == groupValue;
 
     final Widget circle = AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
+      duration: NeonMotion.duration(context, kNeonFastDuration),
       width: 22,
       height: 22,
       decoration: BoxDecoration(
@@ -68,48 +72,24 @@ class NeonRadio<T> extends StatelessWidget {
       ),
       child: Center(
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+          duration: NeonMotion.duration(context, kNeonFastDuration),
           width: selected ? 12 : 0,
           height: selected ? 12 : 0,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: style.fill(
-              LinearGradient(
-                colors: <Color>[accent, p.secondary],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
+            gradient: style.fill(NeonDecorations.accent(p, accent)),
           ),
         ),
       ),
     );
 
-    return Opacity(
-      opacity: disabled ? 0.55 : 1,
-      child: InkWell(
-        onTap: disabled ? null : () => onChanged!(value),
-        borderRadius: style.radius(20),
-        child: Padding(
-          padding: const EdgeInsets.all(2),
-          child: label == null
-              ? circle
-              : Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    circle,
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: Text(
-                        label!,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: disabled ? p.textMuted : p.textPrimary,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-        ),
+    return NeonPressable(
+      onTap: disabled ? null : () => onChanged!(value),
+      borderRadius: style.radius(20),
+      checked: selected,
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: NeonLabeled(control: circle, label: label, enabled: !disabled),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -65,7 +66,7 @@ class NeonSlider extends StatelessWidget {
         trackShape: const RoundedRectSliderTrackShape(),
       ),
       child: Opacity(
-        opacity: disabled ? 0.55 : 1,
+        opacity: disabled ? kNeonDisabledOpacity : 1,
         child: Slider(
           value: value.clamp(min, max),
           min: min,

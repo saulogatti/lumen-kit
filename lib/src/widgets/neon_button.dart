@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_action_content.dart';
+import '../foundation/neon_pressable.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -92,7 +94,7 @@ class NeonButton extends StatelessWidget {
     final bool enabled = onPressed != null && !busy;
     final Color accent = accentColor ?? palette.primary;
 
-    final Widget content = _buildContent(context, palette, accent);
+    final Widget content = _buildContent(palette, accent);
 
     final Widget body = switch (variant) {
       NeonButtonVariant.solid => _solid(context, palette, content, enabled),
@@ -106,52 +108,26 @@ class NeonButton extends StatelessWidget {
       NeonButtonVariant.ghost => _ghost(content),
     };
 
-    return Opacity(
-      opacity: enabled ? 1.0 : 0.55,
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: style.radius(borderRadius),
-        child: InkWell(
-          onTap: enabled ? onPressed : null,
-          borderRadius: style.radius(borderRadius),
-          child: body,
-        ),
-      ),
+    return NeonPressable(
+      onTap: onPressed,
+      enabled: !busy,
+      borderRadius: style.radius(borderRadius),
+      child: body,
     );
   }
 
-  Widget _buildContent(
-    BuildContext context,
-    NeonPalette palette,
-    Color accent,
-  ) {
+  Widget _buildContent(NeonPalette palette, Color accent) {
     final Color fg = switch (variant) {
       NeonButtonVariant.solid => palette.backgroundDeep,
       NeonButtonVariant.outline || NeonButtonVariant.ghost => accent,
     };
 
-    final List<Widget> children = <Widget>[
-      if (busy)
-        SizedBox(
-          width: 16,
-          height: 16,
-          child: CircularProgressIndicator(strokeWidth: 2, color: fg),
-        )
-      else if (icon != null)
-        Icon(icon, color: fg, size: 18),
-      if (busy || icon != null) const SizedBox(width: 10),
-      Text(
-        label,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: fg),
-      ),
-    ];
-
-    return Row(
-      mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-      mainAxisAlignment: expand
-          ? MainAxisAlignment.center
-          : MainAxisAlignment.start,
-      children: children,
+    return NeonActionContent(
+      color: fg,
+      label: label,
+      icon: icon,
+      busy: busy,
+      expand: expand,
     );
   }
 

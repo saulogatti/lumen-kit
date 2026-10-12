@@ -10,6 +10,11 @@
 library;
 
 export 'src/backgrounds/animated_grid_background.dart';
+export 'src/foundation/neon_action_content.dart';
+export 'src/foundation/neon_decorations.dart';
+export 'src/foundation/neon_labeled.dart';
+export 'src/foundation/neon_pressable.dart';
+export 'src/foundation/neon_tokens.dart';
 export 'src/theme/neon_palette.dart';
 export 'src/theme/neon_style.dart';
 export 'src/widgets/gradient_cta.dart';

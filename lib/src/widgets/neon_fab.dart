@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_action_content.dart';
+import '../foundation/neon_pressable.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -20,6 +22,7 @@ class NeonFab extends StatelessWidget {
     this.foregroundColor,
     this.size = 56,
     this.heroTag,
+    this.semanticLabel,
   });
 
   /// Construtor explícito para o modo estendido.
@@ -33,7 +36,8 @@ class NeonFab extends StatelessWidget {
     this.glowColor,
     this.foregroundColor,
     this.heroTag,
-  }) : size = 56;
+  }) : size = 56,
+       semanticLabel = null;
 
   /// Ícone exibido no botão.
   final IconData icon;
@@ -64,6 +68,9 @@ class NeonFab extends StatelessWidget {
   /// Tag para Hero animation. Repassada ao [Material] interno via [Hero].
   final Object? heroTag;
 
+  /// Rótulo para leitores de tela no modo compacto (só ícone).
+  final String? semanticLabel;
+
   @override
   Widget build(BuildContext context) {
     final NeonPalette palette = NeonThemeExt.of(context).palette;
@@ -76,31 +83,14 @@ class NeonFab extends StatelessWidget {
 
     final BorderRadius radius = style.radius(size / 2);
 
-    final Widget iconOrSpinner = busy
-        ? SizedBox(
-            width: 20,
-            height: 20,
-            child: CircularProgressIndicator(strokeWidth: 2, color: fg),
-          )
-        : Icon(icon, color: fg, size: 22);
-
-    final Widget content = extended
-        ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                iconOrSpinner,
-                const SizedBox(width: 10),
-                Text(
-                  label!,
-                  style: Theme.of(context).textTheme.labelLarge
-                      ?.copyWith(color: fg),
-                ),
-              ],
-            ),
-          )
-        : Center(child: iconOrSpinner);
+    final Widget content = NeonActionContent(
+      color: fg,
+      label: label,
+      icon: icon,
+      busy: busy,
+      iconSize: 22,
+      spinnerSize: 20,
+    );
 
     final Widget body = Container(
       height: size,
@@ -120,20 +110,17 @@ class NeonFab extends StatelessWidget {
               : null,
         ),
       ),
+      padding: extended ? const EdgeInsets.symmetric(horizontal: 20) : null,
+      alignment: extended ? null : Alignment.center,
       child: content,
     );
 
-    final Widget interactive = Opacity(
-      opacity: enabled ? 1.0 : 0.55,
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: radius,
-        child: InkWell(
-          onTap: enabled ? onPressed : null,
-          borderRadius: radius,
-          child: body,
-        ),
-      ),
+    final Widget interactive = NeonPressable(
+      onTap: onPressed,
+      enabled: !busy,
+      borderRadius: radius,
+      semanticLabel: label == null ? semanticLabel : null,
+      child: body,
     );
 
     if (heroTag != null) {

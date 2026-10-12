@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -60,7 +61,14 @@ class _NeonSkeletonState extends State<NeonSkeleton>
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1300),
-  )..repeat();
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Com "reduzir animações", o brilho fica parado no meio.
+    NeonMotion.syncRepeat(_ctrl, context);
+  }
 
   @override
   void dispose() {

@@ -1,5 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_pressable.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -16,7 +19,10 @@ class NeonTabItem {
 }
 
 /// Tabs horizontais com indicador em gradiente accent.
-class NeonTabs extends StatelessWidget {
+///
+/// Controlado: o indicador acompanha [selectedIndex] mesmo quando ele muda
+/// por fora (ex.: swipe num `PageView` ou navegação programática).
+class NeonTabs extends StatefulWidget {
   /// Cria uma barra de tabs controlada por [selectedIndex].
   const NeonTabs({
     required this.items,
@@ -30,9 +36,7 @@ class NeonTabs extends StatelessWidget {
   /// Itens exibidos na barra.
   final List<NeonTabItem> items;
 
-  /// Índice da tab selecionada.
-  ///
-  /// O índice é limitado ao intervalo válido antes de inicializar o controller.
+  /// Índice da tab selecionada, limitado ao intervalo válido.
   final int selectedIndex;
 
   /// Callback chamado com o índice da tab tocada.
@@ -45,36 +49,66 @@ class NeonTabs extends StatelessWidget {
   final bool isScrollable;
 
   @override
+  State<NeonTabs> createState() => _NeonTabsState();
+}
+
+class _NeonTabsState extends State<NeonTabs> with TickerProviderStateMixin {
+  late TabController _controller = _create();
+
+  int get _index => widget.selectedIndex.clamp(0, widget.items.length - 1);
+
+  TabController _create() => TabController(
+    length: widget.items.length,
+    initialIndex: _index,
+    vsync: this,
+  );
+
+  @override
+  void didUpdateWidget(NeonTabs oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.items.length != widget.items.length) {
+      _controller.dispose();
+      _controller = _create();
+    } else if (_controller.index != _index) {
+      _controller.animateTo(_index);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final Color accent = widget.accentColor ?? p.primary;
 
-    return DefaultTabController(
-      length: items.length,
-      initialIndex: selectedIndex.clamp(0, items.length - 1),
-      child: TabBar(
-        isScrollable: isScrollable,
-        onTap: onChanged,
-        labelColor: p.textPrimary,
-        unselectedLabelColor: p.textMuted,
-        indicatorSize: TabBarIndicatorSize.label,
-        indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(color: accent, width: 2.5),
-          insets: const EdgeInsets.symmetric(horizontal: 4),
-        ),
-        overlayColor: WidgetStateProperty.all(accent.withValues(alpha: 0.08)),
-        splashBorderRadius: style.radius(10),
-        tabs: items
-            .map(
-              (NeonTabItem it) => Tab(
-                icon: it.icon == null ? null : Icon(it.icon),
-                text: it.label,
-                iconMargin: const EdgeInsets.only(bottom: 4),
-              ),
-            )
-            .toList(),
+    return TabBar(
+      controller: _controller,
+      isScrollable: widget.isScrollable,
+      onTap: widget.onChanged,
+      labelColor: p.textPrimary,
+      unselectedLabelColor: p.textMuted,
+      indicatorSize: TabBarIndicatorSize.label,
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(color: accent, width: 2.5),
+        insets: const EdgeInsets.symmetric(horizontal: 4),
       ),
+      overlayColor: WidgetStatePropertyAll<Color>(
+        accent.withValues(alpha: 0.08),
+      ),
+      splashBorderRadius: style.radius(10),
+      tabs: <Widget>[
+        for (final NeonTabItem it in widget.items)
+          Tab(
+            icon: it.icon == null ? null : Icon(it.icon),
+            text: it.label,
+            iconMargin: const EdgeInsets.only(bottom: 4),
+          ),
+      ],
     );
   }
 }
@@ -119,23 +153,19 @@ class NeonSegmentedControl extends StatelessWidget {
         children: List<Widget>.generate(items.length, (int i) {
           final bool selected = i == selectedIndex;
           final NeonTabItem it = items[i];
+          final Color fg = selected ? p.textPrimary : p.textMuted;
           return Expanded(
-            child: GestureDetector(
+            child: NeonPressable(
               onTap: () => onChanged(i),
-              behavior: HitTestBehavior.opaque,
+              selected: selected,
+              borderRadius: style.radius(24),
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
+                duration: NeonMotion.duration(context, kNeonMediumDuration),
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   borderRadius: style.radius(24),
                   gradient: style.fill(
-                    selected
-                        ? LinearGradient(
-                            colors: <Color>[accent, p.secondary],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          )
-                        : null,
+                    selected ? NeonDecorations.accent(p, accent) : null,
                   ),
                   boxShadow: style.shadows(
                     selected
@@ -153,19 +183,13 @@ class NeonSegmentedControl extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
+                  spacing: 6,
                   children: <Widget>[
-                    if (it.icon != null) ...<Widget>[
-                      Icon(
-                        it.icon,
-                        size: 16,
-                        color: selected ? p.textPrimary : p.textMuted,
-                      ),
-                      const SizedBox(width: 6),
-                    ],
+                    if (it.icon != null) Icon(it.icon, size: 16, color: fg),
                     Text(
                       it.label,
                       style: TextStyle(
-                        color: selected ? p.textPrimary : p.textMuted,
+                        color: fg,
                         fontWeight: selected
                             ? FontWeight.w600
                             : FontWeight.w500,

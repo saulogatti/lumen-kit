@@ -1,5 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_labeled.dart';
+import '../foundation/neon_pressable.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -34,91 +38,75 @@ class NeonSwitch extends StatelessWidget {
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
-    final double opacity = disabled ? 0.55 : 1;
+    final Duration duration = NeonMotion.duration(context, kNeonMediumDuration);
 
-    final Widget switchWidget = Opacity(
-      opacity: opacity,
-      child: GestureDetector(
-        onTap: disabled ? null : () => onChanged!(!value),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 220),
-          curve: Curves.easeOut,
-          width: 52,
-          height: 30,
-          padding: const EdgeInsets.all(3),
+    final Widget track = AnimatedContainer(
+      duration: duration,
+      curve: Curves.easeOut,
+      width: 52,
+      height: 30,
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: value
+            ? accent.withValues(alpha: 0.25)
+            : p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
+        borderRadius: style.radius(30),
+        border: style.borderAll(
+          color: value
+              ? accent.withValues(alpha: 0.9)
+              : p.surfaceOutline.withValues(alpha: 0.8),
+          width: 1.2,
+        ),
+        boxShadow: style.shadows(
+          value
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.45),
+                    blurRadius: 14,
+                    spreadRadius: -2,
+                  ),
+                ]
+              : null,
+        ),
+      ),
+      child: AnimatedAlign(
+        duration: duration,
+        curve: Curves.easeOut,
+        alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
+          width: 22,
+          height: 22,
           decoration: BoxDecoration(
-            color: value
-                ? accent.withValues(alpha: 0.25)
-                : p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
-            borderRadius: style.radius(30),
-            border: style.borderAll(
-              color: value
-                  ? accent.withValues(alpha: 0.9)
-                  : p.surfaceOutline.withValues(alpha: 0.8),
-              width: 1.2,
+            shape: BoxShape.circle,
+            gradient: style.fill(
+              value ? NeonDecorations.accent(p, accent) : null,
             ),
+            color: value ? null : p.textMuted.withValues(alpha: 0.85),
             boxShadow: style.shadows(
               value
                   ? <BoxShadow>[
                       BoxShadow(
-                        color: accent.withValues(alpha: 0.45),
-                        blurRadius: 14,
-                        spreadRadius: -2,
+                        color: accent.withValues(alpha: 0.55),
+                        blurRadius: 8,
                       ),
                     ]
                   : null,
-            ),
-          ),
-          child: AnimatedAlign(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOut,
-            alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-            child: Container(
-              width: 22,
-              height: 22,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: style.fill(
-                  value
-                      ? LinearGradient(
-                          colors: <Color>[accent, p.secondary],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        )
-                      : null,
-                ),
-                color: value ? null : p.textMuted.withValues(alpha: 0.85),
-                boxShadow: style.shadows(
-                  value
-                      ? <BoxShadow>[
-                          BoxShadow(
-                            color: accent.withValues(alpha: 0.55),
-                            blurRadius: 8,
-                          ),
-                        ]
-                      : null,
-                ),
-              ),
             ),
           ),
         ),
       ),
     );
 
-    if (label == null) return switchWidget;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        switchWidget,
-        const SizedBox(width: 12),
-        Flexible(
-          child: Text(
-            label!,
-            style: Theme.of(context).textTheme.bodyMedium
-                ?.copyWith(color: disabled ? p.textMuted : p.textPrimary),
-          ),
-        ),
-      ],
+    return NeonPressable(
+      onTap: disabled ? null : () => onChanged!(!value),
+      borderRadius: style.radius(30),
+      toggled: value,
+      child: NeonLabeled(
+        control: track,
+        label: label,
+        enabled: !disabled,
+        gap: 12,
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_pressable.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -13,12 +14,14 @@ class NeonBadge extends StatelessWidget {
     this.color,
     this.child,
     this.dot = false,
+    this.dense = false,
   });
 
   /// Modo "ponto" (sem texto), útil para indicar atividade.
   const NeonBadge.dot({super.key, this.color, this.child})
     : label = '',
-      dot = true;
+      dot = true,
+      dense = false;
 
   /// Texto exibido dentro do badge quando [dot] é `false`.
   final String label;
@@ -32,36 +35,51 @@ class NeonBadge extends StatelessWidget {
   /// Se `true`, renderiza apenas um ponto sem [label].
   final bool dot;
 
+  /// Versão menor, para ícones de navegação.
+  final bool dense;
+
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final Color c = color ?? p.danger;
 
+    // Texto legível sobre qualquer cor de fundo, não só sobre vermelho.
+    final Color fg = ThemeData.estimateBrightnessForColor(c) == Brightness.dark
+        ? Colors.white
+        : Colors.black;
+
     final Widget badge = Container(
-      padding: dot
-          ? EdgeInsets.zero
-          : const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      constraints: dot
-          ? const BoxConstraints(minWidth: 10, minHeight: 10)
-          : const BoxConstraints(minWidth: 18, minHeight: 18),
+      padding: switch ((dot, dense)) {
+        (true, _) => EdgeInsets.zero,
+        (false, true) => const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+        (false, false) => const EdgeInsets.symmetric(
+          horizontal: 6,
+          vertical: 2,
+        ),
+      },
+      constraints: switch ((dot, dense)) {
+        (true, _) => const BoxConstraints(minWidth: 10, minHeight: 10),
+        (false, true) => null,
+        (false, false) => const BoxConstraints(minWidth: 18, minHeight: 18),
+      },
       decoration: BoxDecoration(
         color: c,
-        borderRadius: style.radius(dot ? 10 : 12),
+        borderRadius: style.radius(dot ? 10 : (dense ? 8 : 12)),
         boxShadow: style.shadows(<BoxShadow>[
-          BoxShadow(color: c.withValues(alpha: 0.6), blurRadius: 8),
+          BoxShadow(color: c.withValues(alpha: 0.6), blurRadius: dense ? 6 : 8),
         ]),
       ),
-      alignment: Alignment.center,
+      alignment: dense ? null : Alignment.center,
       child: dot
           ? null
           : Text(
               label,
-              style: const TextStyle(
-                fontSize: 10,
+              style: TextStyle(
+                fontSize: dense ? 9 : 10,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
-                height: 1,
+                color: fg,
+                height: dense ? null : 1,
               ),
             ),
     );
@@ -118,11 +136,9 @@ class NeonTag extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        spacing: 4,
         children: <Widget>[
-          if (icon != null) ...<Widget>[
-            Icon(icon, size: 12, color: c),
-            const SizedBox(width: 4),
-          ],
+          if (icon != null) Icon(icon, size: 12, color: c),
           Text(
             label,
             style: TextStyle(
@@ -136,7 +152,7 @@ class NeonTag extends StatelessWidget {
     );
 
     if (onTap == null) return content;
-    return InkWell(
+    return NeonPressable(
       onTap: onTap,
       borderRadius: style.radius(20),
       child: content,

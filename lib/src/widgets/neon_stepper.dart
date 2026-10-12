@@ -1,5 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_pressable.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -74,8 +77,10 @@ class NeonStepper extends StatelessWidget {
       final bool active = i <= currentStep;
       final bool current = i == currentStep;
       nodes.add(
-        InkWell(
+        NeonPressable(
           onTap: onStepTapped == null ? null : () => onStepTapped!(i),
+          selected: current,
+          dimWhenDisabled: false,
           borderRadius: style.radius(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -179,8 +184,10 @@ class NeonStepper extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(bottom: isLast ? 0 : 18, top: 4),
-                  child: InkWell(
+                  child: NeonPressable(
                     onTap: onStepTapped == null ? null : () => onStepTapped!(i),
+                    selected: current,
+                    dimWhenDisabled: false,
                     borderRadius: style.radius(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,16 +201,17 @@ class NeonStepper extends StatelessWidget {
                                 : FontWeight.w500,
                           ),
                         ),
-                        if (s.subtitle != null) ...<Widget>[
+                        if (s.subtitle case final String subtitle) ...<Widget>[
                           const SizedBox(height: 2),
                           Text(
-                            s.subtitle!,
+                            subtitle,
                             style: TextStyle(color: p.textMuted, fontSize: 12),
                           ),
                         ],
-                        if (current && s.content != null) ...<Widget>[
+                        if (s.content case final Widget content
+                            when current) ...<Widget>[
                           const SizedBox(height: 12),
-                          s.content!,
+                          content,
                         ],
                       ],
                     ),
@@ -239,20 +247,14 @@ class _StepCircle extends StatelessWidget {
   Widget build(BuildContext context) {
     final NeonStyle style = NeonStyle.of(context);
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
+      duration: NeonMotion.duration(context, kNeonMediumDuration),
       width: 30,
       height: 30,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: style.fill(
-          active
-              ? LinearGradient(
-                  colors: <Color>[accent, palette.secondary],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-              : null,
+          active ? NeonDecorations.accent(palette, accent) : null,
         ),
         color: active
             ? null

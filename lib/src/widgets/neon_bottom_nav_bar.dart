@@ -1,7 +1,11 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_pressable.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
+import 'neon_badge.dart';
 
 /// Item de [NeonBottomNavBar] / [NeonNavRail].
 class NeonNavItem {
@@ -64,68 +68,28 @@ class NeonBottomNavBar extends StatelessWidget {
             final bool selected = i == selectedIndex;
             final NeonNavItem it = items[i];
             return Expanded(
-              child: InkWell(
+              child: NeonPressable(
                 onTap: () => onChanged(i),
+                selected: selected,
                 borderRadius: style.radius(20),
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
+                  duration: NeonMotion.duration(context, kNeonMediumDuration),
                   padding: const EdgeInsets.symmetric(
                     vertical: 8,
                     horizontal: 6,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: style.radius(20),
-                    color: selected
-                        ? accent.withValues(alpha: 0.16)
-                        : Colors.transparent,
-                    border: style.borderAll(
-                      color: selected
-                          ? accent.withValues(alpha: 0.55)
-                          : Colors.transparent,
-                    ),
-                    boxShadow: style.shadows(
-                      selected
-                          ? <BoxShadow>[
-                              BoxShadow(
-                                color: accent.withValues(alpha: 0.3),
-                                blurRadius: 12,
-                                spreadRadius: -2,
-                              ),
-                            ]
-                          : null,
-                    ),
+                  decoration: NeonDecorations.selectable(
+                    p,
+                    style,
+                    accent: accent,
+                    selected: selected,
+                    radius: 20,
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: <Widget>[
-                          Icon(
-                            it.icon,
-                            color: selected ? accent : p.textMuted,
-                            size: 22,
-                          ),
-                          if (it.badge != null)
-                            Positioned(
-                              right: -6,
-                              top: -4,
-                              child: _Badge(text: it.badge!, color: p.danger),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        it.label,
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: selected ? p.textPrimary : p.textMuted,
-                          fontWeight: selected
-                              ? FontWeight.w600
-                              : FontWeight.w500,
-                        ),
-                      ),
-                    ],
+                  child: _NavItemContent(
+                    item: it,
+                    selected: selected,
+                    accent: accent,
+                    iconSize: 22,
                   ),
                 ),
               ),
@@ -185,9 +149,9 @@ class NeonNavRail extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: <Widget>[
-            if (leading != null) ...<Widget>[
+            if (leading case final Widget leading) ...<Widget>[
               const SizedBox(height: 12),
-              leading!,
+              leading,
             ],
             const SizedBox(height: 12),
             Expanded(
@@ -199,38 +163,28 @@ class NeonNavRail extends StatelessWidget {
                   final NeonNavItem it = items[i];
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: InkWell(
+                    child: NeonPressable(
                       onTap: () => onChanged(i),
+                      selected: selected,
                       borderRadius: style.radius(16),
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: style.radius(16),
-                          color: selected
-                              ? accent.withValues(alpha: 0.16)
-                              : Colors.transparent,
-                          border: style.borderAll(
-                            color: selected
-                                ? accent.withValues(alpha: 0.55)
-                                : Colors.transparent,
-                          ),
+                        duration: NeonMotion.duration(
+                          context,
+                          kNeonMediumDuration,
                         ),
-                        child: Column(
-                          children: <Widget>[
-                            Icon(
-                              it.icon,
-                              color: selected ? accent : p.textMuted,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              it.label,
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: selected ? p.textPrimary : p.textMuted,
-                              ),
-                            ),
-                          ],
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: NeonDecorations.selectable(
+                          p,
+                          style,
+                          accent: accent,
+                          selected: selected,
+                          radius: 16,
+                          glow: false,
+                        ),
+                        child: _NavItemContent(
+                          item: it,
+                          selected: selected,
+                          accent: accent,
                         ),
                       ),
                     ),
@@ -238,8 +192,8 @@ class NeonNavRail extends StatelessWidget {
                 },
               ),
             ),
-            if (trailing != null) ...<Widget>[
-              trailing!,
+            if (trailing case final Widget trailing) ...<Widget>[
+              trailing,
               const SizedBox(height: 12),
             ],
           ],
@@ -249,32 +203,56 @@ class NeonNavRail extends StatelessWidget {
   }
 }
 
-class _Badge extends StatelessWidget {
-  const _Badge({required this.text, required this.color});
+/// Ícone (com badge) + rótulo de um [NeonNavItem]. Compartilhado pela barra
+/// inferior e pelo rail, que antes ignorava o `badge`.
+class _NavItemContent extends StatelessWidget {
+  const _NavItemContent({
+    required this.item,
+    required this.selected,
+    required this.accent,
+    this.iconSize,
+  });
 
-  final String text;
-  final Color color;
+  final NeonNavItem item;
+  final bool selected;
+  final Color accent;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
-    final NeonStyle style = NeonStyle.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: style.radius(8),
-        boxShadow: style.shadows(<BoxShadow>[
-          BoxShadow(color: color.withValues(alpha: 0.6), blurRadius: 6),
-        ]),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 9,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
+    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final Widget icon = Icon(
+      item.icon,
+      color: selected ? accent : p.textMuted,
+      size: iconSize,
+    );
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      spacing: 4,
+      children: <Widget>[
+        if (item.badge case final String badge)
+          Stack(
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              icon,
+              Positioned(
+                right: -6,
+                top: -4,
+                child: NeonBadge(label: badge, color: p.danger, dense: true),
+              ),
+            ],
+          )
+        else
+          icon,
+        Text(
+          item.label,
+          style: TextStyle(
+            fontSize: 11,
+            color: selected ? p.textPrimary : p.textMuted,
+            fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+          ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -31,6 +31,15 @@ extension StatusToneColor on StatusTone {
     StatusTone.warning => p.warning,
     StatusTone.danger => p.danger,
   };
+
+  /// Ícone padrão do tom (snackbar, toast).
+  IconData get icon => switch (this) {
+    StatusTone.neutral => Icons.info_outline_rounded,
+    StatusTone.info => Icons.bolt_rounded,
+    StatusTone.success => Icons.check_circle_outline_rounded,
+    StatusTone.warning => Icons.warning_amber_rounded,
+    StatusTone.danger => Icons.error_outline_rounded,
+  };
 }
 
 /// Chip compacto que comunica um status por cor semântica.
@@ -67,18 +76,16 @@ class StatusChip extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        spacing: icon == null ? 8 : 6,
         children: <Widget>[
-          if (icon != null) ...<Widget>[
-            Icon(icon, size: 14, color: c),
-            const SizedBox(width: 6),
-          ] else ...<Widget>[
+          if (icon != null)
+            Icon(icon, size: 14, color: c)
+          else
             Container(
               width: 8,
               height: 8,
               decoration: BoxDecoration(color: c, shape: BoxShape.circle),
             ),
-            const SizedBox(width: 8),
-          ],
           Text(
             label,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(color: c),

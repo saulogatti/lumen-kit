@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -52,13 +53,7 @@ class NeonAvatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: style.fill(
-          showRing
-              ? LinearGradient(
-                  colors: <Color>[accent, p.secondary],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-              : null,
+          showRing ? NeonDecorations.accent(p, accent) : null,
         ),
         boxShadow: style.shadows(
           showRing
