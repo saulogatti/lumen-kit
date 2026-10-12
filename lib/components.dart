@@ -37,6 +37,7 @@ export 'src/widgets/neon_expansion_tile.dart';
 export 'src/widgets/neon_fab.dart';
 export 'src/widgets/neon_icon_button.dart';
 export 'src/widgets/neon_list_tile.dart';
+export 'src/widgets/neon_loading_overlay.dart';
 export 'src/widgets/neon_menu.dart';
 export 'src/widgets/neon_progress_indicator.dart';
 export 'src/widgets/neon_radio.dart';
