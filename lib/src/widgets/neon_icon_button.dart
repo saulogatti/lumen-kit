@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_action_content.dart';
+import '../foundation/neon_pressable.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -29,6 +31,7 @@ class NeonIconButton extends StatelessWidget {
     this.size = 44,
     this.iconSize = 20,
     this.shape = NeonIconButtonShape.circle,
+    this.semanticLabel,
   });
 
   /// Atalho para [NeonIconButtonVariant.solid].
@@ -42,6 +45,7 @@ class NeonIconButton extends StatelessWidget {
     this.size = 44,
     this.iconSize = 20,
     this.shape = NeonIconButtonShape.circle,
+    this.semanticLabel,
   }) : variant = NeonIconButtonVariant.solid;
 
   /// Atalho para [NeonIconButtonVariant.ghost].
@@ -55,6 +59,7 @@ class NeonIconButton extends StatelessWidget {
     this.size = 44,
     this.iconSize = 20,
     this.shape = NeonIconButtonShape.circle,
+    this.semanticLabel,
   }) : variant = NeonIconButtonVariant.ghost;
 
   /// Ícone exibido no botão.
@@ -86,6 +91,9 @@ class NeonIconButton extends StatelessWidget {
   /// Formato do botão: círculo ou quadrado arredondado.
   final NeonIconButtonShape shape;
 
+  /// Rótulo para leitores de tela quando não há [tooltip].
+  final String? semanticLabel;
+
   @override
   Widget build(BuildContext context) {
     final NeonPalette palette = NeonThemeExt.of(context).palette;
@@ -103,13 +111,13 @@ class NeonIconButton extends StatelessWidget {
         : accent;
 
     final Widget content = Center(
-      child: busy
-          ? SizedBox(
-              width: iconSize,
-              height: iconSize,
-              child: CircularProgressIndicator(strokeWidth: 2, color: fg),
-            )
-          : Icon(icon, color: fg, size: iconSize),
+      child: NeonActionContent(
+        color: fg,
+        icon: icon,
+        busy: busy,
+        iconSize: iconSize,
+        spinnerSize: iconSize,
+      ),
     );
 
     final Widget body = switch (variant) {
@@ -166,24 +174,18 @@ class NeonIconButton extends StatelessWidget {
       ),
     };
 
-    Widget interactive = Opacity(
-      opacity: enabled ? 1.0 : 0.55,
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: radius,
-        child: InkWell(
-          onTap: enabled ? onPressed : null,
-          borderRadius: radius,
-          child: body,
-        ),
-      ),
+    final Widget interactive = NeonPressable(
+      onTap: onPressed,
+      enabled: !busy,
+      borderRadius: radius,
+      // Com tooltip o Tooltip já anuncia a mensagem.
+      semanticLabel: tooltip == null ? semanticLabel : null,
+      child: body,
     );
 
-    if (tooltip != null) {
-      interactive = Tooltip(message: tooltip!, child: interactive);
-    }
-
-    return interactive;
+    return tooltip == null
+        ? interactive
+        : Tooltip(message: tooltip, child: interactive);
   }
 }
 

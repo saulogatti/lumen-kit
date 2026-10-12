@@ -1,5 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_labeled.dart';
+import '../foundation/neon_pressable.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -43,34 +47,22 @@ class NeonCheckbox extends StatelessWidget {
     final bool isChecked = value == true;
     final bool isIndeterminate = value == null && tristate;
 
-    void toggle() {
-      if (disabled) return;
-      if (tristate) {
-        if (value == false) {
-          onChanged!(true);
-        } else if (value == true) {
-          onChanged!(null);
-        } else {
-          onChanged!(false);
-        }
-      } else {
-        onChanged!(!isChecked);
-      }
-    }
+    // false → true → null (tristate) → false.
+    void toggle() => onChanged!(switch (value) {
+      false => true,
+      true => tristate ? null : false,
+      null => false,
+    });
 
     final Widget box = AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
+      duration: NeonMotion.duration(context, kNeonFastDuration),
       width: 22,
       height: 22,
       decoration: BoxDecoration(
         borderRadius: style.radius(6),
         gradient: style.fill(
           isChecked || isIndeterminate
-              ? LinearGradient(
-                  colors: <Color>[accent, p.secondary],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
+              ? NeonDecorations.accent(p, accent)
               : null,
         ),
         color: (isChecked || isIndeterminate)
@@ -101,34 +93,14 @@ class NeonCheckbox extends StatelessWidget {
           : null,
     );
 
-    final Widget content = Opacity(
-      opacity: disabled ? 0.55 : 1,
-      child: InkWell(
-        onTap: disabled ? null : toggle,
-        borderRadius: style.radius(6),
-        child: Padding(
-          padding: const EdgeInsets.all(2),
-          child: label == null
-              ? box
-              : Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    box,
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: Text(
-                        label!,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: disabled ? p.textMuted : p.textPrimary,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-        ),
+    return NeonPressable(
+      onTap: disabled ? null : toggle,
+      borderRadius: style.radius(6),
+      checked: isChecked,
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: NeonLabeled(control: box, label: label, enabled: !disabled),
       ),
     );
-
-    return content;
   }
 }

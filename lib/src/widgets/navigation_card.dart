@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -15,6 +17,7 @@ class NavigationCard extends StatefulWidget {
     required this.onTap,
     super.key,
     this.tag,
+    this.actionLabel = 'ACESSAR MÓDULO',
   });
 
   /// Título do módulo ou destino.
@@ -35,6 +38,9 @@ class NavigationCard extends StatefulWidget {
   /// Tag opcional exibida no canto superior direito.
   final String? tag;
 
+  /// Texto da chamada no rodapé do card.
+  final String actionLabel;
+
   @override
   State<NavigationCard> createState() => _NavigationCardState();
 }
@@ -49,85 +55,77 @@ class _NavigationCardState extends State<NavigationCard> {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _hovering = true),
-      onExit: (_) => setState(() => _hovering = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        curve: Curves.easeOut,
-        transform: Matrix4.identity()
-          ..translateByDouble(0.0, _hovering ? -4.0 : 0.0, 0.0, 1.0),
-        decoration: BoxDecoration(
+    // Hover e foco de teclado levantam o card do mesmo jeito.
+    void highlight(bool on) {
+      if (_hovering != on) setState(() => _hovering = on);
+    }
+
+    return AnimatedContainer(
+      duration: NeonMotion.duration(context, kNeonMediumDuration),
+      curve: Curves.easeOut,
+      transform: Matrix4.identity()
+        ..translateByDouble(0.0, _hovering ? -4.0 : 0.0, 0.0, 1.0),
+      decoration: BoxDecoration(
+        borderRadius: style.radius(20),
+        boxShadow: style.shadows(<BoxShadow>[
+          BoxShadow(
+            color: accent.withValues(alpha: _hovering ? 0.35 : 0.12),
+            blurRadius: _hovering ? 36 : 18,
+            spreadRadius: _hovering ? 1 : 0,
+            offset: const Offset(0, 12),
+          ),
+        ]),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: style.radius(20),
+        child: InkWell(
+          onTap: widget.onTap,
+          onHover: highlight,
+          onFocusChange: highlight,
           borderRadius: style.radius(20),
-          boxShadow: style.shadows(<BoxShadow>[
-            BoxShadow(
-              color: accent.withValues(alpha: _hovering ? 0.35 : 0.12),
-              blurRadius: _hovering ? 36 : 18,
-              spreadRadius: _hovering ? 1 : 0,
-              offset: const Offset(0, 12),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: style.radius(20),
+              gradient: style.fill(
+                NeonDecorations.diagonal(
+                  p.surface.withValues(alpha: style.surfaceAlpha(0.95)),
+                  p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.85)),
+                ),
+              ),
+              border: style.borderAll(
+                color: accent.withValues(alpha: _hovering ? 0.7 : 0.35),
+                width: 1.2,
+              ),
             ),
-          ]),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: style.radius(20),
-          child: InkWell(
-            onTap: widget.onTap,
-            borderRadius: style.radius(20),
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                borderRadius: style.radius(20),
-                gradient: style.fill(
-                  LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[
-                      p.surface.withValues(alpha: style.surfaceAlpha(0.95)),
-                      p.backgroundMid.withValues(
-                        alpha: style.surfaceAlpha(0.85),
-                      ),
-                    ],
-                  ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    _IconBadge(icon: widget.icon, accent: accent),
+                    const Spacer(),
+                    if (widget.tag case final String tag)
+                      _Tag(label: tag, accent: accent),
+                  ],
                 ),
-                border: style.borderAll(
-                  color: accent.withValues(alpha: _hovering ? 0.7 : 0.35),
-                  width: 1.2,
+                const SizedBox(height: 28),
+                Text(widget.title, style: text.headlineMedium),
+                const SizedBox(height: 10),
+                Text(widget.subtitle, style: text.bodyMedium),
+                const SizedBox(height: 24),
+                Row(
+                  spacing: 8,
+                  children: <Widget>[
+                    Text(
+                      widget.actionLabel,
+                      style: text.labelLarge?.copyWith(color: accent),
+                    ),
+                    Icon(Icons.arrow_forward_rounded, size: 16, color: accent),
+                  ],
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      _IconBadge(icon: widget.icon, accent: accent),
-                      const Spacer(),
-                      if (widget.tag != null)
-                        _Tag(label: widget.tag!, accent: accent),
-                    ],
-                  ),
-                  const SizedBox(height: 28),
-                  Text(widget.title, style: text.headlineMedium),
-                  const SizedBox(height: 10),
-                  Text(widget.subtitle, style: text.bodyMedium),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'ACESSAR MÓDULO',
-                        style: text.labelLarge?.copyWith(color: accent),
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        Icons.arrow_forward_rounded,
-                        size: 16,
-                        color: accent,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              ],
             ),
           ),
         ),
@@ -148,11 +146,7 @@ class _IconBadge extends StatelessWidget {
     return Container(
       width: 56,
       height: 56,
-      decoration: BoxDecoration(
-        borderRadius: style.radius(14),
-        color: accent.withValues(alpha: 0.12),
-        border: style.borderAll(color: accent.withValues(alpha: 0.45)),
-      ),
+      decoration: NeonDecorations.iconBox(style, accent: accent, radius: 14),
       child: Icon(icon, color: accent, size: 28),
     );
   }

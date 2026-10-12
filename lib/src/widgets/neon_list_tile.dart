@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_pressable.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -54,14 +56,19 @@ class NeonListTile extends StatelessWidget {
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onTap == null && onLongPress == null;
 
+    // Tile sem ação é só informativo: apaga menos que um controle
+    // desabilitado (0.7 em vez de kNeonDisabledOpacity).
     return Opacity(
       opacity: disabled && !selected ? 0.7 : 1,
-      child: InkWell(
+      child: NeonPressable(
         onTap: onTap,
         onLongPress: onLongPress,
+        selected: selected,
+        button: !disabled,
+        dimWhenDisabled: false,
         borderRadius: style.radius(14),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+          duration: NeonMotion.duration(context, kNeonFastDuration),
           padding: EdgeInsets.symmetric(
             horizontal: 14,
             vertical: dense ? 8 : 12,
@@ -90,8 +97,8 @@ class NeonListTile extends StatelessWidget {
           ),
           child: Row(
             children: <Widget>[
-              if (leading != null) ...<Widget>[
-                leading!,
+              if (leading case final Widget leading) ...<Widget>[
+                leading,
                 const SizedBox(width: 12),
               ],
               Expanded(
@@ -105,10 +112,10 @@ class NeonListTile extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    if (subtitle != null) ...<Widget>[
+                    if (subtitle case final String subtitle) ...<Widget>[
                       const SizedBox(height: 2),
                       Text(
-                        subtitle!,
+                        subtitle,
                         style: Theme.of(context).textTheme.bodySmall
                             ?.copyWith(color: p.textMuted),
                       ),
@@ -116,9 +123,9 @@ class NeonListTile extends StatelessWidget {
                   ],
                 ),
               ),
-              if (trailing != null) ...<Widget>[
+              if (trailing case final Widget trailing) ...<Widget>[
                 const SizedBox(width: 8),
-                trailing!,
+                trailing,
               ],
             ],
           ),

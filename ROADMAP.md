@@ -6,6 +6,7 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 
 - [x] **Tema**: `AppColors`, `NeonPalette` (+ `fromSeed`), `NeonPreset`, `NeonStyle` (neon / flat / glass / soft / brutal), `NeonThemeExt`, `AppTheme`
 - [x] **Background**: `AnimatedGridBackground`, `GlowOrbSpec`
+- [x] **Base reaproveitável**: `NeonPressable`, `NeonDecorations`, `NeonActionContent`, `NeonLabeled`, `NeonMotion`
 - [x] **Estrutura**: `NeonAppBar`, `NeonCard`
 - [x] **Ações**: `GradientCta`, `NeonButton` (solid / outline / ghost), `NeonIconButton`, `NeonFab`
 - [x] **Input**: `NeonTextField`, `NeonSwitch`, `NeonCheckbox`, `NeonRadio`, `NeonSlider`, `NeonDropdown`, `NeonSearchBar`, `NeonDatePicker` (+ `showNeonDatePicker`)
@@ -56,5 +57,9 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 - Paleta sempre acessada via `NeonThemeExt.of(context).palette` — nunca importar `AppColors` diretamente em widgets (senão a cor ignora `AppTheme.fromSeed` e os presets).
 - Sombra, gradiente, raio e borda sempre via `NeonStyle.of(context)` (`shadows`, `fill`, `radius`, `borderAll`, `surfaceAlpha`) — nunca `BoxShadow`/`BorderRadius.circular` crus, senão o widget ignora o estilo.
 - Exportar widgets em `lib/components.dart` (o `lib/neon_ui.dart` reexporta). Nada de tema global (`AppTheme`/`AppColors`) dentro de widgets.
-- Estados padrão a suportar quando fizer sentido: `onPressed == null` → desabilitado (opacidade 0.55), `busy: true` → spinner inline.
+- Estados padrão a suportar quando fizer sentido: `onPressed == null` → desabilitado (`kNeonDisabledOpacity`), `busy: true` → spinner inline.
+- Antes de escrever `Opacity` + `InkWell`, gradiente diagonal, painel com borda/glow ou `InputDecoration` na mão, use as peças de `lib/src/foundation/` (`NeonPressable`, `NeonDecorations`, `NeonActionContent`, `NeonLabeled`).
+- Nada de `GestureDetector` para ações: sem foco de teclado nem semântica. Use `NeonPressable`.
+- Animações: controllers e `CurvedAnimation` criados uma vez no `State` (nunca no `build`), durações via `NeonMotion.duration` e loops via `NeonMotion.syncRepeat`.
+- Espaço entre filhos de `Row`/`Column` com `spacing:` em vez de `SizedBox` intercalado.
 - Documentar uso mínimo no `README.md` quando o componente sair do roadmap.

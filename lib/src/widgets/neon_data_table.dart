@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_pressable.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -138,6 +139,6 @@ class NeonTableRow extends StatelessWidget {
     );
 
     if (onTap == null || isHeader) return row;
-    return InkWell(onTap: onTap, child: row);
+    return NeonPressable(onTap: onTap, child: row);
   }
 }

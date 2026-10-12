@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -48,12 +49,27 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
   late bool _expanded = widget.initiallyExpanded;
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 220),
+    duration: kNeonMediumDuration,
     value: _expanded ? 1 : 0,
+  );
+  // Criadas uma vez: criar no build vazava um listener por frame.
+  late final CurvedAnimation _size = CurvedAnimation(
+    parent: _ctrl,
+    curve: Curves.easeOut,
+  );
+  late final Animation<double> _turns = _ctrl.drive(
+    Tween<double>(begin: 0, end: 0.5),
   );
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _ctrl.duration = NeonMotion.duration(context, kNeonMediumDuration);
+  }
+
+  @override
   void dispose() {
+    _size.dispose();
     _ctrl.dispose();
     super.dispose();
   }
@@ -75,7 +91,7 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
     final Color accent = widget.accentColor ?? p.primary;
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
+      duration: NeonMotion.duration(context, kNeonMediumDuration),
       decoration: BoxDecoration(
         borderRadius: style.radius(14),
         color: p.surface.withValues(alpha: style.surfaceAlpha(0.55)),
@@ -99,54 +115,69 @@ class _NeonExpansionTileState extends State<NeonExpansionTile>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          InkWell(
-            onTap: _toggle,
-            borderRadius: style.radius(14),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-              child: Row(
-                children: <Widget>[
-                  if (widget.leading != null) ...<Widget>[
-                    widget.leading!,
-                    const SizedBox(width: 12),
-                  ],
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          widget.title,
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(
-                                color: p.textPrimary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                        if (widget.subtitle != null) ...<Widget>[
-                          const SizedBox(height: 2),
+          Semantics(
+            expanded: _expanded,
+            child: InkWell(
+              onTap: _toggle,
+              borderRadius: style.radius(14),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 12,
+                ),
+                child: Row(
+                  spacing: 12,
+                  children: <Widget>[
+                    ?widget.leading,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
                           Text(
-                            widget.subtitle!,
-                            style: TextStyle(color: p.textMuted, fontSize: 12),
+                            widget.title,
+                            style: Theme.of(context).textTheme.titleSmall
+                                ?.copyWith(
+                                  color: p.textPrimary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
+                          if (widget.subtitle case final String subtitle)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2),
+                              child: Text(
+                                subtitle,
+                                style: TextStyle(
+                                  color: p.textMuted,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
                         ],
-                      ],
+                      ),
                     ),
-                  ),
-                  RotationTransition(
-                    turns: Tween<double>(begin: 0, end: 0.5).animate(_ctrl),
-                    child: Icon(Icons.expand_more_rounded, color: accent),
-                  ),
-                ],
+                    RotationTransition(
+                      turns: _turns,
+                      child: Icon(Icons.expand_more_rounded, color: accent),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           SizeTransition(
-            sizeFactor: CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.children,
+            sizeFactor: _size,
+            // Fechado, o conteúdo some também do foco e do leitor de tela.
+            child: ExcludeFocus(
+              excluding: !_expanded,
+              child: ExcludeSemantics(
+                excluding: !_expanded,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: widget.children,
+                  ),
+                ),
               ),
             ),
           ),

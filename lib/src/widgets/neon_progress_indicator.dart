@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -16,6 +17,7 @@ class NeonLinearProgress extends StatelessWidget {
     this.glowColor,
     this.trackColor,
     this.borderRadius = 999,
+    this.semanticsLabel,
   });
 
   /// Valor entre 0 e 1. `null` = indeterminado.
@@ -36,6 +38,9 @@ class NeonLinearProgress extends StatelessWidget {
   /// Raio dos cantos da barra.
   final double borderRadius;
 
+  /// Rótulo lido por leitores de tela (ex.: "Enviando arquivo").
+  final String? semanticsLabel;
+
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
@@ -44,25 +49,51 @@ class NeonLinearProgress extends StatelessWidget {
     final Color glow = glowColor ?? p.secondary;
     final Color track = trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
 
-    return ClipRRect(
-      borderRadius: style.radius(borderRadius),
-      child: SizedBox(
-        height: height,
-        child: Stack(
-          children: <Widget>[
-            Container(color: track),
-            if (value != null)
-              FractionallySizedBox(
-                widthFactor: value!.clamp(0.0, 1.0),
-                child: _GlowBar(gradient: g, glow: glow),
-              )
-            else
-              _IndeterminateBar(gradient: g, glow: glow),
-          ],
+    return _ProgressSemantics(
+      label: semanticsLabel,
+      value: value,
+      child: ClipRRect(
+        borderRadius: style.radius(borderRadius),
+        child: SizedBox(
+          height: height,
+          child: Stack(
+            children: <Widget>[
+              Container(color: track),
+              if (value != null)
+                FractionallySizedBox(
+                  widthFactor: value!.clamp(0.0, 1.0),
+                  child: _GlowBar(gradient: g, glow: glow),
+                )
+              else
+                _IndeterminateBar(gradient: g, glow: glow),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+/// Anuncia o progresso como o `ProgressIndicator` do Material: valor em %
+/// quando determinado, só o rótulo quando indeterminado.
+class _ProgressSemantics extends StatelessWidget {
+  const _ProgressSemantics({
+    required this.label,
+    required this.value,
+    required this.child,
+  });
+
+  final String? label;
+  final double? value;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    container: true,
+    label: label,
+    value: value == null ? null : '${(value!.clamp(0.0, 1.0) * 100).round()}%',
+    child: child,
+  );
 }
 
 class _GlowBar extends StatelessWidget {
@@ -98,7 +129,13 @@ class _IndeterminateBarState extends State<_IndeterminateBar>
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1400),
-  )..repeat();
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    NeonMotion.syncRepeat(_ctrl, context, rest: 0.6);
+  }
 
   @override
   void dispose() {
@@ -145,6 +182,7 @@ class NeonCircularProgress extends StatefulWidget {
     this.gradient,
     this.glowColor,
     this.trackColor,
+    this.semanticsLabel,
   });
 
   /// Valor entre 0 e 1. `null` = indeterminado.
@@ -165,6 +203,9 @@ class NeonCircularProgress extends StatefulWidget {
   /// Cor da trilha circular de fundo.
   final Color? trackColor;
 
+  /// Rótulo lido por leitores de tela (ex.: "Carregando").
+  final String? semanticsLabel;
+
   @override
   State<NeonCircularProgress> createState() => _NeonCircularProgressState();
 }
@@ -177,16 +218,15 @@ class _NeonCircularProgressState extends State<NeonCircularProgress>
   );
 
   @override
-  void initState() {
-    super.initState();
-    if (widget.value == null) _ctrl.repeat();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    NeonMotion.syncRepeat(_ctrl, context, active: widget.value == null);
   }
 
   @override
   void didUpdateWidget(covariant NeonCircularProgress old) {
     super.didUpdateWidget(old);
-    if (widget.value == null && !_ctrl.isAnimating) _ctrl.repeat();
-    if (widget.value != null && _ctrl.isAnimating) _ctrl.stop();
+    NeonMotion.syncRepeat(_ctrl, context, active: widget.value == null);
   }
 
   @override
@@ -204,24 +244,28 @@ class _NeonCircularProgressState extends State<NeonCircularProgress>
     final Color track =
         widget.trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
 
-    return SizedBox(
-      width: widget.size,
-      height: widget.size,
-      child: AnimatedBuilder(
-        animation: _ctrl,
-        builder: (BuildContext ctx, _) {
-          return CustomPaint(
-            painter: _NeonCircularPainter(
-              progress: widget.value,
-              rotation: _ctrl.value,
-              gradient: style.fill(g)!,
-              showGlow: style.shadow == NeonShadowKind.glow,
-              glowColor: glow,
-              trackColor: track,
-              strokeWidth: widget.strokeWidth,
-            ),
-          );
-        },
+    return _ProgressSemantics(
+      label: widget.semanticsLabel,
+      value: widget.value,
+      child: SizedBox(
+        width: widget.size,
+        height: widget.size,
+        child: AnimatedBuilder(
+          animation: _ctrl,
+          builder: (BuildContext ctx, _) {
+            return CustomPaint(
+              painter: _NeonCircularPainter(
+                progress: widget.value,
+                rotation: _ctrl.value,
+                gradient: style.fill(g)!,
+                showGlow: style.shadow == NeonShadowKind.glow,
+                glowColor: glow,
+                trackColor: track,
+                strokeWidth: widget.strokeWidth,
+              ),
+            );
+          },
+        ),
       ),
     );
   }

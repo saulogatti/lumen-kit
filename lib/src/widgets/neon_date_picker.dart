@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_pressable.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -102,47 +104,44 @@ class NeonDatePicker extends StatelessWidget {
         ? null
         : (format ?? _defaultFormat)(value!);
 
-    return Opacity(
-      opacity: disabled ? 0.55 : 1,
-      child: InkWell(
-        borderRadius: style.radius(12),
-        onTap: disabled
-            ? null
-            : () async {
-                final DateTime? picked = await showNeonDatePicker(
-                  context: context,
-                  initialDate: value ?? DateTime.now(),
-                  firstDate: firstDate,
-                  lastDate: lastDate,
-                  accentColor: accent,
-                );
-                if (picked != null) onChanged!(picked);
-              },
-        child: InputDecorator(
-          decoration: InputDecoration(
-            labelText: label,
-            hintText: hint,
-            prefixIcon: Icon(Icons.calendar_today_rounded, color: accent),
-            filled: true,
-            fillColor: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
-            labelStyle: TextStyle(color: p.textMuted),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: style.radius(12),
-              borderSide: BorderSide(color: accent.withValues(alpha: 0.35)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: style.radius(12),
-              borderSide: BorderSide(color: accent, width: 1.4),
-            ),
-          ),
-          isEmpty: text == null,
-          child: Text(
-            text ?? '',
-            style: Theme.of(context).textTheme.titleMedium
-                ?.copyWith(color: p.textPrimary),
-          ),
+    return NeonPressable(
+      borderRadius: style.radius(12),
+      onTap: disabled
+          ? null
+          : () async {
+              final DateTime? picked = await showNeonDatePicker(
+                context: context,
+                initialDate: _clamp(value ?? DateTime.now()),
+                firstDate: firstDate,
+                lastDate: lastDate,
+                accentColor: accent,
+              );
+              if (picked != null) onChanged!(picked);
+            },
+      child: InputDecorator(
+        decoration: NeonDecorations.input(
+          p,
+          style,
+          accent: accent,
+          label: label,
+          hint: hint,
+          prefixIcon: Icon(Icons.calendar_today_rounded, color: accent),
+        ),
+        isEmpty: text == null,
+        child: Text(
+          text ?? '',
+          style: Theme.of(context).textTheme.titleMedium
+              ?.copyWith(color: p.textPrimary),
         ),
       ),
     );
   }
+
+  // showDatePicker exige initialDate dentro de [firstDate, lastDate]; "hoje"
+  // fora do intervalo derrubava o app com assert.
+  DateTime _clamp(DateTime d) => d.isBefore(firstDate)
+      ? firstDate
+      : d.isAfter(lastDate)
+      ? lastDate
+      : d;
 }

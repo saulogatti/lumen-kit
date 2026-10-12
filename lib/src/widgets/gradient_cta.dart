@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_action_content.dart';
+import '../foundation/neon_pressable.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -53,51 +55,32 @@ class GradientCta extends StatelessWidget {
     final Color glow = glowColor ?? p.secondary;
     final Color fg = foregroundColor ?? p.backgroundDeep;
 
-    return Opacity(
-      opacity: enabled ? 1.0 : 0.55,
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: style.radius(borderRadius),
-        child: InkWell(
-          onTap: enabled ? onPressed : null,
+    return NeonPressable(
+      onTap: onPressed,
+      enabled: !busy,
+      borderRadius: style.radius(borderRadius),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+        decoration: BoxDecoration(
+          gradient: style.fill(g),
           borderRadius: style.radius(borderRadius),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-            decoration: BoxDecoration(
-              gradient: style.fill(g),
-              borderRadius: style.radius(borderRadius),
-              boxShadow: style.shadows(
-                enabled
-                    ? <BoxShadow>[
-                        BoxShadow(
-                          color: glow.withValues(alpha: 0.35),
-                          blurRadius: 18,
-                          offset: const Offset(0, 6),
-                        ),
-                      ]
-                    : null,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                if (busy)
-                  SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: fg),
-                  )
-                else if (icon != null)
-                  Icon(icon, color: fg, size: 18),
-                if (busy || icon != null) const SizedBox(width: 10),
-                Text(
-                  label,
-                  style: Theme.of(context).textTheme.labelLarge
-                      ?.copyWith(color: fg),
-                ),
-              ],
-            ),
+          boxShadow: style.shadows(
+            enabled
+                ? <BoxShadow>[
+                    BoxShadow(
+                      color: glow.withValues(alpha: 0.35),
+                      blurRadius: 18,
+                      offset: const Offset(0, 6),
+                    ),
+                  ]
+                : null,
           ),
+        ),
+        child: NeonActionContent(
+          color: fg,
+          label: label,
+          icon: icon,
+          busy: busy,
         ),
       ),
     );

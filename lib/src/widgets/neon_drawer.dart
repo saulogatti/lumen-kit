@@ -1,5 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_pressable.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -47,13 +50,9 @@ class NeonDrawer extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           gradient: style.fill(
-            LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.98)),
-                p.backgroundDeep.withValues(alpha: 0.98),
-              ],
+            NeonDecorations.diagonal(
+              p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.98)),
+              p.backgroundDeep.withValues(alpha: 0.98),
             ),
           ),
           border: Border(
@@ -130,56 +129,38 @@ class NeonDrawerItem extends StatelessWidget {
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
-    final bool disabled = onTap == null;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
-      child: Opacity(
-        opacity: disabled ? 0.55 : 1,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: style.radius(14),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-            decoration: BoxDecoration(
-              borderRadius: style.radius(14),
-              color: selected
-                  ? accent.withValues(alpha: 0.16)
-                  : Colors.transparent,
-              border: style.borderAll(
-                color: selected
-                    ? accent.withValues(alpha: 0.55)
-                    : Colors.transparent,
-              ),
-              boxShadow: style.shadows(
-                selected
-                    ? <BoxShadow>[
-                        BoxShadow(
-                          color: accent.withValues(alpha: 0.3),
-                          blurRadius: 12,
-                          spreadRadius: -2,
-                        ),
-                      ]
-                    : null,
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                Icon(icon, color: selected ? accent : p.textMuted, size: 20),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Text(
-                    label,
-                    style: TextStyle(
-                      color: selected ? p.textPrimary : p.textSecondary,
-                      fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-                    ),
+      child: NeonPressable(
+        onTap: onTap,
+        selected: selected,
+        borderRadius: style.radius(14),
+        child: AnimatedContainer(
+          duration: NeonMotion.duration(context, kNeonFastDuration),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: NeonDecorations.selectable(
+            p,
+            style,
+            accent: accent,
+            selected: selected,
+            radius: 14,
+          ),
+          child: Row(
+            spacing: 14,
+            children: <Widget>[
+              Icon(icon, color: selected ? accent : p.textMuted, size: 20),
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: selected ? p.textPrimary : p.textSecondary,
+                    fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                   ),
                 ),
-                ?trailing,
-              ],
-            ),
+              ),
+              ?trailing,
+            ],
           ),
         ),
       ),

@@ -164,6 +164,38 @@ final style = NeonStyle.soft.copyWith(
 As animações dos widgets (hover, transições, toasts) continuam iguais em todos
 os estilos.
 
+## Montando componentes próprios
+
+As peças que os widgets do kit usam por dentro também são públicas
+(`package:neon_ui/components.dart`), então um widget seu ganha o mesmo
+comportamento e acompanha paleta e estilo sem copiar código:
+
+```dart
+final NeonPalette p = NeonThemeExt.of(context).palette;
+final NeonStyle s = NeonStyle.of(context);
+
+NeonPressable(                       // ripple, foco, desabilitado 0.55, semântica
+  onTap: save,
+  borderRadius: s.radius(14),
+  child: Container(
+    padding: const EdgeInsets.all(16),
+    decoration: NeonDecorations.panel(p, s, accent: p.secondary),
+    child: NeonActionContent(color: p.textPrimary, icon: Icons.save, label: 'Salvar', busy: saving),
+  ),
+);
+```
+
+| Peça | Para quê |
+|---|---|
+| `NeonPressable` | Área tocável com ripple, teclado, `selected`/`checked`/`toggled` para leitores de tela e opacidade de desabilitado |
+| `NeonDecorations` | `panel` (dialog/toast/tooltip), `selectable` (item de navegação), `iconBox`, `input` (`InputDecoration`), `accent`/`diagonal` (gradientes) |
+| `NeonActionContent` | Spinner ou ícone + texto, como nos botões |
+| `NeonLabeled` | Controle + rótulo (checkbox, radio, switch) |
+| `NeonMotion` / `kNeon*` | Durações, opacidade de desabilitado e respeito a "reduzir animações" |
+
+Animações em loop (skeleton, progresso indeterminado) e transições param ou
+viram instantâneas quando o sistema pede para reduzir animações.
+
 ## Background configurável
 
 ```dart

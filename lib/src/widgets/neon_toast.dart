@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_tokens.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 import 'status_chip.dart';
@@ -17,7 +21,7 @@ enum NeonToastPosition {
 /// `ScaffoldMessenger`. Útil para feedbacks rápidos em telas sem `Scaffold`
 /// (ex.: splash, onboarding).
 ///
-/// Retorna um [Future] que completa quando o toast some.
+/// Retorna um [Future] que completa quando o toast sai da tela.
 ///
 /// [tone] define cor e ícone padrão, [position] escolhe o alinhamento vertical
 /// e [margin] controla a distância horizontal e vertical das bordas seguras.
@@ -29,28 +33,32 @@ Future<void> showNeonToast({
   Duration duration = const Duration(seconds: 3),
   NeonToastPosition position = NeonToastPosition.bottom,
   double margin = 24,
-}) async {
+}) {
   final OverlayState overlay = Overlay.of(context, rootOverlay: true);
   final NeonPalette p = NeonThemeExt.of(context).palette;
-  final Color accent = tone.colorOf(p);
+  final Completer<void> done = Completer<void>();
 
   late final OverlayEntry entry;
+  void finish() {
+    if (entry.mounted) entry.remove();
+    entry.dispose();
+    if (!done.isCompleted) done.complete();
+  }
+
   entry = OverlayEntry(
     builder: (BuildContext ctx) => _NeonToastWidget(
       message: message,
-      icon: icon ?? _toneIcon(tone),
-      accent: accent,
+      icon: icon ?? tone.icon,
+      accent: tone.colorOf(p),
       duration: duration,
       position: position,
       margin: margin,
-      onDone: () {
-        if (entry.mounted) entry.remove();
-      },
+      onDone: finish,
     ),
   );
 
   overlay.insert(entry);
-  await Future<void>.delayed(duration + const Duration(milliseconds: 400));
+  return done.future;
 }
 
 class _NeonToastWidget extends StatefulWidget {
@@ -80,103 +88,97 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 220),
+    duration: kNeonMediumDuration,
   );
+  late final CurvedAnimation _anim = CurvedAnimation(
+    parent: _ctrl,
+    curve: Curves.easeOutCubic,
+    reverseCurve: Curves.easeInCubic,
+  );
+  late final Animation<Offset> _slide = Tween<Offset>(
+    begin: Offset(0, widget.position == NeonToastPosition.top ? -0.3 : 0.3),
+    end: Offset.zero,
+  ).animate(_anim);
+  Timer? _timer;
 
   @override
-  void initState() {
-    super.initState();
-    _ctrl.forward();
-    Future<void>.delayed(widget.duration, () async {
-      if (!mounted) return;
-      await _ctrl.reverse();
-      widget.onDone();
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _ctrl.duration = NeonMotion.duration(context, kNeonMediumDuration);
+    if (_ctrl.isDismissed && _timer == null) {
+      _ctrl.forward();
+      _timer = Timer(widget.duration, _hide);
+    }
+  }
+
+  Future<void> _hide() async {
+    if (!mounted) return;
+    await _ctrl.reverse();
+    // O OverlayEntry é removido fora do frame de build.
+    widget.onDone();
   }
 
   @override
   void dispose() {
+    _timer?.cancel();
+    _anim.dispose();
     _ctrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Animation<double> anim = CurvedAnimation(
-      parent: _ctrl,
-      curve: Curves.easeOutCubic,
-      reverseCurve: Curves.easeInCubic,
-    );
     final bool top = widget.position == NeonToastPosition.top;
     final NeonPalette p = NeonThemeExt.of(context).palette;
     final NeonStyle style = NeonStyle.of(context);
+    final EdgeInsets safe = MediaQuery.paddingOf(context);
 
     return Positioned(
       left: widget.margin,
       right: widget.margin,
-      top: top ? widget.margin + MediaQuery.of(context).padding.top : null,
-      bottom: top
-          ? null
-          : widget.margin + MediaQuery.of(context).padding.bottom,
+      top: top ? widget.margin + safe.top : null,
+      bottom: top ? null : widget.margin + safe.bottom,
       child: IgnorePointer(
         child: FadeTransition(
-          opacity: anim,
+          opacity: _anim,
           child: SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset(0, top ? -0.3 : 0.3),
-              end: Offset.zero,
-            ).animate(anim),
+            position: _slide,
             child: Center(
-              child: Material(
-                color: Colors.transparent,
-                child: style.frost(
-                  borderRadius: style.radius(999),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: style.radius(999),
-                      gradient: style.fill(
-                        LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: <Color>[
-                            p.surface.withValues(
-                              alpha: style.surfaceAlpha(0.98),
-                            ),
-                            p.backgroundMid.withValues(
-                              alpha: style.surfaceAlpha(0.95),
-                            ),
-                          ],
-                        ),
+              // liveRegion: leitores de tela anunciam o toast ao aparecer.
+              child: Semantics(
+                liveRegion: true,
+                container: true,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: style.frost(
+                    borderRadius: style.radius(999),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 12,
                       ),
-                      border: style.borderAll(
-                        color: widget.accent.withValues(alpha: 0.55),
-                        width: 1.2,
+                      decoration: NeonDecorations.panel(
+                        p,
+                        style,
+                        accent: widget.accent,
+                        radius: 999,
+                        glowAlpha: 0.35,
+                        glowOffset: const Offset(0, 8),
                       ),
-                      boxShadow: style.shadows(<BoxShadow>[
-                        BoxShadow(
-                          color: widget.accent.withValues(alpha: 0.35),
-                          blurRadius: 22,
-                          offset: const Offset(0, 8),
-                        ),
-                      ]),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Icon(widget.icon, color: widget.accent, size: 18),
-                        const SizedBox(width: 10),
-                        Flexible(
-                          child: Text(
-                            widget.message,
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: p.textPrimary),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 10,
+                        children: <Widget>[
+                          Icon(widget.icon, color: widget.accent, size: 18),
+                          Flexible(
+                            child: Text(
+                              widget.message,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: p.textPrimary),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -186,20 +188,5 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
         ),
       ),
     );
-  }
-}
-
-IconData _toneIcon(StatusTone tone) {
-  switch (tone) {
-    case StatusTone.neutral:
-      return Icons.info_outline_rounded;
-    case StatusTone.info:
-      return Icons.bolt_rounded;
-    case StatusTone.success:
-      return Icons.check_circle_outline_rounded;
-    case StatusTone.warning:
-      return Icons.warning_amber_rounded;
-    case StatusTone.danger:
-      return Icons.error_outline_rounded;
   }
 }

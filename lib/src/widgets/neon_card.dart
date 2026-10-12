@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../foundation/neon_decorations.dart';
+import '../foundation/neon_pressable.dart';
 import '../theme/neon_palette.dart';
 import '../theme/neon_style.dart';
 
@@ -55,13 +57,9 @@ class NeonCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: radius,
           gradient: style.fill(
-            LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                p.surface.withValues(alpha: style.surfaceAlpha(0.95)),
-                p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.85)),
-              ],
+            NeonDecorations.diagonal(
+              p.surface.withValues(alpha: style.surfaceAlpha(0.95)),
+              p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.85)),
             ),
           ),
           border: style.borderAll(
@@ -75,10 +73,11 @@ class NeonCard extends StatelessWidget {
 
     final Widget body = onTap == null
         ? content
-        : Material(
-            color: Colors.transparent,
+        : NeonPressable(
+            onTap: onTap,
             borderRadius: radius,
-            child: InkWell(onTap: onTap, borderRadius: radius, child: content),
+            mergeSemantics: false,
+            child: content,
           );
 
     if (!glow) return body;
