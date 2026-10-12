@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 import 'status_chip.dart';
 
 /// Posição vertical do toast na tela.
@@ -108,6 +109,7 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
     );
     final bool top = widget.position == NeonToastPosition.top;
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
 
     return Positioned(
       left: widget.margin,
@@ -127,46 +129,55 @@ class _NeonToastWidgetState extends State<_NeonToastWidget>
             child: Center(
               child: Material(
                 color: Colors.transparent,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(999),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: <Color>[
-                        p.surface.withValues(alpha: 0.98),
-                        p.backgroundMid.withValues(alpha: 0.95),
-                      ],
+                child: style.frost(
+                  borderRadius: style.radius(999),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 12,
                     ),
-                    border: Border.all(
-                      color: widget.accent.withValues(alpha: 0.55),
-                      width: 1.2,
-                    ),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: widget.accent.withValues(alpha: 0.35),
-                        blurRadius: 22,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(widget.icon, color: widget.accent, size: 18),
-                      const SizedBox(width: 10),
-                      Flexible(
-                        child: Text(
-                          widget.message,
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(color: p.textPrimary),
+                    decoration: BoxDecoration(
+                      borderRadius: style.radius(999),
+                      gradient: style.fill(
+                        LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: <Color>[
+                            p.surface.withValues(
+                              alpha: style.surfaceAlpha(0.98),
+                            ),
+                            p.backgroundMid.withValues(
+                              alpha: style.surfaceAlpha(0.95),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                      border: style.borderAll(
+                        color: widget.accent.withValues(alpha: 0.55),
+                        width: 1.2,
+                      ),
+                      boxShadow: style.shadows(<BoxShadow>[
+                        BoxShadow(
+                          color: widget.accent.withValues(alpha: 0.35),
+                          blurRadius: 22,
+                          offset: const Offset(0, 8),
+                        ),
+                      ]),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Icon(widget.icon, color: widget.accent, size: 18),
+                        const SizedBox(width: 10),
+                        Flexible(
+                          child: Text(
+                            widget.message,
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: p.textPrimary),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Tooltip estilizado seguindo a identidade neon (surface translúcida, borda
 /// accent + glow). Wrapper fino sobre o [Tooltip] do Material.
@@ -37,6 +38,7 @@ class NeonTooltip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return Tooltip(
@@ -49,23 +51,28 @@ class NeonTooltip extends StatelessWidget {
       textStyle: Theme.of(context).textTheme.bodySmall
           ?.copyWith(color: p.textPrimary),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[
-            p.surface.withValues(alpha: 0.98),
-            p.backgroundMid.withValues(alpha: 0.95),
-          ],
+        borderRadius: style.radius(10),
+        gradient: style.fill(
+          LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[
+              p.surface.withValues(alpha: style.surfaceAlpha(0.98)),
+              p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
+            ],
+          ),
         ),
-        border: Border.all(color: accent.withValues(alpha: 0.55), width: 1),
-        boxShadow: <BoxShadow>[
+        border: style.borderAll(
+          color: accent.withValues(alpha: 0.55),
+          width: 1,
+        ),
+        boxShadow: style.shadows(<BoxShadow>[
           BoxShadow(
             color: accent.withValues(alpha: 0.3),
             blurRadius: 14,
             offset: const Offset(0, 6),
           ),
-        ],
+        ]),
       ),
       child: child,
     );

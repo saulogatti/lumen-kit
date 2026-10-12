@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Tom semântico para um chip de status.
 enum StatusTone {
@@ -55,13 +56,14 @@ class StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NeonStyle style = NeonStyle.of(context);
     final Color c = tone.colorOf(NeonThemeExt.of(context).palette);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: c.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: c.withValues(alpha: 0.5)),
+        borderRadius: style.radius(999),
+        border: style.borderAll(color: c.withValues(alpha: 0.5)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

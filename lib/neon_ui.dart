@@ -4,6 +4,7 @@ export 'src/backgrounds/animated_grid_background.dart';
 export 'src/theme/app_colors.dart';
 export 'src/theme/app_theme.dart';
 export 'src/theme/neon_palette.dart';
+export 'src/theme/neon_style.dart';
 export 'src/widgets/gradient_cta.dart';
 export 'src/widgets/navigation_card.dart';
 export 'src/widgets/neon_app_bar.dart';

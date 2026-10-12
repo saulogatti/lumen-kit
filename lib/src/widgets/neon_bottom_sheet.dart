@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Abre um modal bottom sheet com a estética do tema neon (gradiente de fundo,
 /// borda accent no topo e handle).
@@ -39,46 +40,55 @@ class _NeonBottomSheetShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            p.backgroundMid.withValues(alpha: 0.98),
-            p.backgroundDeep.withValues(alpha: 0.98),
-          ],
-        ),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        border: Border(
-          top: BorderSide(color: accent.withValues(alpha: 0.55), width: 1.2),
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: accent.withValues(alpha: 0.25),
-            blurRadius: 24,
-            spreadRadius: -4,
-            offset: const Offset(0, -6),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const SizedBox(height: 10),
-            Container(
-              width: 42,
-              height: 4,
-              decoration: BoxDecoration(
-                color: p.textMuted.withValues(alpha: 0.45),
-                borderRadius: BorderRadius.circular(2),
-              ),
+    final NeonStyle style = NeonStyle.of(context);
+    final BorderRadius sheetRadius = BorderRadius.vertical(
+      top: Radius.circular(24 * style.radiusScale),
+    );
+    return style.frost(
+      borderRadius: sheetRadius,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: style.fill(
+            LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[
+                p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.98)),
+                p.backgroundDeep.withValues(alpha: 0.98),
+              ],
             ),
-            const SizedBox(height: 14),
-            Flexible(child: child),
-          ],
+          ),
+          borderRadius: sheetRadius,
+          border: Border(
+            top: BorderSide(color: accent.withValues(alpha: 0.55), width: 1.2),
+          ),
+          boxShadow: style.shadows(<BoxShadow>[
+            BoxShadow(
+              color: accent.withValues(alpha: 0.25),
+              blurRadius: 24,
+              spreadRadius: -4,
+              offset: const Offset(0, -6),
+            ),
+          ]),
+        ),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(height: 10),
+              Container(
+                width: 42,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: p.textMuted.withValues(alpha: 0.45),
+                  borderRadius: style.radius(2),
+                ),
+              ),
+              const SizedBox(height: 14),
+              Flexible(child: child),
+            ],
+          ),
         ),
       ),
     );

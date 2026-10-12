@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 import 'status_chip.dart';
 
 /// Tom semântico do snackbar — usa as mesmas cores de [StatusTone].
@@ -22,6 +23,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
   SnackBarAction? action,
 }) {
   final NeonPalette p = NeonThemeExt.of(context).palette;
+  final NeonStyle style = NeonStyle.of(context);
   final Color accent = tone.colorOf(p);
 
   final SnackBar bar = SnackBar(
@@ -31,47 +33,55 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showNeonSnackBar({
     duration: duration,
     padding: EdgeInsets.zero,
     margin: const EdgeInsets.all(16),
-    content: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[
-            p.surface.withValues(alpha: 0.98),
-            p.backgroundMid.withValues(alpha: 0.95),
+    content: style.frost(
+      borderRadius: style.radius(14),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          borderRadius: style.radius(14),
+          gradient: style.fill(
+            LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                p.surface.withValues(alpha: style.surfaceAlpha(0.98)),
+                p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
+              ],
+            ),
+          ),
+          border: style.borderAll(
+            color: accent.withValues(alpha: 0.55),
+            width: 1.2,
+          ),
+          boxShadow: style.shadows(<BoxShadow>[
+            BoxShadow(
+              color: accent.withValues(alpha: 0.3),
+              blurRadius: 22,
+              offset: const Offset(0, 10),
+            ),
+          ]),
+        ),
+        child: Row(
+          children: <Widget>[
+            Icon(icon ?? _toneIcon(tone), color: accent, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: Theme.of(context).textTheme.bodyMedium
+                    ?.copyWith(color: p.textPrimary),
+              ),
+            ),
+            if (action != null) ...<Widget>[
+              const SizedBox(width: 8),
+              TextButton(
+                onPressed: action.onPressed,
+                style: TextButton.styleFrom(foregroundColor: accent),
+                child: Text(action.label),
+              ),
+            ],
           ],
         ),
-        border: Border.all(color: accent.withValues(alpha: 0.55), width: 1.2),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: accent.withValues(alpha: 0.3),
-            blurRadius: 22,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Row(
-        children: <Widget>[
-          Icon(icon ?? _toneIcon(tone), color: accent, size: 20),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              message,
-              style: Theme.of(context).textTheme.bodyMedium
-                  ?.copyWith(color: p.textPrimary),
-            ),
-          ),
-          if (action != null) ...<Widget>[
-            const SizedBox(width: 8),
-            TextButton(
-              onPressed: action.onPressed,
-              style: TextButton.styleFrom(foregroundColor: accent),
-              child: Text(action.label),
-            ),
-          ],
-        ],
       ),
     ),
   );

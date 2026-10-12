@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Floating Action Button no estilo neon. Funciona em dois modos:
 ///
@@ -66,13 +67,14 @@ class NeonFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette palette = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final bool enabled = onPressed != null && !busy;
     final Gradient g = gradient ?? palette.accentGradient;
     final Color glow = glowColor ?? palette.secondary;
     final Color fg = foregroundColor ?? palette.backgroundDeep;
     final bool extended = label != null;
 
-    final BorderRadius radius = BorderRadius.circular(size / 2);
+    final BorderRadius radius = style.radius(size / 2);
 
     final Widget iconOrSpinner = busy
         ? SizedBox(
@@ -104,17 +106,19 @@ class NeonFab extends StatelessWidget {
       height: size,
       width: extended ? null : size,
       decoration: BoxDecoration(
-        gradient: g,
+        gradient: style.fill(g),
         borderRadius: radius,
-        boxShadow: enabled
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: glow.withValues(alpha: 0.45),
-                  blurRadius: 24,
-                  offset: const Offset(0, 8),
-                ),
-              ]
-            : null,
+        boxShadow: style.shadows(
+          enabled
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: glow.withValues(alpha: 0.45),
+                    blurRadius: 24,
+                    offset: const Offset(0, 8),
+                  ),
+                ]
+              : null,
+        ),
       ),
       child: content,
     );

@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// CTA primário com gradiente neon. Reutilizado em todas as telas.
 class GradientCta extends StatelessWidget {
@@ -46,6 +47,7 @@ class GradientCta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final bool enabled = onPressed != null && !busy;
     final Gradient g = gradient ?? p.accentGradient;
     final Color glow = glowColor ?? p.secondary;
@@ -55,24 +57,26 @@ class GradientCta extends StatelessWidget {
       opacity: enabled ? 1.0 : 0.55,
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: style.radius(borderRadius),
         child: InkWell(
           onTap: enabled ? onPressed : null,
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: style.radius(borderRadius),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
             decoration: BoxDecoration(
-              gradient: g,
-              borderRadius: BorderRadius.circular(borderRadius),
-              boxShadow: enabled
-                  ? <BoxShadow>[
-                      BoxShadow(
-                        color: glow.withValues(alpha: 0.35),
-                        blurRadius: 18,
-                        offset: const Offset(0, 6),
-                      ),
-                    ]
-                  : null,
+              gradient: style.fill(g),
+              borderRadius: style.radius(borderRadius),
+              boxShadow: style.shadows(
+                enabled
+                    ? <BoxShadow>[
+                        BoxShadow(
+                          color: glow.withValues(alpha: 0.35),
+                          blurRadius: 18,
+                          offset: const Offset(0, 6),
+                        ),
+                      ]
+                    : null,
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,

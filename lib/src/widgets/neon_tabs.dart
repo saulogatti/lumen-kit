@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Item de [NeonTabs] / [NeonSegmentedControl].
 class NeonTabItem {
@@ -46,6 +47,7 @@ class NeonTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return DefaultTabController(
@@ -62,7 +64,7 @@ class NeonTabs extends StatelessWidget {
           insets: const EdgeInsets.symmetric(horizontal: 4),
         ),
         overlayColor: WidgetStateProperty.all(accent.withValues(alpha: 0.08)),
-        splashBorderRadius: BorderRadius.circular(10),
+        splashBorderRadius: style.radius(10),
         tabs: items
             .map(
               (NeonTabItem it) => Tab(
@@ -103,14 +105,15 @@ class NeonSegmentedControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: p.surface.withValues(alpha: 0.7),
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: p.surfaceOutline.withValues(alpha: 0.6)),
+        color: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
+        borderRadius: style.radius(28),
+        border: style.borderAll(color: p.surfaceOutline.withValues(alpha: 0.6)),
       ),
       child: Row(
         children: List<Widget>.generate(items.length, (int i) {
@@ -124,23 +127,27 @@ class NeonSegmentedControl extends StatelessWidget {
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  gradient: selected
-                      ? LinearGradient(
-                          colors: <Color>[accent, p.secondary],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        )
-                      : null,
-                  boxShadow: selected
-                      ? <BoxShadow>[
-                          BoxShadow(
-                            color: accent.withValues(alpha: 0.4),
-                            blurRadius: 12,
-                            spreadRadius: -2,
-                          ),
-                        ]
-                      : null,
+                  borderRadius: style.radius(24),
+                  gradient: style.fill(
+                    selected
+                        ? LinearGradient(
+                            colors: <Color>[accent, p.secondary],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          )
+                        : null,
+                  ),
+                  boxShadow: style.shadows(
+                    selected
+                        ? <BoxShadow>[
+                            BoxShadow(
+                              color: accent.withValues(alpha: 0.4),
+                              blurRadius: 12,
+                              spreadRadius: -2,
+                            ),
+                          ]
+                        : null,
+                  ),
                 ),
                 alignment: Alignment.center,
                 child: Row(

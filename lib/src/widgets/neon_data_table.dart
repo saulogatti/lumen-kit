@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Wrapper temático sobre [DataTable]. Aplica as cores do tema, glow no header
 /// e uma linha alternada sutil. Aceita `columns`/`rows` direto da API do
@@ -35,13 +36,14 @@ class NeonDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return Container(
       decoration: BoxDecoration(
-        color: p.surface.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: p.surfaceOutline.withValues(alpha: 0.6)),
+        color: p.surface.withValues(alpha: style.surfaceAlpha(0.5)),
+        borderRadius: style.radius(16),
+        border: style.borderAll(color: p.surfaceOutline.withValues(alpha: 0.6)),
       ),
       clipBehavior: Clip.antiAlias,
       child: SingleChildScrollView(
@@ -64,7 +66,7 @@ class NeonDataTable extends StatelessWidget {
           dataTextStyle: TextStyle(color: p.textSecondary),
           dividerThickness: 0.6,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.transparent),
+            border: style.borderAll(color: Colors.transparent),
           ),
           sortColumnIndex: sortColumnIndex,
           sortAscending: sortAscending,

@@ -19,27 +19,30 @@ class MyWidget extends StatelessWidget {
   }
 }
 
-/// Preset e brilho atuais da galeria. Trocar qualquer um re-tematiza o app
-/// inteiro (com transição animada via [NeonThemeExt.lerp]).
-final ValueNotifier<({NeonPreset preset, Brightness brightness})> _themeConfig =
-    ValueNotifier<({NeonPreset preset, Brightness brightness})>((
-      preset: NeonPreset.neon,
-      brightness: Brightness.light,
-    ));
+/// Preset, estilo e brilho atuais da galeria. Trocar qualquer um re-tematiza
+/// o app inteiro (cores com transição animada via [NeonThemeExt.lerp]).
+final ValueNotifier<NeonPreset> _preset = ValueNotifier<NeonPreset>(
+  NeonPreset.neon,
+);
+final ValueNotifier<String> _style = ValueNotifier<String>('neon');
+final ValueNotifier<Brightness> _brightness = ValueNotifier<Brightness>(
+  Brightness.light,
+);
 
 class NeonExampleApp extends StatelessWidget {
   const NeonExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<({NeonPreset preset, Brightness brightness})>(
-      valueListenable: _themeConfig,
-      builder: (BuildContext context, config, _) => MaterialApp(
+    return ListenableBuilder(
+      listenable: Listenable.merge(<Listenable>[_preset, _style, _brightness]),
+      builder: (BuildContext context, _) => MaterialApp(
         title: 'neon_ui example',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.fromPreset(
-          config.preset,
-          brightness: config.brightness,
+          _preset.value,
+          brightness: _brightness.value,
+          style: NeonStyle.presets[_style.value]!,
         ),
         home: const _GalleryScreen(),
       ),
@@ -163,7 +166,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
           children: <Widget>[
             _section(
-              'Paleta',
+              'Paleta e estilo',
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -175,13 +178,25 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         NeonTag(
                           label: preset.name,
                           color: preset.primary,
-                          icon: _themeConfig.value.preset == preset
+                          icon: _preset.value == preset
                               ? Icons.check_rounded
                               : null,
-                          onTap: () => _themeConfig.value = (
-                            preset: preset,
-                            brightness: _themeConfig.value.brightness,
-                          ),
+                          onTap: () => _preset.value = preset,
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: <Widget>[
+                      for (final String name in NeonStyle.presets.keys)
+                        NeonTag(
+                          label: name,
+                          icon: _style.value == name
+                              ? Icons.check_rounded
+                              : Icons.auto_awesome_outlined,
+                          onTap: () => _style.value = name,
                         ),
                     ],
                   ),
@@ -189,11 +204,10 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   Row(
                     children: <Widget>[
                       NeonSwitch(
-                        value: _themeConfig.value.brightness == Brightness.dark,
-                        onChanged: (bool dark) => _themeConfig.value = (
-                          preset: _themeConfig.value.preset,
-                          brightness: dark ? Brightness.dark : Brightness.light,
-                        ),
+                        value: _brightness.value == Brightness.dark,
+                        onChanged: (bool dark) => _brightness.value = dark
+                            ? Brightness.dark
+                            : Brightness.light,
                       ),
                       const SizedBox(width: 12),
                       Text(

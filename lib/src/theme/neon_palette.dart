@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import 'app_colors.dart';
+import 'neon_style.dart';
 
 /// Paleta instanciável do tema neon. Permite criar variantes (ex. branca, com
 /// outras accents) sem alterar os tokens default de [AppColors].
@@ -368,17 +369,26 @@ class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
   /// Paleta disponível para os widgets que leem o [ThemeData] atual.
   final NeonPalette palette;
 
-  /// Cria uma extensão de tema que transporta a [palette].
-  const NeonThemeExt({required this.palette});
+  /// Estilo de efeitos (sombra, borda, fundo…) usado pelos widgets.
+  final NeonStyle style;
+
+  /// Cria uma extensão de tema que transporta a [palette] e o [style].
+  const NeonThemeExt({required this.palette, this.style = NeonStyle.neon});
 
   @override
-  NeonThemeExt copyWith({NeonPalette? palette}) =>
-      NeonThemeExt(palette: palette ?? this.palette);
+  NeonThemeExt copyWith({NeonPalette? palette, NeonStyle? style}) =>
+      NeonThemeExt(
+        palette: palette ?? this.palette,
+        style: style ?? this.style,
+      );
 
   @override
   NeonThemeExt lerp(ThemeExtension<NeonThemeExt>? other, double t) {
     if (other is! NeonThemeExt) return this;
-    return NeonThemeExt(palette: NeonPalette.lerp(palette, other.palette, t));
+    return NeonThemeExt(
+      palette: NeonPalette.lerp(palette, other.palette, t),
+      style: t < 0.5 ? style : other.style,
+    );
   }
 
   /// Obtém a extensão neon registrada no [Theme] mais próximo.

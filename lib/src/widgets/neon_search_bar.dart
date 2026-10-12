@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Barra de busca compacta, com prefixo de lupa e botão de limpar quando há
 /// conteúdo. Mantém o próprio [TextEditingController] para evitar perda de foco.
@@ -62,6 +63,7 @@ class _NeonSearchBarState extends State<NeonSearchBar> {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = widget.accentColor ?? p.primary;
     final bool hasText = _controller.text.isNotEmpty;
 
@@ -84,17 +86,17 @@ class _NeonSearchBarState extends State<NeonSearchBar> {
               )
             : null,
         filled: true,
-        fillColor: p.surface.withValues(alpha: 0.7),
+        fillColor: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: style.radius(28),
           borderSide: BorderSide(color: accent.withValues(alpha: 0.3)),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: style.radius(28),
           borderSide: BorderSide(color: accent, width: 1.4),
         ),
       ),

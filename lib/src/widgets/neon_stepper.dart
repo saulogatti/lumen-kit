@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Definição de cada step.
 class NeonStep {
@@ -65,6 +66,7 @@ class NeonStepper extends StatelessWidget {
 
   Widget _buildHorizontal(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     final List<Widget> nodes = <Widget>[];
@@ -74,7 +76,7 @@ class NeonStepper extends StatelessWidget {
       nodes.add(
         InkWell(
           onTap: onStepTapped == null ? null : () => onStepTapped!(i),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: style.radius(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -126,6 +128,7 @@ class NeonStepper extends StatelessWidget {
 
   Widget _buildVertical(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
 
     return Column(
@@ -155,15 +158,17 @@ class NeonStepper extends StatelessWidget {
                         width: 2,
                         margin: const EdgeInsets.symmetric(vertical: 4),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: i < currentStep
-                                ? <Color>[accent, p.secondary]
-                                : <Color>[
-                                    p.surfaceOutline.withValues(alpha: 0.7),
-                                    p.surfaceOutline.withValues(alpha: 0.4),
-                                  ],
+                          gradient: style.fill(
+                            LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: i < currentStep
+                                  ? <Color>[accent, p.secondary]
+                                  : <Color>[
+                                      p.surfaceOutline.withValues(alpha: 0.7),
+                                      p.surfaceOutline.withValues(alpha: 0.4),
+                                    ],
+                            ),
                           ),
                         ),
                       ),
@@ -176,7 +181,7 @@ class NeonStepper extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: isLast ? 0 : 18, top: 4),
                   child: InkWell(
                     onTap: onStepTapped == null ? null : () => onStepTapped!(i),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: style.radius(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -232,6 +237,7 @@ class _StepCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NeonStyle style = NeonStyle.of(context);
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),
       width: 30,
@@ -239,29 +245,35 @@ class _StepCircle extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: active
-            ? LinearGradient(
-                colors: <Color>[accent, palette.secondary],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
-            : null,
-        color: active ? null : palette.surface.withValues(alpha: 0.7),
-        border: Border.all(
+        gradient: style.fill(
+          active
+              ? LinearGradient(
+                  colors: <Color>[accent, palette.secondary],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+        ),
+        color: active
+            ? null
+            : palette.surface.withValues(alpha: style.surfaceAlpha(0.7)),
+        border: style.borderAll(
           color: active
               ? accent
               : palette.surfaceOutline.withValues(alpha: 0.8),
           width: 1.4,
         ),
-        boxShadow: current
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.55),
-                  blurRadius: 14,
-                  spreadRadius: -2,
-                ),
-              ]
-            : null,
+        boxShadow: style.shadows(
+          current
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.55),
+                    blurRadius: 14,
+                    spreadRadius: -2,
+                  ),
+                ]
+              : null,
+        ),
       ),
       child: completed
           ? Icon(Icons.check_rounded, size: 16, color: palette.textPrimary)
@@ -290,17 +302,20 @@ class _Connector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NeonStyle style = NeonStyle.of(context);
     return Container(
       height: 2,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: active
-              ? <Color>[accent, palette.secondary]
-              : <Color>[
-                  palette.surfaceOutline.withValues(alpha: 0.6),
-                  palette.surfaceOutline.withValues(alpha: 0.3),
-                ],
+        gradient: style.fill(
+          LinearGradient(
+            colors: active
+                ? <Color>[accent, palette.secondary]
+                : <Color>[
+                    palette.surfaceOutline.withValues(alpha: 0.6),
+                    palette.surfaceOutline.withValues(alpha: 0.3),
+                  ],
+          ),
         ),
       ),
     );

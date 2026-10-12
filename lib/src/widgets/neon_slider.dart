@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Slider com track em gradiente accent e thumb com glow.
 class NeonSlider extends StatelessWidget {
@@ -57,7 +58,10 @@ class NeonSlider extends StatelessWidget {
         valueIndicatorColor: p.surface,
         valueIndicatorTextStyle: Theme.of(context).textTheme.bodySmall
             ?.copyWith(color: p.textPrimary),
-        thumbShape: _GlowThumbShape(glow: accent),
+        thumbShape: _GlowThumbShape(
+          glow: accent,
+          showGlow: NeonStyle.of(context).shadow == NeonShadowKind.glow,
+        ),
         trackShape: const RoundedRectSliderTrackShape(),
       ),
       child: Opacity(
@@ -76,9 +80,10 @@ class NeonSlider extends StatelessWidget {
 }
 
 class _GlowThumbShape extends SliderComponentShape {
-  const _GlowThumbShape({required this.glow});
+  const _GlowThumbShape({required this.glow, required this.showGlow});
 
   final Color glow;
+  final bool showGlow;
 
   static const double _radius = 10;
 
@@ -105,7 +110,7 @@ class _GlowThumbShape extends SliderComponentShape {
     final Paint glowPaint = Paint()
       ..color = glow.withValues(alpha: 0.55)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
-    canvas.drawCircle(center, _radius + 2, glowPaint);
+    if (showGlow) canvas.drawCircle(center, _radius + 2, glowPaint);
 
     final Paint thumbPaint = Paint()..color = glow;
     canvas.drawCircle(center, _radius, thumbPaint);

@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Checkbox quadrado com borda accent e marcador em gradiente quando ativo.
 class NeonCheckbox extends StatelessWidget {
@@ -36,6 +37,7 @@ class NeonCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
     final bool isChecked = value == true;
@@ -61,32 +63,36 @@ class NeonCheckbox extends StatelessWidget {
       width: 22,
       height: 22,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        gradient: isChecked || isIndeterminate
-            ? LinearGradient(
-                colors: <Color>[accent, p.secondary],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
-            : null,
+        borderRadius: style.radius(6),
+        gradient: style.fill(
+          isChecked || isIndeterminate
+              ? LinearGradient(
+                  colors: <Color>[accent, p.secondary],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+        ),
         color: (isChecked || isIndeterminate)
             ? null
-            : p.surface.withValues(alpha: 0.7),
-        border: Border.all(
+            : p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
+        border: style.borderAll(
           color: (isChecked || isIndeterminate)
               ? accent
               : p.surfaceOutline.withValues(alpha: 0.9),
           width: 1.2,
         ),
-        boxShadow: (isChecked || isIndeterminate)
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.45),
-                  blurRadius: 10,
-                  spreadRadius: -2,
-                ),
-              ]
-            : null,
+        boxShadow: style.shadows(
+          (isChecked || isIndeterminate)
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.45),
+                    blurRadius: 10,
+                    spreadRadius: -2,
+                  ),
+                ]
+              : null,
+        ),
       ),
       child: isIndeterminate
           ? Center(child: Container(width: 10, height: 2, color: p.textPrimary))
@@ -99,7 +105,7 @@ class NeonCheckbox extends StatelessWidget {
       opacity: disabled ? 0.55 : 1,
       child: InkWell(
         onTap: disabled ? null : toggle,
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: style.radius(6),
         child: Padding(
           padding: const EdgeInsets.all(2),
           child: label == null

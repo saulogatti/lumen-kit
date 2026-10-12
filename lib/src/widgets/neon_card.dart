@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Container base do tema neon: gradiente sutil + borda accent + opcional onTap.
 /// Use como peça fundamental para qualquer tela — cards, painéis, seções.
@@ -43,27 +44,33 @@ class NeonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color a = accent ?? p.primary;
-    final BorderRadius radius = BorderRadius.circular(borderRadius);
+    final BorderRadius radius = style.radius(borderRadius);
 
-    final Widget content = Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        borderRadius: radius,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[
-            p.surface.withValues(alpha: 0.95),
-            p.backgroundMid.withValues(alpha: 0.85),
-          ],
+    final Widget content = style.frost(
+      borderRadius: radius,
+      child: Container(
+        padding: padding,
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          gradient: style.fill(
+            LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                p.surface.withValues(alpha: style.surfaceAlpha(0.95)),
+                p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.85)),
+              ],
+            ),
+          ),
+          border: style.borderAll(
+            color: a.withValues(alpha: borderOpacity),
+            width: 1.2,
+          ),
         ),
-        border: Border.all(
-          color: a.withValues(alpha: borderOpacity),
-          width: 1.2,
-        ),
+        child: child,
       ),
-      child: child,
     );
 
     final Widget body = onTap == null
@@ -79,13 +86,13 @@ class NeonCard extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: radius,
-        boxShadow: <BoxShadow>[
+        boxShadow: style.shadows(<BoxShadow>[
           BoxShadow(
             color: a.withValues(alpha: 0.18),
             blurRadius: 24,
             offset: const Offset(0, 12),
           ),
-        ],
+        ]),
       ),
       child: body,
     );

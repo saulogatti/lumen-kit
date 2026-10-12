@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Radio circular com glow no estado selecionado. Genérico em [T] para casar
 /// com o `groupValue` do chamador.
@@ -37,6 +38,7 @@ class NeonRadio<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onChanged == null;
     final bool selected = value == groupValue;
@@ -47,20 +49,22 @@ class NeonRadio<T> extends StatelessWidget {
       height: 22,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: p.surface.withValues(alpha: 0.7),
-        border: Border.all(
+        color: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
+        border: style.borderAll(
           color: selected ? accent : p.surfaceOutline.withValues(alpha: 0.9),
           width: 1.4,
         ),
-        boxShadow: selected
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.45),
-                  blurRadius: 10,
-                  spreadRadius: -2,
-                ),
-              ]
-            : null,
+        boxShadow: style.shadows(
+          selected
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.45),
+                    blurRadius: 10,
+                    spreadRadius: -2,
+                  ),
+                ]
+              : null,
+        ),
       ),
       child: Center(
         child: AnimatedContainer(
@@ -69,10 +73,12 @@ class NeonRadio<T> extends StatelessWidget {
           height: selected ? 12 : 0,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: <Color>[accent, p.secondary],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+            gradient: style.fill(
+              LinearGradient(
+                colors: <Color>[accent, p.secondary],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
           ),
         ),
@@ -83,7 +89,7 @@ class NeonRadio<T> extends StatelessWidget {
       opacity: disabled ? 0.55 : 1,
       child: InkWell(
         onTap: disabled ? null : () => onChanged!(value),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: style.radius(20),
         child: Padding(
           padding: const EdgeInsets.all(2),
           child: label == null

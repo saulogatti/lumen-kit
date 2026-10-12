@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../theme/neon_palette.dart';
+import '../theme/neon_style.dart';
 
 /// Avatar circular com borda em gradiente e glow opcional. Aceita imagem
 /// ([image]) ou caem nas iniciais ([initials]).
@@ -40,6 +41,7 @@ class NeonAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NeonPalette p = NeonThemeExt.of(context).palette;
+    final NeonStyle style = NeonStyle.of(context);
     final Color accent = accentColor ?? p.primary;
     final double size = radius * 2;
 
@@ -49,22 +51,26 @@ class NeonAvatar extends StatelessWidget {
       padding: EdgeInsets.all(showRing ? 2 : 0),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: showRing
-            ? LinearGradient(
-                colors: <Color>[accent, p.secondary],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
-            : null,
-        boxShadow: showRing
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.45),
-                  blurRadius: 12,
-                  spreadRadius: -2,
-                ),
-              ]
-            : null,
+        gradient: style.fill(
+          showRing
+              ? LinearGradient(
+                  colors: <Color>[accent, p.secondary],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+        ),
+        boxShadow: style.shadows(
+          showRing
+              ? <BoxShadow>[
+                  BoxShadow(
+                    color: accent.withValues(alpha: 0.45),
+                    blurRadius: 12,
+                    spreadRadius: -2,
+                  ),
+                ]
+              : null,
+        ),
       ),
       child: Container(
         decoration: BoxDecoration(
@@ -105,13 +111,13 @@ class NeonAvatar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: statusColor,
                 shape: BoxShape.circle,
-                border: Border.all(color: p.backgroundDeep, width: 2),
-                boxShadow: <BoxShadow>[
+                border: style.borderAll(color: p.backgroundDeep, width: 2),
+                boxShadow: style.shadows(<BoxShadow>[
                   BoxShadow(
                     color: statusColor!.withValues(alpha: 0.6),
                     blurRadius: 6,
                   ),
-                ],
+                ]),
               ),
             ),
           ),
