@@ -45,11 +45,9 @@ screenshots da galeria: `flutter build web --no-web-resources-cdn` em
 `specify_nonobvious_*`…). `flutter analyze` com zero issues é o padrão do
 repo.
 
-**Não rode `dart format .` no repo inteiro.** O código está formatado em 80
-colunas, mas o `analysis_options.yaml` declara `formatter: page_width: 100`;
-um format global reescreve ~60 arquivos e enterra a mudança real no diff.
-Formate à mão no estilo do arquivo que você está editando (ou
-`dart format` só nos arquivos novos) até alguém decidir a largura de vez.
+Formatação: `dart format` no padrão de 80 colunas (sem `page_width` no
+`analysis_options.yaml`). O repo inteiro já está formatado, então
+`dart format lib test example/lib` não deve gerar diff além do seu.
 
 ## Estrutura
 
@@ -161,7 +159,7 @@ como `NeonDecorations.input` faz.
 4. Seção na galeria (`example/lib/main.dart`).
 5. Linha na tabela "O que vem dentro" do `README.md` + exemplo curto se a API
    não for óbvia; marcar no `ROADMAP.md`.
-6. `flutter analyze` e `flutter test` limpos.
+6. `dart format lib test example/lib`, `flutter analyze` e `flutter test` limpos.
 
 ## Git
 

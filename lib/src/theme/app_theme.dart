@@ -7,9 +7,9 @@ import 'neon_style.dart';
 /// para que telas não conheçam detalhes de estilo globais.
 class AppTheme {
   const AppTheme._();
+
   /// Tema dark default usando a paleta padrão.
-  static ThemeData get dark =>
-      fromPalette(NeonPalette.defaultDark());
+  static ThemeData get dark => fromPalette(NeonPalette.defaultDark());
 
   /// Tema claro usando a paleta clara padrão.
   static ThemeData get light =>

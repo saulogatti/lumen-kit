@@ -8,7 +8,6 @@ import '../theme/neon_style.dart';
 /// ListTile temático com surface translúcida, borda accent suave e estado
 /// selecionado destacado por glow.
 class NeonListTile extends StatelessWidget {
-
   /// Cria um item de lista neon.
   const NeonListTile({
     required this.title,
@@ -22,6 +21,7 @@ class NeonListTile extends StatelessWidget {
     this.accentColor,
     this.dense = false,
   });
+
   /// Texto principal do item.
   final String title;
 

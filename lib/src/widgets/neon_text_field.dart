@@ -11,7 +11,6 @@ import '../theme/neon_style.dart';
 /// Sem [controller], mantém um controller interno inicializado com
 /// [initialValue] para preservar foco/cursor entre rebuilds.
 class NeonTextField extends StatefulWidget {
-
   /// Cria um campo de texto neon.
   const NeonTextField({
     required this.label,
@@ -41,6 +40,7 @@ class NeonTextField extends StatefulWidget {
     this.autofillHints,
     this.accentColor,
   });
+
   /// Rótulo exibido pelo campo.
   final String label;
 

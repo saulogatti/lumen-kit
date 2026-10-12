@@ -9,7 +9,6 @@ import '../theme/neon_style.dart';
 /// Material; quem precisar de algo mais simples pode montar com
 /// [NeonTableRow] dentro de uma [Column].
 class NeonDataTable extends StatelessWidget {
-
   /// Cria uma [DataTable] com o tema visual neon.
   const NeonDataTable({
     required this.columns,
@@ -19,6 +18,7 @@ class NeonDataTable extends StatelessWidget {
     this.sortColumnIndex,
     this.sortAscending = true,
   });
+
   /// Colunas repassadas para [DataTable.columns].
   final List<DataColumn> columns;
 
@@ -82,7 +82,6 @@ class NeonDataTable extends StatelessWidget {
 /// Linha "à mão" para quem quer compor uma tabela leve sem [DataTable] (ex:
 /// dentro de cartões). Cada célula é um widget e flex configurável.
 class NeonTableRow extends StatelessWidget {
-
   /// Cria uma linha flexível para composição manual de tabelas.
   const NeonTableRow({
     required this.cells,
@@ -92,6 +91,7 @@ class NeonTableRow extends StatelessWidget {
     this.flex,
     this.accentColor,
   });
+
   /// Células exibidas na linha.
   final List<Widget> cells;
 

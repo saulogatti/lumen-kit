@@ -10,7 +10,6 @@ import 'neon_style.dart';
 /// [NeonPalette.fromSeed] ou um [NeonPreset].
 @immutable
 class NeonPalette {
-
   /// Cria uma paleta completa para o tema neon.
   ///
   /// Os gradientes são opcionais: quando omitidos, são derivados dos tons de
@@ -151,6 +150,7 @@ class NeonPalette {
       danger: AppColors.danger,
     );
   }
+
   /// Tom mais profundo do fundo da aplicação.
   final Color backgroundDeep;
 
@@ -366,9 +366,9 @@ enum NeonPreset {
 /// ThemeExtension para acessar a paleta via `Theme.of(context).extension<NeonThemeExt>()`.
 @immutable
 class NeonThemeExt extends ThemeExtension<NeonThemeExt> {
-
   /// Cria uma extensão de tema que transporta a [palette] e o [style].
   const NeonThemeExt({required this.palette, this.style = NeonStyle.neon});
+
   /// Paleta disponível para os widgets que leem o [ThemeData] atual.
   final NeonPalette palette;
 

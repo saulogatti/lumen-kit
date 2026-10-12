@@ -31,10 +31,7 @@ void main() {
     // Arrasta o thumb da direita para perto do fim.
     final double trackStart = box.left + 24;
     final double trackWidth = box.width - 48;
-    final endThumb = Offset(
-      trackStart + trackWidth * 0.8,
-      box.center.dy,
-    );
+    final endThumb = Offset(trackStart + trackWidth * 0.8, box.center.dy);
     await tester.dragFrom(endThumb, Offset(trackWidth * 0.15, 0));
     await tester.pumpAndSettle();
 
