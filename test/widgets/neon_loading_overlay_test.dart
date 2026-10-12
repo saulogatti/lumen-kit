@@ -54,11 +54,13 @@ void main() {
 
     final job = Completer<int>();
     int? result;
-    await showNeonLoading<int>(
-      context: ctx,
-      message: 'Enviando…',
-      task: () => job.future,
-    ).then((int v) => result = v);
+    unawaited(
+      showNeonLoading<int>(
+        context: ctx,
+        message: 'Enviando…',
+        task: () => job.future,
+      ).then((int v) => result = v),
+    );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Enviando…'), findsOneWidget);
@@ -90,11 +92,13 @@ void main() {
     );
 
     Object? error;
-    await showNeonLoading<void>(
-      context: ctx,
-      message: 'Enviando…',
-      task: () async => throw StateError('falhou'),
-    ).catchError((Object e) => error = e);
+    unawaited(
+      showNeonLoading<void>(
+        context: ctx,
+        message: 'Enviando…',
+        task: () async => throw StateError('falhou'),
+      ).catchError((Object e) => error = e),
+    );
     await tester.pumpAndSettle();
 
     expect(error, isA<StateError>());

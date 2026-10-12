@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:neon_ui/components.dart';
@@ -73,10 +75,12 @@ void main() {
         },
       ),
     );
-    await showNeonTimePicker(
-      context: ctx,
-      initialTime: const TimeOfDay(hour: 10, minute: 0),
-      accentColor: accent,
+    unawaited(
+      showNeonTimePicker(
+        context: ctx,
+        initialTime: const TimeOfDay(hour: 10, minute: 0),
+        accentColor: accent,
+      ),
     );
     await tester.pumpAndSettle();
     final BuildContext dialog = tester.element(find.byType(TimePickerDialog));

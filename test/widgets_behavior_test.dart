@@ -1,4 +1,6 @@
 // Regressões da refatoração: comportamento, acessibilidade e movimento.
+import 'dart:async';
+
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -48,11 +50,13 @@ void main() {
     );
 
     var done = false;
-    await showNeonToast(
-      context: ctx,
-      message: 'salvo',
-      duration: const Duration(seconds: 1),
-    ).then((_) => done = true);
+    unawaited(
+      showNeonToast(
+        context: ctx,
+        message: 'salvo',
+        duration: const Duration(seconds: 1),
+      ).then((_) => done = true),
+    );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300)); // entrada
     expect(find.text('salvo'), findsOneWidget);
