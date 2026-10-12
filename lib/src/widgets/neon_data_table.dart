@@ -9,16 +9,6 @@ import '../theme/neon_style.dart';
 /// Material; quem precisar de algo mais simples pode montar com
 /// [NeonTableRow] dentro de uma [Column].
 class NeonDataTable extends StatelessWidget {
-  /// Cria uma [DataTable] com o tema visual neon.
-  const NeonDataTable({
-    required this.columns,
-    required this.rows,
-    super.key,
-    this.accentColor,
-    this.sortColumnIndex,
-    this.sortAscending = true,
-  });
-
   /// Colunas repassadas para [DataTable.columns].
   final List<DataColumn> columns;
 
@@ -33,6 +23,16 @@ class NeonDataTable extends StatelessWidget {
 
   /// Se `true`, indica ordenação ascendente.
   final bool sortAscending;
+
+  /// Cria uma [DataTable] com o tema visual neon.
+  const NeonDataTable({
+    required this.columns,
+    required this.rows,
+    super.key,
+    this.accentColor,
+    this.sortColumnIndex,
+    this.sortAscending = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,16 +82,6 @@ class NeonDataTable extends StatelessWidget {
 /// Linha "à mão" para quem quer compor uma tabela leve sem [DataTable] (ex:
 /// dentro de cartões). Cada célula é um widget e flex configurável.
 class NeonTableRow extends StatelessWidget {
-  /// Cria uma linha flexível para composição manual de tabelas.
-  const NeonTableRow({
-    required this.cells,
-    super.key,
-    this.isHeader = false,
-    this.onTap,
-    this.flex,
-    this.accentColor,
-  });
-
   /// Células exibidas na linha.
   final List<Widget> cells;
 
@@ -108,6 +98,16 @@ class NeonTableRow extends StatelessWidget {
 
   /// Override da cor de destaque. Default: `palette.primary`.
   final Color? accentColor;
+
+  /// Cria uma linha flexível para composição manual de tabelas.
+  const NeonTableRow({
+    required this.cells,
+    super.key,
+    this.isHeader = false,
+    this.onTap,
+    this.flex,
+    this.accentColor,
+  });
 
   @override
   Widget build(BuildContext context) {

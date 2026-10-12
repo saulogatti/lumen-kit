@@ -1,8 +1,19 @@
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/widget_previews.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:neon_ui/neon_ui.dart';
 
 void main() => runApp(const NeonExampleApp());
+
+final ValueNotifier<Brightness> _brightness = ValueNotifier<Brightness>(
+  Brightness.light,
+);
+
+/// Preset, estilo e brilho atuais da galeria. Trocar qualquer um re-tematiza
+/// o app inteiro (cores com transição animada via [NeonThemeExt.lerp]).
+final ValueNotifier<NeonPreset> _preset = ValueNotifier<NeonPreset>(
+  NeonPreset.neon,
+);
+final ValueNotifier<String> _style = ValueNotifier<String>('neon');
 
 class MyWidget extends StatelessWidget {
   @Preview(name: 'Constructor preview')
@@ -18,16 +29,6 @@ class MyWidget extends StatelessWidget {
     );
   }
 }
-
-/// Preset, estilo e brilho atuais da galeria. Trocar qualquer um re-tematiza
-/// o app inteiro (cores com transição animada via [NeonThemeExt.lerp]).
-final ValueNotifier<NeonPreset> _preset = ValueNotifier<NeonPreset>(
-  NeonPreset.neon,
-);
-final ValueNotifier<String> _style = ValueNotifier<String>('neon');
-final ValueNotifier<Brightness> _brightness = ValueNotifier<Brightness>(
-  Brightness.light,
-);
 
 class NeonExampleApp extends StatelessWidget {
   const NeonExampleApp({super.key});
@@ -736,6 +737,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 ],
               ),
             ),
+
             _section(
               'Navegação (cards)',
               Column(
