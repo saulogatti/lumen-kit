@@ -50,7 +50,7 @@ class LumenSlider extends StatelessWidget {
     final disabled = onChanged == null;
 
     return SliderTheme(
-      data: _neonSliderTheme(context, p, accent),
+      data: _lumenSliderTheme(context, p, accent),
       child: Opacity(
         opacity: disabled ? kLumenDisabledOpacity : 1,
         child: Slider(
@@ -97,7 +97,7 @@ class _GlowThumbShape extends SliderComponentShape {
 
 const double _thumbRadius = 10;
 
-SliderThemeData _neonSliderTheme(
+SliderThemeData _lumenSliderTheme(
   BuildContext context,
   LumenPalette p,
   Color accent,
@@ -214,7 +214,7 @@ class LumenRangeSlider extends StatelessWidget {
     final double end = values.end.clamp(start, max);
 
     return SliderTheme(
-      data: _neonSliderTheme(context, p, accent),
+      data: _lumenSliderTheme(context, p, accent),
       child: Opacity(
         opacity: onChanged == null ? kLumenDisabledOpacity : 1,
         child: RangeSlider(

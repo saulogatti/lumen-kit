@@ -59,7 +59,7 @@ lib/
     theme/              # LumenPalette, LumenPreset, LumenThemeExt, LumenScope, LumenStyle, AppTheme, AppColors
     foundation/         # peças reaproveitáveis: LumenPressable, LumenDecorations,
                         #   LumenActionContent, LumenLabeled, LumenMotion + kLumen* tokens
-    backgrounds/        # AnimatedGridBackground, GlowOrbSpec
+    backgrounds/        # LumenAnimatedGridBackground, LumenGlowOrbSpec
     widgets/            # um arquivo por widget (ou família: lumen_tabs.dart tem LumenTabs + LumenSegmentedControl)
 test/
   widgets/_harness.dart # bareApp/pumpBare: app SEM LumenThemeExt registrado
@@ -116,9 +116,10 @@ alpha, não multiplica. `surfaceOutline` no claro default já é translúcido
 (`0x15000000`), então `p.surfaceOutline.withValues(alpha: 0.5)` vira preto
 quase opaco. Para contorno use `p.surfaceOutline.outlineAlpha(0.5)`: no
 escuro o alpha pedido entra direto (o cyan continua visível) e no claro o
-preto fraco é só escalado. Accent opaco pode usar `withValues(alpha:)` à
-vontade. Não multiplique um accent opaco achando que está suavizando um
-token que já tinha alpha.
+preto fraco é só escalado. Token que já nasce translúcido (`textMuted`,
+`textSecondary`, `surfaceHighlight`) usa `c.scaleAlpha(x)`, que faz `c.a * x`.
+Accent opaco pode usar `withValues(alpha:)` à vontade. Não multiplique um
+accent opaco achando que está suavizando um token que já tinha alpha.
 
 **Material 3 e tipografia.** Texto usa `Theme.of(context).textTheme` com
 `copyWith(color: p.textX)`. Não fixe `fontFamily`.

@@ -81,7 +81,7 @@ class _LumenBottomSheetShell extends StatelessWidget {
                 width: 42,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: p.textMuted.withValues(alpha: 0.45),
+                  color: p.textMuted.scaleAlpha(0.45),
                   borderRadius: style.radius(2),
                 ),
               ),

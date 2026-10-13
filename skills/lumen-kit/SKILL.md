@@ -161,7 +161,7 @@ Follow [`references/widgets.md`](references/widgets.md). Rules:
   `showDialog` by hand.
 - Don't replace what has no equivalent (Autocomplete, paginated tables…);
   keep Material and say which ones were left out.
-- Kit background: wrap the `body` in `AnimatedGridBackground(child: ...)`.
+- Kit background: wrap the `body` in `LumenAnimatedGridBackground(child: ...)`.
   It follows the style (grid, dots or plain).
 - An app's own component that must match the kit: use
   `LumenThemeExt.of(context).palette`, `LumenStyle.of(context)`,
@@ -181,6 +181,8 @@ Follow [`references/widgets.md`](references/widgets.md). Rules:
    `unawaited(...)` and pump.
 3. Run the app in both brightnesses if it has a light mode. Outline colors
    in the kit go through `Color.outlineAlpha`, which keeps the light
-   `surfaceOutline` from turning into a near-opaque black border.
+   `surfaceOutline` from turning into a near-opaque black border. Tokens that
+   already carry alpha (`textMuted`, `surfaceHighlight`) use `scaleAlpha`,
+   which multiplies instead of replacing it.
 4. Summarize for the user: import chosen, theme path (A/B/C), widgets
    swapped, what stayed Material and why.

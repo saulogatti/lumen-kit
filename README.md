@@ -7,7 +7,7 @@ Kit de widgets Flutter com os mesmos desenhos e a cor livre. O visual neon (glow
 | Categoria   | Componentes                                                        |
 |-------------|--------------------------------------------------------------------|
 | Tema        | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `AppTheme` |
-| Background  | `AnimatedGridBackground`, `GlowOrbSpec`                            |
+| Background  | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec`                  |
 | Estrutura   | `LumenAppBar`, `LumenCard`                                           |
 | Ação        | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
 | Input       | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating` |
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.dark,
       home: Scaffold(
         appBar: const LumenAppBar(title: 'Dashboard', subtitle: 'em tempo real'),
-        body: AnimatedGridBackground(
+        body: LumenAnimatedGridBackground(
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: LumenCard(
@@ -199,12 +199,17 @@ viram instantâneas quando o sistema pede para reduzir animações.
 ## Background configurável
 
 ```dart
-AnimatedGridBackground(
+LumenAnimatedGridBackground(
   gridSpacing: 80,
   gridOpacity: 0.08,
-  orbs: const <GlowOrbSpec>[
-    GlowOrbSpec(color: Colors.cyanAccent, size: 380, top: -120, left: -120),
-    GlowOrbSpec(color: Colors.purpleAccent, size: 320, bottom: -100, right: -80),
+  orbs: const <LumenGlowOrbSpec>[
+    LumenGlowOrbSpec(color: Colors.cyanAccent, size: 380, top: -120, left: -120),
+    LumenGlowOrbSpec(
+      color: Colors.purpleAccent,
+      size: 320,
+      bottom: -100,
+      right: -80,
+    ),
   ],
   child: child,
 );
