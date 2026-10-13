@@ -1,0 +1,242 @@
+import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
+
+import '../foundation/lumen_tokens.dart';
+import '../theme/lumen_palette.dart';
+import '../theme/lumen_style.dart';
+
+/// Campo de código (OTP): uma sequência de casas controlada por [value].
+///
+/// `onChanged == null` desabilita. [onCompleted] dispara quando a última
+/// casa é preenchida. Colar um código preenche a sequência de uma vez.
+///
+/// ```dart
+/// LumenPinField(
+///   length: 6,
+///   value: _codigo,
+///   onChanged: (String v) => setState(() => _codigo = v),
+///   onCompleted: enviar,
+/// )
+/// ```
+class LumenPinField extends StatefulWidget {
+  /// Cria um campo de [length] casas. Default: 6.
+  const LumenPinField({
+    super.key,
+    this.length = 6,
+    this.value = '',
+    this.onChanged,
+    this.onCompleted,
+    this.obscure = false,
+    this.semanticLabel,
+  }) : assert(length > 0, 'length precisa ser positivo.');
+
+  /// Quantidade de casas.
+  final int length;
+
+  /// Dígitos já preenchidos. O que passar de [length] é ignorado.
+  final String value;
+
+  /// Recebe só dígitos, no máximo [length]. `null` desabilita o campo.
+  final ValueChanged<String>? onChanged;
+
+  /// Chamado uma vez quando [value] chega a [length] dígitos.
+  final ValueChanged<String>? onCompleted;
+
+  /// Se `true`, cada casa mostra um ponto em vez do dígito.
+  final bool obscure;
+
+  /// Rótulo para leitores de tela. Default: "Código de N dígitos".
+  final String? semanticLabel;
+
+  @override
+  State<LumenPinField> createState() => _LumenPinFieldState();
+}
+
+class _LumenPinFieldState extends State<LumenPinField> {
+  late final TextEditingController _controller;
+  late final FocusNode _focus;
+  int _previousLength = 0;
+
+  bool get _enabled => widget.onChanged != null;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final LumenStyle s = LumenStyle.of(context);
+    final Color accent = p.primary;
+    final String text = _digits(_controller.text);
+    final int cursor = text.length.clamp(0, widget.length - 1);
+    return Opacity(
+      opacity: _enabled ? 1 : kLumenDisabledOpacity,
+      child: Semantics(
+        label: widget.semanticLabel ?? 'Código de ${widget.length} dígitos',
+        value: widget.obscure ? null : text,
+        textField: true,
+        enabled: _enabled,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Row(
+              spacing: 8,
+              children: <Widget>[
+                for (int i = 0; i < widget.length; i++)
+                  Expanded(
+                    child: _PinCell(
+                      char: i < text.length
+                          ? (widget.obscure ? '•' : text[i])
+                          : '',
+                      active: _enabled && _focus.hasFocus && i == cursor,
+                      accent: accent,
+                      palette: p,
+                      style: s,
+                    ),
+                  ),
+              ],
+            ),
+            Positioned.fill(
+              child: IgnorePointer(
+                ignoring: !_enabled,
+                child: Opacity(
+                  opacity: 0,
+                  child: TextField(
+                    controller: _controller,
+                    focusNode: _focus,
+                    enabled: _enabled,
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    autofillHints: const <String>[AutofillHints.oneTimeCode],
+                    maxLength: widget.length,
+                    showCursor: false,
+                    enableInteractiveSelection: _enabled,
+                    style: const TextStyle(
+                      color: Color(0x00000000),
+                      fontSize: 1,
+                    ),
+                    decoration: const InputDecoration(
+                      counterText: '',
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(widget.length),
+                    ],
+                    onChanged: _changed,
+                    onTap: () => setState(() {}),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void didUpdateWidget(LumenPinField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final String next = _digits(widget.value);
+    if (next != _controller.text) {
+      _controller.value = TextEditingValue(
+        text: next,
+        selection: TextSelection.collapsed(offset: next.length),
+      );
+    }
+    _previousLength = next.length;
+  }
+
+  @override
+  void dispose() {
+    _focus.removeListener(_onFocus);
+    _controller.dispose();
+    _focus.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final String initial = _digits(widget.value);
+    _controller = TextEditingController(text: initial);
+    _previousLength = initial.length;
+    _focus = FocusNode()..addListener(_onFocus);
+  }
+
+  void _changed(String raw) {
+    if (!_enabled) {
+      return;
+    }
+    final String next = _digits(raw);
+    if (next != _controller.text) {
+      _controller.value = TextEditingValue(
+        text: next,
+        selection: TextSelection.collapsed(offset: next.length),
+      );
+    }
+    final bool justCompleted =
+        next.length == widget.length && _previousLength != widget.length;
+    _previousLength = next.length;
+    if (next != widget.value) {
+      widget.onChanged!(next);
+    }
+    if (justCompleted) {
+      widget.onCompleted?.call(next);
+    }
+    setState(() {});
+  }
+
+  String _digits(String raw) {
+    final String only = raw.replaceAll(RegExp(r'\D'), '');
+    if (only.length <= widget.length) {
+      return only;
+    }
+    return only.substring(0, widget.length);
+  }
+
+  void _onFocus() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+}
+
+class _PinCell extends StatelessWidget {
+  const _PinCell({
+    required this.char,
+    required this.active,
+    required this.accent,
+    required this.palette,
+    required this.style,
+  });
+
+  final String char;
+  final bool active;
+  final Color accent;
+  final LumenPalette palette;
+  final LumenStyle style;
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 0.8,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: palette.surface.withValues(alpha: style.surfaceAlpha(0.7)),
+          borderRadius: style.radius(10),
+          border: style.borderAll(
+            color: active ? accent : palette.surfaceOutline.outlineAlpha(0.7),
+            width: active ? 1.4 : 1,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            char,
+            style: Theme.of(context).textTheme.titleLarge
+                ?.copyWith(color: palette.textPrimary),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -70,9 +70,10 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 - [x] `LumenTimePicker`
 - [x] `LumenRangeSlider`
 - [x] `LumenMenuButton` / `LumenContextMenu`
-- [ ] `LumenBanner` / alerta inline que fica até alguém fechar
-- [ ] `LumenEmptyState` (ícone, texto e CTA)
-- [ ] `LumenPinField` (OTP)
+- [x] `LumenBanner` / alerta inline que fica até alguém fechar
+- [x] `LumenEmptyState` (ícone, texto e CTA)
+- [x] `LumenPinField` (OTP)
+- [x] `LumenList` (`ListView.builder` para listas grandes)
 - [x] `LumenPageIndicator` / `LumenCarousel`
 - [x] `LumenQuantityStepper`
 - [x] `LumenRating`
