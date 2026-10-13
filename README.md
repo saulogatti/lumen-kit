@@ -1,19 +1,19 @@
-# neon_ui
+# lumen_kit
 
-Kit de UI com tema futurístico **dark neon** para Flutter — paleta opinativa, fundo com grid + glow orbs nos cantos e um conjunto de widgets prontos com identidade visual consistente. Pensado para reaproveitar entre projetos sem precisar reescrever tokens e estilos a cada novo app.
+Kit de widgets Flutter com os mesmos desenhos e a cor livre. O visual neon (glow, gradiente, grid e orbs) é o estilo padrão; flat, glass, soft e brutal usam qualquer paleta. Pensado para reaproveitar entre projetos sem reescrever tokens e estilos a cada novo app.
 
 ## O que vem dentro
 
 | Categoria   | Componentes                                                        |
 |-------------|--------------------------------------------------------------------|
-| Tema        | `AppColors`, `NeonPalette`, `NeonPreset`, `NeonStyle`, `NeonThemeExt`, `AppTheme` |
+| Tema        | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `AppTheme` |
 | Background  | `AnimatedGridBackground`, `GlowOrbSpec`                            |
-| Estrutura   | `NeonAppBar`, `NeonCard`                                           |
-| Ação        | `GradientCta`, `NeonButton`, `NeonIconButton`, `NeonFab`, `NeonMenuButton`, `NeonContextMenu` |
-| Input       | `NeonTextField`, `NeonSwitch`, `NeonCheckbox`, `NeonRadio`, `NeonSlider`, `NeonRangeSlider`, `NeonDropdown`, `NeonSearchBar`, `NeonDatePicker`, `NeonTimePicker`, `NeonChip` (+ `NeonChoiceChips`, `NeonFilterChips`), `NeonQuantityStepper`, `NeonRating` |
-| Feedback    | `StatusChip`, `NeonDialog`, `NeonSnackBar`, `NeonToast`, `NeonLinearProgress`, `NeonCircularProgress`, `NeonSkeleton`, `NeonTooltip`, `NeonLoadingOverlay` (+ `showNeonLoading`) |
-| Navegação   | `NavigationCard`, `NeonTabs`, `NeonSegmentedControl`, `NeonBottomNavBar`, `NeonNavRail`, `NeonBottomSheet`, `NeonDrawer`, `NeonStepper`, `NeonPageIndicator`, `NeonCarousel` |
-| Display     | `NeonBadge`, `NeonTag`, `NeonAvatar`, `NeonAvatarGroup`, `NeonListTile`, `NeonDivider`, `NeonExpansionTile`, `NeonDataTable`, `NeonTableRow` |
+| Estrutura   | `LumenAppBar`, `LumenCard`                                           |
+| Ação        | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
+| Input       | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating` |
+| Feedback    | `LumenStatusChip`, `LumenDialog`, `LumenSnackBar`, `LumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
+| Navegação   | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
+| Display     | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
 
 Tudo desacoplado de domínio — recebe `child`, callbacks e tokens; não conhece nenhuma regra de negócio.
 
@@ -21,9 +21,9 @@ Tudo desacoplado de domínio — recebe `child`, callbacks e tokens; não conhec
 
 ```yaml
 dependencies:
-  neon_ui:
+  lumen_kit:
     git:
-      url: https://github.com/saulogatti/flutter-neon-ui.git
+      url: https://github.com/saulogatti/lumen-kit.git
       ref: main
 ```
 
@@ -32,30 +32,30 @@ dependencies:
 Se o seu app já tem o próprio `ThemeData`, importe só os widgets:
 
 ```dart
-import 'package:neon_ui/components.dart';
+import 'package:lumen_kit/components.dart';
 ```
 
 Esse import não traz `AppTheme` nem `AppColors` (nada de conflito de nomes) e
 não exige registrar nada no tema: os widgets usam a paleta default, clara ou
 escura conforme o brilho do seu tema. Para outras cores ou outro estilo em
-uma parte da tela, sem tocar no `ThemeData`, use `NeonScope`:
+uma parte da tela, sem tocar no `ThemeData`, use `LumenScope`:
 
 ```dart
-NeonScope(
-  palette: NeonPalette.fromSeed(primary: Colors.teal),
-  style: NeonStyle.flat,
-  child: NeonButton(label: 'Salvar', onPressed: salvar),
+LumenScope(
+  palette: LumenPalette.fromSeed(primary: Colors.teal),
+  style: LumenStyle.flat,
+  child: LumenButton(label: 'Salvar', onPressed: salvar),
 )
 ```
 
 Tipografia vem do `textTheme` do seu app. O import completo
-(`package:neon_ui/neon_ui.dart`) continua igual, com tudo.
+(`package:lumen_kit/lumen_kit.dart`) continua igual, com tudo.
 
 ## Uso mínimo
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:neon_ui/neon_ui.dart';
+import 'package:lumen_kit/lumen_kit.dart';
 
 void main() => runApp(const MyApp());
 
@@ -67,11 +67,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.dark,
       home: Scaffold(
-        appBar: const NeonAppBar(title: 'Dashboard', subtitle: 'em tempo real'),
+        appBar: const LumenAppBar(title: 'Dashboard', subtitle: 'em tempo real'),
         body: AnimatedGridBackground(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: NeonCard(
+            child: LumenCard(
               glow: true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,9 +79,9 @@ class MyApp extends StatelessWidget {
                 children: <Widget>[
                   const Text('Serviço online'),
                   const SizedBox(height: 12),
-                  const StatusChip(label: 'OK', tone: StatusTone.success),
+                  const LumenStatusChip(label: 'OK', tone: LumenStatusTone.success),
                   const SizedBox(height: 20),
-                  GradientCta(
+                  LumenCta(
                     label: 'EXECUTAR',
                     icon: Icons.play_arrow_rounded,
                     onPressed: () {},
@@ -104,7 +104,7 @@ Do mais simples ao mais detalhado:
 
 ```dart
 // 1. Preset pronto: neon (default), matrix, synthwave, ultraviolet, ember.
-MaterialApp(theme: AppTheme.fromPreset(NeonPreset.matrix), home: ...);
+MaterialApp(theme: AppTheme.fromPreset(LumenPreset.matrix), home: ...);
 
 // 2. Uma ou duas cores: fundos, superfícies, textos, glows e gradientes
 //    são derivados automaticamente.
@@ -118,11 +118,11 @@ MaterialApp(
 );
 
 // 3. Ajuste fino de tokens específicos (gradientes se recalculam sozinhos).
-final palette = NeonPalette.defaultDark().copyWith(primary: Colors.greenAccent);
+final palette = LumenPalette.defaultDark().copyWith(primary: Colors.greenAccent);
 MaterialApp(theme: AppTheme.fromPalette(palette), home: ...);
 ```
 
-Trocas de tema em runtime são animadas (`NeonThemeExt.lerp` interpola a
+Trocas de tema em runtime são animadas (`LumenThemeExt.lerp` interpola a
 paleta). O app de `example/` tem um seletor de preset e modo claro/escuro.
 
 > `accentCyan`, `accentMagenta` e `accentBlue` viraram `primary`, `secondary`
@@ -131,13 +131,13 @@ paleta). O app de `example/` tem um seletor de preset e modo claro/escuro.
 Dentro de qualquer widget, acesse via extension:
 
 ```dart
-final p = NeonThemeExt.of(context).palette;
+final p = LumenThemeExt.of(context).palette;
 return Container(color: p.surface);
 ```
 
 ## Trocando o estilo (além da cor)
 
-O "neon" (glow, gradientes, grid) é só um dos estilos. `NeonStyle` controla
+O "neon" (glow, gradientes, grid) é só um dos estilos. `LumenStyle` controla
 sombra, preenchimento, superfície, borda e fundo, e combina com qualquer paleta:
 
 | Estilo   | Visual                                                        |
@@ -150,13 +150,13 @@ sombra, preenchimento, superfície, borda e fundo, e combina com qualquer paleta
 
 ```dart
 MaterialApp(
-  theme: AppTheme.fromPreset(NeonPreset.matrix, style: NeonStyle.flat),
+  theme: AppTheme.fromPreset(LumenPreset.matrix, style: LumenStyle.flat),
   home: ...,
 );
 
 // Ajuste fino a partir de um preset.
-final style = NeonStyle.soft.copyWith(
-  background: NeonBackgroundKind.grid,
+final style = LumenStyle.soft.copyWith(
+  background: LumenBackgroundKind.grid,
   radiusScale: 1.2,
 );
 ```
@@ -167,31 +167,31 @@ os estilos.
 ## Montando componentes próprios
 
 As peças que os widgets do kit usam por dentro também são públicas
-(`package:neon_ui/components.dart`), então um widget seu ganha o mesmo
+(`package:lumen_kit/components.dart`), então um widget seu ganha o mesmo
 comportamento e acompanha paleta e estilo sem copiar código:
 
 ```dart
-final NeonPalette p = NeonThemeExt.of(context).palette;
-final NeonStyle s = NeonStyle.of(context);
+final LumenPalette p = LumenThemeExt.of(context).palette;
+final LumenStyle s = LumenStyle.of(context);
 
-NeonPressable(                       // ripple, foco, desabilitado 0.55, semântica
+LumenPressable(                       // ripple, foco, desabilitado 0.55, semântica
   onTap: save,
   borderRadius: s.radius(14),
   child: Container(
     padding: const EdgeInsets.all(16),
-    decoration: NeonDecorations.panel(p, s, accent: p.secondary),
-    child: NeonActionContent(color: p.textPrimary, icon: Icons.save, label: 'Salvar', busy: saving),
+    decoration: LumenDecorations.panel(p, s, accent: p.secondary),
+    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Salvar', busy: saving),
   ),
 );
 ```
 
 | Peça | Para quê |
 |---|---|
-| `NeonPressable` | Área tocável com ripple, teclado, `selected`/`checked`/`toggled` para leitores de tela e opacidade de desabilitado |
-| `NeonDecorations` | `panel` (dialog/toast/tooltip), `selectable` (item de navegação), `iconBox`, `input` (`InputDecoration`), `accent`/`diagonal` (gradientes) |
-| `NeonActionContent` | Spinner ou ícone + texto, como nos botões |
-| `NeonLabeled` | Controle + rótulo (checkbox, radio, switch) |
-| `NeonMotion` / `kNeon*` | Durações, opacidade de desabilitado e respeito a "reduzir animações" |
+| `LumenPressable` | Área tocável com ripple, teclado, `selected`/`checked`/`toggled` para leitores de tela e opacidade de desabilitado |
+| `LumenDecorations` | `panel` (dialog/toast/tooltip), `selectable` (item de navegação), `iconBox`, `input` (`InputDecoration`), `accent`/`diagonal` (gradientes) |
+| `LumenActionContent` | Spinner ou ícone + texto, como nos botões |
+| `LumenLabeled` | Controle + rótulo (checkbox, radio, switch) |
+| `LumenMotion` / `kLumen*` | Durações, opacidade de desabilitado e respeito a "reduzir animações" |
 
 Animações em loop (skeleton, progresso indeterminado) e transições param ou
 viram instantâneas quando o sistema pede para reduzir animações.
@@ -215,44 +215,44 @@ AnimatedGridBackground(
 ```dart
 Row(
   children: <Widget>[
-    NeonButton(label: 'CONFIRMAR', icon: Icons.check, onPressed: () {}),
+    LumenButton(label: 'CONFIRMAR', icon: Icons.check, onPressed: () {}),
     const SizedBox(width: 12),
-    NeonButton.outline(label: 'EDITAR', icon: Icons.edit, onPressed: () {}),
+    LumenButton.outline(label: 'EDITAR', icon: Icons.edit, onPressed: () {}),
     const SizedBox(width: 12),
-    NeonButton.ghost(label: 'cancelar', onPressed: () {}),
+    LumenButton.ghost(label: 'cancelar', onPressed: () {}),
   ],
 );
 ```
 
-- `solid` — gradiente neon cheio (mesma identidade do `GradientCta`).
+- `solid` — gradiente neon cheio (mesma identidade do `LumenCta`).
 - `outline` — borda glow + fundo translúcido. Ação secundária.
 - `ghost` — só texto/ícone na cor de accent. Ação terciária.
 
 ## Inputs de seleção
 
 ```dart
-NeonSwitch(value: on, onChanged: (v) => setState(() => on = v));
+LumenSwitch(value: on, onChanged: (v) => setState(() => on = v));
 
-NeonCheckbox(value: checked, tristate: true, onChanged: (v) => …);
+LumenCheckbox(value: checked, tristate: true, onChanged: (v) => …);
 
-NeonRadio<String>(
+LumenRadio<String>(
   value: 'a',
   groupValue: selected,
   label: 'Opção A',
   onChanged: (v) => setState(() => selected = v ?? selected),
 );
 
-NeonDropdown<String>(
+LumenDropdown<String>(
   label: 'Accent',
   value: current,
   items: const [
-    NeonDropdownItem(value: 'cyan', label: 'Cyan'),
-    NeonDropdownItem(value: 'magenta', label: 'Magenta'),
+    LumenDropdownItem(value: 'cyan', label: 'Cyan'),
+    LumenDropdownItem(value: 'magenta', label: 'Magenta'),
   ],
   onChanged: (v) => setState(() => current = v ?? current),
 );
 
-NeonDatePicker(
+LumenDatePicker(
   label: 'Início',
   value: date,
   firstDate: DateTime(2020),
@@ -260,13 +260,13 @@ NeonDatePicker(
   onChanged: (d) => setState(() => date = d),
 );
 
-NeonTimePicker(
+LumenTimePicker(
   label: 'Horário',
   value: time,
   onChanged: (t) => setState(() => time = t),
 );
 
-NeonRangeSlider(
+LumenRangeSlider(
   values: preco,
   max: 500,
   divisions: 50,
@@ -279,68 +279,68 @@ NeonRangeSlider(
 
 ```dart
 // Escolha única.
-NeonChoiceChips<String>(
+LumenChoiceChips<String>(
   value: tamanho,
   onChanged: (v) => setState(() => tamanho = v),
   items: const [
-    NeonChipItem(value: 'p', label: 'P'),
-    NeonChipItem(value: 'm', label: 'M'),
+    LumenChipItem(value: 'p', label: 'P'),
+    LumenChipItem(value: 'm', label: 'M'),
   ],
 );
 
 // Filtros (vários marcados). Recebe e devolve um Set novo.
-NeonFilterChips<String>(
+LumenFilterChips<String>(
   values: filtros,
   onChanged: (v) => setState(() => filtros = v),
   items: const [
-    NeonChipItem(value: 'promo', label: 'Promoção'),
-    NeonChipItem(value: 'frete', label: 'Frete grátis'),
+    LumenChipItem(value: 'promo', label: 'Promoção'),
+    LumenChipItem(value: 'frete', label: 'Frete grátis'),
   ],
 );
 
-NeonQuantityStepper(value: qtd, min: 1, max: 10, onChanged: (v) => setState(() => qtd = v));
+LumenQuantityStepper(value: qtd, min: 1, max: 10, onChanged: (v) => setState(() => qtd = v));
 
-NeonRating(value: nota, allowHalf: true, onChanged: (v) => setState(() => nota = v));
-NeonRating(value: 4.3, size: 16); // somente leitura, com fração
+LumenRating(value: nota, allowHalf: true, onChanged: (v) => setState(() => nota = v));
+LumenRating(value: 4.3, size: 16); // somente leitura, com fração
 ```
 
 ## Menu, loading e carrossel
 
 ```dart
 // O "⋮" de card / app bar.
-NeonMenuButton<String>(
+LumenMenuButton<String>(
   items: const [
-    NeonMenuItem(value: 'edit', label: 'Editar', icon: Icons.edit),
-    NeonMenuDivider(),
-    NeonMenuItem(value: 'del', label: 'Excluir', destructive: true),
+    LumenMenuItem(value: 'edit', label: 'Editar', icon: Icons.edit),
+    LumenMenuDivider(),
+    LumenMenuItem(value: 'del', label: 'Excluir', destructive: true),
   ],
   onSelected: (v) => …,
 );
 
 // Clique direito (desktop/web) ou toque longo (mobile).
-NeonContextMenu<String>(items: itens, onSelected: …, child: linha);
+LumenContextMenu<String>(items: itens, onSelected: …, child: linha);
 
 // Bloqueia a tela durante o submit e devolve o resultado da tarefa.
-final ok = await showNeonLoading(
+final ok = await showLumenLoading(
   context: context,
   message: 'Enviando…',
   task: () => api.enviar(form),
 );
 
 // Ou só uma área, controlada por estado.
-NeonLoadingOverlay(loading: salvando, message: 'Salvando…', child: form);
+LumenLoadingOverlay(loading: salvando, message: 'Salvando…', child: form);
 
 // Galeria / onboarding com os pontinhos de página.
-NeonCarousel(
+LumenCarousel(
   itemCount: fotos.length,
   itemBuilder: (context, i) => Image.network(fotos[i], fit: BoxFit.cover),
 );
 // Ou só os pontos, ligados ao seu PageView.
-NeonPageIndicator(count: 4, controller: pageController);
+LumenPageIndicator(count: 4, controller: pageController);
 
 // Avatares empilhados com "+N".
-NeonAvatarGroup(
-  avatars: [for (final u in membros) NeonAvatar(initials: u.iniciais)],
+LumenAvatarGroup(
+  avatars: [for (final u in membros) LumenAvatar(initials: u.iniciais)],
   maxVisible: 3,
   total: totalDeMembros,
 );
@@ -350,31 +350,31 @@ NeonAvatarGroup(
 
 ```dart
 // Pílula compacta — ótima para alternar visões dentro de uma tela.
-NeonSegmentedControl(
+LumenSegmentedControl(
   selectedIndex: i,
   onChanged: (v) => setState(() => i = v),
   items: const [
-    NeonTabItem(label: 'Dia'),
-    NeonTabItem(label: 'Semana'),
-    NeonTabItem(label: 'Mês'),
+    LumenTabItem(label: 'Dia'),
+    LumenTabItem(label: 'Semana'),
+    LumenTabItem(label: 'Mês'),
   ],
 );
 
 // Bottom nav com badge.
 Scaffold(
-  bottomNavigationBar: NeonBottomNavBar(
+  bottomNavigationBar: LumenBottomNavBar(
     selectedIndex: tab,
     onChanged: (v) => setState(() => tab = v),
     items: const [
-      NeonNavItem(icon: Icons.home_outlined, label: 'Home'),
-      NeonNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
-      NeonNavItem(icon: Icons.person_outline, label: 'Conta'),
+      LumenNavItem(icon: Icons.home_outlined, label: 'Home'),
+      LumenNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
+      LumenNavItem(icon: Icons.person_outline, label: 'Conta'),
     ],
   ),
 );
 
 // Modal bottom sheet temático.
-showNeonBottomSheet<void>(
+showLumenBottomSheet<void>(
   context: context,
   builder: (_) => const Padding(
     padding: EdgeInsets.all(20),
@@ -386,14 +386,14 @@ showNeonBottomSheet<void>(
 ## Dialog estilizado
 
 ```dart
-await showNeonDialog<void>(
+await showLumenDialog<void>(
   context: context,
   title: 'Confirmar ação',
   icon: Icons.warning_amber_rounded,
   content: const Text('Esta operação não pode ser desfeita.'),
   actions: <Widget>[
     TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
-    GradientCta(label: 'CONFIRMAR', onPressed: () => Navigator.pop(context)),
+    LumenCta(label: 'CONFIRMAR', onPressed: () => Navigator.pop(context)),
   ],
 );
 ```

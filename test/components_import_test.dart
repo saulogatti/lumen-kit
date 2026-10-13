@@ -1,8 +1,8 @@
 // Simula um app que já tem o próprio tema (e classes com os mesmos nomes do
 // kit) e importa só os componentes.
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lumen_kit/components.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:neon_ui/components.dart';
 
 class AppTheme {
   static ThemeData get light =>
@@ -14,7 +14,7 @@ class AppColors {
 }
 
 void main() {
-  testWidgets('widgets funcionam sem NeonThemeExt no ThemeData', (
+  testWidgets('widgets funcionam sem LumenThemeExt no ThemeData', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
@@ -23,10 +23,10 @@ void main() {
         home: Scaffold(
           body: ListView(
             children: <Widget>[
-              const StatusChip(label: 'info', tone: StatusTone.info),
-              NeonButton(label: 'go', onPressed: () {}),
-              NeonSwitch(value: true, onChanged: (_) {}),
-              const NeonCard(child: Text('card')),
+              const LumenStatusChip(label: 'info', tone: LumenStatusTone.info),
+              LumenButton(label: 'go', onPressed: () {}),
+              LumenSwitch(value: true, onChanged: (_) {}),
+              const LumenCard(child: Text('card')),
             ],
           ),
         ),
@@ -35,14 +35,14 @@ void main() {
 
     expect(tester.takeException(), isNull);
     final Text chip = tester.widget<Text>(find.text('info'));
-    expect(chip.style?.color, NeonPalette.light().primary);
+    expect(chip.style?.color, LumenPalette.light().primary);
     // O tema do app continua intacto.
     final BuildContext ctx = tester.element(find.text('card'));
-    expect(Theme.of(ctx).extension<NeonThemeExt>(), isNull);
+    expect(Theme.of(ctx).extension<LumenThemeExt>(), isNull);
     expect(AppColors.brand, const Color(0xFF3F51B5));
   });
 
-  testWidgets('NeonScope aplica paleta e estilo só na subárvore', (
+  testWidgets('LumenScope aplica paleta e estilo só na subárvore', (
     WidgetTester tester,
   ) async {
     const teal = Color(0xFF00BFA5);
@@ -52,11 +52,14 @@ void main() {
         home: Scaffold(
           body: Column(
             children: <Widget>[
-              const StatusChip(label: 'fora', tone: StatusTone.info),
-              NeonScope(
-                palette: NeonPalette.fromSeed(primary: teal),
-                style: NeonStyle.flat,
-                child: const StatusChip(label: 'dentro', tone: StatusTone.info),
+              const LumenStatusChip(label: 'fora', tone: LumenStatusTone.info),
+              LumenScope(
+                palette: LumenPalette.fromSeed(primary: teal),
+                style: LumenStyle.flat,
+                child: const LumenStatusChip(
+                  label: 'dentro',
+                  tone: LumenStatusTone.info,
+                ),
               ),
             ],
           ),
@@ -67,11 +70,11 @@ void main() {
     expect(tester.widget<Text>(find.text('dentro')).style?.color, teal);
     expect(
       tester.widget<Text>(find.text('fora')).style?.color,
-      NeonPalette.light().primary,
+      LumenPalette.light().primary,
     );
     expect(
-      NeonStyle.of(tester.element(find.text('dentro'))),
-      same(NeonStyle.flat),
+      LumenStyle.of(tester.element(find.text('dentro'))),
+      same(LumenStyle.flat),
     );
   });
 }
