@@ -1,82 +1,82 @@
-# Roadmap — neon_ui
+# Roadmap — lumen_kit
 
 Componentes planejados para o kit. Marque conforme forem entregues.
 
 ## Já implementado
 
-- [x] **Tema**: `AppColors`, `NeonPalette` (+ `fromSeed`), `NeonPreset`, `NeonStyle` (neon / flat / glass / soft / brutal), `NeonThemeExt`, `AppTheme`
+- [x] **Tema**: `AppColors`, `LumenPalette` (+ `fromSeed`), `LumenPreset`, `LumenStyle` (neon / flat / glass / soft / brutal), `LumenThemeExt`, `AppTheme`
 - [x] **Background**: `AnimatedGridBackground`, `GlowOrbSpec`
-- [x] **Base reaproveitável**: `NeonPressable`, `NeonDecorations`, `NeonActionContent`, `NeonLabeled`, `NeonMotion`
-- [x] **Estrutura**: `NeonAppBar`, `NeonCard`
-- [x] **Ações**: `GradientCta`, `NeonButton` (solid / outline / ghost), `NeonIconButton`, `NeonFab`, `NeonMenuButton` / `NeonContextMenu` (+ `showNeonMenu`)
-- [x] **Input**: `NeonTextField`, `NeonSwitch`, `NeonCheckbox`, `NeonRadio`, `NeonSlider`, `NeonDropdown`, `NeonRangeSlider`, `NeonSearchBar`, `NeonDatePicker` (+ `showNeonDatePicker`), `NeonTimePicker` (+ `showNeonTimePicker`), `NeonChip` / `NeonChoiceChips` / `NeonFilterChips`, `NeonQuantityStepper`, `NeonRating`
-- [x] **Feedback**: `StatusChip`, `NeonDialog` (+ `showNeonDialog`), `NeonSnackBar` (+ `showNeonSnackBar`), `NeonToast`, `NeonProgressIndicator`, `NeonSkeleton`, `NeonTooltip`, `NeonLoadingOverlay` (+ `showNeonLoading`)
-- [x] **Navegação**: `NavigationCard`, `NeonTabs`, `NeonSegmentedControl`, `NeonBottomNavBar`, `NeonNavRail`, `NeonBottomSheet` (+ `showNeonBottomSheet`), `NeonDrawer` (+ `NeonDrawerItem`), `NeonStepper`, `NeonPageIndicator`, `NeonCarousel`
-- [x] **Display**: `NeonBadge`, `NeonTag`, `NeonAvatar`, `NeonAvatarGroup`, `NeonListTile`, `NeonDivider`, `NeonExpansionTile`, `NeonDataTable` (+ `NeonTableRow`)
+- [x] **Base reaproveitável**: `LumenPressable`, `LumenDecorations`, `LumenActionContent`, `LumenLabeled`, `LumenMotion`
+- [x] **Estrutura**: `LumenAppBar`, `LumenCard`
+- [x] **Ações**: `LumenCta`, `LumenButton` (solid / outline / ghost), `LumenIconButton`, `LumenFab`, `LumenMenuButton` / `LumenContextMenu` (+ `showLumenMenu`)
+- [x] **Input**: `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenDropdown`, `LumenRangeSlider`, `LumenSearchBar`, `LumenDatePicker` (+ `showLumenDatePicker`), `LumenTimePicker` (+ `showLumenTimePicker`), `LumenChip` / `LumenChoiceChips` / `LumenFilterChips`, `LumenQuantityStepper`, `LumenRating`
+- [x] **Feedback**: `LumenStatusChip`, `LumenDialog` (+ `showLumenDialog`), `LumenSnackBar` (+ `showLumenSnackBar`), `LumenToast`, `LumenProgressIndicator`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`)
+- [x] **Navegação**: `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet` (+ `showLumenBottomSheet`), `LumenDrawer` (+ `LumenDrawerItem`), `LumenStepper`, `LumenPageIndicator`, `LumenCarousel`
+- [x] **Display**: `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable` (+ `LumenTableRow`)
 
 ## A fazer
 
 ### Inputs / formulários
 
-- [x] `NeonSwitch`
-- [x] `NeonCheckbox`
-- [x] `NeonRadio`
-- [x] `NeonSlider`
-- [x] `NeonDropdown` / `NeonSelect`
-- [x] `NeonSearchBar`
-- [x] `NeonDatePicker` (wrapper temático)
+- [x] `LumenSwitch`
+- [x] `LumenCheckbox`
+- [x] `LumenRadio`
+- [x] `LumenSlider`
+- [x] `LumenDropdown` / `LumenSelect`
+- [x] `LumenSearchBar`
+- [x] `LumenDatePicker` (wrapper temático)
 
 ### Feedback / status
 
-- [x] `NeonSnackBar` (+ `showNeonSnackBar`)
-- [x] `NeonToast`
-- [x] `NeonProgressIndicator` (linear e circular com glow)
-- [x] `NeonSkeleton` / shimmer loader
-- [x] `NeonTooltip`
+- [x] `LumenSnackBar` (+ `showLumenSnackBar`)
+- [x] `LumenToast`
+- [x] `LumenProgressIndicator` (linear e circular com glow)
+- [x] `LumenSkeleton` / shimmer loader
+- [x] `LumenTooltip`
 
 ### Navegação / layout
 
-- [x] `NeonTabs` / `NeonSegmentedControl`
-- [x] `NeonBottomNavBar` ou `NeonNavRail`
-- [x] `NeonBottomSheet` (+ `showNeonBottomSheet`)
-- [x] `NeonDrawer`
-- [x] `NeonStepper`
+- [x] `LumenTabs` / `LumenSegmentedControl`
+- [x] `LumenBottomNavBar` ou `LumenNavRail`
+- [x] `LumenBottomSheet` (+ `showLumenBottomSheet`)
+- [x] `LumenDrawer`
+- [x] `LumenStepper`
 
 ### Display / dados
 
-- [x] `NeonBadge` / `NeonTag` (variação menor que `StatusChip`)
-- [x] `NeonAvatar`
-- [x] `NeonListTile`
-- [x] `NeonDivider` (com gradiente)
-- [x] `NeonExpansionTile`
-- [x] `NeonDataTable` (ou ao menos `NeonTableRow`)
+- [x] `LumenBadge` / `LumenTag` (variação menor que `LumenStatusChip`)
+- [x] `LumenAvatar`
+- [x] `LumenListTile`
+- [x] `LumenDivider` (com gradiente)
+- [x] `LumenExpansionTile`
+- [x] `LumenDataTable` (ou ao menos `LumenTableRow`)
 
 ## Convenções
 
 - Arquivo por widget em `lib/src/widgets/`.
-- Paleta sempre acessada via `NeonThemeExt.of(context).palette` — nunca importar `AppColors` diretamente em widgets (senão a cor ignora `AppTheme.fromSeed` e os presets).
-- Sombra, gradiente, raio e borda sempre via `NeonStyle.of(context)` (`shadows`, `fill`, `radius`, `borderAll`, `surfaceAlpha`) — nunca `BoxShadow`/`BorderRadius.circular` crus, senão o widget ignora o estilo.
-- Exportar widgets em `lib/components.dart` (o `lib/neon_ui.dart` reexporta). Nada de tema global (`AppTheme`/`AppColors`) dentro de widgets.
-- Estados padrão a suportar quando fizer sentido: `onPressed == null` → desabilitado (`kNeonDisabledOpacity`), `busy: true` → spinner inline.
-- Antes de escrever `Opacity` + `InkWell`, gradiente diagonal, painel com borda/glow ou `InputDecoration` na mão, use as peças de `lib/src/foundation/` (`NeonPressable`, `NeonDecorations`, `NeonActionContent`, `NeonLabeled`).
-- Nada de `GestureDetector` para ações: sem foco de teclado nem semântica. Use `NeonPressable`.
-- Animações: controllers e `CurvedAnimation` criados uma vez no `State` (nunca no `build`), durações via `NeonMotion.duration` e loops via `NeonMotion.syncRepeat`.
+- Paleta sempre acessada via `LumenThemeExt.of(context).palette` — nunca importar `AppColors` diretamente em widgets (senão a cor ignora `AppTheme.fromSeed` e os presets).
+- Sombra, gradiente, raio e borda sempre via `LumenStyle.of(context)` (`shadows`, `fill`, `radius`, `borderAll`, `surfaceAlpha`) — nunca `BoxShadow`/`BorderRadius.circular` crus, senão o widget ignora o estilo.
+- Exportar widgets em `lib/components.dart` (o `lib/lumen_kit.dart` reexporta). Nada de tema global (`AppTheme`/`AppColors`) dentro de widgets.
+- Estados padrão a suportar quando fizer sentido: `onPressed == null` → desabilitado (`kLumenDisabledOpacity`), `busy: true` → spinner inline.
+- Antes de escrever `Opacity` + `InkWell`, gradiente diagonal, painel com borda/glow ou `InputDecoration` na mão, use as peças de `lib/src/foundation/` (`LumenPressable`, `LumenDecorations`, `LumenActionContent`, `LumenLabeled`).
+- Nada de `GestureDetector` para ações: sem foco de teclado nem semântica. Use `LumenPressable`.
+- Animações: controllers e `CurvedAnimation` criados uma vez no `State` (nunca no `build`), durações via `LumenMotion.duration` e loops via `LumenMotion.syncRepeat`.
 - Espaço entre filhos de `Row`/`Column` com `spacing:` em vez de `SizedBox` intercalado.
 - Documentar uso mínimo no `README.md` quando o componente sair do roadmap.
 
 ## Próximos
 
-- [x] `NeonChip` selecionável (`NeonChoiceChips` / `NeonFilterChips`)
-- [x] `NeonTimePicker`
-- [x] `NeonRangeSlider`
-- [x] `NeonMenuButton` / `NeonContextMenu`
-- [ ] `NeonBanner` / alerta inline que fica até alguém fechar
-- [ ] `NeonEmptyState` (ícone, texto e CTA)
-- [ ] `NeonPinField` (OTP)
-- [x] `NeonPageIndicator` / `NeonCarousel`
-- [x] `NeonQuantityStepper`
-- [x] `NeonRating`
-- [x] `NeonAvatarGroup`
-- [ ] `NeonTimeline` (histórico de pedidos e atividades)
-- [x] `NeonLoadingOverlay` (+ `showNeonLoading`)
-- [ ] `NeonFileUpload` / dropzone (só se o kit for usado em web/desktop)
+- [x] `LumenChip` selecionável (`LumenChoiceChips` / `LumenFilterChips`)
+- [x] `LumenTimePicker`
+- [x] `LumenRangeSlider`
+- [x] `LumenMenuButton` / `LumenContextMenu`
+- [ ] `LumenBanner` / alerta inline que fica até alguém fechar
+- [ ] `LumenEmptyState` (ícone, texto e CTA)
+- [ ] `LumenPinField` (OTP)
+- [x] `LumenPageIndicator` / `LumenCarousel`
+- [x] `LumenQuantityStepper`
+- [x] `LumenRating`
+- [x] `LumenAvatarGroup`
+- [ ] `LumenTimeline` (histórico de pedidos e atividades)
+- [x] `LumenLoadingOverlay` (+ `showLumenLoading`)
+- [ ] `LumenFileUpload` / dropzone (só se o kit for usado em web/desktop)

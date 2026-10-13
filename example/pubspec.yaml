@@ -1,16 +1,16 @@
-name: neon_ui_example
-description: App de exemplo demonstrando os componentes do neon_ui.
+name: lumen_kit_example
+description: App de exemplo demonstrando os componentes do lumen_kit.
 publish_to: 'none'
 version: 0.1.0
 
 environment:
   sdk: ^3.13.0
   flutter: ">=3.47.0"
-
+resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
-  neon_ui:
+  lumen_kit:
     path: ../
 
   material_ui: ^1.6.0

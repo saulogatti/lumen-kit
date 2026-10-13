@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
-import 'neon_palette.dart';
-import 'neon_style.dart';
+import 'lumen_palette.dart';
+import 'lumen_style.dart';
 
 /// Tema central da aplicação. Mantém ThemeData isolado da camada de UI
 /// para que telas não conheçam detalhes de estilo globais.
@@ -9,22 +9,22 @@ class AppTheme {
   const AppTheme._();
 
   /// Tema dark default usando a paleta padrão.
-  static ThemeData get dark => fromPalette(NeonPalette.defaultDark());
+  static ThemeData get dark => fromPalette(LumenPalette.defaultDark());
 
   /// Tema claro usando a paleta clara padrão.
   static ThemeData get light =>
-      fromPalette(NeonPalette.light(), brightness: Brightness.light);
+      fromPalette(LumenPalette.light(), brightness: Brightness.light);
 
   /// Atalho para trocar as cores do kit inteiro a partir de uma ou duas
-  /// cores. Equivale a `fromPalette(NeonPalette.fromSeed(...))`.
+  /// cores. Equivale a `fromPalette(LumenPalette.fromSeed(...))`.
   static ThemeData fromSeed({
     required Color primary,
     Color? secondary,
     Color? tertiary,
     Brightness brightness = Brightness.dark,
-    NeonStyle style = NeonStyle.neon,
+    LumenStyle style = LumenStyle.neon,
   }) => fromPalette(
-    NeonPalette.fromSeed(
+    LumenPalette.fromSeed(
       primary: primary,
       secondary: secondary,
       tertiary: tertiary,
@@ -34,11 +34,11 @@ class AppTheme {
     style: style,
   );
 
-  /// Atalho para usar um [NeonPreset].
+  /// Atalho para usar um [LumenPreset].
   static ThemeData fromPreset(
-    NeonPreset preset, {
+    LumenPreset preset, {
     Brightness brightness = Brightness.dark,
-    NeonStyle style = NeonStyle.neon,
+    LumenStyle style = LumenStyle.neon,
   }) => fromPalette(
     preset.palette(brightness: brightness),
     brightness: brightness,
@@ -47,12 +47,12 @@ class AppTheme {
 
   /// Constrói um [ThemeData] a partir da paleta [p].
   ///
-  /// Registra [NeonThemeExt] em [ThemeData.extensions] para que os widgets do
-  /// kit acessem os mesmos tokens via [NeonThemeExt.of].
+  /// Registra [LumenThemeExt] em [ThemeData.extensions] para que os widgets do
+  /// kit acessem os mesmos tokens via [LumenThemeExt.of].
   static ThemeData fromPalette(
-    NeonPalette p, {
+    LumenPalette p, {
     Brightness brightness = Brightness.dark,
-    NeonStyle style = NeonStyle.neon,
+    LumenStyle style = LumenStyle.neon,
   }) {
     final scheme = ColorScheme.fromSeed(
       dynamicSchemeVariant: .vibrant,
@@ -121,7 +121,7 @@ class AppTheme {
       iconTheme: IconThemeData(color: p.primary),
       dividerColor: p.surfaceOutline,
       extensions: <ThemeExtension<dynamic>>[
-        NeonThemeExt(palette: p, style: style),
+        LumenThemeExt(palette: p, style: style),
       ],
     );
   }

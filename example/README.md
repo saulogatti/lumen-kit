@@ -1,3 +1,3 @@
-# neon_ui_example
+# lumen_kit_example
 
 A new Flutter project.

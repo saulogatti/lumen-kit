@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// App sem `NeonThemeExt` registrado: os widgets novos precisam funcionar só
+/// App sem `LumenThemeExt` registrado: os widgets novos precisam funcionar só
 /// com o import de `components.dart`.
 Widget bareApp(Widget child, {bool reduceMotion = false}) => MaterialApp(
   theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo)),

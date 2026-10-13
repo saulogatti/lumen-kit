@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/neon_palette.dart';
-import '../theme/neon_style.dart';
+import '../theme/lumen_palette.dart';
+import '../theme/lumen_style.dart';
 
 /// Configuração de um glow orb posicionado no fundo.
 @immutable
@@ -66,7 +66,7 @@ class AnimatedGridBackground extends StatelessWidget {
 
   /// Lista de orbs. Default: `palette.primary` no canto superior direito e
   /// `palette.secondary` no inferior esquerdo, ou nenhum quando
-  /// [NeonStyle.orbs] é `false`.
+  /// [LumenStyle.orbs] é `false`.
   final List<GlowOrbSpec>? orbs;
 
   /// Distância em px entre linhas da grid.
@@ -79,22 +79,22 @@ class AnimatedGridBackground extends StatelessWidget {
   final double gridOpacity;
 
   /// Se `false`, omite a grid/pontos e mantém só gradiente + orbs. O tipo de
-  /// decoração (grid, pontos ou nenhuma) vem de [NeonStyle.background].
+  /// decoração (grid, pontos ou nenhuma) vem de [LumenStyle.background].
   final bool showGrid;
 
-  static List<GlowOrbSpec> _defaultOrbs(NeonPalette p) => <GlowOrbSpec>[
+  static List<GlowOrbSpec> _defaultOrbs(LumenPalette p) => <GlowOrbSpec>[
     GlowOrbSpec(color: p.primary, size: 320, top: -120, right: -80),
     GlowOrbSpec(color: p.secondary, size: 360, bottom: -160, left: -100),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final NeonPalette p = NeonThemeExt.of(context).palette;
-    final NeonStyle style = NeonStyle.of(context);
+    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final LumenStyle style = LumenStyle.of(context);
     final List<GlowOrbSpec> orbList =
         orbs ?? (style.orbs ? _defaultOrbs(p) : const <GlowOrbSpec>[]);
     final bool drawPattern =
-        showGrid && style.background != NeonBackgroundKind.plain;
+        showGrid && style.background != LumenBackgroundKind.plain;
     final Color effectiveGridColor = gridColor ?? p.primary;
     final Gradient effectiveGradient = gradient ?? p.backgroundGradient;
 
@@ -108,7 +108,7 @@ class AnimatedGridBackground extends StatelessWidget {
                 painter: _GridPainter(
                   spacing: gridSpacing,
                   color: effectiveGridColor.withValues(alpha: gridOpacity),
-                  dots: style.background == NeonBackgroundKind.dots,
+                  dots: style.background == LumenBackgroundKind.dots,
                 ),
               ),
             ),

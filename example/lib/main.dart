@@ -1,17 +1,17 @@
 import 'package:flutter/widget_previews.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:neon_ui/neon_ui.dart';
+import 'package:lumen_kit/lumen_kit.dart';
 
-void main() => runApp(const NeonExampleApp());
+void main() => runApp(const LumenExampleApp());
 
 final ValueNotifier<Brightness> _brightness = ValueNotifier<Brightness>(
   Brightness.light,
 );
 
 /// Preset, estilo e brilho atuais da galeria. Trocar qualquer um re-tematiza
-/// o app inteiro (cores com transição animada via [NeonThemeExt.lerp]).
-final ValueNotifier<NeonPreset> _preset = ValueNotifier<NeonPreset>(
-  NeonPreset.neon,
+/// o app inteiro (cores com transição animada via [LumenThemeExt.lerp]).
+final ValueNotifier<LumenPreset> _preset = ValueNotifier<LumenPreset>(
+  LumenPreset.neon,
 );
 final ValueNotifier<String> _style = ValueNotifier<String>('neon');
 
@@ -22,7 +22,7 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'neon_ui example',
+      title: 'lumen_kit example',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.dark,
       home: const _GalleryScreen(),
@@ -30,20 +30,20 @@ class MyWidget extends StatelessWidget {
   }
 }
 
-class NeonExampleApp extends StatelessWidget {
-  const NeonExampleApp({super.key});
+class LumenExampleApp extends StatelessWidget {
+  const LumenExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
       listenable: Listenable.merge(<Listenable>[_preset, _style, _brightness]),
       builder: (BuildContext context, _) => MaterialApp(
-        title: 'neon_ui example',
+        title: 'lumen_kit example',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.fromPreset(
           _preset.value,
           brightness: _brightness.value,
-          style: NeonStyle.presets[_style.value]!,
+          style: LumenStyle.presets[_style.value]!,
         ),
         home: const _GalleryScreen(),
       ),
@@ -90,31 +90,31 @@ class _GalleryScreenState extends State<_GalleryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final LumenPalette p = LumenThemeExt.of(context).palette;
     return Scaffold(
-      appBar: NeonAppBar(
-        title: 'neon_ui',
+      appBar: LumenAppBar(
+        title: 'lumen_kit',
         subtitle: 'gallery',
         leading: Builder(
-          builder: (BuildContext ctx) => NeonIconButton.ghost(
+          builder: (BuildContext ctx) => LumenIconButton.ghost(
             icon: Icons.menu_rounded,
             onPressed: () => Scaffold.of(ctx).openDrawer(),
           ),
         ),
       ),
-      drawer: NeonDrawer(
+      drawer: LumenDrawer(
         header: Padding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
           child: Row(
             children: <Widget>[
-              const NeonAvatar(initials: 'NU', radius: 22),
+              const LumenAvatar(initials: 'NU', radius: 22),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'neon_ui',
+                      'lumen_kit',
                       style: TextStyle(
                         color: p.textPrimary,
                         fontWeight: FontWeight.w700,
@@ -131,42 +131,42 @@ class _GalleryScreenState extends State<_GalleryScreen> {
           ),
         ),
         children: <Widget>[
-          NeonDrawerItem(
+          LumenDrawerItem(
             icon: Icons.dashboard_outlined,
             label: 'Dashboard',
             selected: true,
             onTap: () => Navigator.pop(context),
           ),
-          NeonDrawerItem(
+          LumenDrawerItem(
             icon: Icons.bolt_outlined,
             label: 'Eventos',
-            trailing: const NeonBadge(label: '3'),
+            trailing: const LumenBadge(label: '3'),
             onTap: () => Navigator.pop(context),
           ),
-          NeonDrawerItem(
+          LumenDrawerItem(
             icon: Icons.settings_outlined,
             label: 'Configurações',
             onTap: () => Navigator.pop(context),
           ),
         ],
       ),
-      bottomNavigationBar: NeonBottomNavBar(
+      bottomNavigationBar: LumenBottomNavBar(
         selectedIndex: _bottomNav,
         onChanged: (int i) => setState(() => _bottomNav = i),
-        items: const <NeonNavItem>[
-          NeonNavItem(icon: Icons.dashboard_outlined, label: 'Home'),
-          NeonNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
-          NeonNavItem(icon: Icons.person_outline, label: 'Conta'),
+        items: const <LumenNavItem>[
+          LumenNavItem(icon: Icons.dashboard_outlined, label: 'Home'),
+          LumenNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
+          LumenNavItem(icon: Icons.person_outline, label: 'Conta'),
         ],
       ),
-      floatingActionButton: NeonFab.extended(
+      floatingActionButton: LumenFab.extended(
         icon: Icons.bolt_rounded,
         label: 'AÇÃO',
-        onPressed: () => showNeonToast(
+        onPressed: () => showLumenToast(
           context: context,
           message: 'FAB tocado!',
-          tone: StatusTone.success,
-          position: NeonToastPosition.top,
+          tone: LumenStatusTone.success,
+          position: LumenToastPosition.top,
         ),
       ),
       body: AnimatedGridBackground(
@@ -182,8 +182,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     spacing: 8,
                     runSpacing: 8,
                     children: <Widget>[
-                      for (final NeonPreset preset in NeonPreset.values)
-                        NeonTag(
+                      for (final LumenPreset preset in LumenPreset.values)
+                        LumenTag(
                           label: preset.name,
                           color: preset.primary,
                           icon: _preset.value == preset
@@ -198,8 +198,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     spacing: 8,
                     runSpacing: 8,
                     children: <Widget>[
-                      for (final String name in NeonStyle.presets.keys)
-                        NeonTag(
+                      for (final String name in LumenStyle.presets.keys)
+                        LumenTag(
                           label: name,
                           icon: _style.value == name
                               ? Icons.check_rounded
@@ -211,7 +211,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   const SizedBox(height: 12),
                   Row(
                     children: <Widget>[
-                      NeonSwitch(
+                      LumenSwitch(
                         value: _brightness.value == Brightness.dark,
                         onChanged: (bool dark) => _brightness.value = dark
                             ? Brightness.dark
@@ -229,7 +229,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             ),
             _section(
               'Cards & status',
-              NeonCard(
+              LumenCard(
                 glow: true,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,11 +248,26 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       spacing: 8,
                       runSpacing: 8,
                       children: <Widget>[
-                        StatusChip(label: 'OK', tone: StatusTone.success),
-                        StatusChip(label: 'INFO', tone: StatusTone.info),
-                        StatusChip(label: 'ALERTA', tone: StatusTone.warning),
-                        StatusChip(label: 'FALHA', tone: StatusTone.danger),
-                        StatusChip(label: 'OFFLINE', tone: StatusTone.neutral),
+                        LumenStatusChip(
+                          label: 'OK',
+                          tone: LumenStatusTone.success,
+                        ),
+                        LumenStatusChip(
+                          label: 'INFO',
+                          tone: LumenStatusTone.info,
+                        ),
+                        LumenStatusChip(
+                          label: 'ALERTA',
+                          tone: LumenStatusTone.warning,
+                        ),
+                        LumenStatusChip(
+                          label: 'FALHA',
+                          tone: LumenStatusTone.danger,
+                        ),
+                        LumenStatusChip(
+                          label: 'OFFLINE',
+                          tone: LumenStatusTone.neutral,
+                        ),
                       ],
                     ),
                   ],
@@ -265,7 +280,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 spacing: 12,
                 runSpacing: 12,
                 children: <Widget>[
-                  NeonButton(
+                  LumenButton(
                     label: 'EXECUTAR',
                     icon: Icons.play_arrow_rounded,
                     busy: _busy,
@@ -274,19 +289,19 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       await Future<void>.delayed(const Duration(seconds: 1));
                       if (!context.mounted) return;
                       setState(() => _busy = false);
-                      showNeonSnackBar(
+                      showLumenSnackBar(
                         context: context,
                         message: 'Pipeline executado com sucesso',
-                        tone: StatusTone.success,
+                        tone: LumenStatusTone.success,
                       );
                     },
                   ),
-                  NeonButton.outline(
+                  LumenButton.outline(
                     label: 'EDITAR',
                     icon: Icons.edit,
                     onPressed: () {},
                   ),
-                  NeonButton.ghost(label: 'cancelar', onPressed: () {}),
+                  LumenButton.ghost(label: 'cancelar', onPressed: () {}),
                 ],
               ),
             ),
@@ -294,35 +309,35 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               'Icon buttons & FAB',
               Row(
                 children: <Widget>[
-                  NeonIconButton(
+                  LumenIconButton(
                     icon: Icons.favorite,
                     tooltip: 'Curtir',
                     onPressed: () {},
                   ),
                   const SizedBox(width: 12),
-                  NeonIconButton.solid(
+                  LumenIconButton.solid(
                     icon: Icons.refresh,
                     tooltip: 'Atualizar',
                     onPressed: () {},
                   ),
                   const SizedBox(width: 12),
-                  NeonIconButton.ghost(
+                  LumenIconButton.ghost(
                     icon: Icons.more_vert,
                     tooltip: 'Mais',
                     onPressed: () {},
                   ),
                   const SizedBox(width: 12),
-                  NeonIconButton(
+                  LumenIconButton(
                     icon: Icons.lock_outline_rounded,
-                    shape: NeonIconButtonShape.rounded,
+                    shape: LumenIconButtonShape.rounded,
                     onPressed: null,
                   ),
                   const Spacer(),
-                  NeonTooltip(
+                  LumenTooltip(
                     message: 'Quadrado, com tooltip neon',
-                    child: NeonIconButton(
+                    child: LumenIconButton(
                       icon: Icons.info_outline,
-                      shape: NeonIconButtonShape.rounded,
+                      shape: LumenIconButtonShape.rounded,
                       onPressed: () {},
                     ),
                   ),
@@ -333,14 +348,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               'Inputs — texto & busca',
               Column(
                 children: <Widget>[
-                  NeonTextField(
+                  LumenTextField(
                     label: 'Slug do projeto',
                     initialValue: _slug,
                     icon: Icons.tag_rounded,
                     onChanged: (String v) => _slug = v,
                   ),
                   const SizedBox(height: 16),
-                  NeonSearchBar(
+                  LumenSearchBar(
                     hint: 'Buscar componente…',
                     initialValue: _search,
                     onChanged: (String v) => setState(() => _search = v),
@@ -353,13 +368,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  NeonSwitch(
+                  LumenSwitch(
                     value: _switchOn,
                     label: 'Notificações em tempo real',
                     onChanged: (bool v) => setState(() => _switchOn = v),
                   ),
                   const SizedBox(height: 12),
-                  NeonCheckbox(
+                  LumenCheckbox(
                     value: _checkbox,
                     tristate: true,
                     label: 'Aceito os termos (tristate)',
@@ -369,14 +384,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   Wrap(
                     spacing: 12,
                     children: <Widget>[
-                      NeonRadio<String>(
+                      LumenRadio<String>(
                         value: 'a',
                         groupValue: _radio,
                         label: 'Cyan',
                         onChanged: (String? v) =>
                             setState(() => _radio = v ?? _radio),
                       ),
-                      NeonRadio<String>(
+                      LumenRadio<String>(
                         value: 'b',
                         groupValue: _radio,
                         label: 'Magenta',
@@ -384,7 +399,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         onChanged: (String? v) =>
                             setState(() => _radio = v ?? _radio),
                       ),
-                      NeonRadio<String>(
+                      LumenRadio<String>(
                         value: 'c',
                         groupValue: _radio,
                         label: 'Blue',
@@ -399,7 +414,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     'Volume (${(_slider * 100).round()}%)',
                     style: TextStyle(color: p.textMuted),
                   ),
-                  NeonSlider(
+                  LumenSlider(
                     value: _slider,
                     onChanged: (double v) => setState(() => _slider = v),
                   ),
@@ -408,7 +423,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     'R\$ ${_price.end.round()})',
                     style: TextStyle(color: p.textMuted),
                   ),
-                  NeonRangeSlider(
+                  LumenRangeSlider(
                     values: _price,
                     max: 500,
                     divisions: 50,
@@ -419,21 +434,21 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     onChanged: (RangeValues v) => setState(() => _price = v),
                   ),
                   const SizedBox(height: 4),
-                  NeonDropdown<String>(
+                  LumenDropdown<String>(
                     label: 'Accent padrão',
                     value: _dropdown,
-                    items: const <NeonDropdownItem<String>>[
-                      NeonDropdownItem<String>(
+                    items: const <LumenDropdownItem<String>>[
+                      LumenDropdownItem<String>(
                         value: 'cyan',
                         label: 'Cyan',
                         icon: Icons.circle_outlined,
                       ),
-                      NeonDropdownItem<String>(
+                      LumenDropdownItem<String>(
                         value: 'magenta',
                         label: 'Magenta',
                         icon: Icons.circle_outlined,
                       ),
-                      NeonDropdownItem<String>(
+                      LumenDropdownItem<String>(
                         value: 'blue',
                         label: 'Blue',
                         icon: Icons.circle_outlined,
@@ -443,7 +458,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         setState(() => _dropdown = v ?? _dropdown),
                   ),
                   const SizedBox(height: 16),
-                  NeonDatePicker(
+                  LumenDatePicker(
                     label: 'Data de início',
                     value: _date,
                     firstDate: DateTime(2020),
@@ -451,7 +466,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     onChanged: (DateTime v) => setState(() => _date = v),
                   ),
                   const SizedBox(height: 16),
-                  NeonTimePicker(
+                  LumenTimePicker(
                     label: 'Horário',
                     value: _time,
                     onChanged: (TimeOfDay v) => setState(() => _time = v),
@@ -465,36 +480,36 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 16,
                 children: <Widget>[
-                  NeonChoiceChips<String>(
+                  LumenChoiceChips<String>(
                     value: _size,
                     onChanged: (String? v) => setState(() => _size = v),
-                    items: const <NeonChipItem<String>>[
-                      NeonChipItem<String>(value: 'p', label: 'P'),
-                      NeonChipItem<String>(value: 'm', label: 'M'),
-                      NeonChipItem<String>(value: 'g', label: 'G'),
-                      NeonChipItem<String>(
+                    items: const <LumenChipItem<String>>[
+                      LumenChipItem<String>(value: 'p', label: 'P'),
+                      LumenChipItem<String>(value: 'm', label: 'M'),
+                      LumenChipItem<String>(value: 'g', label: 'G'),
+                      LumenChipItem<String>(
                         value: 'gg',
                         label: 'GG',
                         enabled: false,
                       ),
                     ],
                   ),
-                  NeonFilterChips<String>(
+                  LumenFilterChips<String>(
                     values: _filters,
                     onChanged: (Set<String> v) => setState(() => _filters = v),
-                    items: const <NeonChipItem<String>>[
-                      NeonChipItem<String>(value: 'promo', label: 'Promoção'),
-                      NeonChipItem<String>(
+                    items: const <LumenChipItem<String>>[
+                      LumenChipItem<String>(value: 'promo', label: 'Promoção'),
+                      LumenChipItem<String>(
                         value: 'frete',
                         label: 'Frete grátis',
                         icon: Icons.local_shipping_outlined,
                       ),
-                      NeonChipItem<String>(value: 'novo', label: 'Lançamento'),
+                      LumenChipItem<String>(value: 'novo', label: 'Lançamento'),
                     ],
                   ),
                   Row(
                     children: <Widget>[
-                      NeonQuantityStepper(
+                      LumenQuantityStepper(
                         value: _qty,
                         min: 1,
                         max: 10,
@@ -502,7 +517,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         onChanged: (int v) => setState(() => _qty = v),
                       ),
                       const Spacer(),
-                      NeonRating(
+                      LumenRating(
                         value: _rating,
                         allowHalf: true,
                         semanticLabel: 'Avaliação',
@@ -513,7 +528,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   Row(
                     spacing: 8,
                     children: <Widget>[
-                      const NeonRating(value: 4.3, size: 16),
+                      const LumenRating(value: 4.3, size: 16),
                       Text(
                         '4.3 (128 avaliações)',
                         style: TextStyle(color: p.textMuted, fontSize: 12),
@@ -529,7 +544,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 16,
                 children: <Widget>[
-                  NeonCard(
+                  LumenCard(
                     child: Row(
                       children: <Widget>[
                         Expanded(
@@ -538,9 +553,9 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                             style: TextStyle(color: p.textSecondary),
                           ),
                         ),
-                        NeonMenuButton<String>(
+                        LumenMenuButton<String>(
                           items: _menuItems,
-                          onSelected: (String v) => showNeonToast(
+                          onSelected: (String v) => showLumenToast(
                             context: context,
                             message: 'Ação: $v',
                           ),
@@ -548,19 +563,19 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       ],
                     ),
                   ),
-                  NeonContextMenu<String>(
+                  LumenContextMenu<String>(
                     items: _menuItems,
                     onSelected: (String v) =>
-                        showNeonToast(context: context, message: 'Ação: $v'),
-                    child: NeonLoadingOverlay(
+                        showLumenToast(context: context, message: 'Ação: $v'),
+                    child: LumenLoadingOverlay(
                       loading: _overlay,
                       message: 'Sincronizando…',
-                      borderRadius: NeonStyle.of(context).radius(20),
-                      child: NeonCard(
+                      borderRadius: LumenStyle.of(context).radius(20),
+                      child: LumenCard(
                         child: SizedBox(
                           height: 120,
                           child: Center(
-                            child: NeonSwitch(
+                            child: LumenSwitch(
                               value: _overlay,
                               label: 'Overlay por 3s (clique direito: menu)',
                               onChanged: (bool v) async {
@@ -576,21 +591,21 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       ),
                     ),
                   ),
-                  NeonButton.outline(
+                  LumenButton.outline(
                     label: 'ENVIAR (tela cheia)',
                     icon: Icons.send_rounded,
                     onPressed: () async {
-                      await showNeonLoading<void>(
+                      await showLumenLoading<void>(
                         context: context,
                         message: 'Enviando formulário…',
                         task: () =>
                             Future<void>.delayed(const Duration(seconds: 2)),
                       );
                       if (!context.mounted) return;
-                      showNeonSnackBar(
+                      showLumenSnackBar(
                         context: context,
                         message: 'Formulário enviado',
-                        tone: StatusTone.success,
+                        tone: LumenStatusTone.success,
                       );
                     },
                   ),
@@ -599,7 +614,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             ),
             _section(
               'Carrossel',
-              NeonCarousel(
+              LumenCarousel(
                 itemCount: 4,
                 height: 150,
                 itemBuilder: (BuildContext context, int i) {
@@ -641,24 +656,24 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 children: <Widget>[
                   Text('Determinado (${(_progress * 100).round()}%)'),
                   const SizedBox(height: 8),
-                  NeonLinearProgress(value: _progress),
+                  LumenLinearProgress(value: _progress),
                   const SizedBox(height: 12),
-                  NeonSlider(
+                  LumenSlider(
                     value: _progress,
                     onChanged: (double v) => setState(() => _progress = v),
                   ),
                   const SizedBox(height: 12),
                   const Text('Indeterminado'),
                   const SizedBox(height: 8),
-                  const NeonLinearProgress(),
+                  const LumenLinearProgress(),
                   const SizedBox(height: 20),
                   Row(
                     children: const <Widget>[
-                      NeonCircularProgress(value: 0.7),
+                      LumenCircularProgress(value: 0.7),
                       SizedBox(width: 20),
-                      NeonCircularProgress(),
+                      LumenCircularProgress(),
                       SizedBox(width: 20),
-                      NeonCircularProgress(size: 56, strokeWidth: 5),
+                      LumenCircularProgress(size: 56, strokeWidth: 5),
                     ],
                   ),
                 ],
@@ -668,17 +683,17 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               'Skeleton (loading state)',
               Row(
                 children: const <Widget>[
-                  NeonSkeleton.circle(size: 48),
+                  LumenSkeleton.circle(size: 48),
                   SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        NeonSkeleton(width: 160),
+                        LumenSkeleton(width: 160),
                         SizedBox(height: 8),
-                        NeonSkeleton(width: 220, height: 10),
+                        LumenSkeleton(width: 220, height: 10),
                         SizedBox(height: 8),
-                        NeonSkeleton(height: 10),
+                        LumenSkeleton(height: 10),
                       ],
                     ),
                   ),
@@ -691,32 +706,32 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 spacing: 12,
                 runSpacing: 12,
                 children: <Widget>[
-                  NeonButton.outline(
+                  LumenButton.outline(
                     label: 'SNACKBAR',
                     icon: Icons.notifications_active_outlined,
-                    onPressed: () => showNeonSnackBar(
+                    onPressed: () => showLumenSnackBar(
                       context: context,
                       message: 'Snackbar com tom de alerta',
-                      tone: StatusTone.warning,
+                      tone: LumenStatusTone.warning,
                       action: SnackBarAction(
                         label: 'desfazer',
                         onPressed: () {},
                       ),
                     ),
                   ),
-                  NeonButton.outline(
+                  LumenButton.outline(
                     label: 'TOAST',
                     icon: Icons.bolt_outlined,
-                    onPressed: () => showNeonToast(
+                    onPressed: () => showLumenToast(
                       context: context,
                       message: 'Toast flutuante via Overlay',
-                      tone: StatusTone.info,
+                      tone: LumenStatusTone.info,
                     ),
                   ),
-                  NeonButton.outline(
+                  LumenButton.outline(
                     label: 'DIALOG',
                     icon: Icons.warning_amber_rounded,
-                    onPressed: () => showNeonDialog<void>(
+                    onPressed: () => showLumenDialog<void>(
                       context: context,
                       title: 'Confirmar ação',
                       icon: Icons.warning_amber_rounded,
@@ -728,17 +743,17 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                           onPressed: () => Navigator.pop(context),
                           child: const Text('Cancelar'),
                         ),
-                        NeonButton(
+                        LumenButton(
                           label: 'CONFIRMAR',
                           onPressed: () => Navigator.pop(context),
                         ),
                       ],
                     ),
                   ),
-                  NeonButton.outline(
+                  LumenButton.outline(
                     label: 'BOTTOM SHEET',
                     icon: Icons.vertical_align_bottom_rounded,
-                    onPressed: () => showNeonBottomSheet<void>(
+                    onPressed: () => showLumenBottomSheet<void>(
                       context: context,
                       builder: (BuildContext _) => Padding(
                         padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
@@ -754,7 +769,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            NeonListTile(
+                            LumenListTile(
                               leading: Icon(
                                 Icons.share_outlined,
                                 color: p.primary,
@@ -764,7 +779,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                               onTap: () => Navigator.pop(context),
                             ),
                             const SizedBox(height: 8),
-                            NeonListTile(
+                            LumenListTile(
                               leading: Icon(
                                 Icons.delete_outline,
                                 color: p.danger,
@@ -785,23 +800,23 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  NeonTabs(
+                  LumenTabs(
                     selectedIndex: _tab,
                     onChanged: (int i) => setState(() => _tab = i),
-                    items: const <NeonTabItem>[
-                      NeonTabItem(label: 'Visão geral', icon: Icons.bar_chart),
-                      NeonTabItem(label: 'Eventos', icon: Icons.bolt_outlined),
-                      NeonTabItem(label: 'Alertas', icon: Icons.warning_amber),
+                    items: const <LumenTabItem>[
+                      LumenTabItem(label: 'Visão geral', icon: Icons.bar_chart),
+                      LumenTabItem(label: 'Eventos', icon: Icons.bolt_outlined),
+                      LumenTabItem(label: 'Alertas', icon: Icons.warning_amber),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  NeonSegmentedControl(
+                  LumenSegmentedControl(
                     selectedIndex: _segment,
                     onChanged: (int i) => setState(() => _segment = i),
-                    items: const <NeonTabItem>[
-                      NeonTabItem(label: 'Dia'),
-                      NeonTabItem(label: 'Semana'),
-                      NeonTabItem(label: 'Mês'),
+                    items: const <LumenTabItem>[
+                      LumenTabItem(label: 'Dia'),
+                      LumenTabItem(label: 'Semana'),
+                      LumenTabItem(label: 'Mês'),
                     ],
                   ),
                 ],
@@ -809,13 +824,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             ),
             _section(
               'Stepper',
-              NeonStepper(
+              LumenStepper(
                 currentStep: _step,
                 onStepTapped: (int i) => setState(() => _step = i),
-                steps: const <NeonStep>[
-                  NeonStep(title: 'Conta', subtitle: 'criar credenciais'),
-                  NeonStep(title: 'Perfil', subtitle: 'dados pessoais'),
-                  NeonStep(title: 'Pronto', subtitle: 'concluir'),
+                steps: const <LumenStep>[
+                  LumenStep(title: 'Conta', subtitle: 'criar credenciais'),
+                  LumenStep(title: 'Perfil', subtitle: 'dados pessoais'),
+                  LumenStep(title: 'Pronto', subtitle: 'concluir'),
                 ],
               ),
             ),
@@ -826,13 +841,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 runSpacing: 12,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
-                  const NeonAvatar(initials: 'SG', radius: 26),
-                  NeonAvatar(
+                  const LumenAvatar(initials: 'SG', radius: 26),
+                  LumenAvatar(
                     initials: 'NU',
                     radius: 26,
                     statusColor: p.success,
                   ),
-                  const NeonBadge(
+                  const LumenBadge(
                     label: '12',
                     child: Icon(
                       Icons.notifications_outlined,
@@ -840,7 +855,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       size: 30,
                     ),
                   ),
-                  NeonBadge.dot(
+                  LumenBadge.dot(
                     color: p.success,
                     child: const Icon(
                       Icons.mail_outline,
@@ -848,21 +863,21 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       size: 30,
                     ),
                   ),
-                  const NeonTag(label: 'novo', icon: Icons.fiber_new_outlined),
-                  NeonTag(label: 'beta', color: p.secondary),
-                  NeonAvatarGroup(
+                  const LumenTag(label: 'novo', icon: Icons.fiber_new_outlined),
+                  LumenTag(label: 'beta', color: p.secondary),
+                  LumenAvatarGroup(
                     maxVisible: 3,
                     total: 12,
                     semanticLabel: '12 participantes',
-                    onOverflowTap: () => showNeonToast(
+                    onOverflowTap: () => showLumenToast(
                       context: context,
                       message: '+9 participantes',
                     ),
-                    avatars: const <NeonAvatar>[
-                      NeonAvatar(initials: 'SG'),
-                      NeonAvatar(initials: 'NU'),
-                      NeonAvatar(initials: 'AB'),
-                      NeonAvatar(initials: 'CD'),
+                    avatars: const <LumenAvatar>[
+                      LumenAvatar(initials: 'SG'),
+                      LumenAvatar(initials: 'NU'),
+                      LumenAvatar(initials: 'AB'),
+                      LumenAvatar(initials: 'CD'),
                     ],
                   ),
                 ],
@@ -872,23 +887,23 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               'Lista, divider & expansion',
               Column(
                 children: <Widget>[
-                  NeonListTile(
+                  LumenListTile(
                     leading: Icon(Icons.dashboard_outlined, color: p.primary),
                     title: 'Dashboard',
                     subtitle: 'visão geral em tempo real',
-                    trailing: const NeonTag(label: 'live'),
+                    trailing: const LumenTag(label: 'live'),
                     selected: true,
                     onTap: () {},
                   ),
                   const SizedBox(height: 8),
-                  NeonListTile(
+                  LumenListTile(
                     leading: Icon(Icons.settings_outlined, color: p.secondary),
                     title: 'Configurações',
                     subtitle: 'tokens, paleta e integrações',
                     onTap: () {},
                   ),
-                  const NeonDivider(label: 'avançado'),
-                  NeonExpansionTile(
+                  const LumenDivider(label: 'avançado'),
+                  LumenExpansionTile(
                     title: 'Integrações',
                     subtitle: 'webhooks, SSO, API keys',
                     leading: Icon(Icons.hub_outlined, color: p.primary),
@@ -896,17 +911,17 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     onExpansionChanged: (bool v) =>
                         setState(() => _expanded = v),
                     children: <Widget>[
-                      NeonListTile(
+                      LumenListTile(
                         title: 'Webhook de eventos',
                         subtitle: 'POST → https://hooks.example.com',
-                        trailing: const NeonTag(
+                        trailing: const LumenTag(
                           label: 'ativo',
                           icon: Icons.check_circle_outline,
                         ),
                         onTap: () {},
                       ),
                       const SizedBox(height: 6),
-                      NeonListTile(
+                      LumenListTile(
                         title: 'API Key principal',
                         subtitle: 'sk_live_••••8421',
                         onTap: () {},
@@ -918,7 +933,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             ),
             _section(
               'Data table',
-              NeonDataTable(
+              LumenDataTable(
                 columns: const <DataColumn>[
                   DataColumn(label: Text('Serviço')),
                   DataColumn(label: Text('Status')),
@@ -929,7 +944,10 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     cells: <DataCell>[
                       DataCell(Text('api')),
                       DataCell(
-                        StatusChip(label: 'OK', tone: StatusTone.success),
+                        LumenStatusChip(
+                          label: 'OK',
+                          tone: LumenStatusTone.success,
+                        ),
                       ),
                       DataCell(Text('42ms')),
                     ],
@@ -938,7 +956,10 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     cells: <DataCell>[
                       DataCell(Text('worker')),
                       DataCell(
-                        StatusChip(label: 'ALERTA', tone: StatusTone.warning),
+                        LumenStatusChip(
+                          label: 'ALERTA',
+                          tone: LumenStatusTone.warning,
+                        ),
                       ),
                       DataCell(Text('118ms')),
                     ],
@@ -947,7 +968,10 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     cells: <DataCell>[
                       DataCell(Text('cache')),
                       DataCell(
-                        StatusChip(label: 'FALHA', tone: StatusTone.danger),
+                        LumenStatusChip(
+                          label: 'FALHA',
+                          tone: LumenStatusTone.danger,
+                        ),
                       ),
                       DataCell(Text('—')),
                     ],
@@ -960,7 +984,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               'Navegação (cards)',
               Column(
                 children: <Widget>[
-                  NavigationCard(
+                  LumenNavigationCard(
                     title: 'Dashboard',
                     subtitle: 'visão geral em tempo real',
                     icon: Icons.dashboard_outlined,
@@ -968,7 +992,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     onTap: () {},
                   ),
                   const SizedBox(height: 12),
-                  NavigationCard(
+                  LumenNavigationCard(
                     title: 'Configurações',
                     subtitle: 'tokens, paleta e integrações',
                     icon: Icons.settings_outlined,
@@ -985,7 +1009,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   }
 
   Widget _section(String title, Widget child) {
-    final NeonPalette p = NeonThemeExt.of(context).palette;
+    final LumenPalette p = LumenThemeExt.of(context).palette;
     return Padding(
       padding: const EdgeInsets.only(bottom: 28),
       child: Column(
@@ -1008,21 +1032,21 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   }
 }
 
-const List<NeonMenuEntry<String>> _menuItems = <NeonMenuEntry<String>>[
-  NeonMenuItem<String>(value: 'editar', label: 'Editar', icon: Icons.edit),
-  NeonMenuItem<String>(
+const List<LumenMenuEntry<String>> _menuItems = <LumenMenuEntry<String>>[
+  LumenMenuItem<String>(value: 'editar', label: 'Editar', icon: Icons.edit),
+  LumenMenuItem<String>(
     value: 'duplicar',
     label: 'Duplicar',
     icon: Icons.copy_rounded,
   ),
-  NeonMenuItem<String>(
+  LumenMenuItem<String>(
     value: 'arquivar',
     label: 'Arquivar',
     icon: Icons.archive_outlined,
     enabled: false,
   ),
-  NeonMenuDivider<String>(),
-  NeonMenuItem<String>(
+  LumenMenuDivider<String>(),
+  LumenMenuItem<String>(
     value: 'excluir',
     label: 'Excluir',
     icon: Icons.delete_outline,
