@@ -112,13 +112,13 @@ Senão o widget fica igual nos cinco estilos (neon, flat, glass, soft, brutal).
 registrado; é o que `bareApp` testa.
 
 **Alpha em cores da paleta.** `Color.withValues(alpha: x)` **substitui** o
-alpha, não multiplica. `surfaceOutline` já é translúcido (`0x15000000` no
-claro), então `p.surfaceOutline.withValues(alpha: 0.5)` vira preto quase
-opaco no tema claro. Vários widgets antigos (radio, checkbox, switch, trilhos
-de slider/progress, tabs, stepper, data table) ainda têm esse bug, deixado de
-propósito porque corrigir muda o visual; não repita o padrão em código novo.
-Multiplique (`c.withValues(alpha: c.a * x)`) ou use o accent translúcido
-como `LumenDecorations.input` faz.
+alpha, não multiplica. `surfaceOutline` no claro default já é translúcido
+(`0x15000000`), então `p.surfaceOutline.withValues(alpha: 0.5)` vira preto
+quase opaco. Para contorno use `p.surfaceOutline.outlineAlpha(0.5)`: no
+escuro o alpha pedido entra direto (o cyan continua visível) e no claro o
+preto fraco é só escalado. Accent opaco pode usar `withValues(alpha:)` à
+vontade. Não multiplique um accent opaco achando que está suavizando um
+token que já tinha alpha.
 
 **Material 3 e tipografia.** Texto usa `Theme.of(context).textTheme` com
 `copyWith(color: p.textX)`. Não fixe `fontFamily`.

@@ -450,3 +450,22 @@ class LumenScope extends InheritedWidget {
       oldWidget.data.palette != data.palette ||
       oldWidget.data.style != data.style;
 }
+
+/// Alpha de contorno que não estoura o token claro.
+///
+/// [Color.withValues] substitui o alpha. No escuro, [LumenPalette.surfaceOutline]
+/// é um cyan translúcido e os widgets pedem `0.4`–`0.9` para a borda aparecer:
+/// esse valor é aplicado direto. No claro default o token é preto a ~8%
+/// (`0x15000000`). Substituir por `0.9` vira uma borda preta. Nesse caso o
+/// pedido é escalado a partir do alpha do token, com teto de `0.28`.
+extension LumenOutlineColor on Color {
+  /// Aplica [alpha] como contorno, preservando o token claro.
+  Color outlineAlpha(double alpha) {
+    final bool faintNeutral =
+        HSLColor.fromColor(this).saturation < 0.15 && a < 0.35;
+    if (!faintNeutral) {
+      return withValues(alpha: alpha);
+    }
+    return withValues(alpha: (a * (alpha / 0.2)).clamp(0.0, 0.28));
+  }
+}

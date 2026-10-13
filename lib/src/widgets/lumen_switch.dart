@@ -57,7 +57,7 @@ class LumenSwitch extends StatelessWidget {
         border: style.borderAll(
           color: value
               ? accent.withValues(alpha: 0.9)
-              : p.surfaceOutline.withValues(alpha: 0.8),
+              : p.surfaceOutline.outlineAlpha(0.8),
           width: 1.2,
         ),
         boxShadow: style.shadows(

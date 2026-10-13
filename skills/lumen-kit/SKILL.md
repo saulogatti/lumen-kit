@@ -173,16 +173,14 @@ Follow [`references/widgets.md`](references/widgets.md). Rules:
 1. `flutter analyze` with no new errors.
 2. `flutter test`. Tests that look for `find.byType(ElevatedButton)`,
    `find.byType(TextField)` etc. break where the widget was swapped; update
-   them to the neon type (`find.byType(LumenButton)`) or to
+   them to the kit type (`find.byType(LumenButton)`) or to
    `find.text`/`find.bySemanticsLabel`. Tests using `MaterialApp`/`ThemeData`
    from `flutter/material.dart` need the same `material_ui` import as step 3.
    Never `await` a `showLumenX(...)` call directly in a test: the `Future`
    only completes when the route closes, so the test hangs. Use
    `unawaited(...)` and pump.
-3. Run the app in both brightnesses if it has a light mode. In light mode,
-   borders of some older kit controls (radio, checkbox, switch,
-   slider/progress track, tabs, stepper, data table) come out nearly black:
-   a known kit bug (`surfaceOutline.withValues(alpha:)`), not the app's.
-   Report it instead of "fixing" it in the app.
+3. Run the app in both brightnesses if it has a light mode. Outline colors
+   in the kit go through `Color.outlineAlpha`, which keeps the light
+   `surfaceOutline` from turning into a near-opaque black border.
 4. Summarize for the user: import chosen, theme path (A/B/C), widgets
    swapped, what stayed Material and why.

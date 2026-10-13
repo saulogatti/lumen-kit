@@ -47,7 +47,7 @@ class LumenLinearProgress extends StatelessWidget {
     final LumenStyle style = LumenStyle.of(context);
     final Gradient g = gradient ?? p.accentGradient;
     final Color glow = glowColor ?? p.secondary;
-    final Color track = trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
+    final Color track = trackColor ?? p.surfaceOutline.outlineAlpha(0.4);
 
     return _ProgressSemantics(
       label: semanticsLabel,
@@ -241,8 +241,7 @@ class _LumenCircularProgressState extends State<LumenCircularProgress>
     final LumenStyle style = LumenStyle.of(context);
     final Gradient g = widget.gradient ?? p.accentGradient;
     final Color glow = widget.glowColor ?? p.secondary;
-    final Color track =
-        widget.trackColor ?? p.surfaceOutline.withValues(alpha: 0.4);
+    final Color track = widget.trackColor ?? p.surfaceOutline.outlineAlpha(0.4);
 
     return _ProgressSemantics(
       label: widget.semanticsLabel,

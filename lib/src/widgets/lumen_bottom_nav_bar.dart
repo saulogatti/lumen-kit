@@ -57,7 +57,7 @@ class LumenBottomNavBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
         border: Border(
-          top: BorderSide(color: p.surfaceOutline.withValues(alpha: 0.5)),
+          top: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5)),
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
@@ -143,7 +143,7 @@ class LumenNavRail extends StatelessWidget {
       decoration: BoxDecoration(
         color: p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
         border: Border(
-          right: BorderSide(color: p.surfaceOutline.withValues(alpha: 0.5)),
+          right: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5)),
         ),
       ),
       child: SafeArea(

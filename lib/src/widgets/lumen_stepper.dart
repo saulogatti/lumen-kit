@@ -170,8 +170,8 @@ class LumenStepper extends StatelessWidget {
                               colors: i < currentStep
                                   ? <Color>[accent, p.secondary]
                                   : <Color>[
-                                      p.surfaceOutline.withValues(alpha: 0.7),
-                                      p.surfaceOutline.withValues(alpha: 0.4),
+                                      p.surfaceOutline.outlineAlpha(0.7),
+                                      p.surfaceOutline.outlineAlpha(0.4),
                                     ],
                             ),
                           ),
@@ -260,9 +260,7 @@ class _StepCircle extends StatelessWidget {
             ? null
             : palette.surface.withValues(alpha: style.surfaceAlpha(0.7)),
         border: style.borderAll(
-          color: active
-              ? accent
-              : palette.surfaceOutline.withValues(alpha: 0.8),
+          color: active ? accent : palette.surfaceOutline.outlineAlpha(0.8),
           width: 1.4,
         ),
         boxShadow: style.shadows(
@@ -314,8 +312,8 @@ class _Connector extends StatelessWidget {
             colors: active
                 ? <Color>[accent, palette.secondary]
                 : <Color>[
-                    palette.surfaceOutline.withValues(alpha: 0.6),
-                    palette.surfaceOutline.withValues(alpha: 0.3),
+                    palette.surfaceOutline.outlineAlpha(0.6),
+                    palette.surfaceOutline.outlineAlpha(0.3),
                   ],
           ),
         ),

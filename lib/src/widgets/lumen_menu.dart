@@ -75,6 +75,8 @@ Future<T?> showLumenMenu<T>({
     elevation: s.shadow == LumenShadowKind.none ? 0 : 10,
     shadowColor: s.shadow == LumenShadowKind.glow
         ? accent.withValues(alpha: 0.45 * s.shadowStrength)
+        : Theme.of(context).brightness == Brightness.dark
+        ? Colors.white24
         : Colors.black54,
     shape: RoundedRectangleBorder(
       borderRadius: s.radius(14),

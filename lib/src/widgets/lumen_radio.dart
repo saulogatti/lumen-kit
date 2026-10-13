@@ -55,7 +55,7 @@ class LumenRadio<T> extends StatelessWidget {
         shape: BoxShape.circle,
         color: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
         border: style.borderAll(
-          color: selected ? accent : p.surfaceOutline.withValues(alpha: 0.9),
+          color: selected ? accent : p.surfaceOutline.outlineAlpha(0.9),
           width: 1.4,
         ),
         boxShadow: style.shadows(
