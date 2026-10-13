@@ -19,7 +19,7 @@ enum LumenShadowKind {
   none,
 }
 
-/// Decoração do [AnimatedGridBackground].
+/// Decoração do [LumenAnimatedGridBackground].
 enum LumenBackgroundKind {
   /// Grade de linhas.
   grid,
@@ -159,11 +159,11 @@ class LumenStyle {
   }
 
   BoxShadow _adapt(BoxShadow s) {
-    final double alpha = (s.color.a * shadowStrength).clamp(0.0, 1.0);
+    final Color glow = s.color.scaleAlpha(shadowStrength);
     switch (shadow) {
       case LumenShadowKind.glow:
         return BoxShadow(
-          color: s.color.withValues(alpha: alpha),
+          color: glow,
           blurRadius: s.blurRadius,
           spreadRadius: s.spreadRadius,
           offset: s.offset,
@@ -171,7 +171,7 @@ class LumenStyle {
       case LumenShadowKind.elevation:
         return BoxShadow(
           color: const Color(0xFF000000)
-              .withValues(alpha: (alpha * 0.8).clamp(0.08, 0.3)),
+              .withValues(alpha: (glow.a * 0.8).clamp(0.08, 0.3)),
           blurRadius: s.blurRadius,
           spreadRadius: s.spreadRadius < 0 ? 0 : s.spreadRadius,
           offset: s.offset == Offset.zero
@@ -209,7 +209,7 @@ class LumenStyle {
       return const Border();
     }
     return Border.all(
-      color: color.withValues(alpha: (color.a * borderOpacity).clamp(0.0, 1.0)),
+      color: color.scaleAlpha(borderOpacity),
       width: width * borderScale,
     );
   }

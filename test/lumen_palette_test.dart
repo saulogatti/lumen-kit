@@ -70,7 +70,7 @@ void main() {
       MaterialApp(
         theme: AppTheme.fromSeed(primary: orange),
         home: const Scaffold(
-          body: AnimatedGridBackground(
+          body: LumenAnimatedGridBackground(
             child: Column(
               children: <Widget>[
                 LumenStatusChip(label: 'info', tone: LumenStatusTone.info),

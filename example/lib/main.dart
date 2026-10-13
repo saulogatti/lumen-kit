@@ -1,8 +1,30 @@
 import 'package:flutter/widget_previews.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:lumen_kit/lumen_kit.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const LumenExampleApp());
+
+const List<LumenMenuEntry<String>> _menuItems = <LumenMenuEntry<String>>[
+  LumenMenuItem<String>(value: 'editar', label: 'Editar', icon: Icons.edit),
+  LumenMenuItem<String>(
+    value: 'duplicar',
+    label: 'Duplicar',
+    icon: Icons.copy_rounded,
+  ),
+  LumenMenuItem<String>(
+    value: 'arquivar',
+    label: 'Arquivar',
+    icon: Icons.archive_outlined,
+    enabled: false,
+  ),
+  LumenMenuDivider<String>(),
+  LumenMenuItem<String>(
+    value: 'excluir',
+    label: 'Excluir',
+    icon: Icons.delete_outline,
+    destructive: true,
+  ),
+];
 
 final ValueNotifier<Brightness> _brightness = ValueNotifier<Brightness>(
   Brightness.light,
@@ -13,22 +35,8 @@ final ValueNotifier<Brightness> _brightness = ValueNotifier<Brightness>(
 final ValueNotifier<LumenPreset> _preset = ValueNotifier<LumenPreset>(
   LumenPreset.neon,
 );
+
 final ValueNotifier<String> _style = ValueNotifier<String>('neon');
-
-class MyWidget extends StatelessWidget {
-  @Preview(name: 'Constructor preview')
-  const MyWidget.preview({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'lumen_kit example',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
-      home: const _GalleryScreen(),
-    );
-  }
-}
 
 class LumenExampleApp extends StatelessWidget {
   const LumenExampleApp({super.key});
@@ -47,6 +55,21 @@ class LumenExampleApp extends StatelessWidget {
         ),
         home: const _GalleryScreen(),
       ),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  @Preview(name: 'Constructor preview')
+  const MyWidget.preview({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'lumen_kit example',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.dark,
+      home: const _GalleryScreen(),
     );
   }
 }
@@ -169,7 +192,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
           position: LumenToastPosition.top,
         ),
       ),
-      body: AnimatedGridBackground(
+      body: LumenAnimatedGridBackground(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
           children: <Widget>[
@@ -1031,25 +1054,3 @@ class _GalleryScreenState extends State<_GalleryScreen> {
     );
   }
 }
-
-const List<LumenMenuEntry<String>> _menuItems = <LumenMenuEntry<String>>[
-  LumenMenuItem<String>(value: 'editar', label: 'Editar', icon: Icons.edit),
-  LumenMenuItem<String>(
-    value: 'duplicar',
-    label: 'Duplicar',
-    icon: Icons.copy_rounded,
-  ),
-  LumenMenuItem<String>(
-    value: 'arquivar',
-    label: 'Arquivar',
-    icon: Icons.archive_outlined,
-    enabled: false,
-  ),
-  LumenMenuDivider<String>(),
-  LumenMenuItem<String>(
-    value: 'excluir',
-    label: 'Excluir',
-    icon: Icons.delete_outline,
-    destructive: true,
-  ),
-];

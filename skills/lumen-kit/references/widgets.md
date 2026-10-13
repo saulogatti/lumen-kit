@@ -12,7 +12,7 @@ dependency).
 |---|---|---|
 | `AppBar(title: Text(t))` | `LumenAppBar(title: t, subtitle:, leading:, actions:)` | `title` is a `String`. Implements `PreferredSizeWidget`, goes straight into `Scaffold.appBar`. |
 | `Card(child:)` | `LumenCard(child:, onTap:, glow: false, padding:)` | Default padding is 20; pass `EdgeInsets.zero` if the child already has its own. |
-| `Scaffold` background | `AnimatedGridBackground(child: body)` | Grid/dots/plain depending on `LumenStyle`. |
+| `Scaffold` background | `LumenAnimatedGridBackground(child: body)` | Grid/dots/plain depending on `LumenStyle`. |
 | `Divider()` / `VerticalDivider()` | `LumenDivider()` / `LumenDivider(vertical: true)` | `label:` draws text in the middle. |
 
 ## Actions

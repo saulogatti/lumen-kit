@@ -75,7 +75,7 @@ class LumenPageIndicator extends StatelessWidget {
     final LumenPalette p = LumenThemeExt.of(context).palette;
     final LumenStyle s = LumenStyle.of(context);
     final Color accent = accentColor ?? p.primary;
-    final Color idle = p.textMuted.withValues(alpha: 0.35);
+    final Color idle = p.textMuted.scaleAlpha(0.35);
     final int current = page.round().clamp(0, count == 0 ? 0 : count - 1);
     final String Function(int, int) label =
         semanticsLabel ?? (int i, int n) => '${i + 1}/$n';

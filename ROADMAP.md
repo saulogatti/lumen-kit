@@ -5,7 +5,7 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 ## Já implementado
 
 - [x] **Tema**: `AppColors`, `LumenPalette` (+ `fromSeed`), `LumenPreset`, `LumenStyle` (neon / flat / glass / soft / brutal), `LumenThemeExt`, `AppTheme`
-- [x] **Background**: `AnimatedGridBackground`, `GlowOrbSpec`
+- [x] **Background**: `LumenAnimatedGridBackground`, `LumenGlowOrbSpec`
 - [x] **Base reaproveitável**: `LumenPressable`, `LumenDecorations`, `LumenActionContent`, `LumenLabeled`, `LumenMotion`
 - [x] **Estrutura**: `LumenAppBar`, `LumenCard`
 - [x] **Ações**: `LumenCta`, `LumenButton` (solid / outline / ghost), `LumenIconButton`, `LumenFab`, `LumenMenuButton` / `LumenContextMenu` (+ `showLumenMenu`)

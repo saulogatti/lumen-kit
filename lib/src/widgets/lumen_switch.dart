@@ -84,7 +84,7 @@ class LumenSwitch extends StatelessWidget {
             gradient: style.fill(
               value ? LumenDecorations.accent(p, accent) : null,
             ),
-            color: value ? null : p.textMuted.withValues(alpha: 0.85),
+            color: value ? null : p.textMuted.scaleAlpha(0.85),
             boxShadow: style.shadows(
               value
                   ? <BoxShadow>[

@@ -2,11 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lumen_kit/lumen_kit.dart';
 import 'package:material_ui/material_ui.dart';
 
-const List<BoxShadow> _glow = <BoxShadow>[
-  BoxShadow(color: Color(0x5900E5FF), blurRadius: 14, spreadRadius: -2),
-  BoxShadow(color: Color(0x9900E5FF), blurRadius: 6),
-];
-
 void main() {
   group('LumenStyle', () {
     test('neon mantém os glows originais', () {
@@ -64,7 +59,7 @@ void main() {
         MaterialApp(
           theme: AppTheme.fromPreset(LumenPreset.matrix, style: e.value),
           home: Scaffold(
-            body: AnimatedGridBackground(
+            body: LumenAnimatedGridBackground(
               child: ListView(
                 children: <Widget>[
                   const LumenCard(glow: true, child: Text('card')),
@@ -92,3 +87,8 @@ void main() {
     });
   }
 }
+
+const List<BoxShadow> _glow = <BoxShadow>[
+  BoxShadow(color: Color(0x5900E5FF), blurRadius: 14, spreadRadius: -2),
+  BoxShadow(color: Color(0x9900E5FF), blurRadius: 6),
+];

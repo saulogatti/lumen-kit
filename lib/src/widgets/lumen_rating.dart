@@ -65,7 +65,7 @@ class LumenRating extends StatelessWidget {
     final LumenPalette p = LumenThemeExt.of(context).palette;
     final LumenStyle s = LumenStyle.of(context);
     final Color fill = color ?? p.warning;
-    final Color idle = p.textMuted.withValues(alpha: 0.6);
+    final Color idle = p.textMuted.scaleAlpha(0.6);
     final double current = value.clamp(0, max.toDouble());
     final double step = allowHalf ? 0.5 : 1;
     final interactive = onChanged != null;

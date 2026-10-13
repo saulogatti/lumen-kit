@@ -5,50 +5,26 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_icon_button.dart';
 
-/// Entrada de um menu neon: [LumenMenuItem] ou [LumenMenuDivider].
-sealed class LumenMenuEntry<T> {
-  const LumenMenuEntry();
+/// Posição para [showLumenMenu] num ponto global da tela (ex.:
+/// `TapUpDetails.globalPosition` de um clique direito).
+RelativeRect lumenMenuPositionAt(BuildContext context, Offset globalPosition) {
+  final overlay =
+      Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
+  final Offset local = overlay.globalToLocal(globalPosition);
+  return RelativeRect.fromRect(local & Size.zero, Offset.zero & overlay.size);
 }
 
-/// Ação de um menu neon.
-class LumenMenuItem<T> extends LumenMenuEntry<T> {
-  /// Cria uma ação com [value] devolvido ao ser escolhida.
-  const LumenMenuItem({
-    required this.value,
-    required this.label,
-    this.icon,
-    this.enabled = true,
-    this.destructive = false,
-  });
-
-  /// Valor devolvido por [showLumenMenu] / `onSelected`.
-  final T value;
-
-  /// Texto da ação.
-  final String label;
-
-  /// Ícone opcional antes do [label].
-  final IconData? icon;
-
-  /// Se `false`, a ação aparece apagada e não pode ser escolhida.
-  final bool enabled;
-
-  /// Pinta a ação com `palette.danger` (ex.: "Excluir").
-  final bool destructive;
-}
-
-/// Linha separando grupos de ações.
-class LumenMenuDivider<T> extends LumenMenuEntry<T> {
-  /// Cria um separador.
-  const LumenMenuDivider();
-}
+/// Nome antigo de [lumenMenuPositionAt].
+@Deprecated('Use lumenMenuPositionAt')
+RelativeRect neonMenuPositionAt(BuildContext context, Offset globalPosition) =>
+    lumenMenuPositionAt(context, globalPosition);
 
 /// Abre um menu flutuante com [items] e devolve o valor escolhido, ou `null`
 /// se o menu for fechado sem escolha.
 ///
 /// Sem [position], o menu abre ancorado logo abaixo do widget dono de
 /// [context] (como o "⋮" de um card). Para abrir num ponto da tela (ex.:
-/// clique direito), use [neonMenuPositionAt].
+/// clique direito), use [lumenMenuPositionAt].
 Future<T?> showLumenMenu<T>({
   required BuildContext context,
   required List<LumenMenuEntry<T>> items,
@@ -111,15 +87,6 @@ Future<T?> showLumenMenu<T>({
   );
 }
 
-/// Posição para [showLumenMenu] num ponto global da tela (ex.:
-/// `TapUpDetails.globalPosition` de um clique direito).
-RelativeRect neonMenuPositionAt(BuildContext context, Offset globalPosition) {
-  final overlay =
-      Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
-  final Offset local = overlay.globalToLocal(globalPosition);
-  return RelativeRect.fromRect(local & Size.zero, Offset.zero & overlay.size);
-}
-
 RelativeRect _anchorBelow(BuildContext context) {
   final box = context.findRenderObject()! as RenderBox;
   final overlay =
@@ -138,46 +105,65 @@ RelativeRect _anchorBelow(BuildContext context) {
   );
 }
 
-class _LumenMenuRow<T> extends StatelessWidget {
-  const _LumenMenuRow({
-    required this.item,
-    required this.color,
-    required this.iconColor,
-    required this.selected,
-    required this.selectedColor,
-    required this.style,
+/// Abre um menu de contexto com clique direito (desktop/web) ou toque longo
+/// (mobile) sobre [child], na posição do ponteiro.
+///
+/// Usa `GestureDetector` porque precisa da posição do ponteiro, que o
+/// `LumenPressable` não expõe; leitores de tela abrem o menu pela ação de
+/// toque longo.
+class LumenContextMenu<T> extends StatelessWidget {
+  /// Cria a região de menu de contexto.
+  const LumenContextMenu({
+    required this.items,
+    required this.onSelected,
+    required this.child,
+    super.key,
+    this.accentColor,
   });
 
-  final LumenMenuItem<T> item;
-  final Color color;
-  final Color iconColor;
-  final bool selected;
-  final Color selectedColor;
-  final TextStyle? style;
+  /// Ações do menu.
+  final List<LumenMenuEntry<T>> items;
+
+  /// Chamado com o valor da ação escolhida. `null` desliga o menu.
+  final ValueChanged<T>? onSelected;
+
+  /// Conteúdo que recebe o gesto.
+  final Widget child;
+
+  /// Override do accent. Default: `palette.primary`.
+  final Color? accentColor;
 
   @override
   Widget build(BuildContext context) {
-    final Color fg = selected ? selectedColor : color;
-    final Widget row = Row(
-      spacing: 12,
-      children: <Widget>[
-        if (item.icon != null) Icon(item.icon, size: 18, color: iconColor),
-        Expanded(
-          child: Text(
-            item.label,
-            overflow: TextOverflow.ellipsis,
-            style: style?.copyWith(
-              color: fg,
-              fontWeight: selected ? FontWeight.w600 : null,
-            ),
-          ),
-        ),
-        if (selected) Icon(Icons.check_rounded, size: 18, color: fg),
-      ],
+    if (onSelected == null) {
+      return child;
+    }
+    return Semantics(
+      onLongPress: () {
+        final box = context.findRenderObject()! as RenderBox;
+        _open(context, box.localToGlobal(box.size.center(Offset.zero)));
+      },
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        excludeFromSemantics: true,
+        onSecondaryTapUp: (TapUpDetails d) => _open(context, d.globalPosition),
+        onLongPressStart: (LongPressStartDetails d) =>
+            _open(context, d.globalPosition),
+        child: child,
+      ),
     );
-    return item.enabled
-        ? row
-        : Opacity(opacity: kLumenDisabledOpacity, child: row);
+  }
+
+  Future<void> _open(BuildContext context, Offset global) async {
+    final T? value = await showLumenMenu<T>(
+      context: context,
+      items: items,
+      accentColor: accentColor,
+      position: lumenMenuPositionAt(context, global),
+    );
+    if (value != null && context.mounted) {
+      onSelected?.call(value);
+    }
   }
 }
 
@@ -266,64 +252,83 @@ class LumenMenuButton<T> extends StatelessWidget {
   }
 }
 
-/// Abre um menu de contexto com clique direito (desktop/web) ou toque longo
-/// (mobile) sobre [child], na posição do ponteiro.
-///
-/// Usa `GestureDetector` porque precisa da posição do ponteiro, que o
-/// `LumenPressable` não expõe; leitores de tela abrem o menu pela ação de
-/// toque longo.
-class LumenContextMenu<T> extends StatelessWidget {
-  /// Cria a região de menu de contexto.
-  const LumenContextMenu({
-    required this.items,
-    required this.onSelected,
-    required this.child,
-    super.key,
-    this.accentColor,
+/// Linha separando grupos de ações.
+class LumenMenuDivider<T> extends LumenMenuEntry<T> {
+  /// Cria um separador.
+  const LumenMenuDivider();
+}
+
+/// Entrada de um menu neon: [LumenMenuItem] ou [LumenMenuDivider].
+sealed class LumenMenuEntry<T> {
+  const LumenMenuEntry();
+}
+
+/// Ação de um menu neon.
+class LumenMenuItem<T> extends LumenMenuEntry<T> {
+  /// Cria uma ação com [value] devolvido ao ser escolhida.
+  const LumenMenuItem({
+    required this.value,
+    required this.label,
+    this.icon,
+    this.enabled = true,
+    this.destructive = false,
   });
 
-  /// Ações do menu.
-  final List<LumenMenuEntry<T>> items;
+  /// Valor devolvido por [showLumenMenu] / `onSelected`.
+  final T value;
 
-  /// Chamado com o valor da ação escolhida. `null` desliga o menu.
-  final ValueChanged<T>? onSelected;
+  /// Texto da ação.
+  final String label;
 
-  /// Conteúdo que recebe o gesto.
-  final Widget child;
+  /// Ícone opcional antes do [label].
+  final IconData? icon;
 
-  /// Override do accent. Default: `palette.primary`.
-  final Color? accentColor;
+  /// Se `false`, a ação aparece apagada e não pode ser escolhida.
+  final bool enabled;
 
-  Future<void> _open(BuildContext context, Offset global) async {
-    final T? value = await showLumenMenu<T>(
-      context: context,
-      items: items,
-      accentColor: accentColor,
-      position: neonMenuPositionAt(context, global),
-    );
-    if (value != null && context.mounted) {
-      onSelected?.call(value);
-    }
-  }
+  /// Pinta a ação com `palette.danger` (ex.: "Excluir").
+  final bool destructive;
+}
+
+class _LumenMenuRow<T> extends StatelessWidget {
+  const _LumenMenuRow({
+    required this.item,
+    required this.color,
+    required this.iconColor,
+    required this.selected,
+    required this.selectedColor,
+    required this.style,
+  });
+
+  final LumenMenuItem<T> item;
+  final Color color;
+  final Color iconColor;
+  final bool selected;
+  final Color selectedColor;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    if (onSelected == null) {
-      return child;
-    }
-    return Semantics(
-      onLongPress: () {
-        final box = context.findRenderObject()! as RenderBox;
-        _open(context, box.localToGlobal(box.size.center(Offset.zero)));
-      },
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        excludeFromSemantics: true,
-        onSecondaryTapUp: (TapUpDetails d) => _open(context, d.globalPosition),
-        onLongPressStart: (LongPressStartDetails d) =>
-            _open(context, d.globalPosition),
-        child: child,
-      ),
+    final Color fg = selected ? selectedColor : color;
+    final Widget row = Row(
+      spacing: 12,
+      children: <Widget>[
+        if (item.icon != null) Icon(item.icon, size: 18, color: iconColor),
+        Expanded(
+          child: Text(
+            item.label,
+            overflow: TextOverflow.ellipsis,
+            style: style?.copyWith(
+              color: fg,
+              fontWeight: selected ? FontWeight.w600 : null,
+            ),
+          ),
+        ),
+        if (selected) Icon(Icons.check_rounded, size: 18, color: fg),
+      ],
     );
+    return item.enabled
+        ? row
+        : Opacity(opacity: kLumenDisabledOpacity, child: row);
   }
 }

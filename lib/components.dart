@@ -9,7 +9,7 @@
 /// ```
 library;
 
-export 'src/backgrounds/animated_grid_background.dart';
+export 'src/backgrounds/lumen_animated_grid_background.dart';
 export 'src/foundation/lumen_action_content.dart';
 export 'src/foundation/lumen_decorations.dart';
 export 'src/foundation/lumen_labeled.dart';
