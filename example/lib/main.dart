@@ -101,6 +101,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   int _qty = 1;
   double _rating = 4;
   bool _overlay = false;
+  bool _bannerVisible = true;
+  String _pin = '';
 
   // Navegação
   int _tab = 0;
@@ -498,6 +500,18 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               ),
             ),
             _section(
+              'Código (pin)',
+              LumenPinField(
+                value: _pin,
+                onChanged: (String v) => setState(() => _pin = v),
+                onCompleted: (String v) => showLumenToast(
+                  context: context,
+                  message: 'Código $v completo',
+                  tone: LumenStatusTone.success,
+                ),
+              ),
+            ),
+            _section(
               'Chips, quantidade & avaliação',
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -718,6 +732,55 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         SizedBox(height: 8),
                         LumenSkeleton(height: 10),
                       ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            _section(
+              'Banner, vazio e lista',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: 16,
+                children: <Widget>[
+                  if (_bannerVisible)
+                    LumenBanner(
+                      message: 'Sincronização pausada neste dispositivo.',
+                      tone: LumenStatusTone.warning,
+                      actionLabel: 'Retomar',
+                      onAction: () => showLumenToast(
+                        context: context,
+                        message: 'Retomando',
+                        tone: LumenStatusTone.info,
+                      ),
+                      onDismiss: () => setState(() => _bannerVisible = false),
+                    )
+                  else
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: LumenButton.ghost(
+                        label: 'Mostrar banner',
+                        onPressed: () => setState(() => _bannerVisible = true),
+                      ),
+                    ),
+                  const LumenEmptyState(
+                    icon: Icons.inbox_outlined,
+                    title: 'Nenhum evento',
+                    message:
+                        'A lista abaixo só monta os itens que estão na tela.',
+                  ),
+                  SizedBox(
+                    height: 220,
+                    child: LumenList(
+                      itemCount: 24,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const SizedBox(height: 8),
+                      itemBuilder: (BuildContext context, int i) =>
+                          LumenListTile(
+                            title: 'Evento ${i + 1}',
+                            subtitle: 'item virtualizado',
+                            onTap: () {},
+                          ),
                     ),
                   ),
                 ],

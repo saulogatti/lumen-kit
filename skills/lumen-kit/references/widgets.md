@@ -48,6 +48,7 @@ dependency).
 | `FilterChip` / `ChoiceChip` | `LumenChip(label:, selected:, onSelected:)` | Ready-made groups: `LumenChoiceChips<T>(items:, value:, onChanged:)` (single) and `LumenFilterChips<T>(items:, values:, onChanged:)` (`Set<T>`, returns a new Set). Items: `LumenChipItem(value:, label:)`. |
 | quantity `+`/`−` | `LumenQuantityStepper(value:, onChanged:, min:, max:, step:)` | `int`. |
 | stars | `LumenRating(value:, onChanged:, allowHalf:)` | `onChanged: null` = read-only, accepts fractions. |
+| OTP / pin | `LumenPinField(value:, onChanged:, length:, onCompleted:, obscure:)` | One field, digits only. `onChanged: null` disables. Paste fills the cells. |
 
 ## Feedback
 
@@ -62,6 +63,7 @@ dependency).
 | shimmer/placeholder | `LumenSkeleton(width:, height:)`, `LumenSkeleton.circle(size:)` | |
 | `Tooltip` | `LumenTooltip(message:, child:)` | |
 | status chip | `LumenStatusChip(label:, tone:)` | |
+| inline alert that stays | `LumenBanner(message:, tone:, actionLabel:, onAction:, onDismiss:)` | Not a toast. No `onDismiss` means no close button. |
 | `Badge` | `LumenBadge(label:, child:)`, `LumenBadge.dot(child:)` | Small tag: `LumenTag(label:)`. |
 
 ## Navigation
@@ -83,6 +85,8 @@ dependency).
 | Material | Lumen | Notes |
 |---|---|---|
 | `ListTile` | `LumenListTile(title:, subtitle:, leading:, trailing:, onTap:, selected:)` | `title`/`subtitle` are `String`s. |
+| long `ListView.builder` | `LumenList(itemCount:, itemBuilder:, separatorBuilder:, empty:)` | Only visible rows are built. `itemCount: 0` shows `empty`. Give it a bounded height. |
+| empty placeholder | `LumenEmptyState(title:, message:, icon:, actionLabel:, onPressed:)` | No `onPressed` means no button. |
 | `ExpansionTile` | `LumenExpansionTile(title:, children:, subtitle:, leading:)` | `title` is a `String`. |
 | `CircleAvatar` | `LumenAvatar(image:, initials:, radius:, statusColor:)` | `image` is an `ImageProvider`. Stack: `LumenAvatarGroup(avatars:, maxVisible:, total:)`. |
 | `DataTable` | `LumenDataTable(columns:, rows:)` | Takes regular `DataColumn`/`DataRow`. Standalone row: `LumenTableRow(cells:, isHeader:)`. |
@@ -90,7 +94,7 @@ dependency).
 ## No equivalent (keep Material)
 
 `Autocomplete`, `PaginatedDataTable`, `SearchAnchor` with suggestions,
-`ReorderableListView`, `MenuAnchor`/`MenuBar` with submenus, `Banner`,
+`ReorderableListView`, `MenuAnchor`/`MenuBar` with submenus,
 `showAboutDialog`, `CupertinoX`. To make them match visually, use
 `LumenDecorations.input(...)` for the `InputDecoration` or
 `LumenDecorations.panel(...)` on a surrounding `Container`.

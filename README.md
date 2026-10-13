@@ -10,10 +10,10 @@ Kit de widgets Flutter com os mesmos desenhos e a cor livre. O visual neon (glow
 | Background  | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec`                  |
 | Estrutura   | `LumenAppBar`, `LumenCard`                                           |
 | Ação        | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
-| Input       | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating` |
-| Feedback    | `LumenStatusChip`, `LumenDialog`, `LumenSnackBar`, `LumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
+| Input       | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
+| Feedback    | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `LumenSnackBar`, `LumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navegação   | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
-| Display     | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
+| Display     | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
 
 Tudo desacoplado de domínio — recebe `child`, callbacks e tokens; não conhece nenhuma regra de negócio.
 
@@ -214,6 +214,39 @@ LumenAnimatedGridBackground(
   child: child,
 );
 ```
+
+## Lista grande e código
+
+`LumenList` usa `ListView.builder`: só o que está na tela é construído. Com
+`itemCount: 0` ele mostra o `empty`.
+
+```dart
+LumenList(
+  itemCount: eventos.length,
+  empty: const LumenEmptyState(
+    icon: Icons.inbox_outlined,
+    title: 'Nenhum evento',
+  ),
+  itemBuilder: (context, i) => LumenListTile(
+    title: eventos[i].titulo,
+    onTap: () => abrir(eventos[i]),
+  ),
+)
+```
+
+`LumenPinField` é controlado (`value` + `onChanged`). `onChanged == null`
+desabilita. `onCompleted` dispara quando a última casa preenche.
+
+```dart
+LumenPinField(
+  value: _codigo,
+  onChanged: (String v) => setState(() => _codigo = v),
+  onCompleted: enviar,
+)
+```
+
+`LumenBanner` fica na tela até `onDismiss`. Sem esse callback não há botão
+de fechar.
 
 ## Variantes de botão
 
