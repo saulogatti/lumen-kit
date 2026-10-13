@@ -54,8 +54,8 @@ Tipografia vem do `textTheme` do seu app. O import completo
 ## Uso mínimo
 
 ```dart
-import 'package:flutter/material.dart';
 import 'package:lumen_kit/lumen_kit.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const MyApp());
 

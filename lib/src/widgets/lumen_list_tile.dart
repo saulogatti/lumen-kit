@@ -81,7 +81,7 @@ class LumenListTile extends StatelessWidget {
             border: style.borderAll(
               color: selected
                   ? accent.withValues(alpha: 0.6)
-                  : p.surfaceOutline.withValues(alpha: 0.45),
+                  : p.surfaceOutline.outlineAlpha(0.45),
             ),
             boxShadow: style.shadows(
               selected

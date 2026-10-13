@@ -147,7 +147,7 @@ class LumenSegmentedControl extends StatelessWidget {
       decoration: BoxDecoration(
         color: p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
         borderRadius: style.radius(28),
-        border: style.borderAll(color: p.surfaceOutline.withValues(alpha: 0.6)),
+        border: style.borderAll(color: p.surfaceOutline.outlineAlpha(0.6)),
       ),
       child: Row(
         children: List<Widget>.generate(items.length, (int i) {

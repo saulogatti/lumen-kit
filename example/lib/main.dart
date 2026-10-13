@@ -847,19 +847,19 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     radius: 26,
                     statusColor: p.success,
                   ),
-                  const LumenBadge(
+                  LumenBadge(
                     label: '12',
                     child: Icon(
                       Icons.notifications_outlined,
-                      color: Colors.white70,
+                      color: p.textPrimary,
                       size: 30,
                     ),
                   ),
                   LumenBadge.dot(
                     color: p.success,
-                    child: const Icon(
+                    child: Icon(
                       Icons.mail_outline,
-                      color: Colors.white70,
+                      color: p.textPrimary,
                       size: 30,
                     ),
                   ),

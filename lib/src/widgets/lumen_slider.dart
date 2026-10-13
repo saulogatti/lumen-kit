@@ -106,7 +106,7 @@ SliderThemeData _neonSliderTheme(
   return SliderTheme.of(context).copyWith(
     trackHeight: 4,
     activeTrackColor: accent,
-    inactiveTrackColor: p.surfaceOutline.withValues(alpha: 0.6),
+    inactiveTrackColor: p.surfaceOutline.outlineAlpha(0.6),
     thumbColor: accent,
     overlayColor: accent.withValues(alpha: 0.18),
     valueIndicatorColor: p.surface,

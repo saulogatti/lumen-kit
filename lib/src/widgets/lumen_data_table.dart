@@ -44,7 +44,7 @@ class LumenDataTable extends StatelessWidget {
       decoration: BoxDecoration(
         color: p.surface.withValues(alpha: style.surfaceAlpha(0.5)),
         borderRadius: style.radius(16),
-        border: style.borderAll(color: p.surfaceOutline.withValues(alpha: 0.6)),
+        border: style.borderAll(color: p.surfaceOutline.outlineAlpha(0.6)),
       ),
       clipBehavior: Clip.antiAlias,
       child: SingleChildScrollView(
@@ -120,7 +120,7 @@ class LumenTableRow extends StatelessWidget {
       decoration: BoxDecoration(
         color: isHeader ? accent.withValues(alpha: 0.1) : null,
         border: Border(
-          bottom: BorderSide(color: p.surfaceOutline.withValues(alpha: 0.35)),
+          bottom: BorderSide(color: p.surfaceOutline.outlineAlpha(0.35)),
         ),
       ),
       child: DefaultTextStyle.merge(

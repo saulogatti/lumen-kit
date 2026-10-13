@@ -148,7 +148,7 @@ abstract final class LumenDecorations {
       hintStyle: TextStyle(color: p.textMuted),
       helperStyle: TextStyle(color: p.textMuted),
       enabledBorder: border(accent.withValues(alpha: enabledBorderAlpha)),
-      disabledBorder: border(p.surfaceOutline.withValues(alpha: 0.5)),
+      disabledBorder: border(p.surfaceOutline.outlineAlpha(0.5)),
       focusedBorder: border(accent, 1.4),
       errorBorder: border(p.danger),
       focusedErrorBorder: border(p.danger, 1.4),

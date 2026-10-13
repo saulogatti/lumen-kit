@@ -71,7 +71,7 @@ class LumenCheckbox extends StatelessWidget {
         border: style.borderAll(
           color: (isChecked || isIndeterminate)
               ? accent
-              : p.surfaceOutline.withValues(alpha: 0.9),
+              : p.surfaceOutline.outlineAlpha(0.9),
           width: 1.2,
         ),
         boxShadow: style.shadows(
