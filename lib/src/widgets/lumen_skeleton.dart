@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Skeleton/shimmer in neon style.
 ///
@@ -25,8 +24,7 @@ class LumenSkeleton extends StatefulWidget {
 
   /// Creates a circular skeleton with width and height equal to [size].
   const LumenSkeleton.circle({
-    super.key,
-    required double size,
+    required double size, super.key,
     this.baseColor,
     this.highlightColor,
   }) : width = size,
@@ -84,25 +82,25 @@ class _LumenSkeletonState extends State<LumenSkeleton>
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color base =
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final base =
         widget.baseColor ??
         p.surface.withValues(alpha: style.surfaceAlpha(0.55));
-    final Color highlight =
+    final highlight =
         widget.highlightColor ?? p.primary.withValues(alpha: 0.25);
 
-    final BorderRadius radius = widget.shape == BoxShape.circle
+    final radius = widget.shape == BoxShape.circle
         ? BorderRadius.zero
         : style.radius(widget.borderRadius);
 
     return AnimatedBuilder(
       animation: _ctrl,
-      builder: (BuildContext ctx, _) {
+      builder: (ctx, _) {
         return ShaderMask(
           blendMode: BlendMode.srcATop,
-          shaderCallback: (Rect rect) {
-            final double t = _ctrl.value;
+          shaderCallback: (rect) {
+            final t = _ctrl.value;
             return LinearGradient(
               begin: Alignment(-1 + 2 * t - 0.3, 0),
               end: Alignment(-1 + 2 * t + 0.3, 0),
@@ -111,7 +109,7 @@ class _LumenSkeletonState extends State<LumenSkeleton>
                 highlight,
                 Colors.transparent,
               ],
-              stops: const <double>[0.0, 0.5, 1.0],
+              stops: const <double>[0, 0.5, 1],
             ).createShader(rect);
           },
           child: Container(

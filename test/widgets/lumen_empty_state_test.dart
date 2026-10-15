@@ -6,7 +6,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenEmptyState mostra o CTA só com onPressed', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await pumpBare(

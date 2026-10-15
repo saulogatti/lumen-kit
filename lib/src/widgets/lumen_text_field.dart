@@ -1,9 +1,8 @@
 import 'package:flutter/services.dart' show TextInputFormatter;
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Neon text field.
 ///
@@ -138,9 +137,9 @@ class _LumenTextFieldState extends State<LumenTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = widget.accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = widget.accentColor ?? p.primary;
     return TextFormField(
       controller: _controller,
       focusNode: widget.focusNode,

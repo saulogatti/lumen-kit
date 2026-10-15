@@ -6,20 +6,20 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenSegmentedControl troca o segmento', (
-    WidgetTester tester,
+    tester,
   ) async {
     var index = 0;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) =>
+          builder: (context, setState) =>
               LumenSegmentedControl(
                 items: const <LumenTabItem>[
                   LumenTabItem(label: 'Dia'),
                   LumenTabItem(label: 'Semana'),
                 ],
                 selectedIndex: index,
-                onChanged: (int next) => setState(() => index = next),
+                onChanged: (next) => setState(() => index = next),
               ),
         ),
       ),

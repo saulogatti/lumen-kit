@@ -1,0 +1,12 @@
+dartdoc:
+
+ 
+  linkTo:
+    url: "https://github.com/saulogatti/lumen-kit"
+  showUndocumentedCategories: false
+  ignore:
+    - ambiguous-doc-reference
+  errors:
+    - unresolved-doc-reference
+  warnings:
+    - tool-error  

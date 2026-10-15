@@ -1,7 +1,6 @@
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// AppBar with neon identity: transparent, with bottom gradient line and
 /// typography consistent with the theme.
@@ -46,9 +45,9 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenStyle style = LumenStyle.of(context);
-    final TextTheme text = Theme.of(context).textTheme;
-    final Gradient g =
+    final style = LumenStyle.of(context);
+    final text = Theme.of(context).textTheme;
+    final g =
         accentGradient ?? LumenThemeExt.of(context).palette.accentGradient;
 
     return Material(

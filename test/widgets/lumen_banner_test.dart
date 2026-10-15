@@ -5,7 +5,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenBanner mostra a ação e o fechar', (
-    WidgetTester tester,
+    tester,
   ) async {
     var actions = 0;
     var dismisses = 0;
@@ -29,7 +29,7 @@ void main() {
   });
 
   testWidgets('LumenBanner sem onDismiss não oferece fechar', (
-    WidgetTester tester,
+    tester,
   ) async {
     await pumpBare(
       tester,

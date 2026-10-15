@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
+import 'package:lumen_kit/src/widgets/lumen_avatar.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
-import 'lumen_avatar.dart';
 
 /// Stacked avatars with overlay and a "+N" for overflow.
 ///
@@ -32,8 +31,8 @@ class LumenAvatarGroup extends StatelessWidget {
     this.ringColor,
     this.onOverflowTap,
     this.semanticLabel,
-  }) : assert(maxVisible > 0),
-       assert(overlap >= 0 && overlap < 1);
+  }) : assert(maxVisible > 0, 'maxVisible must be greater than 0'),
+       assert(overlap >= 0 && overlap < 1, 'overlap must be between 0 and 1');
 
   /// Group avatars, in display order.
   final List<LumenAvatar> avatars;
@@ -76,18 +75,18 @@ class LumenAvatarGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
-    final Color ring = ringColor ?? p.backgroundDeep;
-    final int count = total ?? avatars.length;
-    final int visible = avatars.length < maxVisible
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
+    final ring = ringColor ?? p.backgroundDeep;
+    final count = total ?? avatars.length;
+    final visible = avatars.length < maxVisible
         ? avatars.length
         : maxVisible;
-    final int extra = count - visible;
-    final double outer = (radius + _ring) * 2;
-    final double stepX = outer * (1 - overlap);
-    final int slots = visible + (extra > 0 ? 1 : 0);
+    final extra = count - visible;
+    final outer = (radius + _ring) * 2;
+    final stepX = outer * (1 - overlap);
+    final slots = visible + (extra > 0 ? 1 : 0);
     if (slots == 0) {
       return const SizedBox.shrink();
     }
@@ -102,7 +101,7 @@ class LumenAvatarGroup extends StatelessWidget {
 
     Widget? overflow;
     if (extra > 0) {
-      final Widget chip = ringed(
+      final chip = ringed(
         Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(

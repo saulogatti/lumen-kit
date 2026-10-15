@@ -1,24 +1,12 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Circular avatar with gradient border and optional glow.
 ///
 /// Accept image ([image]) or fall into the initials ([initials]).
 class LumenAvatar extends StatelessWidget {
-  /// Creates a circular avatar with image, initials or textual fallback.
-  const LumenAvatar({
-    super.key,
-    this.image,
-    this.initials,
-    this.radius = 22,
-    this.accentColor,
-    this.statusColor,
-    this.showRing = true,
-  });
-
   /// Image displayed on the avatar.
   /// When informed, it takes precedence over [initials].
   final ImageProvider? image;
@@ -42,12 +30,23 @@ class LumenAvatar extends StatelessWidget {
   /// Whether to draw the gradient ring around the avatar.
   final bool showRing;
 
+  /// Creates a circular avatar with image, initials or textual fallback.
+  const LumenAvatar({
+    super.key,
+    this.image,
+    this.initials,
+    this.radius = 22,
+    this.accentColor,
+    this.statusColor,
+    this.showRing = true,
+  });
+
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
-    final double size = radius * 2;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
+    final size = radius * 2;
 
     final Widget base = Container(
       width: size,
@@ -55,9 +54,7 @@ class LumenAvatar extends StatelessWidget {
       padding: EdgeInsets.all(showRing ? 2 : 0),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: style.fill(
-          showRing ? LumenDecorations.accent(p, accent) : null,
-        ),
+        gradient: style.fill(showRing ? LumenDecorations.accent(p, accent) : null),
         boxShadow: style.shadows(
           showRing
               ? <BoxShadow>[
@@ -74,9 +71,7 @@ class LumenAvatar extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: p.surface,
-          image: image == null
-              ? null
-              : DecorationImage(image: image!, fit: BoxFit.cover),
+          image: image == null ? null : DecorationImage(image: image!, fit: BoxFit.cover),
         ),
         alignment: Alignment.center,
         child: image != null
@@ -95,7 +90,7 @@ class LumenAvatar extends StatelessWidget {
     if (statusColor == null) {
       return base;
     }
-    final double dot = (size * 0.28).clamp(8, 18);
+    final dot = (size * 0.28).clamp(8, 18).toDouble();
     return SizedBox(
       width: size,
       height: size,
@@ -113,10 +108,7 @@ class LumenAvatar extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: style.borderAll(color: p.backgroundDeep, width: 2),
                 boxShadow: style.shadows(<BoxShadow>[
-                  BoxShadow(
-                    color: statusColor!.withValues(alpha: 0.6),
-                    blurRadius: 6,
-                  ),
+                  BoxShadow(color: statusColor!.withValues(alpha: 0.6), blurRadius: 6),
                 ]),
               ),
             ),

@@ -1,10 +1,9 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_pressable.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Side drawer with gradient background and vertical accent border.
 /// Use directly on `Scaffold(drawer: LumenDrawer(...))`. Children can be any
@@ -39,15 +38,15 @@ class LumenDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
 
     return Drawer(
       backgroundColor: Colors.transparent,
       elevation: 0,
       width: width,
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: style.fill(
             LumenDecorations.diagonal(
@@ -127,9 +126,9 @@ class LumenDrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),

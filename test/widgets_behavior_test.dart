@@ -16,7 +16,7 @@ Widget _app(Widget child, {bool reduceMotion = false}) => MaterialApp(
 
 void main() {
   testWidgets('LumenTabs acompanha selectedIndex vindo de fora', (
-    WidgetTester tester,
+    tester,
   ) async {
     const items = <LumenTabItem>[
       LumenTabItem(label: 'A'),
@@ -30,18 +30,18 @@ void main() {
     await tester.pumpWidget(tabs(2));
     await tester.pumpAndSettle();
 
-    final TabBar bar = tester.widget<TabBar>(find.byType(TabBar));
+    final bar = tester.widget<TabBar>(find.byType(TabBar));
     expect(bar.controller!.index, 2);
   });
 
   testWidgets('showLumenToast completa só quando o toast sai da tela', (
-    WidgetTester tester,
+    tester,
   ) async {
     late BuildContext ctx;
     await tester.pumpWidget(
       _app(
         Builder(
-          builder: (BuildContext c) {
+          builder: (c) {
             ctx = c;
             return const SizedBox();
           },
@@ -70,13 +70,13 @@ void main() {
   });
 
   testWidgets('ação do LumenSnackBar executa e fecha o snackbar', (
-    WidgetTester tester,
+    tester,
   ) async {
     late BuildContext ctx;
     await tester.pumpWidget(
       _app(
         Builder(
-          builder: (BuildContext c) {
+          builder: (c) {
             ctx = c;
             return const SizedBox();
           },
@@ -99,9 +99,9 @@ void main() {
   });
 
   testWidgets('controles anunciam estado para leitores de tela', (
-    WidgetTester tester,
+    tester,
   ) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
+    final handle = tester.ensureSemantics();
     await tester.pumpWidget(
       _app(
         Column(
@@ -159,15 +159,15 @@ void main() {
   });
 
   testWidgets('LumenSwitch alterna pelo teclado (antes era GestureDetector)', (
-    WidgetTester tester,
+    tester,
   ) async {
     var value = false;
     await tester.pumpWidget(
       _app(
         StatefulBuilder(
-          builder: (BuildContext c, StateSetter set) => LumenSwitch(
+          builder: (c, set) => LumenSwitch(
             value: value,
-            onChanged: (bool v) => set(() => value = v),
+            onChanged: (v) => set(() => value = v),
           ),
         ),
       ),
@@ -180,7 +180,7 @@ void main() {
   });
 
   testWidgets('label de checkbox/switch funciona dentro de Row', (
-    WidgetTester tester,
+    tester,
   ) async {
     await tester.pumpWidget(
       _app(
@@ -197,7 +197,7 @@ void main() {
   });
 
   testWidgets('LumenTextField aceita controller e valida dentro de Form', (
-    WidgetTester tester,
+    tester,
   ) async {
     final form = GlobalKey<FormState>();
     final controller = TextEditingController(text: 'x');
@@ -211,7 +211,7 @@ void main() {
             label: 'Bio',
             controller: controller,
             maxLines: 4,
-            validator: (String? v) =>
+            validator: (v) =>
                 (v ?? '').length < 3 ? 'Muito curto' : null,
           ),
         ),
@@ -228,7 +228,7 @@ void main() {
   });
 
   testWidgets('LumenDatePicker abre mesmo com "hoje" fora do intervalo', (
-    WidgetTester tester,
+    tester,
   ) async {
     await tester.pumpWidget(
       _app(
@@ -248,7 +248,7 @@ void main() {
   });
 
   testWidgets('LumenNavRail mostra o badge do item', (
-    WidgetTester tester,
+    tester,
   ) async {
     await tester.pumpWidget(
       _app(
@@ -269,9 +269,9 @@ void main() {
   });
 
   testWidgets('LumenExpansionTile fechado esconde o conteúdo do leitor', (
-    WidgetTester tester,
+    tester,
   ) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
+    final handle = tester.ensureSemantics();
     await tester.pumpWidget(
       _app(
         const LumenExpansionTile(
@@ -289,7 +289,7 @@ void main() {
   });
 
   testWidgets('animações infinitas param com "reduzir animações"', (
-    WidgetTester tester,
+    tester,
   ) async {
     await tester.pumpWidget(
       _app(
@@ -310,9 +310,9 @@ void main() {
   });
 
   testWidgets('progresso determinado anuncia a porcentagem', (
-    WidgetTester tester,
+    tester,
   ) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
+    final handle = tester.ensureSemantics();
     await tester.pumpWidget(
       _app(
         const SizedBox(

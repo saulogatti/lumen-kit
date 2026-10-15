@@ -8,23 +8,23 @@ import '_harness.dart';
 
 void main() {
   testWidgets('showLumenBottomSheet abre e devolve o valor ao fechar', (
-    WidgetTester tester,
+    tester,
   ) async {
     String? result;
     await pumpBare(
       tester,
       Builder(
-        builder: (BuildContext context) => LumenButton(
+        builder: (context) => LumenButton(
           label: 'Abrir',
           onPressed: () {
             unawaited(
               showLumenBottomSheet<String>(
                 context: context,
-                builder: (BuildContext ctx) => TextButton(
+                builder: (ctx) => TextButton(
                   onPressed: () => Navigator.of(ctx).pop('feito'),
                   child: const Text('Fechar'),
                 ),
-              ).then((String? value) => result = value),
+              ).then((value) => result = value),
             );
           },
         ),

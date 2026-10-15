@@ -4,23 +4,23 @@ import 'package:material_ui/material_ui.dart';
 
 void main() {
   test('outlineAlpha mantém o cyan do escuro e o preto fraco do claro', () {
-    final Color dark = LumenPalette.defaultDark().surfaceOutline.outlineAlpha(
+    final dark = LumenPalette.defaultDark().surfaceOutline.outlineAlpha(
       0.8,
     );
     expect(dark.a, closeTo(0.8, 0.001));
 
-    final Color light = LumenPalette.light().surfaceOutline.outlineAlpha(0.9);
+    final light = LumenPalette.light().surfaceOutline.outlineAlpha(0.9);
     expect(light.a, lessThan(0.3));
     expect(light.r, lessThan(0.05));
     expect(light.g, lessThan(0.05));
     expect(light.b, lessThan(0.05));
 
-    final Color seededDark = LumenPalette.fromSeed(
+    final seededDark = LumenPalette.fromSeed(
       primary: const Color(0xFF00E5FF),
     ).surfaceOutline.outlineAlpha(0.6);
     expect(seededDark.a, closeTo(0.6, 0.02));
 
-    final Color seededLight = LumenPalette.fromSeed(
+    final seededLight = LumenPalette.fromSeed(
       primary: const Color(0xFF00E5FF),
       brightness: Brightness.light,
     ).surfaceOutline.outlineAlpha(0.6);

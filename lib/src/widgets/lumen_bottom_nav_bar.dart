@@ -1,11 +1,10 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
+import 'package:lumen_kit/src/widgets/lumen_badge.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_pressable.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
-import 'lumen_badge.dart';
 
 /// Item from [LumenBottomNavBar] / [LumenNavRail].
 class LumenNavItem {
@@ -50,9 +49,9 @@ class LumenBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
 
     return Container(
       decoration: BoxDecoration(
@@ -65,9 +64,9 @@ class LumenBottomNavBar extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Row(
-          children: List<Widget>.generate(items.length, (int i) {
+          children: List<Widget>.generate(items.length, (i) {
             final selected = i == selectedIndex;
-            final LumenNavItem it = items[i];
+            final it = items[i];
             return Expanded(
               child: LumenPressable(
                 onTap: () => onChanged(i),
@@ -137,9 +136,9 @@ class LumenNavRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
 
     return Container(
       width: 84,
@@ -161,9 +160,9 @@ class LumenNavRail extends StatelessWidget {
               child: ListView.builder(
                 itemCount: items.length,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                itemBuilder: (BuildContext _, int i) {
+                itemBuilder: (_, i) {
                   final selected = i == selectedIndex;
-                  final LumenNavItem it = items[i];
+                  final it = items[i];
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: LumenPressable(
@@ -224,7 +223,7 @@ class _NavItemContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     final Widget icon = Icon(
       item.icon,
       color: selected ? accent : p.textMuted,

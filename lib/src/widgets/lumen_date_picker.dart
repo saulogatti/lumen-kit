@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Opens the default [showDatePicker] applying the neon theme.
 /// Uses [initialDate] as the start date and limits the selection to the range
@@ -17,8 +16,8 @@ Future<DateTime?> showLumenDatePicker({
   Color? accentColor,
   String? helpText,
 }) {
-  final LumenPalette p = LumenThemeExt.of(context).palette;
-  final Color accent = accentColor ?? p.primary;
+  final p = LumenThemeExt.of(context).palette;
+  final accent = accentColor ?? p.primary;
 
   return showDatePicker(
     context: context,
@@ -26,8 +25,8 @@ Future<DateTime?> showLumenDatePicker({
     firstDate: firstDate,
     lastDate: lastDate,
     helpText: helpText,
-    builder: (BuildContext ctx, Widget? child) {
-      final ThemeData base = Theme.of(ctx);
+    builder: (ctx, child) {
+      final base = Theme.of(ctx);
       return Theme(
         data: base.copyWith(
           colorScheme: base.colorScheme.copyWith(
@@ -96,11 +95,11 @@ class LumenDatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
     final disabled = onChanged == null;
-    final String? text = value == null
+    final text = value == null
         ? null
         : (format ?? _defaultFormat)(value!);
 
@@ -109,7 +108,7 @@ class LumenDatePicker extends StatelessWidget {
       onTap: disabled
           ? null
           : () async {
-              final DateTime? picked = await showLumenDatePicker(
+              final picked = await showLumenDatePicker(
                 context: context,
                 initialDate: _clamp(value ?? DateTime.now()),
                 firstDate: firstDate,

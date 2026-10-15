@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_action_content.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_action_content.dart';
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Floating Action Button in neon style.
 ///
@@ -83,15 +82,15 @@ class LumenFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette palette = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final bool enabled = onPressed != null && !busy;
-    final Gradient g = gradient ?? palette.accentGradient;
-    final Color glow = glowColor ?? palette.secondary;
-    final Color fg = foregroundColor ?? palette.backgroundDeep;
+    final palette = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final enabled = onPressed != null && !busy;
+    final g = gradient ?? palette.accentGradient;
+    final glow = glowColor ?? palette.secondary;
+    final fg = foregroundColor ?? palette.backgroundDeep;
     final extended = label != null;
 
-    final BorderRadius radius = style.radius(size / 2);
+    final radius = style.radius(size / 2);
 
     final Widget content = LumenActionContent(
       color: fg,

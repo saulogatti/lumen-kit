@@ -1,6 +1,5 @@
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
 import 'package:material_ui/material_ui.dart';
-
-import 'lumen_tokens.dart';
 
 /// Touchable Kit Base: Applies Disabled Opacity, Cropped Ripple in
 /// [borderRadius], keyboard focus and button semantics.
@@ -83,7 +82,7 @@ class LumenPressable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool active = isEnabled;
+    final active = isEnabled;
     final Widget ink = Material(
       type: MaterialType.transparency,
       borderRadius: customBorder == null ? borderRadius : null,

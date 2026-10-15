@@ -1,11 +1,10 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_labeled.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_labeled.dart';
-import '../foundation/lumen_pressable.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Circular radio with glow in the selected state.
 ///
@@ -42,9 +41,9 @@ class LumenRadio<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
     final disabled = onChanged == null;
     final selected = value == groupValue;
 

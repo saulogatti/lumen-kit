@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Small stamp (usually for accountants) that can be left free or anchored to
 /// [child] in the upper right corner.
@@ -42,12 +41,12 @@ class LumenBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color c = color ?? p.danger;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final c = color ?? p.danger;
 
     // Texto legível sobre qualquer cor de fundo, não só sobre vermelho.
-    final Color fg = ThemeData.estimateBrightnessForColor(c) == Brightness.dark
+    final fg = ThemeData.estimateBrightnessForColor(c) == Brightness.dark
         ? Colors.white
         : Colors.black;
 
@@ -130,9 +129,9 @@ class LumenTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color c = color ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final c = color ?? p.primary;
 
     final Widget content = Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

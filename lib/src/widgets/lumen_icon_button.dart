@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_action_content.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_action_content.dart';
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Visual variants of [LumenIconButton].
 enum LumenIconButtonVariant {
@@ -97,17 +96,17 @@ class LumenIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette palette = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final bool enabled = onPressed != null && !busy;
-    final Color accent = accentColor ?? palette.primary;
+    final palette = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final enabled = onPressed != null && !busy;
+    final accent = accentColor ?? palette.primary;
 
-    final BorderRadius radius = switch (shape) {
+    final radius = switch (shape) {
       LumenIconButtonShape.circle => style.radius(size / 2),
       LumenIconButtonShape.rounded => style.radius(12),
     };
 
-    final Color fg = variant == LumenIconButtonVariant.solid
+    final fg = variant == LumenIconButtonVariant.solid
         ? palette.backgroundDeep
         : accent;
 
@@ -121,7 +120,7 @@ class LumenIconButton extends StatelessWidget {
       ),
     );
 
-    final Widget body = switch (variant) {
+    final body = switch (variant) {
       LumenIconButtonVariant.solid => Container(
         width: size,
         height: size,

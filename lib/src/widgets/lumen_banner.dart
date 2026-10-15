@@ -1,11 +1,10 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
+import 'package:lumen_kit/src/widgets/lumen_button.dart';
+import 'package:lumen_kit/src/widgets/lumen_icon_button.dart';
+import 'package:lumen_kit/src/widgets/lumen_status_chip.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
-import 'lumen_button.dart';
-import 'lumen_icon_button.dart';
-import 'lumen_status_chip.dart';
 
 /// Inline alert that remains on the screen until someone closes.
 /// Unlike toast and snack bars, it doesn't disappear on its own. No [onDismiss]
@@ -59,10 +58,10 @@ class LumenBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
-    final Color color = tone.colorOf(p);
-    final bool showAction = actionLabel != null && onAction != null;
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
+    final color = tone.colorOf(p);
+    final showAction = actionLabel != null && onAction != null;
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 10, 8, 10),
       decoration: LumenDecorations.panel(

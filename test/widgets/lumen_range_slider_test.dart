@@ -6,31 +6,31 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenRangeSlider arrasta os thumbs e informa o intervalo', (
-    WidgetTester tester,
+    tester,
   ) async {
     var values = const RangeValues(20, 80);
     RangeValues? ended;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) => SizedBox(
+          builder: (context, setState) => SizedBox(
             width: 400,
             child: LumenRangeSlider(
               values: values,
               max: 100,
-              onChanged: (RangeValues v) => setState(() => values = v),
-              onChangeEnd: (RangeValues v) => ended = v,
+              onChanged: (v) => setState(() => values = v),
+              onChangeEnd: (v) => ended = v,
             ),
           ),
         ),
       ),
     );
 
-    final RangeSlider slider = tester.widget(find.byType(RangeSlider));
-    final Rect box = tester.getRect(find.byType(RangeSlider));
+    final slider = tester.widget<RangeSlider>(find.byType(RangeSlider));
+    final box = tester.getRect(find.byType(RangeSlider));
     // Arrasta o thumb da direita para perto do fim.
-    final double trackStart = box.left + 24;
-    final double trackWidth = box.width - 48;
+    final trackStart = box.left + 24;
+    final trackWidth = box.width - 48;
     final endThumb = Offset(trackStart + trackWidth * 0.8, box.center.dy);
     await tester.dragFrom(endThumb, Offset(trackWidth * 0.15, 0));
     await tester.pumpAndSettle();
@@ -42,7 +42,7 @@ void main() {
   });
 
   testWidgets('valores fora do intervalo são limitados e null desabilita', (
-    WidgetTester tester,
+    tester,
   ) async {
     await pumpBare(
       tester,
@@ -55,10 +55,10 @@ void main() {
         ),
       ),
     );
-    final RangeSlider slider = tester.widget(find.byType(RangeSlider));
+    final slider = tester.widget<RangeSlider>(find.byType(RangeSlider));
     expect(slider.values, const RangeValues(0, 100));
     expect(slider.onChanged, isNull);
-    final Opacity dim = tester.widget(
+    final dim = tester.widget<Opacity>(
       find.ancestor(
         of: find.byType(RangeSlider),
         matching: find.byType(Opacity),
@@ -68,7 +68,7 @@ void main() {
   });
 
   testWidgets('LumenRangeSlider usa o accent do tema nos trilhos', (
-    WidgetTester tester,
+    tester,
   ) async {
     const teal = Color(0xFF00BFA5);
     await pumpBare(

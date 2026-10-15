@@ -1,12 +1,11 @@
 import 'dart:async';
 
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
+import 'package:lumen_kit/src/widgets/lumen_status_chip.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
-import 'lumen_status_chip.dart';
 
 /// Vertical position of the toast on the screen.
 enum LumenToastPosition {
@@ -34,8 +33,8 @@ Future<void> showLumenToast({
   LumenToastPosition position = LumenToastPosition.bottom,
   double margin = 24,
 }) {
-  final OverlayState overlay = Overlay.of(context, rootOverlay: true);
-  final LumenPalette p = LumenThemeExt.of(context).palette;
+  final overlay = Overlay.of(context, rootOverlay: true);
+  final p = LumenThemeExt.of(context).palette;
   final done = Completer<void>();
 
   late final OverlayEntry entry;
@@ -50,7 +49,7 @@ Future<void> showLumenToast({
   }
 
   entry = OverlayEntry(
-    builder: (BuildContext ctx) => _LumenToastWidget(
+    builder: (ctx) => _LumenToastWidget(
       message: message,
       icon: icon ?? tone.icon,
       accent: tone.colorOf(p),
@@ -135,9 +134,9 @@ class _LumenToastWidgetState extends State<_LumenToastWidget>
   @override
   Widget build(BuildContext context) {
     final top = widget.position == LumenToastPosition.top;
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final EdgeInsets safe = MediaQuery.paddingOf(context);
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final safe = MediaQuery.paddingOf(context);
 
     return Positioned(
       left: widget.margin,

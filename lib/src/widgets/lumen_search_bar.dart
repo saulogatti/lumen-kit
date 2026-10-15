@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Compact search bar, with magnifying glass prefix and clear button when there
 /// is content.
@@ -67,10 +66,10 @@ class _LumenSearchBarState extends State<LumenSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = widget.accentColor ?? p.primary;
-    final bool hasText = _controller.text.isNotEmpty;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = widget.accentColor ?? p.primary;
+    final hasText = _controller.text.isNotEmpty;
 
     return TextField(
       controller: _controller,

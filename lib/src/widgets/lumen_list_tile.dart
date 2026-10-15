@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_pressable.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Themed ListTile with translucent surface, soft accent border and state
 /// selected highlighted by glow.
@@ -53,10 +52,10 @@ class LumenListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
-    final bool disabled = onTap == null && onLongPress == null;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
+    final disabled = onTap == null && onLongPress == null;
 
     // Tile sem ação é só informativo: apaga menos que um controle
     // desabilitado (0.7 em vez de kLumenDisabledOpacity).

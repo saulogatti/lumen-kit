@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Neon theme base container: subtle gradient + accent border + optional onTap.
 ///
@@ -47,12 +46,12 @@ class LumenCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color a = accent ?? p.primary;
-    final BorderRadius radius = style.radius(borderRadius);
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final a = accent ?? p.primary;
+    final radius = style.radius(borderRadius);
 
-    final Widget content = style.frost(
+    final content = style.frost(
       borderRadius: radius,
       child: Container(
         padding: padding,
@@ -73,7 +72,7 @@ class LumenCard extends StatelessWidget {
       ),
     );
 
-    final Widget body = onTap == null
+    final body = onTap == null
         ? content
         : LumenPressable(
             onTap: onTap,

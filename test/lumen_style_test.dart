@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 void main() {
   group('LumenStyle', () {
     test('neon mantém os glows originais', () {
-      final List<BoxShadow>? out = LumenStyle.neon.shadows(_glow);
+      final out = LumenStyle.neon.shadows(_glow);
       expect(out, hasLength(2));
       expect(out!.first.color, _glow.first.color);
     });
@@ -13,7 +13,7 @@ void main() {
     test(
       'elevation troca glow por sombra neutra e descarta glows pequenos',
       () {
-        final List<BoxShadow>? out = LumenStyle.flat.shadows(_glow);
+        final out = LumenStyle.flat.shadows(_glow);
         expect(out, hasLength(1));
         expect(out!.single.color.r, 0);
         expect(out.single.offset.dy, greaterThan(0));
@@ -21,7 +21,7 @@ void main() {
     );
 
     test('hard vira sombra sem blur deslocada', () {
-      final BoxShadow s = LumenStyle.brutal.shadows(_glow)!.single;
+      final s = LumenStyle.brutal.shadows(_glow)!.single;
       expect(s.blurRadius, 0);
       expect(s.offset, const Offset(4, 4));
     });
@@ -51,9 +51,9 @@ void main() {
     });
   });
 
-  for (final MapEntry<String, LumenStyle> e in LumenStyle.presets.entries) {
+  for (final e in LumenStyle.presets.entries) {
     testWidgets('estilo ${e.key} renderiza o kit sem erros', (
-      WidgetTester tester,
+      tester,
     ) async {
       await tester.pumpWidget(
         MaterialApp(

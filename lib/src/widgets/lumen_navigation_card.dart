@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Reusable main screen navigation card.
 ///
@@ -52,10 +51,10 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    final Color accent = widget.accent;
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
+    final text = Theme.of(context).textTheme;
+    final accent = widget.accent;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
 
     // Hover e foco de teclado levantam o card do mesmo jeito.
     void highlight(bool on) {
@@ -68,7 +67,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
       duration: LumenMotion.duration(context, kLumenMediumDuration),
       curve: Curves.easeOut,
       transform: Matrix4.identity()
-        ..translateByDouble(0.0, _hovering ? -4.0 : 0.0, 0.0, 1.0),
+        ..translateByDouble(0, _hovering ? -4.0 : 0.0, 0, 1),
       decoration: BoxDecoration(
         borderRadius: style.radius(20),
         boxShadow: style.shadows(<BoxShadow>[
@@ -146,7 +145,7 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenStyle style = LumenStyle.of(context);
+    final style = LumenStyle.of(context);
     return Container(
       width: 56,
       height: 56,
@@ -164,7 +163,7 @@ class _Tag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenStyle style = LumenStyle.of(context);
+    final style = LumenStyle.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(

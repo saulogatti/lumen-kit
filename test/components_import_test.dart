@@ -15,7 +15,7 @@ class AppColors {
 
 void main() {
   testWidgets('widgets funcionam sem LumenThemeExt no ThemeData', (
-    WidgetTester tester,
+    tester,
   ) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -34,7 +34,7 @@ void main() {
     );
 
     expect(tester.takeException(), isNull);
-    final Text chip = tester.widget<Text>(find.text('info'));
+    final chip = tester.widget<Text>(find.text('info'));
     expect(chip.style?.color, LumenPalette.light().primary);
     // O tema do app continua intacto.
     final BuildContext ctx = tester.element(find.text('card'));
@@ -43,7 +43,7 @@ void main() {
   });
 
   testWidgets('LumenScope aplica paleta e estilo só na subárvore', (
-    WidgetTester tester,
+    tester,
   ) async {
     const teal = Color(0xFF00BFA5);
     await tester.pumpWidget(

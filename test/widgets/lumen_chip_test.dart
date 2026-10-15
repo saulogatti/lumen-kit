@@ -12,17 +12,17 @@ const List<LumenChipItem<String>> _sizes = <LumenChipItem<String>>[
 
 void main() {
   testWidgets('LumenChoiceChips marca um valor por vez', (
-    WidgetTester tester,
+    tester,
   ) async {
     String? value = 'p';
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) =>
+          builder: (context, setState) =>
               LumenChoiceChips<String>(
                 items: _sizes,
                 value: value,
-                onChanged: (String? v) => setState(() => value = v),
+                onChanged: (v) => setState(() => value = v),
               ),
         ),
       ),
@@ -44,7 +44,7 @@ void main() {
   });
 
   testWidgets('allowDeselect manda null ao tocar no marcado', (
-    WidgetTester tester,
+    tester,
   ) async {
     final calls = <String?>[];
     await pumpBare(
@@ -61,18 +61,18 @@ void main() {
   });
 
   testWidgets('LumenFilterChips alterna vários valores e mostra o check', (
-    WidgetTester tester,
+    tester,
   ) async {
     var values = <String>{'p'};
     final original = values;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) =>
+          builder: (context, setState) =>
               LumenFilterChips<String>(
                 items: _sizes,
                 values: values,
-                onChanged: (Set<String> v) => setState(() => values = v),
+                onChanged: (v) => setState(() => values = v),
               ),
         ),
       ),
@@ -91,9 +91,9 @@ void main() {
   });
 
   testWidgets('LumenChip anuncia seleção e usa o accent quando marcado', (
-    WidgetTester tester,
+    tester,
   ) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
+    final handle = tester.ensureSemantics();
     await pumpBare(
       tester,
       LumenChip(label: 'Promoção', selected: true, onSelected: (_) {}),

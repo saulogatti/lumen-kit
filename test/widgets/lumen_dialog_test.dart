@@ -8,13 +8,13 @@ import '_harness.dart';
 
 void main() {
   testWidgets('showLumenDialog mostra o título e devolve a ação', (
-    WidgetTester tester,
+    tester,
   ) async {
     String? chosen;
     await pumpBare(
       tester,
       Builder(
-        builder: (BuildContext context) => LumenButton(
+        builder: (context) => LumenButton(
           label: 'Abrir',
           onPressed: () {
             unawaited(
@@ -28,7 +28,7 @@ void main() {
                     child: const Text('Confirmar'),
                   ),
                 ],
-              ).then((String? value) => chosen = value),
+              ).then((value) => chosen = value),
             );
           },
         ),

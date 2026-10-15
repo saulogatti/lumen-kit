@@ -6,7 +6,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenDivider mostra o rótulo e o flat não quebra', (
-    WidgetTester tester,
+    tester,
   ) async {
     await pumpBare(
       tester,

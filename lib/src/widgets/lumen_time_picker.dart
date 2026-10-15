@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Opens the default [showTimePicker] applying the neon theme.
 /// [initialTime] is the start time, [accentColor] replaces the default accent
@@ -18,17 +17,17 @@ Future<TimeOfDay?> showLumenTimePicker({
   bool? use24HourFormat,
   TimePickerEntryMode initialEntryMode = TimePickerEntryMode.dial,
 }) {
-  final LumenPalette p = LumenThemeExt.of(context).palette;
-  final LumenStyle s = LumenStyle.of(context);
-  final Color accent = accentColor ?? p.primary;
+  final p = LumenThemeExt.of(context).palette;
+  final s = LumenStyle.of(context);
+  final accent = accentColor ?? p.primary;
 
   return showTimePicker(
     context: context,
     initialTime: initialTime,
     helpText: helpText,
     initialEntryMode: initialEntryMode,
-    builder: (BuildContext ctx, Widget? child) {
-      final ThemeData base = Theme.of(ctx);
+    builder: (ctx, child) {
+      final base = Theme.of(ctx);
       Widget picker = Theme(
         data: base.copyWith(
           colorScheme: base.colorScheme.copyWith(
@@ -121,11 +120,11 @@ class LumenTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
     final disabled = onChanged == null;
-    final String? text = value == null
+    final text = value == null
         ? null
         : (format?.call(value!) ??
               MaterialLocalizations.of(context).formatTimeOfDay(
@@ -140,7 +139,7 @@ class LumenTimePicker extends StatelessWidget {
       onTap: disabled
           ? null
           : () async {
-              final TimeOfDay? picked = await showLumenTimePicker(
+              final picked = await showLumenTimePicker(
                 context: context,
                 initialTime: value ?? TimeOfDay.now(),
                 accentColor: accent,

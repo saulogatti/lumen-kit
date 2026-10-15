@@ -1,10 +1,9 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_pressable.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Definition of each step.
 class LumenStep {
@@ -71,13 +70,13 @@ class LumenStepper extends StatelessWidget {
   }
 
   Widget _buildHorizontal(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
 
     final nodes = <Widget>[];
     for (var i = 0; i < steps.length; i++) {
-      final bool active = i <= currentStep;
+      final active = i <= currentStep;
       final current = i == currentStep;
       nodes.add(
         LumenPressable(
@@ -135,16 +134,16 @@ class LumenStepper extends StatelessWidget {
   }
 
   Widget _buildVertical(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: List<Widget>.generate(steps.length, (int i) {
-        final LumenStep s = steps[i];
+      children: List<Widget>.generate(steps.length, (i) {
+        final s = steps[i];
         final current = i == currentStep;
-        final bool active = i <= currentStep;
+        final active = i <= currentStep;
         final isLast = i == steps.length - 1;
         return IntrinsicHeight(
           child: Row(
@@ -248,7 +247,7 @@ class _StepCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenStyle style = LumenStyle.of(context);
+    final style = LumenStyle.of(context);
     return AnimatedContainer(
       duration: LumenMotion.duration(context, kLumenMediumDuration),
       width: 30,
@@ -305,7 +304,7 @@ class _Connector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenStyle style = LumenStyle.of(context);
+    final style = LumenStyle.of(context);
     return Container(
       height: 2,
       margin: const EdgeInsets.symmetric(horizontal: 4),

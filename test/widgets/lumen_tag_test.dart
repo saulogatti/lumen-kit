@@ -5,7 +5,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenTag toca quando tem onTap e só mostra o texto sem ele', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await pumpBare(tester, LumenTag(label: 'beta', onTap: () => taps++));

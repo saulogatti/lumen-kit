@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// Default action content: spinner (when [busy]) or [icon], followed by the
@@ -52,7 +53,7 @@ class LumenActionContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget? leading = busy
+    final leading = busy
         ? SizedBox.square(
             dimension: spinnerSize,
             child: CircularProgressIndicator(strokeWidth: 2, color: color),
@@ -78,5 +79,19 @@ class LumenActionContent extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ColorProperty('color', color));
+    properties.add(StringProperty('label', label));
+    properties.add(DiagnosticsProperty<IconData?>('icon', icon));
+    properties.add(DiagnosticsProperty<bool>('busy', busy));
+    properties.add(DoubleProperty('iconSize', iconSize));
+    properties.add(DoubleProperty('spinnerSize', spinnerSize));
+    properties.add(DoubleProperty('gap', gap));
+    properties.add(DiagnosticsProperty<bool>('expand', expand));
+    properties.add(DiagnosticsProperty<TextStyle?>('textStyle', textStyle));
   }
 }

@@ -12,17 +12,17 @@ const List<LumenNavItem> _items = <LumenNavItem>[
 
 void main() {
   testWidgets('LumenBottomNavBar troca o índice e mostra o badge', (
-    WidgetTester tester,
+    tester,
   ) async {
     var index = 0;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) =>
+          builder: (context, setState) =>
               LumenBottomNavBar(
                 items: _items,
                 selectedIndex: index,
-                onChanged: (int next) => setState(() => index = next),
+                onChanged: (next) => setState(() => index = next),
               ),
         ),
       ),

@@ -1,6 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../theme/lumen_palette.dart';
 
 /// Control followed by a text label, with the color turned off when disabled.
 ///
@@ -34,7 +34,7 @@ class LumenLabeled extends StatelessWidget {
     if (label == null) {
       return control;
     }
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     final Widget text = Text(
       label!,
       style: Theme.of(context).textTheme.bodyMedium
@@ -48,5 +48,13 @@ class LumenLabeled extends StatelessWidget {
         Flexible(child: text),
       ],
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty('label', label));
+    properties.add(DiagnosticsProperty<bool>('enabled', enabled));
+    properties.add(DoubleProperty('gap', gap));
   }
 }

@@ -6,13 +6,13 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenDropdown troca o valor e ignora toque se desabilitado', (
-    WidgetTester tester,
+    tester,
   ) async {
     String? value = 'cyan';
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) =>
+          builder: (context, setState) =>
               LumenDropdown<String>(
                 label: 'Accent',
                 value: value,
@@ -20,7 +20,7 @@ void main() {
                   LumenDropdownItem(value: 'cyan', label: 'Cyan'),
                   LumenDropdownItem(value: 'magenta', label: 'Magenta'),
                 ],
-                onChanged: (String? next) => setState(() => value = next),
+                onChanged: (next) => setState(() => value = next),
               ),
         ),
       ),

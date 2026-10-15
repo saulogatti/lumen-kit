@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_pressable.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Page dots for onboarding and galleries.
 ///
@@ -26,8 +25,8 @@ class LumenPageIndicator extends StatelessWidget {
     this.activeWidth = 24,
     this.spacing = 8,
     this.semanticsLabel,
-  }) : assert(count >= 0),
-       assert(activeWidth >= dotSize);
+  }) : assert(count >= 0, 'count must be non-negative'),
+       assert(activeWidth >= dotSize, 'activeWidth must be greater than or equal to dotSize');
 
   /// Number of pages.
   final int count;
@@ -66,32 +65,32 @@ class LumenPageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController? c = controller;
+    final c = controller;
     if (c == null) {
       return _build(context, index.toDouble(), animated: true);
     }
     return AnimatedBuilder(
       animation: c,
-      builder: (BuildContext context, _) =>
+      builder: (context, _) =>
           _build(context, _pageOf(c), animated: false),
     );
   }
 
   Widget _build(BuildContext context, double page, {required bool animated}) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
-    final Color idle = p.textMuted.scaleAlpha(0.35);
-    final int current = page.round().clamp(0, count == 0 ? 0 : count - 1);
-    final String Function(int, int) label =
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
+    final idle = p.textMuted.scaleAlpha(0.35);
+    final current = page.round().clamp(0, count == 0 ? 0 : count - 1);
+    final label =
         semanticsLabel ?? (int i, int n) => '${i + 1}/$n';
-    final Duration duration = animated
+    final duration = animated
         ? LumenMotion.duration(context, kLumenMediumDuration)
         : Duration.zero;
 
     Widget dot(int i) {
-      final double t = (1 - (page - i).abs()).clamp(0.0, 1.0);
-      final Color color = Color.lerp(idle, accent, t)!;
+      final t = (1 - (page - i).abs()).clamp(0.0, 1.0);
+      final color = Color.lerp(idle, accent, t)!;
       final Widget body = AnimatedContainer(
         duration: duration,
         curve: Curves.easeOutCubic,
@@ -221,7 +220,7 @@ class _LumenCarouselState extends State<LumenCarousel> {
   @override
   void didUpdateWidget(covariant LumenCarousel old) {
     super.didUpdateWidget(old);
-    final PageController? own = _own;
+    final own = _own;
     if (own == null) {
       return;
     }
@@ -247,7 +246,7 @@ class _LumenCarouselState extends State<LumenCarousel> {
   }
 
   void _goTo(int page) {
-    final Duration d = LumenMotion.duration(context, kLumenMediumDuration * 2);
+    final d = LumenMotion.duration(context, kLumenMediumDuration * 2);
     if (d == Duration.zero) {
       _controller.jumpToPage(page);
     } else {
@@ -257,10 +256,10 @@ class _LumenCarouselState extends State<LumenCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
-    final PageController controller = _controller;
-    final Color accent = widget.accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
+    final controller = _controller;
+    final accent = widget.accentColor ?? p.primary;
 
     Widget page(BuildContext context, int i) {
       final Widget card = Padding(
@@ -290,9 +289,9 @@ class _LumenCarouselState extends State<LumenCarousel> {
       return AnimatedBuilder(
         animation: controller,
         child: card,
-        builder: (BuildContext context, Widget? child) {
-          final double current = _pageOf(controller);
-          final double t = (1 - (current - i).abs()).clamp(0.0, 1.0);
+        builder: (context, child) {
+          final current = _pageOf(controller);
+          final t = (1 - (current - i).abs()).clamp(0.0, 1.0);
           return Transform.scale(
             scale: widget.inactiveScale + (1 - widget.inactiveScale) * t,
             child: child,
@@ -330,7 +329,7 @@ class _LumenCarouselState extends State<LumenCarousel> {
 /// `PageView` has not yet measured the content.
 double _pageOf(PageController c) {
   if (c.hasClients && c.positions.length == 1) {
-    final ScrollPosition pos = c.position;
+    final pos = c.position;
     if (pos.hasContentDimensions) {
       return c.page ?? c.initialPage.toDouble();
     }

@@ -14,7 +14,7 @@ const List<LumenAvatar> _five = <LumenAvatar>[
 
 void main() {
   testWidgets('LumenAvatarGroup mostra maxVisible e o excedente', (
-    WidgetTester tester,
+    tester,
   ) async {
     await pumpBare(
       tester,
@@ -25,18 +25,18 @@ void main() {
     expect(find.text('DD'), findsNothing);
 
     // Todos com o raio do grupo, sobrepostos.
-    for (final LumenAvatar a in tester.widgetList<LumenAvatar>(
+    for (final a in tester.widgetList<LumenAvatar>(
       find.byType(LumenAvatar),
     )) {
       expect(a.radius, 20);
     }
-    final double x0 = tester.getTopLeft(find.byType(LumenAvatar).at(0)).dx;
-    final double x1 = tester.getTopLeft(find.byType(LumenAvatar).at(1)).dx;
+    final x0 = tester.getTopLeft(find.byType(LumenAvatar).at(0)).dx;
+    final x1 = tester.getTopLeft(find.byType(LumenAvatar).at(1)).dx;
     expect(x1 - x0, lessThan(44), reason: 'diâmetro + anel, com overlap');
   });
 
   testWidgets('total conta pessoas fora da amostra e +N é tocável', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await pumpBare(
@@ -53,7 +53,7 @@ void main() {
   });
 
   testWidgets('sem excedente não há chip e lista vazia não quebra', (
-    WidgetTester tester,
+    tester,
   ) async {
     await pumpBare(
       tester,
@@ -70,9 +70,9 @@ void main() {
   });
 
   testWidgets('grupo anuncia só o rótulo, sem ler as iniciais', (
-    WidgetTester tester,
+    tester,
   ) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
+    final handle = tester.ensureSemantics();
     await pumpBare(
       tester,
       const LumenAvatarGroup(

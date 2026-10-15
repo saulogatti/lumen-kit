@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Expandable tile with surface header, icon with animated rotation and border
 /// accent when opened.
@@ -88,9 +87,9 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = widget.accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = widget.accentColor ?? p.primary;
 
     return AnimatedContainer(
       duration: LumenMotion.duration(context, kLumenMediumDuration),

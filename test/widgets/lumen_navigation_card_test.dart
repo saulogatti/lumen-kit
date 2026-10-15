@@ -6,7 +6,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenNavigationCard mostra a tag e dispara o toque', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await pumpBare(

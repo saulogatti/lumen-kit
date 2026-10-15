@@ -6,7 +6,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenDrawerItem toca, marca seleção e desabilita', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await pumpBare(

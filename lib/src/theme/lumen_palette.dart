@@ -1,7 +1,6 @@
+import 'package:lumen_kit/src/theme/app_colors.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import 'app_colors.dart';
-import 'lumen_style.dart';
 
 /// Neon theme instantiable palette.
 ///
@@ -23,15 +22,9 @@ class LumenPalette {
     required this.surface,
     required this.surfaceOutline,
     required this.surfaceHighlight,
-    Color? primary,
+    required this.textPrimary, required this.textSecondary, required this.textMuted, required this.success, required this.warning, required this.danger, Color? primary,
     Color? secondary,
     Color? tertiary,
-    required this.textPrimary,
-    required this.textSecondary,
-    required this.textMuted,
-    required this.success,
-    required this.warning,
-    required this.danger,
     this._backgroundGradient,
     this._accentGradient,
     @Deprecated('Use primary') Color? accentCyan,
@@ -87,14 +80,14 @@ class LumenPalette {
     Brightness brightness = Brightness.dark,
   }) {
     final p = HSLColor.fromColor(primary);
-    final HSLColor s = secondary != null
+    final s = secondary != null
         ? HSLColor.fromColor(secondary)
         : p.withHue((p.hue + 150) % 360);
-    final Color sec = s.toColor();
+    final sec = s.toColor();
     // Meio do caminho pelo arco mais curto do círculo de matiz: laranja +
     // rosa dá vermelho, não ciano.
-    final double delta = ((s.hue - p.hue + 540) % 360) - 180;
-    final Color ter =
+    final delta = ((s.hue - p.hue + 540) % 360) - 180;
+    final ter =
         tertiary ??
         HSLColor.lerp(
           p,
@@ -104,7 +97,7 @@ class LumenPalette {
 
     // Fundos e textos herdam o matiz do accent intermediário, como o default
     // (azul escuro sob cyan + magenta).
-    final double hue = HSLColor.fromColor(ter).hue;
+    final hue = HSLColor.fromColor(ter).hue;
     Color tone(double saturation, double lightness, [double alpha = 1]) =>
         HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
 
@@ -233,7 +226,7 @@ class LumenPalette {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: <Color>[backgroundDeep, backgroundMid, backgroundSoft],
-        stops: const <double>[0.0, 0.55, 1.0],
+        stops: const <double>[0, 0.55, 1],
       );
 
   /// Returns a new palette preserving unspecified tokens.
@@ -264,11 +257,11 @@ class LumenPalette {
     primary ??= accentCyan;
     secondary ??= accentMagenta;
     tertiary ??= accentBlue;
-    final bool backgroundChanged =
+    final backgroundChanged =
         backgroundDeep != null ||
         backgroundMid != null ||
         backgroundSoft != null;
-    final bool accentChanged =
+    final accentChanged =
         primary != null || secondary != null || tertiary != null;
     return LumenPalette(
       backgroundDeep: backgroundDeep ?? this.backgroundDeep,
@@ -346,7 +339,7 @@ enum LumenPreset {
   /// Red and amber.
   ember(Color(0xFFFF3B3B), Color(0xFFFFB020));
 
-  const LumenPreset(this.primary, this.secondary);
+  LumenPreset(this.primary, this.secondary);
 
   /// Preset's primary accent.
   final Color primary;
@@ -387,8 +380,7 @@ class LumenScope extends InheritedWidget {
   /// Creates a scope with [palette] and [style] to [child].
   LumenScope({
     required LumenPalette palette,
-    LumenStyle style = LumenStyle.neon,
-    required super.child,
+    required super.child, LumenStyle style = LumenStyle.neon,
     super.key,
   }) : data = LumenThemeExt(palette: palette, style: style);
 
@@ -447,12 +439,12 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
   /// [LumenStyle.neon]. This way widgets work in apps that keep the own
   /// `ThemeData` and never record anything from the kit.
   static LumenThemeExt of(BuildContext context) {
-    final LumenScope? scope = context
+    final scope = context
         .dependOnInheritedWidgetOfExactType<LumenScope>();
     if (scope != null) {
       return scope.data;
     }
-    final ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     return theme.extension<LumenThemeExt>() ??
         (theme.brightness == Brightness.dark ? _fallbackDark : _fallbackLight);
   }
@@ -469,7 +461,7 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
 extension LumenOutlineColor on Color {
   /// Applies [alpha] as an outline, preserving the clear token.
   Color outlineAlpha(double alpha) {
-    final bool faintNeutral =
+    final faintNeutral =
         HSLColor.fromColor(this).saturation < 0.15 && a < 0.35;
     if (!faintNeutral) {
       return withValues(alpha: alpha);

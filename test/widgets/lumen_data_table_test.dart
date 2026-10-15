@@ -6,7 +6,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenDataTable mostra a célula e LumenTableRow toca', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await pumpBare(

@@ -1,7 +1,7 @@
+import 'package:flutter/foundation.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Old name of [LumenAnimatedGridBackground].
 @Deprecated('Use LumenAnimatedGridBackground')
@@ -62,14 +62,14 @@ class LumenAnimatedGridBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final List<LumenGlowOrbSpec> orbList =
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final orbList =
         orbs ?? (style.orbs ? _defaultOrbs(p) : const <LumenGlowOrbSpec>[]);
-    final bool drawPattern =
+    final drawPattern =
         showGrid && style.background != LumenBackgroundKind.plain;
-    final Color effectiveGridColor = gridColor ?? p.primary;
-    final Gradient effectiveGradient = gradient ?? p.backgroundGradient;
+    final effectiveGridColor = gridColor ?? p.primary;
+    final effectiveGradient = gradient ?? p.backgroundGradient;
 
     return DecoratedBox(
       decoration: BoxDecoration(gradient: effectiveGradient),
@@ -105,6 +105,17 @@ class LumenAnimatedGridBackground extends StatelessWidget {
     LumenGlowOrbSpec(color: p.primary, size: 320, top: -120, right: -80),
     LumenGlowOrbSpec(color: p.secondary, size: 360, bottom: -160, left: -100),
   ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<Gradient?>('gradient', gradient));
+    properties.add(IterableProperty<LumenGlowOrbSpec>('orbs', orbs));
+    properties.add(DoubleProperty('gridSpacing', gridSpacing));
+    properties.add(ColorProperty('gridColor', gridColor));
+    properties.add(DoubleProperty('gridOpacity', gridOpacity));
+    properties.add(DiagnosticsProperty<bool>('showGrid', showGrid));
+  }
 }
 
 /// Configuration of a glow orb positioned in the background.
@@ -166,6 +177,12 @@ class _GlowOrb extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<LumenGlowOrbSpec>('spec', spec));
   }
 }
 

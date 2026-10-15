@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Stylized dialog with gradient surface, accent border and theme typography.
 ///
@@ -41,10 +40,10 @@ class LumenDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color a = accent ?? p.primary;
+    final text = Theme.of(context).textTheme;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final a = accent ?? p.primary;
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -126,7 +125,7 @@ Future<T?> showLumenDialog<T>({
   return showDialog<T>(
     context: context,
     barrierDismissible: barrierDismissible,
-    builder: (BuildContext ctx) => LumenDialog(
+    builder: (ctx) => LumenDialog(
       title: title,
       content: content,
       actions: actions,

@@ -1,9 +1,8 @@
 import 'package:flutter/services.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Code field (OTP): a sequence of places controlled by [value].
 /// `onChanged == null` disables. [onCompleted] fires when the last house is
@@ -67,11 +66,11 @@ class _LumenPinFieldState extends State<LumenPinField> {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
-    final Color accent = p.primary;
-    final String text = _digits(_controller.text);
-    final int cursor = text.length.clamp(0, widget.length - 1);
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
+    final accent = p.primary;
+    final text = _digits(_controller.text);
+    final cursor = text.length.clamp(0, widget.length - 1);
     return Opacity(
       opacity: _enabled ? 1 : kLumenDisabledOpacity,
       child: Semantics(
@@ -142,7 +141,7 @@ class _LumenPinFieldState extends State<LumenPinField> {
   @override
   void didUpdateWidget(LumenPinField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    final String next = _digits(widget.value);
+    final next = _digits(widget.value);
     if (next != _controller.text) {
       _controller.value = TextEditingValue(
         text: next,
@@ -163,7 +162,7 @@ class _LumenPinFieldState extends State<LumenPinField> {
   @override
   void initState() {
     super.initState();
-    final String initial = _digits(widget.value);
+    final initial = _digits(widget.value);
     _controller = TextEditingController(text: initial);
     _previousLength = initial.length;
     _focus = FocusNode()..addListener(_onFocus);
@@ -173,14 +172,14 @@ class _LumenPinFieldState extends State<LumenPinField> {
     if (!_enabled) {
       return;
     }
-    final String next = _digits(raw);
+    final next = _digits(raw);
     if (next != _controller.text) {
       _controller.value = TextEditingValue(
         text: next,
         selection: TextSelection.collapsed(offset: next.length),
       );
     }
-    final bool justCompleted =
+    final justCompleted =
         next.length == widget.length && _previousLength != widget.length;
     _previousLength = next.length;
     if (next != widget.value) {
@@ -193,7 +192,7 @@ class _LumenPinFieldState extends State<LumenPinField> {
   }
 
   String _digits(String raw) {
-    final String only = raw.replaceAll(RegExp(r'\D'), '');
+    final only = raw.replaceAll(RegExp(r'\D'), '');
     if (only.length <= widget.length) {
       return only;
     }

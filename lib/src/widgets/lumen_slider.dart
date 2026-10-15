@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Slider with accent gradient track and glow thumb.
 class LumenSlider extends StatelessWidget {
@@ -45,8 +44,8 @@ class LumenSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final accent = accentColor ?? p.primary;
     final disabled = onChanged == null;
 
     return SliderTheme(
@@ -211,10 +210,10 @@ class LumenRangeSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.primary;
-    final double start = values.start.clamp(min, max);
-    final double end = values.end.clamp(start, max);
+    final p = LumenThemeExt.of(context).palette;
+    final accent = accentColor ?? p.primary;
+    final start = values.start.clamp(min, max);
+    final end = values.end.clamp(start, max);
 
     return SliderTheme(
       data: _lumenSliderTheme(context, p, accent),
@@ -252,11 +251,10 @@ class _GlowRangeThumbShape extends RangeSliderThumbShape {
     Offset center, {
     required Animation<double> activationAnimation,
     required Animation<double> enableAnimation,
-    bool isDiscrete = false,
+    required SliderThemeData sliderTheme, bool isDiscrete = false,
     bool isEnabled = false,
     bool? isOnTop,
     TextDirection? textDirection,
-    required SliderThemeData sliderTheme,
     Thumb? thumb,
     bool? isPressed,
   }) {

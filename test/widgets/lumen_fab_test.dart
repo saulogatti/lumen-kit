@@ -6,7 +6,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenFab toca, estende o rótulo e bloqueia quando busy', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await pumpBare(tester, LumenFab(icon: Icons.add, onPressed: () => taps++));

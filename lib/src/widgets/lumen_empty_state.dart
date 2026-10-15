@@ -1,7 +1,6 @@
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/widgets/lumen_button.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../theme/lumen_palette.dart';
-import 'lumen_button.dart';
 
 /// Block for when there is no data: icon, title, text and a CTA.
 /// Without [onPressed], the button does not appear.
@@ -46,8 +45,8 @@ class LumenEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final bool showAction = actionLabel != null && onPressed != null;
+    final p = LumenThemeExt.of(context).palette;
+    final showAction = actionLabel != null && onPressed != null;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
       child: Column(

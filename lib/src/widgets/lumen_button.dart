@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_action_content.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_action_content.dart';
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Visual variants of [LumenButton].
 enum LumenButtonVariant {
@@ -95,14 +94,14 @@ class LumenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette palette = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final bool enabled = onPressed != null && !busy;
-    final Color accent = accentColor ?? palette.primary;
+    final palette = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final enabled = onPressed != null && !busy;
+    final accent = accentColor ?? palette.primary;
 
-    final Widget content = _buildContent(palette, accent);
+    final content = _buildContent(palette, accent);
 
-    final Widget body = switch (variant) {
+    final body = switch (variant) {
       LumenButtonVariant.solid => _solid(context, palette, content, enabled),
       LumenButtonVariant.outline => _outline(
         context,
@@ -123,7 +122,7 @@ class LumenButton extends StatelessWidget {
   }
 
   Widget _buildContent(LumenPalette palette, Color accent) {
-    final Color fg = switch (variant) {
+    final fg = switch (variant) {
       LumenButtonVariant.solid => palette.backgroundDeep,
       LumenButtonVariant.outline || LumenButtonVariant.ghost => accent,
     };
@@ -143,7 +142,7 @@ class LumenButton extends StatelessWidget {
     Widget content,
     bool enabled,
   ) {
-    final LumenStyle style = LumenStyle.of(context);
+    final style = LumenStyle.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
       decoration: BoxDecoration(
@@ -174,7 +173,7 @@ class LumenButton extends StatelessWidget {
     Widget content,
     bool enabled,
   ) {
-    final LumenStyle style = LumenStyle.of(context);
+    final style = LumenStyle.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       decoration: BoxDecoration(

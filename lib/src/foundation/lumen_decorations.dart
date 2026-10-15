@@ -1,7 +1,6 @@
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Decorations shared by kit widgets.
 ///

@@ -8,7 +8,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenLoadingOverlay bloqueia toques só enquanto carrega', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     Widget build(bool loading) => bareApp(
@@ -39,13 +39,13 @@ void main() {
   });
 
   testWidgets('showLumenLoading cobre a tela e devolve o resultado', (
-    WidgetTester tester,
+    tester,
   ) async {
     late BuildContext ctx;
     await pumpBare(
       tester,
       Builder(
-        builder: (BuildContext c) {
+        builder: (c) {
           ctx = c;
           return const Text('tela');
         },
@@ -59,7 +59,7 @@ void main() {
         context: ctx,
         message: 'Enviando…',
         task: () => job.future,
-      ).then((int v) => result = v),
+      ).then((v) => result = v),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
@@ -78,13 +78,13 @@ void main() {
   });
 
   testWidgets('showLumenLoading fecha a camada e repassa o erro', (
-    WidgetTester tester,
+    tester,
   ) async {
     late BuildContext ctx;
     await pumpBare(
       tester,
       Builder(
-        builder: (BuildContext c) {
+        builder: (c) {
           ctx = c;
           return const SizedBox();
         },

@@ -1,7 +1,6 @@
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Opens a bottom sheet modal with the neon theme aesthetic (background
 /// gradient, accent border on top and handle).
@@ -15,8 +14,8 @@ Future<T?> showLumenBottomSheet<T>({
   bool isDismissible = true,
   bool enableDrag = true,
 }) {
-  final LumenPalette p = LumenThemeExt.of(context).palette;
-  final Color accent = accentColor ?? p.primary;
+  final p = LumenThemeExt.of(context).palette;
+  final accent = accentColor ?? p.primary;
 
   return showModalBottomSheet<T>(
     context: context,
@@ -25,7 +24,7 @@ Future<T?> showLumenBottomSheet<T>({
     enableDrag: enableDrag,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: 0.55),
-    builder: (BuildContext ctx) =>
+    builder: (ctx) =>
         _LumenBottomSheetShell(accent: accent, child: builder(ctx)),
   );
 }
@@ -38,14 +37,14 @@ class _LumenBottomSheetShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
     final sheetRadius = BorderRadius.vertical(
       top: Radius.circular(24 * style.radiusScale),
     );
     return style.frost(
       borderRadius: sheetRadius,
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: style.fill(
             LinearGradient(

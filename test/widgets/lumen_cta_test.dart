@@ -5,7 +5,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenCta toca e fica desabilitado sem onPressed', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await pumpBare(

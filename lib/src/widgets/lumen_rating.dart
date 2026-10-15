@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Rating stars.
 ///
@@ -13,21 +12,6 @@ import '../theme/lumen_style.dart';
 /// LumenRating(value: produto.media) // somente leitura
 /// ```
 class LumenRating extends StatelessWidget {
-  /// Create the assessment.
-  const LumenRating({
-    required this.value,
-    super.key,
-    this.onChanged,
-    this.max = 5,
-    this.allowHalf = false,
-    this.size = 28,
-    this.spacing = 2,
-    this.color,
-    this.icon = Icons.star_rounded,
-    this.emptyIcon = Icons.star_outline_rounded,
-    this.semanticLabel,
-  }) : assert(max > 0);
-
   /// Current score, from 0 to [max].
   ///
   /// Accepts fractions in the display.
@@ -66,29 +50,36 @@ class LumenRating extends StatelessWidget {
   /// "Rating").
   final String? semanticLabel;
 
-  String _fmt(double v) =>
-      v == v.roundToDouble() ? v.toInt().toString() : v.toStringAsFixed(1);
+  /// Create the assessment.
+  const LumenRating({
+    required this.value,
+    super.key,
+    this.onChanged,
+    this.max = 5,
+    this.allowHalf = false,
+    this.size = 28,
+    this.spacing = 2,
+    this.color,
+    this.icon = Icons.star_rounded,
+    this.emptyIcon = Icons.star_outline_rounded,
+    this.semanticLabel,
+  }) : assert(max > 0, 'max must be greater than 0');
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
-    final Color fill = color ?? p.warning;
-    final Color idle = p.textMuted.scaleAlpha(0.6);
-    final double current = value.clamp(0, max.toDouble());
-    final double step = allowHalf ? 0.5 : 1;
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
+    final fill = color ?? p.warning;
+    final idle = p.textMuted.scaleAlpha(0.6);
+    final current = value.clamp(0, max.toDouble()).toDouble();
+    final step = allowHalf ? 0.5 : 1;
     final interactive = onChanged != null;
-    final List<Shadow>? glow = s.shadow == LumenShadowKind.glow
-        ? <Shadow>[
-            Shadow(
-              color: fill.withValues(alpha: 0.6 * s.shadowStrength),
-              blurRadius: 10,
-            ),
-          ]
+    final glow = s.shadow == LumenShadowKind.glow
+        ? <Shadow>[Shadow(color: fill.withValues(alpha: 0.6 * s.shadowStrength), blurRadius: 10)]
         : null;
 
     Widget star(int i) {
-      final double f = (current - i).clamp(0.0, 1.0);
+      final f = (current - i).clamp(0.0, 1.0);
       final Widget body = SizedBox.square(
         dimension: size,
         child: Stack(
@@ -138,20 +129,16 @@ class LumenRating extends StatelessWidget {
       );
     }
 
-    final double up = (current + step).clamp(0, max.toDouble());
-    final double down = (current - step).clamp(0, max.toDouble());
+    final up = (current + step).clamp(0, max.toDouble()).toDouble();
+    final down = (current - step).clamp(0, max.toDouble()).toDouble();
     return Semantics(
       container: true,
       label: semanticLabel,
       value: '${_fmt(current)}/$max',
       increasedValue: interactive && up != current ? '${_fmt(up)}/$max' : null,
-      decreasedValue: interactive && down != current
-          ? '${_fmt(down)}/$max'
-          : null,
+      decreasedValue: interactive && down != current ? '${_fmt(down)}/$max' : null,
       onIncrease: interactive && up != current ? () => onChanged!(up) : null,
-      onDecrease: interactive && down != current
-          ? () => onChanged!(down)
-          : null,
+      onDecrease: interactive && down != current ? () => onChanged!(down) : null,
       child: ExcludeSemantics(
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -161,4 +148,6 @@ class LumenRating extends StatelessWidget {
       ),
     );
   }
+
+  String _fmt(double v) => v == v.roundToDouble() ? v.toInt().toString() : v.toStringAsFixed(1);
 }

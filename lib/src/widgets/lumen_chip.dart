@@ -1,9 +1,8 @@
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_pressable.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Selectable chip: base of filters and choices.
 ///
@@ -48,12 +47,12 @@ class LumenChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
-    final BorderRadius radius = s.radius(20);
-    final Color fg = selected ? accent : p.textSecondary;
-    final IconData? leading = selected && showCheckmark
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
+    final radius = s.radius(20);
+    final fg = selected ? accent : p.textSecondary;
+    final leading = selected && showCheckmark
         ? Icons.check_rounded
         : icon;
 
@@ -185,7 +184,7 @@ class LumenChoiceChips<T> extends StatelessWidget {
             selected: item.value == value,
             onSelected: onChanged == null || !item.enabled
                 ? null
-                : (bool on) {
+                : (on) {
                     if (on) {
                       onChanged!(item.value);
                     } else if (allowDeselect) {
@@ -252,7 +251,7 @@ class LumenFilterChips<T> extends StatelessWidget {
             selected: values.contains(item.value),
             onSelected: onChanged == null || !item.enabled
                 ? null
-                : (bool on) {
+                : (on) {
                     // Cascata dentro de ternário pega a expressão inteira;
                     // por isso o if explícito.
                     final next = <T>{...values};

@@ -1,8 +1,10 @@
 import 'dart:ui' show ImageFilter;
 
+import 'package:lumen_kit/components.dart' show LumenAnimatedGridBackground;
+import 'package:lumen_kit/lumen_kit.dart' show LumenAnimatedGridBackground;
+import 'package:lumen_kit/src/backgrounds/lumen_animated_grid_background.dart' show LumenAnimatedGridBackground;
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:material_ui/material_ui.dart';
-
-import 'lumen_palette.dart';
 
 /// How widget shadows are drawn.
 enum LumenShadowKind {
@@ -164,7 +166,7 @@ class LumenStyle {
   }
 
   BoxShadow _adapt(BoxShadow s) {
-    final Color glow = s.color.scaleAlpha(shadowStrength);
+    final glow = s.color.scaleAlpha(shadowStrength);
     switch (shadow) {
       case LumenShadowKind.glow:
         return BoxShadow(
@@ -198,7 +200,7 @@ class LumenStyle {
     if (gradient == null || gradients || gradient.colors.isEmpty) {
       return gradient;
     }
-    final Color c = gradient.colors.first;
+    final c = gradient.colors.first;
     return LinearGradient(colors: <Color>[c, c]);
   }
 

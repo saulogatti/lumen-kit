@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Linear progress bar with neon and glow gradient.
 /// If [value] is `null`, displays indeterminate animation.
@@ -50,11 +49,11 @@ class LumenLinearProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Gradient g = gradient ?? p.accentGradient;
-    final Color glow = glowColor ?? p.secondary;
-    final Color track = trackColor ?? p.surfaceOutline.outlineAlpha(0.4);
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final g = gradient ?? p.accentGradient;
+    final glow = glowColor ?? p.secondary;
+    final track = trackColor ?? p.surfaceOutline.outlineAlpha(0.4);
 
     return _ProgressSemantics(
       label: semanticsLabel,
@@ -110,7 +109,7 @@ class _GlowBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenStyle style = LumenStyle.of(context);
+    final style = LumenStyle.of(context);
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: style.fill(gradient),
@@ -154,11 +153,11 @@ class _IndeterminateBarState extends State<_IndeterminateBar>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _ctrl,
-      builder: (BuildContext ctx, _) {
+      builder: (ctx, _) {
         return LayoutBuilder(
-          builder: (BuildContext _, BoxConstraints c) {
-            final double barWidth = c.maxWidth * 0.35;
-            final double dx = (c.maxWidth + barWidth) * _ctrl.value - barWidth;
+          builder: (_, c) {
+            final barWidth = c.maxWidth * 0.35;
+            final dx = (c.maxWidth + barWidth) * _ctrl.value - barWidth;
             return Stack(
               children: <Widget>[
                 Positioned(
@@ -254,11 +253,11 @@ class _LumenCircularProgressState extends State<LumenCircularProgress>
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Gradient g = widget.gradient ?? p.accentGradient;
-    final Color glow = widget.glowColor ?? p.secondary;
-    final Color track = widget.trackColor ?? p.surfaceOutline.outlineAlpha(0.4);
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final g = widget.gradient ?? p.accentGradient;
+    final glow = widget.glowColor ?? p.secondary;
+    final track = widget.trackColor ?? p.surfaceOutline.outlineAlpha(0.4);
 
     return _ProgressSemantics(
       label: widget.semanticsLabel,
@@ -268,7 +267,7 @@ class _LumenCircularProgressState extends State<LumenCircularProgress>
         height: widget.size,
         child: AnimatedBuilder(
           animation: _ctrl,
-          builder: (BuildContext ctx, _) {
+          builder: (ctx, _) {
             return CustomPaint(
               painter: _LumenCircularPainter(
                 progress: widget.value,
@@ -309,7 +308,7 @@ class _LumenCircularPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final double radius = (size.shortestSide - strokeWidth) / 2;
+    final radius = (size.shortestSide - strokeWidth) / 2;
     final rect = Rect.fromCircle(center: center, radius: radius);
 
     final trackPaint = Paint()

@@ -1,7 +1,6 @@
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Semantic tone for a status chip.
 enum LumenStatusTone {
@@ -64,8 +63,8 @@ class LumenStatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenStyle style = LumenStyle.of(context);
-    final Color c = tone.colorOf(LumenThemeExt.of(context).palette);
+    final style = LumenStyle.of(context);
+    final c = tone.colorOf(LumenThemeExt.of(context).palette);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(

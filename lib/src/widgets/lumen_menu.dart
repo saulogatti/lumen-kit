@@ -1,16 +1,14 @@
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
+import 'package:lumen_kit/src/widgets/lumen_icon_button.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
-import 'lumen_icon_button.dart';
 
 /// Position for [showLumenMenu] at a global point on the screen (e.g.:
 /// `TapUpDetails.globalPosition` from a right click).
 RelativeRect lumenMenuPositionAt(BuildContext context, Offset globalPosition) {
-  final overlay =
-      Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
-  final Offset local = overlay.globalToLocal(globalPosition);
+  final overlay = Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
+  final local = overlay.globalToLocal(globalPosition);
   return RelativeRect.fromRect(local & Size.zero, Offset.zero & overlay.size);
 }
 
@@ -32,14 +30,11 @@ Future<T?> showLumenMenu<T>({
   T? initialValue,
 }) {
   assert(items.isNotEmpty, 'O menu precisa de ao menos uma entrada.');
-  final LumenPalette p = LumenThemeExt.of(context).palette;
-  final LumenStyle s = LumenStyle.of(context);
-  final Color accent = accentColor ?? p.primary;
-  final TextStyle? text = Theme.of(context).textTheme.bodyMedium;
-  final Border border = s.borderAll(
-    color: accent.withValues(alpha: 0.45),
-    width: 1.2,
-  );
+  final p = LumenThemeExt.of(context).palette;
+  final s = LumenStyle.of(context);
+  final accent = accentColor ?? p.primary;
+  final text = Theme.of(context).textTheme.bodyMedium;
+  final border = s.borderAll(color: accent.withValues(alpha: 0.45), width: 1.2);
 
   return showMenu<T>(
     context: context,
@@ -58,16 +53,11 @@ Future<T?> showLumenMenu<T>({
       side: s.borderScale == 0 ? BorderSide.none : border.top,
     ),
     clipBehavior: Clip.antiAlias,
-    popUpAnimationStyle: LumenMotion.reduced(context)
-        ? AnimationStyle.noAnimation
-        : null,
+    popUpAnimationStyle: LumenMotion.reduced(context) ? AnimationStyle.noAnimation : null,
     items: <PopupMenuEntry<T>>[
       for (final LumenMenuEntry<T> entry in items)
         switch (entry) {
-          LumenMenuDivider<T>() => PopupMenuDivider(
-            height: 9,
-            color: p.surfaceOutline,
-          ),
+          LumenMenuDivider<T>() => PopupMenuDivider(height: 9, color: p.surfaceOutline),
           final LumenMenuItem<T> item => PopupMenuItem<T>(
             value: item.value,
             enabled: item.enabled,
@@ -88,20 +78,10 @@ Future<T?> showLumenMenu<T>({
 
 RelativeRect _anchorBelow(BuildContext context) {
   final box = context.findRenderObject()! as RenderBox;
-  final overlay =
-      Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
-  final Offset topLeft = box.localToGlobal(
-    Offset(0, box.size.height),
-    ancestor: overlay,
-  );
-  final Offset bottomRight = box.localToGlobal(
-    box.size.bottomRight(Offset.zero),
-    ancestor: overlay,
-  );
-  return RelativeRect.fromRect(
-    Rect.fromPoints(topLeft, bottomRight),
-    Offset.zero & overlay.size,
-  );
+  final overlay = Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
+  final topLeft = box.localToGlobal(Offset(0, box.size.height), ancestor: overlay);
+  final bottomRight = box.localToGlobal(box.size.bottomRight(Offset.zero), ancestor: overlay);
+  return RelativeRect.fromRect(Rect.fromPoints(topLeft, bottomRight), Offset.zero & overlay.size);
 }
 
 /// Open a context menu with right click (desktop/web) or long press (mobile) on
@@ -110,15 +90,6 @@ RelativeRect _anchorBelow(BuildContext context) {
 /// which the `LumenPressable` does not expose; Screen readers open the menu by
 /// swiping long press.
 class LumenContextMenu<T> extends StatelessWidget {
-  /// Creates the context menu region.
-  const LumenContextMenu({
-    required this.items,
-    required this.onSelected,
-    required this.child,
-    super.key,
-    this.accentColor,
-  });
-
   /// Menu actions.
   final List<LumenMenuEntry<T>> items;
 
@@ -135,6 +106,15 @@ class LumenContextMenu<T> extends StatelessWidget {
   /// Default: `palette.primary`.
   final Color? accentColor;
 
+  /// Creates the context menu region.
+  const LumenContextMenu({
+    required this.items,
+    required this.onSelected,
+    required this.child,
+    super.key,
+    this.accentColor,
+  });
+
   @override
   Widget build(BuildContext context) {
     if (onSelected == null) {
@@ -148,16 +128,15 @@ class LumenContextMenu<T> extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         excludeFromSemantics: true,
-        onSecondaryTapUp: (TapUpDetails d) => _open(context, d.globalPosition),
-        onLongPressStart: (LongPressStartDetails d) =>
-            _open(context, d.globalPosition),
+        onSecondaryTapUp: (d) => _open(context, d.globalPosition),
+        onLongPressStart: (d) => _open(context, d.globalPosition),
         child: child,
       ),
     );
   }
 
   Future<void> _open(BuildContext context, Offset global) async {
-    final T? value = await showLumenMenu<T>(
+    final value = await showLumenMenu<T>(
       context: context,
       items: items,
       accentColor: accentColor,
@@ -183,22 +162,6 @@ class LumenContextMenu<T> extends StatelessWidget {
 /// )
 /// ```
 class LumenMenuButton<T> extends StatelessWidget {
-  /// Creates the menu button.
-  ///
-  /// With [onSelected] `null` is disabled.
-  const LumenMenuButton({
-    required this.items,
-    required this.onSelected,
-    super.key,
-    this.icon = Icons.more_vert_rounded,
-    this.tooltip,
-    this.accentColor,
-    this.initialValue,
-    this.variant = LumenIconButtonVariant.ghost,
-    this.size = 40,
-    this.onCanceled,
-  });
-
   /// Menu actions.
   final List<LumenMenuEntry<T>> items;
 
@@ -230,6 +193,22 @@ class LumenMenuButton<T> extends StatelessWidget {
   /// Button side.
   final double size;
 
+  /// Creates the menu button.
+  ///
+  /// With [onSelected] `null` is disabled.
+  const LumenMenuButton({
+    required this.items,
+    required this.onSelected,
+    super.key,
+    this.icon = Icons.more_vert_rounded,
+    this.tooltip,
+    this.accentColor,
+    this.initialValue,
+    this.variant = LumenIconButtonVariant.ghost,
+    this.size = 40,
+    this.onCanceled,
+  });
+
   @override
   Widget build(BuildContext context) {
     return LumenIconButton(
@@ -241,7 +220,7 @@ class LumenMenuButton<T> extends StatelessWidget {
       onPressed: onSelected == null
           ? null
           : () async {
-              final T? value = await showLumenMenu<T>(
+              final value = await showLumenMenu<T>(
                 context: context,
                 items: items,
                 accentColor: accentColor,
@@ -273,15 +252,6 @@ sealed class LumenMenuEntry<T> {
 
 /// Action of a neon menu.
 class LumenMenuItem<T> extends LumenMenuEntry<T> {
-  /// Creates an action with [value] returned when chosen.
-  const LumenMenuItem({
-    required this.value,
-    required this.label,
-    this.icon,
-    this.enabled = true,
-    this.destructive = false,
-  });
-
   /// Amount returned by [showLumenMenu] / `onSelected`.
   final T value;
 
@@ -296,9 +266,25 @@ class LumenMenuItem<T> extends LumenMenuEntry<T> {
 
   /// Color the action with `palette.danger` (e.g.: "Delete").
   final bool destructive;
+
+  /// Creates an action with [value] returned when chosen.
+  const LumenMenuItem({
+    required this.value,
+    required this.label,
+    this.icon,
+    this.enabled = true,
+    this.destructive = false,
+  });
 }
 
 class _LumenMenuRow<T> extends StatelessWidget {
+  final LumenMenuItem<T> item;
+
+  final Color color;
+  final Color iconColor;
+  final bool selected;
+  final Color selectedColor;
+  final TextStyle? style;
   const _LumenMenuRow({
     required this.item,
     required this.color,
@@ -308,16 +294,9 @@ class _LumenMenuRow<T> extends StatelessWidget {
     required this.style,
   });
 
-  final LumenMenuItem<T> item;
-  final Color color;
-  final Color iconColor;
-  final bool selected;
-  final Color selectedColor;
-  final TextStyle? style;
-
   @override
   Widget build(BuildContext context) {
-    final Color fg = selected ? selectedColor : color;
+    final fg = selected ? selectedColor : color;
     final Widget row = Row(
       spacing: 12,
       children: <Widget>[
@@ -326,17 +305,12 @@ class _LumenMenuRow<T> extends StatelessWidget {
           child: Text(
             item.label,
             overflow: TextOverflow.ellipsis,
-            style: style?.copyWith(
-              color: fg,
-              fontWeight: selected ? FontWeight.w600 : null,
-            ),
+            style: style?.copyWith(color: fg, fontWeight: selected ? FontWeight.w600 : null),
           ),
         ),
         if (selected) Icon(Icons.check_rounded, size: 18, color: fg),
       ],
     );
-    return item.enabled
-        ? row
-        : Opacity(opacity: kLumenDisabledOpacity, child: row);
+    return item.enabled ? row : Opacity(opacity: kLumenDisabledOpacity, child: row);
   }
 }

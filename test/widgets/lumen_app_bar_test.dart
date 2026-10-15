@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 void main() {
   testWidgets('LumenAppBar mostra título, subtítulo e a ação', (
-    WidgetTester tester,
+    tester,
   ) async {
     var taps = 0;
     await tester.pumpWidget(

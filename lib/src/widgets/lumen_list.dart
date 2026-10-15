@@ -35,7 +35,7 @@ class LumenList extends StatelessWidget {
   /// `0` shows [empty].
   final int itemCount;
 
-  /// Builds the item in [index].
+  /// Builds the item in ´index`.
   ///
   /// In general a `LumenListTile`.
   final Widget Function(BuildContext context, int index) itemBuilder;

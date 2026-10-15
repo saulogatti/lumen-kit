@@ -34,7 +34,7 @@ void main() {
     });
 
     test('copyWith recalcula o gradiente quando um accent muda', () {
-      final LumenPalette p = LumenPalette.defaultDark().copyWith(
+      final p = LumenPalette.defaultDark().copyWith(
         primary: const Color(0xFFFF8A00),
       );
       expect(p.accentGradient.colors.first, const Color(0xFFFF8A00));
@@ -42,8 +42,7 @@ void main() {
     });
 
     test('aliases antigos continuam funcionando', () {
-      // ignore: deprecated_member_use_from_same_package
-      final LumenPalette p = LumenPalette.defaultDark().copyWith(
+      final p = LumenPalette.defaultDark().copyWith(
         // ignore: deprecated_member_use_from_same_package
         accentCyan: const Color(0xFF123456),
       );
@@ -63,7 +62,7 @@ void main() {
   });
 
   testWidgets('widgets seguem a paleta do tema, não AppColors', (
-    WidgetTester tester,
+    tester,
   ) async {
     const orange = Color(0xFFFF8A00);
     await tester.pumpWidget(
@@ -87,9 +86,9 @@ void main() {
       ),
     );
 
-    final Text chipLabel = tester.widget<Text>(find.text('info'));
+    final chipLabel = tester.widget<Text>(find.text('info'));
     expect(chipLabel.style?.color, orange);
-    final Icon fieldIcon = tester.widget<Icon>(find.byIcon(Icons.person));
+    final fieldIcon = tester.widget<Icon>(find.byIcon(Icons.person));
     expect(fieldIcon.color, orange);
   });
 }

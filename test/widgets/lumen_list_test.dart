@@ -6,7 +6,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenList constrói só o visível e toca o item', (
-    WidgetTester tester,
+    tester,
   ) async {
     int? tapped;
     await pumpBare(
@@ -16,7 +16,7 @@ void main() {
         width: 320,
         child: LumenList(
           itemCount: 80,
-          itemBuilder: (BuildContext context, int i) =>
+          itemBuilder: (context, i) =>
               LumenListTile(title: 'item $i', onTap: () => tapped = i),
         ),
       ),
@@ -28,13 +28,13 @@ void main() {
     expect(tapped, 0);
   });
 
-  testWidgets('LumenList vazia mostra empty', (WidgetTester tester) async {
+  testWidgets('LumenList vazia mostra empty', (tester) async {
     await pumpBare(
       tester,
       LumenList(
         itemCount: 0,
         empty: const Text('nenhum evento'),
-        itemBuilder: (BuildContext context, int i) => Text('item $i'),
+        itemBuilder: (context, i) => Text('item $i'),
       ),
     );
     expect(find.text('nenhum evento'), findsOneWidget);

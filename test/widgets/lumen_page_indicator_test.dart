@@ -9,9 +9,9 @@ double _width(WidgetTester tester, int i) =>
 
 void main() {
   testWidgets('LumenPageIndicator alarga o ponto do index e anuncia a página', (
-    WidgetTester tester,
+    tester,
   ) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
+    final handle = tester.ensureSemantics();
     await pumpBare(tester, const LumenPageIndicator(count: 4, index: 2));
     await tester.pumpAndSettle();
 
@@ -24,7 +24,7 @@ void main() {
 
   testWidgets(
     'LumenPageIndicator segue o PageController e toque troca página',
-    (WidgetTester tester) async {
+    (tester) async {
       final pages = PageController();
       addTearDown(pages.dispose);
       await pumpBare(
@@ -43,7 +43,7 @@ void main() {
               LumenPageIndicator(
                 count: 3,
                 controller: pages,
-                onDotTapped: (int i) => pages.jumpToPage(i),
+                onDotTapped: pages.jumpToPage,
               ),
             ],
           ),
@@ -65,7 +65,7 @@ void main() {
   );
 
   testWidgets('LumenCarousel troca de página pelos pontos e avisa', (
-    WidgetTester tester,
+    tester,
   ) async {
     final changes = <int>[];
     await pumpBare(
@@ -76,7 +76,7 @@ void main() {
           itemCount: 3,
           height: 160,
           onPageChanged: changes.add,
-          itemBuilder: (BuildContext context, int i) => Text('foto $i'),
+          itemBuilder: (context, i) => Text('foto $i'),
         ),
       ),
     );
@@ -92,7 +92,7 @@ void main() {
   });
 
   testWidgets('LumenCarousel troca de controller sem quebrar', (
-    WidgetTester tester,
+    tester,
   ) async {
     final external = PageController();
     addTearDown(external.dispose);
@@ -102,7 +102,7 @@ void main() {
         child: LumenCarousel(
           controller: c,
           itemCount: 3,
-          itemBuilder: (BuildContext context, int i) => Text('foto $i'),
+          itemBuilder: (context, i) => Text('foto $i'),
         ),
       ),
     );

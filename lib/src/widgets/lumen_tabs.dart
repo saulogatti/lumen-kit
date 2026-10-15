@@ -1,10 +1,9 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_pressable.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Item from [LumenTabs] / [LumenSegmentedControl].
 class LumenTabItem {
@@ -83,9 +82,9 @@ class _LumenTabsState extends State<LumenTabs> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = widget.accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = widget.accentColor ?? p.primary;
 
     return TabBar(
       controller: _controller,
@@ -143,9 +142,9 @@ class LumenSegmentedControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
 
     return Container(
       padding: const EdgeInsets.all(4),
@@ -155,10 +154,10 @@ class LumenSegmentedControl extends StatelessWidget {
         border: style.borderAll(color: p.surfaceOutline.outlineAlpha(0.6)),
       ),
       child: Row(
-        children: List<Widget>.generate(items.length, (int i) {
+        children: List<Widget>.generate(items.length, (i) {
           final selected = i == selectedIndex;
-          final LumenTabItem it = items[i];
-          final Color fg = selected ? p.textPrimary : p.textMuted;
+          final it = items[i];
+          final fg = selected ? p.textPrimary : p.textMuted;
           return Expanded(
             child: LumenPressable(
               onTap: () => onChanged(i),

@@ -1,10 +1,9 @@
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
+import 'package:lumen_kit/src/widgets/lumen_progress_indicator.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_decorations.dart';
-import '../foundation/lumen_tokens.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
-import 'lumen_progress_indicator.dart';
 
 /// Covers [child] with a layer that blocks touch, focus and screen reader while
 /// [loading] is `true`, with spinner and [message] in the center.
@@ -55,7 +54,7 @@ class LumenLoadingOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     return Stack(
       children: <Widget>[
         ExcludeFocus(
@@ -114,9 +113,9 @@ class LumenLoadingPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
-    final BorderRadius radius = s.radius(18);
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
+    final radius = s.radius(18);
     return Semantics(
       liveRegion: true,
       label: message,
@@ -172,8 +171,8 @@ Future<T> showLumenLoading<T>({
   Color? accentColor,
   Color? barrierColor,
 }) async {
-  final LumenThemeExt ext = LumenThemeExt.of(context);
-  final NavigatorState navigator = Navigator.of(context, rootNavigator: true);
+  final ext = LumenThemeExt.of(context);
+  final navigator = Navigator.of(context, rootNavigator: true);
   final route = DialogRoute<void>(
     context: context,
     barrierDismissible: false,
@@ -181,7 +180,7 @@ Future<T> showLumenLoading<T>({
     themes: InheritedTheme.capture(from: context, to: navigator.context),
     // O LumenScope não é um InheritedTheme: repassa paleta e estilo à mão
     // para a rota herdar o mesmo visual do chamador.
-    builder: (BuildContext _) => LumenScope(
+    builder: (_) => LumenScope(
       palette: ext.palette,
       style: ext.style,
       child: PopScope(

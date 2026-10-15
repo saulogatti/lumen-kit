@@ -1,8 +1,7 @@
+import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
+import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
-
-import '../foundation/lumen_pressable.dart';
-import '../theme/lumen_palette.dart';
-import '../theme/lumen_style.dart';
 
 /// Themed wrapper about [DataTable].
 ///
@@ -39,9 +38,9 @@ class LumenDataTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle style = LumenStyle.of(context);
-    final Color accent = accentColor ?? p.primary;
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
 
     return Container(
       decoration: BoxDecoration(
@@ -56,7 +55,7 @@ class LumenDataTable extends StatelessWidget {
           headingRowColor: WidgetStateProperty.all(
             accent.withValues(alpha: 0.1),
           ),
-          dataRowColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) {
+          dataRowColor: WidgetStateProperty.resolveWith((s) {
             if (s.contains(WidgetState.selected)) {
               return accent.withValues(alpha: 0.16);
             }
@@ -117,9 +116,9 @@ class LumenTableRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final Color accent = accentColor ?? p.primary;
-    final List<int> flexValues = flex ?? List<int>.filled(cells.length, 1);
+    final p = LumenThemeExt.of(context).palette;
+    final accent = accentColor ?? p.primary;
+    final flexValues = flex ?? List<int>.filled(cells.length, 1);
 
     final Widget row = Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),

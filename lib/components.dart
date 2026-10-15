@@ -7,6 +7,8 @@
 /// ```
 library;
 
+import 'package:lumen_kit/components.dart';
+
 export 'src/backgrounds/lumen_animated_grid_background.dart';
 export 'src/foundation/lumen_action_content.dart';
 export 'src/foundation/lumen_decorations.dart';

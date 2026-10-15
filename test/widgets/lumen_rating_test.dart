@@ -6,15 +6,15 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenRating escolhe a nota pela estrela tocada', (
-    WidgetTester tester,
+    tester,
   ) async {
     double nota = 0;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) => LumenRating(
+          builder: (context, setState) => LumenRating(
             value: nota,
-            onChanged: (double v) => setState(() => nota = v),
+            onChanged: (v) => setState(() => nota = v),
           ),
         ),
       ),
@@ -29,14 +29,14 @@ void main() {
   });
 
   testWidgets('allowHalf: metade esquerda dá meia estrela', (
-    WidgetTester tester,
+    tester,
   ) async {
     final calls = <double>[];
     await pumpBare(
       tester,
       LumenRating(value: 0, allowHalf: true, size: 40, onChanged: calls.add),
     );
-    final Rect second = tester.getRect(
+    final second = tester.getRect(
       find.byIcon(Icons.star_outline_rounded).at(1),
     );
     await tester.tapAt(second.centerLeft + const Offset(4, 0));
@@ -45,14 +45,14 @@ void main() {
   });
 
   testWidgets('somente leitura mostra fração e anuncia a nota', (
-    WidgetTester tester,
+    tester,
   ) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
+    final handle = tester.ensureSemantics();
     await pumpBare(
       tester,
       const LumenRating(value: 3.5, semanticLabel: 'Avaliação'),
     );
-    final Align half = tester.widget<Align>(
+    final half = tester.widget<Align>(
       find.ancestor(
         of: find.byIcon(Icons.star_rounded).at(3),
         matching: find.byType(Align),
@@ -68,9 +68,9 @@ void main() {
   });
 
   testWidgets('leitor de tela sobe e desce a nota', (
-    WidgetTester tester,
+    tester,
   ) async {
-    final SemanticsHandle handle = tester.ensureSemantics();
+    final handle = tester.ensureSemantics();
     await pumpBare(tester, LumenRating(value: 5, onChanged: (_) {}));
     expect(
       tester.getSemantics(find.byType(LumenRating)),

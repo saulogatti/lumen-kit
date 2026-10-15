@@ -6,7 +6,7 @@ import '_harness.dart';
 
 void main() {
   testWidgets('LumenTooltip mostra a mensagem no toque longo', (
-    WidgetTester tester,
+    tester,
   ) async {
     await pumpBare(
       tester,
