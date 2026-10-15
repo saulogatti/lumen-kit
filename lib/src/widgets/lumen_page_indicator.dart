@@ -5,17 +5,16 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Pontinhos de página para onboarding e galerias. O ponto ativo vira uma
-/// pílula com glow no accent.
+/// Page dots for onboarding and galleries.
 ///
-/// Com [controller], acompanha o arrasto do `PageView` quadro a quadro; sem
-/// ele, use [index] e o ponto anima ao trocar.
-///
+/// The active point becomes a pill with glow in the accent.
+/// With [controller], follow the drag of the `PageView` frame by frame; without
+/// it, use [index] and the point animates when changing.
 /// ```dart
 /// LumenPageIndicator(count: 4, controller: _pages)
 /// ```
 class LumenPageIndicator extends StatelessWidget {
-  /// Cria o indicador para [count] páginas.
+  /// Creates the bookmark for [count] pages.
   const LumenPageIndicator({
     required this.count,
     super.key,
@@ -30,31 +29,38 @@ class LumenPageIndicator extends StatelessWidget {
   }) : assert(count >= 0),
        assert(activeWidth >= dotSize);
 
-  /// Número de páginas.
+  /// Number of pages.
   final int count;
 
-  /// Controller do `PageView`. Tem precedência sobre [index].
+  /// `PageView` Controller.
+  ///
+  /// Takes precedence over [index].
   final PageController? controller;
 
-  /// Página atual quando não há [controller].
+  /// Current page when there is no [controller].
   final int index;
 
-  /// Chamado com a página do ponto tocado. `null` = pontos não tocáveis.
+  /// Called with the page of the touched point.
+  ///
+  /// `null` = non-touchable points.
   final ValueChanged<int>? onDotTapped;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Diâmetro dos pontos.
+  /// Dot diameter.
   final double dotSize;
 
-  /// Largura do ponto ativo.
+  /// Hotspot width.
   final double activeWidth;
 
-  /// Espaço entre pontos.
+  /// Space between points.
   final double spacing;
 
-  /// Texto lido por leitores de tela para a página atual (base 0) e o total.
+  /// Text read by screen readers for the current page (base 0) and total.
+  ///
   /// Default: "2/5".
   final String Function(int index, int count)? semanticsLabel;
 
@@ -137,9 +143,10 @@ class LumenPageIndicator extends StatelessWidget {
   }
 }
 
-/// `PageView` com cards arredondados, a página atual em destaque e um
-/// [LumenPageIndicator] embaixo. Para galerias e onboarding.
+/// `PageView` with rounded cards, the current page highlighted and a
+/// [LumenPageIndicator] below.
 ///
+/// For galleries and onboarding.
 /// ```dart
 /// LumenCarousel(
 ///   itemCount: fotos.length,
@@ -148,7 +155,7 @@ class LumenPageIndicator extends StatelessWidget {
 /// )
 /// ```
 class LumenCarousel extends StatefulWidget {
-  /// Cria o carrossel.
+  /// Create the carousel.
   const LumenCarousel({
     required this.itemCount,
     required this.itemBuilder,
@@ -163,36 +170,41 @@ class LumenCarousel extends StatefulWidget {
     this.inactiveScale = 0.92,
   });
 
-  /// Número de páginas.
+  /// Number of pages.
   final int itemCount;
 
-  /// Constrói o conteúdo da página `index`.
+  /// Builds the content of the `index` page.
   final IndexedWidgetBuilder itemBuilder;
 
-  /// Controller externo. Sem ele, o carrossel cria um com
-  /// [viewportFraction].
+  /// External controller.
+  ///
+  /// Without it, the carousel creates a com [viewportFraction].
   final PageController? controller;
 
-  /// Altura das páginas (o indicador fica abaixo).
+  /// Page height (the indicator is below).
   final double height;
 
-  /// Fração da largura ocupada por página quando não há [controller]
-  /// (abaixo de 1 deixa as vizinhas aparecendo).
+  /// Fraction of width occupied per page when there is no [controller] (below 1
+  /// leaves the neighbors appearing).
   final double viewportFraction;
 
-  /// Chamado quando a página atual muda.
+  /// Called when the current page changes.
   final ValueChanged<int>? onPageChanged;
 
-  /// Mostra o [LumenPageIndicator] embaixo.
+  /// Shows [LumenPageIndicator] below.
   final bool showIndicator;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Raio dos cantos das páginas.
+  /// Radius of page corners.
   final double radius;
 
-  /// Escala das páginas fora de foco. `1` desliga o efeito.
+  /// Scale of pages out of focus.
+  ///
+  /// `1` turns off the effect.
   final double inactiveScale;
 
   @override
@@ -314,8 +326,8 @@ class _LumenCarouselState extends State<LumenCarousel> {
   }
 }
 
-/// Página atual (fracionária durante o arrasto) de [c], ou a inicial enquanto
-/// o `PageView` ainda não mediu o conteúdo.
+/// Current page (fractional during dragging) of [c], or the initial one while
+/// `PageView` has not yet measured the content.
 double _pageOf(PageController c) {
   if (c.hasClients && c.positions.length == 1) {
     final ScrollPosition pos = c.position;

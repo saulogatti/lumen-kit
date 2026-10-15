@@ -1,6 +1,5 @@
-/// Kit completo: componentes + tema (`AppTheme`, `AppColors`).
-///
-/// Para usar só os widgets, sem nada de tema, importe
+/// Complete kit: components + theme (`AppTheme`, `AppColors`).
+/// To use just the widgets, without any themes, import
 /// `package:lumen_kit/components.dart`.
 library;
 

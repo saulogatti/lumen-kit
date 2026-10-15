@@ -4,10 +4,12 @@ import '../foundation/lumen_decorations.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Barra de busca compacta, com prefixo de lupa e botão de limpar quando há
-/// conteúdo. Mantém o próprio [TextEditingController] para evitar perda de foco.
+/// Compact search bar, with magnifying glass prefix and clear button when there
+/// is content.
+///
+/// Maintains [TextEditingController] itself to prevent loss of focus.
 class LumenSearchBar extends StatefulWidget {
-  /// Cria uma barra de busca com controller interno.
+  /// Creates a search bar with internal controller.
   const LumenSearchBar({
     required this.onChanged,
     super.key,
@@ -18,22 +20,24 @@ class LumenSearchBar extends StatefulWidget {
     this.autofocus = false,
   });
 
-  /// Callback chamado a cada alteração do texto.
+  /// Callback called with each text change.
   final ValueChanged<String> onChanged;
 
-  /// Callback chamado ao submeter a busca pelo teclado.
+  /// Callback called when submitting the keyboard search.
   final ValueChanged<String>? onSubmitted;
 
-  /// Texto exibido quando o campo está vazio.
+  /// Text displayed when the field is empty.
   final String hint;
 
-  /// Valor usado para inicializar o controller interno.
+  /// Value used to initialize the internal controller.
   final String initialValue;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Se `true`, solicita foco automaticamente.
+  /// Whether to automatically request focus.
   final bool autofocus;
 
   @override

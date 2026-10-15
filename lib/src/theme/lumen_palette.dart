@@ -3,20 +3,19 @@ import 'package:material_ui/material_ui.dart';
 import 'app_colors.dart';
 import 'lumen_style.dart';
 
-/// Paleta instanciável do tema neon. Permite criar variantes (ex. branca, com
-/// outras accents) sem alterar os tokens default de [AppColors].
+/// Neon theme instantiable palette.
 ///
-/// Para trocar as cores sem configurar token por token, use
-/// [LumenPalette.fromSeed] ou um [LumenPreset].
+/// Allows you to create variants (e.g. white, with other accents) without
+/// changing the default tokens of [AppColors].
+/// To change colors without configuring token by token, use
+/// [LumenPalette.fromSeed] or a [LumenPreset].
 @immutable
 class LumenPalette {
-  /// Cria uma paleta completa para o tema neon.
-  ///
-  /// Os gradientes são opcionais: quando omitidos, são derivados dos tons de
-  /// fundo e dos accents, e acompanham qualquer troca feita via [copyWith].
-  ///
-  /// [accentCyan], [accentMagenta] e [accentBlue] são aliases antigos de
-  /// [primary], [secondary] e [tertiary], mantidos só por compatibilidade.
+  /// Creates a complete palette for the neon theme.
+  /// Gradients are optional: when omitted, they are derived from the background
+  /// and accents, and monitor any changes made via [copyWith].
+  /// [accentCyan], [accentMagenta] and [accentBlue] are old aliases of [primary],
+  /// [secondary] and [tertiary], maintained for compatibility only.
   const LumenPalette({
     required this.backgroundDeep,
     required this.backgroundMid,
@@ -48,7 +47,7 @@ class LumenPalette {
        secondary = secondary ?? accentMagenta ?? const Color(0x00000000),
        tertiary = tertiary ?? accentBlue ?? const Color(0x00000000);
 
-  /// Paleta default — mesmas cores expostas em [AppColors].
+  /// Default palette — same colors displayed in [AppColors].
   factory LumenPalette.defaultDark() => const LumenPalette(
     backgroundDeep: AppColors.backgroundDeep,
     backgroundMid: AppColors.backgroundMid,
@@ -69,14 +68,12 @@ class LumenPalette {
     accentGradient: AppColors.accentGradient,
   );
 
-  /// Gera uma paleta completa a partir de uma ou duas cores.
-  ///
-  /// Fundos, superfícies, contornos e textos recebem um leve tom de
-  /// [primary]/[tertiary], para que o visual continue coeso com a cor
-  /// escolhida. Quando omitidos, [secondary] é o complementar de [primary] e
-  /// [tertiary] é o meio do caminho entre os dois. As cores semânticas
-  /// (success / warning / danger) seguem os defaults do kit.
-  ///
+  /// Generates a complete palette from one or two colors.
+  /// Backgrounds, surfaces, outlines and texts are given a light shade of
+  /// [primary]/[tertiary], so that the look remains cohesive with the color
+  /// chosen. When omitted, [secondary] is the complement of [primary] and
+  /// [tertiary] is halfway between the two. The semantic colors (success /
+  /// warning / danger) follow the kit defaults.
   /// ```dart
   /// AppTheme.fromPalette(
   ///   LumenPalette.fromSeed(primary: Colors.greenAccent),
@@ -139,7 +136,7 @@ class LumenPalette {
     );
   }
 
-  /// Variante clara com os accents default.
+  /// Clear variant with default accents.
   factory LumenPalette.light() => const LumenPalette(
     backgroundDeep: Color(0xFFF5F5F5),
     backgroundMid: Color(0xFFFFFFFF),
@@ -159,63 +156,64 @@ class LumenPalette {
     accentGradient: AppColors.accentGradient,
   );
 
-  /// Tom mais profundo do fundo da aplicação.
+  /// Deeper tone of the application background.
   final Color backgroundDeep;
 
-  /// Tom intermediário usado em gradientes de fundo.
+  /// Intermediate tone used in background gradients.
   final Color backgroundMid;
 
-  /// Tom mais claro do fundo, usado para suavizar o gradiente.
+  /// Lighter tone of the background, used to soften the gradient.
   final Color backgroundSoft;
 
-  /// Cor base para cards, overlays e superfícies elevadas.
+  /// Base color for cards, overlays and raised surfaces.
   final Color surface;
 
-  /// Contorno translúcido usado em bordas de superfícies.
+  /// Translucent outline used on surface edges.
   final Color surfaceOutline;
 
-  /// Realce sutil aplicado dentro de superfícies translúcidas.
+  /// Subtle highlighting applied within translucent surfaces.
   final Color surfaceHighlight;
 
-  /// Accent primário usado em bordas, ícones e estados ativos.
+  /// Primary accent used on borders, icons, and active states.
   final Color primary;
 
-  /// Accent secundário usado em glows e composições de gradiente.
+  /// Secondary accent used in glows and gradient compositions.
   final Color secondary;
 
-  /// Accent intermediário que conecta [primary] e [secondary] nos gradientes.
+  /// Intermediate accent that connects [primary] and [secondary] in the
+  /// gradients.
   final Color tertiary;
 
-  /// Cor de maior contraste para títulos e conteúdo principal.
+  /// Higher contrast color for titles and main content.
   final Color textPrimary;
 
-  /// Cor de contraste médio para textos de apoio.
+  /// Medium contrast color for supporting texts.
   final Color textSecondary;
 
-  /// Cor de menor contraste para legendas, hints e conteúdo auxiliar.
+  /// Lower contrast color for subtitles, hints and auxiliary content.
   final Color textMuted;
 
-  /// Cor semântica para estados de sucesso.
+  /// Semantic color for success states.
   final Color success;
 
-  /// Cor semântica para estados de alerta.
+  /// Semantic color for alert states.
   final Color warning;
 
-  /// Cor semântica para estados de erro ou perigo.
+  /// Semantic color for error or danger states.
   final Color danger;
 
   final LinearGradient? _backgroundGradient;
   final LinearGradient? _accentGradient;
 
-  /// Alias antigo de [tertiary].
+  /// Old alias of [tertiary].
   @Deprecated('Use tertiary')
   Color get accentBlue => tertiary;
 
-  /// Alias antigo de [primary].
+  /// Old alias of [primary].
   @Deprecated('Use primary')
   Color get accentCyan => primary;
 
-  /// Gradiente de destaque usado em CTAs, indicadores e elementos ativos.
+  /// Highlight gradient used in CTAs, indicators and active elements.
   LinearGradient get accentGradient =>
       _accentGradient ??
       LinearGradient(
@@ -224,11 +222,11 @@ class LumenPalette {
         colors: <Color>[primary, tertiary, secondary],
       );
 
-  /// Alias antigo de [secondary].
+  /// Old alias of [secondary].
   @Deprecated('Use secondary')
   Color get accentMagenta => secondary;
 
-  /// Gradiente padrão de fundo da aplicação.
+  /// Gradient application background pattern.
   LinearGradient get backgroundGradient =>
       _backgroundGradient ??
       LinearGradient(
@@ -238,10 +236,9 @@ class LumenPalette {
         stops: const <double>[0.0, 0.55, 1.0],
       );
 
-  /// Retorna uma nova paleta preservando os tokens não informados.
-  ///
-  /// Se algum tom de fundo ou accent mudar e o gradiente correspondente não
-  /// for informado, o gradiente é recalculado a partir das novas cores.
+  /// Returns a new palette preserving unspecified tokens.
+  /// If any background tone or accent changes and the corresponding gradient does
+  /// not is informed, the gradient is recalculated based on the new colors.
   LumenPalette copyWith({
     Color? backgroundDeep,
     Color? backgroundMid,
@@ -297,7 +294,7 @@ class LumenPalette {
     );
   }
 
-  /// Interpola duas paletas, permitindo que trocas de tema sejam animadas.
+  /// Interpolates two palettes, allowing theme changes to be animated.
   static LumenPalette lerp(LumenPalette a, LumenPalette b, double t) {
     Color c(Color x, Color y) => Color.lerp(x, y, t)!;
     return LumenPalette(
@@ -330,33 +327,37 @@ class LumenPalette {
   }
 }
 
-/// Paletas prontas. Cada preset gera uma [LumenPalette] clara ou escura.
+/// Ready-made palettes.
+///
+/// Each preset generates a light or dark [LumenPalette].
 enum LumenPreset {
-  /// Cyan + magenta original do kit.
+  /// Cyan + magenta original from the kit.
   neon(Color(0xFF00E5FF), Color(0xFFB14BFF)),
 
-  /// Verde terminal com toque de ciano.
+  /// Terminal green with a touch of cyan.
   matrix(Color(0xFF39FF14), Color(0xFF00FFC6)),
 
-  /// Laranja e rosa de pôr do sol oitentista.
+  /// Orange and pink of an 1980s sunset.
   synthwave(Color(0xFFFF8A00), Color(0xFFFF2E88)),
 
-  /// Violeta e azul elétrico.
+  /// Violet and electric blue.
   ultraviolet(Color(0xFF8C5BFF), Color(0xFF2E9BFF)),
 
-  /// Vermelho e âmbar.
+  /// Red and amber.
   ember(Color(0xFFFF3B3B), Color(0xFFFFB020));
 
   const LumenPreset(this.primary, this.secondary);
 
-  /// Accent primário do preset.
+  /// Preset's primary accent.
   final Color primary;
 
-  /// Accent secundário do preset.
+  /// Secondary accent of the preset.
   final Color secondary;
 
-  /// Gera a paleta do preset. [LumenPreset.neon] devolve exatamente
-  /// [LumenPalette.defaultDark] / [LumenPalette.light].
+  /// Generates the preset palette.
+  ///
+  /// [LumenPreset.neon] returns exactly [LumenPalette.defaultDark] /
+  /// [LumenPalette.light].
   LumenPalette palette({Brightness brightness = Brightness.dark}) {
     if (this == LumenPreset.neon) {
       return brightness == Brightness.dark
@@ -371,11 +372,9 @@ enum LumenPreset {
   }
 }
 
-/// Define paleta e estilo neon para uma subárvore sem mexer no `ThemeData`.
-///
-/// Útil quando o app tem o próprio tema e só quer usar alguns componentes do
-/// kit com outras cores:
-///
+/// Sets palette and neon style for a subtree without touching `ThemeData`.
+/// Useful when the app has its own theme and only wants to use some components
+/// of the kit with other colors:
 /// ```dart
 /// LumenScope(
 ///   palette: LumenPalette.fromSeed(primary: Colors.teal),
@@ -383,10 +382,9 @@ enum LumenPreset {
 ///   child: LumenButton(label: 'Salvar', onPressed: salvar),
 /// )
 /// ```
-///
-/// Tem prioridade sobre a [LumenThemeExt] registrada no tema.
+/// It has priority over [LumenThemeExt] registered in the theme.
 class LumenScope extends InheritedWidget {
-  /// Cria um escopo com [palette] e [style] para [child].
+  /// Creates a scope with [palette] and [style] to [child].
   LumenScope({
     required LumenPalette palette,
     LumenStyle style = LumenStyle.neon,
@@ -394,7 +392,7 @@ class LumenScope extends InheritedWidget {
     super.key,
   }) : data = LumenThemeExt(palette: palette, style: style);
 
-  /// Paleta e estilo fornecidos à subárvore.
+  /// Palette and style provided to the subtree.
   final LumenThemeExt data;
 
   @override
@@ -403,10 +401,11 @@ class LumenScope extends InheritedWidget {
       oldWidget.data.style != data.style;
 }
 
-/// ThemeExtension para acessar a paleta via `Theme.of(context).extension<LumenThemeExt>()`.
+/// ThemeExtension to access the palette via
+/// `Theme.of(context).extension<LumenThemeExt>()`.
 @immutable
 class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
-  /// Cria uma extensão de tema que transporta a [palette] e o [style].
+  /// Creates a theme extension that carries [palette] and [style].
   const LumenThemeExt({required this.palette, this.style = LumenStyle.neon});
 
   static final LumenThemeExt _fallbackDark = LumenThemeExt(
@@ -417,10 +416,10 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
     palette: LumenPalette.light(),
   );
 
-  /// Paleta disponível para os widgets que leem o [ThemeData] atual.
+  /// Palette available for widgets that read the current [ThemeData].
   final LumenPalette palette;
 
-  /// Estilo de efeitos (sombra, borda, fundo…) usado pelos widgets.
+  /// Effects style (shadow, border, background…) used by widgets.
   final LumenStyle style;
 
   @override
@@ -441,13 +440,12 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
     );
   }
 
-  /// Obtém a paleta e o estilo neon ativos para [context].
-  ///
-  /// Ordem de busca: o [LumenScope] mais próximo, depois a extensão registrada
-  /// no [ThemeData], e por fim a paleta default ([LumenPalette.defaultDark] ou
-  /// [LumenPalette.light], conforme o brilho do tema do app) com
-  /// [LumenStyle.neon]. Assim os widgets funcionam em apps que mantêm o
-  /// próprio `ThemeData` e nunca registram nada do kit.
+  /// Gets the active neon palette and style for [context].
+  /// Search order: nearest [LumenScope], then registered extension in
+  /// [ThemeData], and finally the default palette ([LumenPalette.defaultDark] or
+  /// [LumenPalette.light], depending on the brightness of the app theme) with
+  /// [LumenStyle.neon]. This way widgets work in apps that keep the own
+  /// `ThemeData` and never record anything from the kit.
   static LumenThemeExt of(BuildContext context) {
     final LumenScope? scope = context
         .dependOnInheritedWidgetOfExactType<LumenScope>();
@@ -460,16 +458,16 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
   }
 }
 
-/// Alpha que não apaga o que a cor da paleta já carregava.
-///
-/// [Color.withValues] substitui o alpha. [scaleAlpha] multiplica (`a * factor`).
-/// [outlineAlpha] é o caso do contorno: no escuro, [LumenPalette.surfaceOutline]
-/// é um cyan translúcido e os widgets pedem `0.4`–`0.9` para a borda aparecer,
-/// então esse valor entra direto. No claro o token é preto a ~8%
-/// (`0x15000000`). Substituir por `0.9` vira uma borda preta. Nesse caso o
-/// pedido é escalado a partir do alpha do token, com teto de `0.28`.
+/// Alpha that does not erase what the color in the palette already carries.
+/// [Color.withValues] replaces alpha. [scaleAlpha] multiplies (`a * factor`).
+/// [outlineAlpha] is the contour case: in the dark,
+/// [LumenPalette.surfaceOutline] is a translucent cyan and the widgets ask for
+/// `0.4`–`0.9` for the border to appear, so this value comes directly. In light
+/// the token is black at ~8% (`0x15000000`). Replacing with `0.9` turns a black
+/// border. In this case the order is scaled based on the token's alpha, with a
+/// ceiling of `0.28`.
 extension LumenOutlineColor on Color {
-  /// Aplica [alpha] como contorno, preservando o token claro.
+  /// Applies [alpha] as an outline, preserving the clear token.
   Color outlineAlpha(double alpha) {
     final bool faintNeutral =
         HSLColor.fromColor(this).saturation < 0.15 && a < 0.35;
@@ -480,11 +478,10 @@ extension LumenOutlineColor on Color {
     return withValues(alpha: (a * (alpha / 0.2)).clamp(0.0, 0.28));
   }
 
-  /// Multiplica o alpha atual por [factor], limitado a `0`–`1`.
-  ///
-  /// Use em tokens que já nascem translúcidos (`textMuted`, `textSecondary`,
-  /// `surfaceHighlight`). Accent opaco continua em [Color.withValues]: o
-  /// pedido ali é um alpha absoluto, e `1 * factor` só coincidiria com ele.
+  /// Multiplies the current alpha by [factor], limited to `0`–`1`.
+  /// Use on tokens that are already translucent (`textMuted`, `textSecondary`,
+  /// `surfaceHighlight`). Opaque accent continues in [Color.withValues]: the
+  /// requested there is an absolute alpha, and `1 * factor` would only match it.
   Color scaleAlpha(double factor) =>
       withValues(alpha: (a * factor).clamp(0.0, 1.0));
 }

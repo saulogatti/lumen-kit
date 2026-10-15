@@ -6,13 +6,11 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Drawer lateral com fundo em gradiente e borda accent vertical.
-///
-/// Use diretamente em `Scaffold(drawer: LumenDrawer(...))`. Os filhos podem ser
-/// quaisquer widgets — geralmente um header customizado seguido de
-/// [LumenDrawerItem]s.
+/// Side drawer with gradient background and vertical accent border.
+/// Use directly on `Scaffold(drawer: LumenDrawer(...))`. Children can be any
+/// widgets — usually a custom header followed by [LumenDrawerItem]s.
 class LumenDrawer extends StatelessWidget {
-  /// Cria um drawer neon com lista de [children].
+  /// Creates a neon drawer with list of [children].
   const LumenDrawer({
     required this.children,
     super.key,
@@ -22,19 +20,21 @@ class LumenDrawer extends StatelessWidget {
     this.width = 300,
   });
 
-  /// Widgets exibidos na área rolável do drawer.
+  /// Widgets displayed in the scrollable drawer area.
   final List<Widget> children;
 
-  /// Cabeçalho opcional exibido antes da lista.
+  /// Optional header displayed before the list.
   final Widget? header;
 
-  /// Rodapé opcional exibido após a lista.
+  /// Optional footer displayed after the list.
   final Widget? footer;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Largura do drawer em pixels lógicos.
+  /// Drawer width in logical pixels.
   final double width;
 
   @override
@@ -91,9 +91,9 @@ class LumenDrawer extends StatelessWidget {
   }
 }
 
-/// Item padronizado para [LumenDrawer], com glow no estado selecionado.
+/// Item defaults to [LumenDrawer], with glow in the selected state.
 class LumenDrawerItem extends StatelessWidget {
-  /// Cria um item interativo para uso dentro de [LumenDrawer].
+  /// Creates an interactive item for use within [LumenDrawer].
   const LumenDrawerItem({
     required this.icon,
     required this.label,
@@ -104,24 +104,25 @@ class LumenDrawerItem extends StatelessWidget {
     this.trailing,
   });
 
-  /// Ícone exibido antes do texto.
+  /// Icon displayed before the text.
   final IconData icon;
 
-  /// Texto principal do item.
+  /// Main text of the item.
   final String label;
 
-  /// Callback executado ao tocar no item.
-  ///
-  /// Quando `null`, o item fica visualmente desabilitado.
+  /// Callback executed when touching the item.
+  /// When `null`, the item is visually disabled.
   final VoidCallback? onTap;
 
-  /// Se `true`, aplica destaque visual de seleção.
+  /// Whether to apply visual selection highlighting.
   final bool selected;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Widget opcional exibido no fim da linha.
+  /// Optional widget displayed at the end of the line.
   final Widget? trailing;
 
   @override

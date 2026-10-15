@@ -5,16 +5,14 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_status_chip.dart';
 
-/// Tom semântico do snackbar — usa as mesmas cores de [LumenStatusTone].
+/// Snackbar semantic tone — uses the same colors as [LumenStatusTone].
 typedef LumenSnackTone = LumenStatusTone;
 
-/// Exibe um snackbar estilizado no `ScaffoldMessenger` mais próximo.
-///
-/// Reutiliza o `SnackBar` do Material mas troca o conteúdo por uma surface
-/// com borda accent + glow, no estilo do resto do kit.
-///
-/// [tone] define cor e ícone padrão, [duration] controla o tempo de exibição e
-/// [action] adiciona uma ação textual no fim do snackbar.
+/// Displays a styled snackbar on the nearest `ScaffoldMessenger`.
+/// Reuses the `SnackBar` from the Material but exchanges the content for a
+/// surface with accent + glow border, in the style of the rest of the kit.
+/// [tone] sets default color and icon, [duration] controls display time and
+/// [action] adds a textual action at the end of the snackbar.
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showLumenSnackBar({
   required BuildContext context,
   required String message,

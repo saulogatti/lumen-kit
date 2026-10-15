@@ -5,11 +5,10 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Abre o [showDatePicker] padrão aplicando o tema neon.
-///
-/// Usa [initialDate] como data inicial e limita a seleção ao intervalo entre
-/// [firstDate] e [lastDate]. [accentColor] substitui o accent padrão e
-/// [helpText] é repassado ao picker do Material.
+/// Opens the default [showDatePicker] applying the neon theme.
+/// Uses [initialDate] as the start date and limits the selection to the range
+/// between [firstDate] and [lastDate]. [accentColor] replaces the default
+/// accent and [helpText] is passed to the Material picker.
 Future<DateTime?> showLumenDatePicker({
   required BuildContext context,
   required DateTime initialDate,
@@ -48,9 +47,9 @@ Future<DateTime?> showLumenDatePicker({
   );
 }
 
-/// Campo somente-leitura que abre o [showLumenDatePicker] ao ser tocado.
+/// Read-only field that opens [showLumenDatePicker] when touched.
 class LumenDatePicker extends StatelessWidget {
-  /// Cria um campo somente-leitura que abre um date picker ao toque.
+  /// Creates a read-only field that opens a date picker on touch.
   const LumenDatePicker({
     required this.value,
     required this.firstDate,
@@ -63,30 +62,31 @@ class LumenDatePicker extends StatelessWidget {
     this.format,
   });
 
-  /// Data atualmente selecionada.
+  /// Date currently selected.
   final DateTime? value;
 
-  /// Primeira data permitida no picker.
+  /// First date allowed in picker.
   final DateTime firstDate;
 
-  /// Última data permitida no picker.
+  /// Last date allowed in the picker.
   final DateTime lastDate;
 
-  /// Callback chamado quando uma nova data é escolhida.
-  ///
-  /// Quando `null`, o campo fica visualmente desabilitado.
+  /// Callback called when a new date is chosen.
+  /// When `null`, the field is visually disabled.
   final ValueChanged<DateTime>? onChanged;
 
-  /// Rótulo exibido pelo campo.
+  /// Label displayed by the field.
   final String? label;
 
-  /// Texto exibido quando [value] é `null`.
+  /// Text displayed when [value] is `null`.
   final String? hint;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Formatador usado para exibir [value].
+  /// Formatter used to display [value].
   final String Function(DateTime)? format;
 
   String _defaultFormat(DateTime d) =>

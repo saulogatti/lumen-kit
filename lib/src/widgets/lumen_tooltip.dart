@@ -4,10 +4,12 @@ import '../foundation/lumen_decorations.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Tooltip estilizado seguindo a identidade neon (surface translúcida, borda
-/// accent + glow). Wrapper fino sobre o [Tooltip] do Material.
+/// Stylized tooltip following the neon identity (translucent surface, accent +
+/// glow).
+///
+/// Thin wrapper over the Material [Tooltip].
 class LumenTooltip extends StatelessWidget {
-  /// Cria um tooltip neon para envolver [child].
+  /// Creates a neon tooltip to wrap around [child].
   const LumenTooltip({
     required this.message,
     required this.child,
@@ -18,22 +20,24 @@ class LumenTooltip extends StatelessWidget {
     this.preferBelow,
   });
 
-  /// Mensagem exibida pelo tooltip.
+  /// Message displayed by the tooltip.
   final String message;
 
-  /// Widget que dispara a exibição do tooltip.
+  /// Widget that triggers the tooltip display.
   final Widget child;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Tempo de espera antes de exibir o tooltip.
+  /// Waiting time before displaying the tooltip.
   final Duration waitDuration;
 
-  /// Tempo em que o tooltip permanece visível.
+  /// Time the tooltip remains visible.
   final Duration showDuration;
 
-  /// Preferência de posicionamento repassada ao [Tooltip].
+  /// Positioning preference passed on to [Tooltip].
   final bool? preferBelow;
 
   @override

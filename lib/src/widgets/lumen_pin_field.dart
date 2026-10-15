@@ -5,11 +5,9 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Campo de código (OTP): uma sequência de casas controlada por [value].
-///
-/// `onChanged == null` desabilita. [onCompleted] dispara quando a última
-/// casa é preenchida. Colar um código preenche a sequência de uma vez.
-///
+/// Code field (OTP): a sequence of places controlled by [value].
+/// `onChanged == null` disables. [onCompleted] fires when the last house is
+/// filled. Pasting a code completes the sequence all at once.
 /// ```dart
 /// LumenPinField(
 ///   length: 6,
@@ -19,7 +17,9 @@ import '../theme/lumen_style.dart';
 /// )
 /// ```
 class LumenPinField extends StatefulWidget {
-  /// Cria um campo de [length] casas. Default: 6.
+  /// Creates a field of [length] houses.
+  ///
+  /// Default: 6.
   const LumenPinField({
     super.key,
     this.length = 6,
@@ -30,22 +30,28 @@ class LumenPinField extends StatefulWidget {
     this.semanticLabel,
   }) : assert(length > 0, 'length precisa ser positivo.');
 
-  /// Quantidade de casas.
+  /// Number of houses.
   final int length;
 
-  /// Dígitos já preenchidos. O que passar de [length] é ignorado.
+  /// Digits already filled in.
+  ///
+  /// Anything past [length] is ignored.
   final String value;
 
-  /// Recebe só dígitos, no máximo [length]. `null` desabilita o campo.
+  /// Receives only digits, maximum [length].
+  ///
+  /// `null` disables the field.
   final ValueChanged<String>? onChanged;
 
-  /// Chamado uma vez quando [value] chega a [length] dígitos.
+  /// Called once when [value] reaches [length] digits.
   final ValueChanged<String>? onCompleted;
 
-  /// Se `true`, cada casa mostra um ponto em vez do dígito.
+  /// Whether each place shows a dot instead of the digit.
   final bool obscure;
 
-  /// Rótulo para leitores de tela. Default: "Código de N dígitos".
+  /// Label for screen readers.
+  ///
+  /// Default: "N-digit code".
   final String? semanticLabel;
 
   @override

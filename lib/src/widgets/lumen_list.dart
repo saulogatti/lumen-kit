@@ -1,12 +1,11 @@
 import 'package:material_ui/material_ui.dart';
 
-/// Lista preguiçosa para muitos itens. O corpo é um [ListView.builder]: só
-/// o que está na tela é construído.
+/// Lazy list for many items.
 ///
-/// Com [itemCount] `0`, mostra [empty] (ou nada, se [empty] for `null`).
-/// A altura vem do pai. Não use `shrinkWrap` aqui: numa lista longa isso
-/// constrói todos os filhos e anula o builder.
-///
+/// The body is a [ListView.builder]: only what is on the screen is constructed.
+/// With [itemCount] `0`, it shows [empty] (or nothing, if [empty] is `null`).
+/// The height comes from the father. Do not use `shrinkWrap` here: in a long
+/// list this builds all children and cancels the builder.
 /// ```dart
 /// LumenList(
 ///   itemCount: eventos.length,
@@ -18,7 +17,9 @@ import 'package:material_ui/material_ui.dart';
 /// )
 /// ```
 class LumenList extends StatelessWidget {
-  /// Cria a lista. [itemBuilder] só é chamado para índices visíveis.
+  /// Create the list.
+  ///
+  /// [itemBuilder] is only called for visible indexes.
   const LumenList({
     required this.itemCount,
     required this.itemBuilder,
@@ -29,22 +30,28 @@ class LumenList extends StatelessWidget {
     this.padding,
   });
 
-  /// Quantidade de itens. `0` mostra [empty].
+  /// Quantity of items.
+  ///
+  /// `0` shows [empty].
   final int itemCount;
 
-  /// Constrói o item em [index]. Em geral um `LumenListTile`.
+  /// Builds the item in [index].
+  ///
+  /// In general a `LumenListTile`.
   final Widget Function(BuildContext context, int index) itemBuilder;
 
-  /// Widget entre dois itens. Sem ele, os itens ficam colados.
+  /// Widget between two items.
+  ///
+  /// Without it, items stick together.
   final Widget Function(BuildContext context, int index)? separatorBuilder;
 
-  /// Controller opcional da rolagem.
+  /// Optional scroll controller.
   final ScrollController? controller;
 
-  /// Conteúdo quando [itemCount] é `0`.
+  /// Content when [itemCount] is `0`.
   final Widget? empty;
 
-  /// Espaço interno da lista.
+  /// Internal list space.
   final EdgeInsetsGeometry? padding;
 
   @override

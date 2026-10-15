@@ -5,12 +5,11 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Abre o [showTimePicker] padrão aplicando o tema neon.
-///
-/// [initialTime] é o horário inicial, [accentColor] substitui o accent padrão
-/// e [helpText] é repassado ao picker do Material. [use24HourFormat] força
-/// (ou desliga) o relógio de 24h; quando `null`, segue a configuração do
-/// sistema.
+/// Opens the default [showTimePicker] applying the neon theme.
+/// [initialTime] is the start time, [accentColor] replaces the default accent
+/// and [helpText] is passed to the Material picker. [use24HourFormat] strength
+/// (or turns off) the 24-hour clock; when `null`, it follows the configuration
+/// of the system.
 Future<TimeOfDay?> showLumenTimePicker({
   required BuildContext context,
   required TimeOfDay initialTime,
@@ -75,10 +74,11 @@ Future<TimeOfDay?> showLumenTimePicker({
   );
 }
 
-/// Campo somente-leitura que abre o [showLumenTimePicker] ao ser tocado.
-/// Par do `LumenDatePicker` para formulários de agendamento.
+/// Read-only field that opens [showLumenTimePicker] when touched.
+///
+/// Pair of `LumenDatePicker` for scheduling forms.
 class LumenTimePicker extends StatelessWidget {
-  /// Cria um campo somente-leitura que abre um time picker ao toque.
+  /// Creates a read-only field that opens a time picker on touch.
   const LumenTimePicker({
     required this.value,
     required this.onChanged,
@@ -90,28 +90,33 @@ class LumenTimePicker extends StatelessWidget {
     this.use24HourFormat,
   });
 
-  /// Horário atualmente selecionado.
+  /// Currently selected time.
   final TimeOfDay? value;
 
-  /// Callback chamado quando um novo horário é escolhido.
-  ///
-  /// Quando `null`, o campo fica visualmente desabilitado.
+  /// Callback called when a new time is chosen.
+  /// When `null`, the field is visually disabled.
   final ValueChanged<TimeOfDay>? onChanged;
 
-  /// Rótulo exibido pelo campo.
+  /// Label displayed by the field.
   final String? label;
 
-  /// Texto exibido quando [value] é `null`.
+  /// Text displayed when [value] is `null`.
   final String? hint;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Formatador usado para exibir [value]. Default: formato do locale, em
-  /// 12h ou 24h conforme [use24HourFormat] / sistema.
+  /// Formatter used to display [value].
+  ///
+  /// Default: locale format, in 12h or 24h depending on [use24HourFormat] /
+  /// system.
   final String Function(TimeOfDay)? format;
 
-  /// Força o relógio de 24h (no campo e no picker). `null` segue o sistema.
+  /// Forces a 24-hour clock (in the field and at the picker).
+  ///
+  /// `null` follows the system.
   final bool? use24HourFormat;
 
   @override

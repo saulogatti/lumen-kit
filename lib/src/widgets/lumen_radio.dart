@@ -7,10 +7,11 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Radio circular com glow no estado selecionado. Genérico em [T] para casar
-/// com o `groupValue` do chamador.
+/// Circular radio with glow in the selected state.
+///
+/// Generic in [T] to get married with the caller's `groupValue`.
 class LumenRadio<T> extends StatelessWidget {
-  /// Cria uma opção de radio para valores do tipo [T].
+  /// Creates a radio option for values ​​of type [T].
   const LumenRadio({
     required this.value,
     required this.groupValue,
@@ -20,23 +21,23 @@ class LumenRadio<T> extends StatelessWidget {
     this.label,
   });
 
-  /// Valor representado por esta opção.
+  /// Value represented by this option.
   final T value;
 
-  /// Valor atualmente selecionado no grupo.
-  ///
-  /// A opção fica selecionada quando [value] é igual a [groupValue].
+  /// Value currently selected in the group.
+  /// The option is selected when [value] is equal to [groupValue].
   final T? groupValue;
 
-  /// Callback chamado com [value] ao tocar nesta opção.
-  ///
-  /// Quando `null`, o radio fica visualmente desabilitado.
+  /// Callback called with [value] when touching this option.
+  /// When `null`, the radio is visually disabled.
   final ValueChanged<T?>? onChanged;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Texto opcional exibido ao lado do radio.
+  /// Optional text displayed next to the radio.
   final String? label;
 
   @override

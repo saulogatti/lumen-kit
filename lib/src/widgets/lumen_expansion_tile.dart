@@ -4,10 +4,10 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Tile expansível com header em surface, ícone com rotação animada e borda
-/// accent quando aberto.
+/// Expandable tile with surface header, icon with animated rotation and border
+/// accent when opened.
 class LumenExpansionTile extends StatefulWidget {
-  /// Cria um tile expansível com [children] revelados ao abrir.
+  /// Creates an expandable tile with [children] revealed when opened.
   const LumenExpansionTile({
     required this.title,
     required this.children,
@@ -19,25 +19,27 @@ class LumenExpansionTile extends StatefulWidget {
     this.onExpansionChanged,
   });
 
-  /// Título exibido no cabeçalho.
+  /// Title displayed in the header.
   final String title;
 
-  /// Texto auxiliar exibido abaixo de [title].
+  /// Auxiliary text displayed below [title].
   final String? subtitle;
 
-  /// Widget opcional exibido antes do texto.
+  /// Optional widget displayed before text.
   final Widget? leading;
 
-  /// Conteúdo exibido quando o tile está expandido.
+  /// Content displayed when the tile is expanded.
   final List<Widget> children;
 
-  /// Se `true`, inicia o tile expandido.
+  /// Whether to start the expanded tile.
   final bool initiallyExpanded;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Callback chamado sempre que o estado expandido muda.
+  /// Callback called whenever the expanded state changes.
   final ValueChanged<bool>? onExpansionChanged;
 
   @override

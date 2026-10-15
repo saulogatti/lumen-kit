@@ -4,16 +4,16 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Skeleton/shimmer no estilo neon. Use enquanto o conteúdo real está
-/// carregando.
+/// Skeleton/shimmer in neon style.
 ///
-/// Exemplos:
+/// Use while the actual content is loading.
+/// Examples:
 /// ```dart
 /// LumenSkeleton(width: 200, height: 14);
 /// LumenSkeleton.circle(size: 48);
 /// ```
 class LumenSkeleton extends StatefulWidget {
-  /// Cria um skeleton retangular.
+  /// Creates a rectangular skeleton.
   const LumenSkeleton({
     super.key,
     this.width,
@@ -23,7 +23,7 @@ class LumenSkeleton extends StatefulWidget {
     this.highlightColor,
   }) : shape = BoxShape.rectangle;
 
-  /// Cria um skeleton circular com largura e altura iguais a [size].
+  /// Creates a circular skeleton with width and height equal to [size].
   const LumenSkeleton.circle({
     super.key,
     required double size,
@@ -34,22 +34,28 @@ class LumenSkeleton extends StatefulWidget {
        borderRadius = 0,
        shape = BoxShape.circle;
 
-  /// Largura do skeleton. Quando `null`, ocupa a largura imposta pelo pai.
+  /// Skeleton width.
+  ///
+  /// When `null`, it occupies the width imposed by the parent.
   final double? width;
 
-  /// Altura do skeleton.
+  /// Skeleton height.
   final double height;
 
-  /// Raio dos cantos quando [shape] é [BoxShape.rectangle].
+  /// Corner radius when [shape] is [BoxShape.rectangle].
   final double borderRadius;
 
-  /// Forma visual do skeleton.
+  /// Visual shape of the skeleton.
   final BoxShape shape;
 
-  /// Cor base do shimmer. Default: surface translúcida da paleta.
+  /// Shimmer base color.
+  ///
+  /// Default: translucent surface of the palette.
   final Color? baseColor;
 
-  /// Cor do brilho animado. Default: accent cyan translúcido da paleta.
+  /// Animated glow color.
+  ///
+  /// Default: translucent cyan accent from the palette.
   final Color? highlightColor;
 
   @override

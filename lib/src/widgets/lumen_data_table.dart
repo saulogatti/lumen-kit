@@ -4,12 +4,13 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Wrapper temático sobre [DataTable]. Aplica as cores do tema, glow no header
-/// e uma linha alternada sutil. Aceita `columns`/`rows` direto da API do
-/// Material; quem precisar de algo mais simples pode montar com
-/// [LumenTableRow] dentro de uma [Column].
+/// Themed wrapper about [DataTable].
+///
+/// Apply the theme colors, glow in the header and a subtle alternating line.
+/// Accepts `columns`/`rows` directly from the API Material; Anyone who needs
+/// something simpler can assemble it with [LumenTableRow] inside a [Column].
 class LumenDataTable extends StatelessWidget {
-  /// Cria uma [DataTable] com o tema visual neon.
+  /// Create a [DataTable] with a neon visual theme.
   const LumenDataTable({
     required this.columns,
     required this.rows,
@@ -19,19 +20,21 @@ class LumenDataTable extends StatelessWidget {
     this.sortAscending = true,
   });
 
-  /// Colunas repassadas para [DataTable.columns].
+  /// Columns passed to [DataTable.columns].
   final List<DataColumn> columns;
 
-  /// Linhas repassadas para [DataTable.rows].
+  /// Lines forwarded to [DataTable.rows].
   final List<DataRow> rows;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Índice da coluna atualmente ordenada.
+  /// Index of the currently sorted column.
   final int? sortColumnIndex;
 
-  /// Se `true`, indica ordenação ascendente.
+  /// Whether to indicate ascending sorting.
   final bool sortAscending;
 
   @override
@@ -79,10 +82,12 @@ class LumenDataTable extends StatelessWidget {
   }
 }
 
-/// Linha "à mão" para quem quer compor uma tabela leve sem [DataTable] (ex:
-/// dentro de cartões). Cada célula é um widget e flex configurável.
+/// "By hand" line for those who want to compose a light table without
+/// [DataTable] (ex: inside cards).
+///
+/// Each cell is a widget and configurable flex.
 class LumenTableRow extends StatelessWidget {
-  /// Cria uma linha flexível para composição manual de tabelas.
+  /// Creates a flexible row for manual table composition.
   const LumenTableRow({
     required this.cells,
     super.key,
@@ -92,21 +97,22 @@ class LumenTableRow extends StatelessWidget {
     this.accentColor,
   });
 
-  /// Células exibidas na linha.
+  /// Cells displayed in the row.
   final List<Widget> cells;
 
-  /// Se `true`, aplica estilo visual de cabeçalho e desativa o toque.
+  /// Whether to apply header visual style and disables ringing.
   final bool isHeader;
 
-  /// Callback executado ao tocar na linha.
-  ///
-  /// Ignorado quando [isHeader] é `true`.
+  /// Callback executed when touching the line.
+  /// Ignored when [isHeader] is `true`.
   final VoidCallback? onTap;
 
-  /// Mesma cardinalidade de [cells]; default todas com flex 1.
+  /// Same cardinality as [cells]; default all with flex 1.
   final List<int>? flex;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
   @override

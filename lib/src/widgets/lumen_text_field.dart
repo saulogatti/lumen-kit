@@ -5,13 +5,14 @@ import '../foundation/lumen_decorations.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Campo de texto neon. Funciona solto ou dentro de um [Form] (via
-/// [validator]) e vira textarea com [maxLines] > 1.
+/// Neon text field.
 ///
-/// Sem [controller], mantém um controller interno inicializado com
-/// [initialValue] para preservar foco/cursor entre rebuilds.
+/// Works loose or inside a [Form] (via [validator]) and becomes a textarea with
+/// [maxLines] > 1.
+/// Without [controller], it maintains an internal controller initialized with
+/// [initialValue] to preserve focus/cursor between rebuilds.
 class LumenTextField extends StatefulWidget {
-  /// Cria um campo de texto neon.
+  /// Creates a neon text field.
   const LumenTextField({
     required this.label,
     super.key,
@@ -41,79 +42,87 @@ class LumenTextField extends StatefulWidget {
     this.accentColor,
   });
 
-  /// Rótulo exibido pelo campo.
+  /// Label displayed by the field.
   final String label;
 
-  /// Texto inicial do controller interno. Ignorado quando há [controller].
+  /// Initial text of the internal controller.
+  ///
+  /// Ignored when there is [controller].
   final String initialValue;
 
-  /// Callback chamado quando o texto muda.
+  /// Callback called when text changes.
   final ValueChanged<String>? onChanged;
 
-  /// Controller externo. Quem cria é quem descarta.
+  /// External controller.
+  ///
+  /// The one who creates is the one who discards.
   final TextEditingController? controller;
 
-  /// Foco externo, para encadear campos ou focar via código.
+  /// External focus, to chain fields or focus via code.
   final FocusNode? focusNode;
 
-  /// Mensagem de erro exibida abaixo do campo (sobrepõe o [validator]).
+  /// Error message displayed below the field (overlaps [validator]).
   final String? errorText;
 
-  /// Texto de dica exibido com o campo vazio.
+  /// Tip text displayed with empty field.
   final String? hint;
 
-  /// Texto de ajuda exibido abaixo do campo.
+  /// Help text displayed below the field.
   final String? helperText;
 
-  /// Ícone opcional exibido antes do texto.
+  /// Optional icon displayed before the text.
   final IconData? icon;
 
-  /// Se `true`, oculta o texto digitado.
+  /// Whether to hide the typed text.
   final bool obscure;
 
-  /// Tipo de teclado solicitado ao sistema.
+  /// Type of keyboard requested from the system.
   final TextInputType? keyboardType;
 
-  /// Ação do botão de confirmação do teclado (próximo, concluir…).
+  /// Keyboard confirmation button action (next, finish…).
   final TextInputAction? textInputAction;
 
-  /// Widget opcional exibido no final do campo.
+  /// Optional widget displayed at the end of the field.
   final Widget? suffix;
 
-  /// Validação usada por um [Form] ancestral.
+  /// Validation used by an ancestor [Form].
   final FormFieldValidator<String>? validator;
 
-  /// Callback ao confirmar pelo teclado.
+  /// Callback when confirming via keyboard.
   final ValueChanged<String>? onSubmitted;
 
-  /// Quando validar automaticamente.
+  /// When to validate automatically.
   final AutovalidateMode? autovalidateMode;
 
-  /// Se `false`, o campo fica desabilitado.
+  /// If `false`, the field is disabled.
   final bool enabled;
 
-  /// Se `true`, o texto não pode ser editado (mas pode ser selecionado).
+  /// Whether the text can be be edited (but can be selected).
   final bool readOnly;
 
-  /// Se `true`, solicita foco ao aparecer.
+  /// Whether to request focus when appearing.
   final bool autofocus;
 
-  /// Mínimo de linhas visíveis (textarea).
+  /// Minimum visible lines (textarea).
   final int? minLines;
 
-  /// Máximo de linhas. `null` cresce sem limite.
+  /// Maximum lines.
+  ///
+  /// `null` grows without limit.
   final int? maxLines;
 
-  /// Limite de caracteres, com contador.
+  /// Character limit, with counter.
   final int? maxLength;
 
-  /// Formatadores aplicados à entrada.
+  /// Formatters applied to input.
   final List<TextInputFormatter>? inputFormatters;
 
-  /// Dicas de preenchimento automático.
+  /// Autocomplete tips.
   final Iterable<String>? autofillHints;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
   @override

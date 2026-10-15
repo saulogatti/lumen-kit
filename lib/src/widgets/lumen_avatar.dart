@@ -4,10 +4,11 @@ import '../foundation/lumen_decorations.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Avatar circular com borda em gradiente e glow opcional. Aceita imagem
-/// ([image]) ou caem nas iniciais ([initials]).
+/// Circular avatar with gradient border and optional glow.
+///
+/// Accept image ([image]) or fall into the initials ([initials]).
 class LumenAvatar extends StatelessWidget {
-  /// Cria um avatar circular com imagem, iniciais ou fallback textual.
+  /// Creates a circular avatar with image, initials or textual fallback.
   const LumenAvatar({
     super.key,
     this.image,
@@ -18,25 +19,27 @@ class LumenAvatar extends StatelessWidget {
     this.showRing = true,
   });
 
-  /// Imagem exibida no avatar.
-  ///
-  /// Quando informada, tem precedência sobre [initials].
+  /// Image displayed on the avatar.
+  /// When informed, it takes precedence over [initials].
   final ImageProvider? image;
 
-  /// Iniciais exibidas quando [image] é `null`.
+  /// Initials displayed when [image] is `null`.
   final String? initials;
 
-  /// Raio do avatar em pixels lógicos.
+  /// Avatar radius in logical pixels.
   final double radius;
 
-  /// Override da cor de destaque do anel. Default: `palette.primary`.
+  /// Ring highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Pequeno indicador (presença) no canto inferior direito. Quando null, não
-  /// é desenhado.
+  /// Small indicator (presence) in the lower right corner.
+  ///
+  /// When null, no is drawn.
   final Color? statusColor;
 
-  /// Se `true`, desenha o anel em gradiente ao redor do avatar.
+  /// Whether to draw the gradient ring around the avatar.
   final bool showRing;
 
   @override

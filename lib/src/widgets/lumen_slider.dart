@@ -4,9 +4,9 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Slider com track em gradiente accent e thumb com glow.
+/// Slider with accent gradient track and glow thumb.
 class LumenSlider extends StatelessWidget {
-  /// Cria um slider neon.
+  /// Creates a neon slider.
   const LumenSlider({
     required this.value,
     required this.onChanged,
@@ -18,29 +18,29 @@ class LumenSlider extends StatelessWidget {
     this.accentColor,
   });
 
-  /// Valor atual do slider.
-  ///
-  /// O valor é limitado visualmente ao intervalo entre [min] e [max].
+  /// Current slider value.
+  /// The value is visually limited to the range between [min] and [max].
   final double value;
 
-  /// Callback chamado quando o usuário muda o valor.
-  ///
-  /// Quando `null`, o slider fica visualmente desabilitado.
+  /// Callback called when the user changes the value.
+  /// When `null`, the slider is visually disabled.
   final ValueChanged<double>? onChanged;
 
-  /// Menor valor permitido.
+  /// Lowest value allowed.
   final double min;
 
-  /// Maior valor permitido.
+  /// Highest value allowed.
   final double max;
 
-  /// Número opcional de divisões discretas do intervalo.
+  /// Optional number of discrete divisions of the range.
   final int? divisions;
 
-  /// Texto exibido no indicador de valor do [Slider].
+  /// Text displayed on the [Slider] value indicator.
   final String? label;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
   @override
@@ -146,9 +146,9 @@ void _paintGlowThumb(
   );
 }
 
-/// Slider de intervalo (dois thumbs) com o mesmo visual do [LumenSlider].
-/// Para filtros de preço, faixa etária, horário…
+/// Interval slider (two thumbs) with the same look as [LumenSlider].
 ///
+/// For price filters, age range, time…
 /// ```dart
 /// LumenRangeSlider(
 ///   values: _preco,
@@ -159,7 +159,7 @@ void _paintGlowThumb(
 /// )
 /// ```
 class LumenRangeSlider extends StatelessWidget {
-  /// Cria um slider de intervalo neon.
+  /// Creates a neon interval slider.
   const LumenRangeSlider({
     required this.values,
     required this.onChanged,
@@ -174,36 +174,39 @@ class LumenRangeSlider extends StatelessWidget {
     this.semanticFormatterCallback,
   });
 
-  /// Intervalo selecionado. É limitado visualmente a [min]..[max].
+  /// Selected range.
+  ///
+  /// It is visually limited to [min]..[max].
   final RangeValues values;
 
-  /// Callback chamado enquanto o usuário arrasta um dos thumbs.
-  ///
-  /// Quando `null`, o slider fica visualmente desabilitado.
+  /// Callback called while the user drags one of the thumbs.
+  /// When `null`, the slider is visually disabled.
   final ValueChanged<RangeValues>? onChanged;
 
-  /// Chamado quando o usuário começa a arrastar.
+  /// Called when the user starts dragging.
   final ValueChanged<RangeValues>? onChangeStart;
 
-  /// Chamado quando o usuário solta o thumb (bom para disparar a busca).
+  /// Called when the user releases the thumb (good for triggering the search).
   final ValueChanged<RangeValues>? onChangeEnd;
 
-  /// Menor valor permitido.
+  /// Lowest value allowed.
   final double min;
 
-  /// Maior valor permitido.
+  /// Highest value allowed.
   final double max;
 
-  /// Número opcional de divisões discretas do intervalo.
+  /// Optional number of discrete divisions of the range.
   final int? divisions;
 
-  /// Textos dos indicadores de valor (aparecem só com [divisions]).
+  /// Value indicator texts (appear only with [divisions]).
   final RangeLabels? labels;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Texto lido por leitores de tela para cada valor (ex.: "R\$ 120").
+  /// Text read by screen readers for each value (e.g.: "R\$ 120").
   final SemanticFormatterCallback? semanticFormatterCallback;
 
   @override

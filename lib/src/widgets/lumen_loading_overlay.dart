@@ -6,12 +6,10 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_progress_indicator.dart';
 
-/// Cobre [child] com uma camada que bloqueia toque, foco e leitor de tela
-/// enquanto [loading] é `true`, com spinner e [message] no centro.
-///
-/// Para bloquear a tela inteira durante uma operação (ex.: submit), sem
-/// guardar estado de loading, use [showLumenLoading].
-///
+/// Covers [child] with a layer that blocks touch, focus and screen reader while
+/// [loading] is `true`, with spinner and [message] in the center.
+/// To lock the entire screen during an operation (e.g. submit), without save
+/// loading state, use [showLumenLoading].
 /// ```dart
 /// LumenLoadingOverlay(
 ///   loading: _saving,
@@ -20,7 +18,7 @@ import 'lumen_progress_indicator.dart';
 /// )
 /// ```
 class LumenLoadingOverlay extends StatelessWidget {
-  /// Cria a camada de loading sobre [child].
+  /// Creates the loading layer over [child].
   const LumenLoadingOverlay({
     required this.loading,
     required this.child,
@@ -31,23 +29,28 @@ class LumenLoadingOverlay extends StatelessWidget {
     this.borderRadius,
   });
 
-  /// Se `true`, mostra a camada e bloqueia [child].
+  /// Whether to show the layer and block [child].
   final bool loading;
 
-  /// Conteúdo coberto.
+  /// Content covered.
   final Widget child;
 
-  /// Texto abaixo do spinner, também anunciado por leitores de tela.
+  /// Text below the spinner, also announced by screen readers.
   final String? message;
 
-  /// Override do accent da borda do painel. Default: `palette.primary`.
+  /// Panel edge accent override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Cor do véu sobre [child]. Default: `palette.backgroundDeep` translúcido.
+  /// Veil color on [child].
+  ///
+  /// Default: `palette.backgroundDeep` translucent.
   final Color? barrierColor;
 
-  /// Recorte do véu, para acompanhar os cantos de [child] (ex.: um card).
-  /// Use `LumenStyle.of(context).radius(...)` para seguir o estilo.
+  /// Cutting out the veil, to accompany the corners of [child] (e.g.: a card).
+  ///
+  /// Use `LumenStyle.of(context).radius(...)` to follow the style.
   final BorderRadius? borderRadius;
 
   @override
@@ -93,16 +96,20 @@ class LumenLoadingOverlay extends StatelessWidget {
 Color _defaultBarrier(LumenPalette p) =>
     p.backgroundDeep.withValues(alpha: 0.6);
 
-/// Painel com spinner e mensagem usado pelo [LumenLoadingOverlay] e pelo
-/// [showLumenLoading]. Útil para montar telas de loading próprias.
+/// Panel with spinner and message used by [LumenLoadingOverlay] and
+/// [showLumenLoading].
+///
+/// Useful for creating your own loading screens.
 class LumenLoadingPanel extends StatelessWidget {
-  /// Cria o painel de loading.
+  /// Creates the loading panel.
   const LumenLoadingPanel({super.key, this.message, this.accentColor});
 
-  /// Texto abaixo do spinner.
+  /// Text below the spinner.
   final String? message;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
   @override
@@ -146,10 +153,11 @@ class LumenLoadingPanel extends StatelessWidget {
   }
 }
 
-/// Bloqueia a tela inteira com o [LumenLoadingPanel] enquanto [task] roda e
-/// devolve o resultado dela. A camada some mesmo se [task] lançar erro (o
-/// erro é repassado), e o botão voltar fica bloqueado nesse meio-tempo.
+/// Lock the entire screen with [LumenLoadingPanel] while [task] runs and
+/// returns its result.
 ///
+/// The layer disappears even if [task] throws an error (the error is passed),
+/// and the back button is blocked in the meantime.
 /// ```dart
 /// final bool ok = await showLumenLoading(
 ///   context: context,

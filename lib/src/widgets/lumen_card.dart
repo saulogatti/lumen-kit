@@ -5,10 +5,11 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Container base do tema neon: gradiente sutil + borda accent + opcional onTap.
-/// Use como peça fundamental para qualquer tela — cards, painéis, seções.
+/// Neon theme base container: subtle gradient + accent border + optional onTap.
+///
+/// Use as a fundamental piece for any screen — cards, panels, sections.
 class LumenCard extends StatelessWidget {
-  /// Cria um card neon com [child] como conteúdo.
+  /// Creates a neon card with [child] as content.
   const LumenCard({
     required this.child,
     super.key,
@@ -20,27 +21,28 @@ class LumenCard extends StatelessWidget {
     this.glow = false,
   });
 
-  /// Conteúdo exibido dentro do card.
+  /// Content displayed inside the card.
   final Widget child;
 
-  /// Cor de destaque (borda + glow). Default: `palette.primary`.
+  /// Highlight color (border + glow).
+  ///
+  /// Default: `palette.primary`.
   final Color? accent;
 
-  /// Espaçamento interno aplicado ao [child].
+  /// Internal spacing applied to [child].
   final EdgeInsetsGeometry padding;
 
-  /// Raio dos cantos do card em pixels lógicos.
+  /// Radius of the card's corners in logical pixels.
   final double borderRadius;
 
-  /// Callback executado ao tocar no card.
-  ///
-  /// Quando `null`, o card é renderizado sem comportamento interativo.
+  /// Callback executed when touching the card.
+  /// When `null`, the card is rendered without interactive behavior.
   final VoidCallback? onTap;
 
-  /// Opacidade da borda de destaque.
+  /// Highlight border opacity.
   final double borderOpacity;
 
-  /// Se `true`, adiciona um leve glow ao redor do card.
+  /// Whether to add a slight glow around the card.
   final bool glow;
 
   @override

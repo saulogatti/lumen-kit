@@ -5,9 +5,11 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// CTA primário com gradiente neon. Reutilizado em todas as telas.
+/// Primary CTA with neon gradient.
+///
+/// Reused on all screens.
 class LumenCta extends StatelessWidget {
-  /// Cria um CTA primário com gradiente.
+  /// Create a primary CTA with a gradient.
   const LumenCta({
     required this.label,
     required this.onPressed,
@@ -20,30 +22,35 @@ class LumenCta extends StatelessWidget {
     this.borderRadius = 14,
   });
 
-  /// Texto exibido no CTA.
+  /// Text displayed in the CTA.
   final String label;
 
-  /// Callback executado ao tocar no CTA.
-  ///
-  /// Quando `null`, o CTA fica visualmente desabilitado.
+  /// Callback executed when tapping the CTA.
+  /// When `null`, the CTA is visually disabled.
   final VoidCallback? onPressed;
 
-  /// Ícone opcional exibido antes de [label].
+  /// Optional icon displayed before [label].
   final IconData? icon;
 
-  /// Se `true`, exibe indicador de progresso e bloqueia o toque.
+  /// Whether to display progress indicator and blocks ringing.
   final bool busy;
 
-  /// Gradiente do botão. Default: `palette.accentGradient`.
+  /// Button gradient.
+  ///
+  /// Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Cor do glow (boxShadow). Default: `palette.secondary`.
+  /// Glow color (boxShadow).
+  ///
+  /// Default: `palette.secondary`.
   final Color? glowColor;
 
-  /// Cor do texto/ícone. Default: `palette.backgroundDeep`.
+  /// Text/icon color.
+  ///
+  /// Default: `palette.backgroundDeep`.
   final Color? foregroundColor;
 
-  /// Raio dos cantos do botão em pixels lógicos.
+  /// Radius of button corners in logical pixels.
   final double borderRadius;
 
   @override

@@ -3,31 +3,32 @@ import 'package:material_ui/material_ui.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Decorações compartilhadas pelos widgets do kit. Todas passam pelo
-/// [LumenStyle], então mudam junto com o estilo (neon, flat, glass…).
+/// Decorations shared by kit widgets.
 ///
-/// Úteis para construir componentes próprios com a mesma cara do kit:
-///
+/// They all go through [LumenStyle], so they change along with the style (neon,
+/// flat, glass…).
+/// Useful for building your own components with the same look as the kit:
 /// ```dart
 /// final LumenPalette p = LumenThemeExt.of(context).palette;
 /// final LumenStyle s = LumenStyle.of(context);
 /// Container(decoration: LumenDecorations.panel(p, s, accent: p.secondary));
 /// ```
 abstract final class LumenDecorations {
-  /// Gradiente diagonal (topo-esquerda → base-direita) de [a] para [b].
+  /// Diagonal gradient (top-left → bottom-right) from [a] to [b].
   static LinearGradient diagonal(Color a, Color b) => LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: <Color>[a, b],
   );
 
-  /// Gradiente diagonal do accent para `palette.secondary`, usado em
-  /// marcadores ativos (checkbox, radio, switch, avatar, stepper…).
+  /// Diagonal accent gradient for `palette.secondary`, used in active markers
+  /// (checkbox, radio, switch, avatar, stepper…).
   static LinearGradient accent(LumenPalette p, Color accent) =>
       diagonal(accent, p.secondary);
 
-  /// Painel flutuante: surface em gradiente, borda e glow no [accent].
-  /// Base de dialog, tooltip, snackbar, toast e cards.
+  /// Floating panel: gradient surface, border and glow in [accent].
+  ///
+  /// Dialog base, tooltip, snackbar, toast and cards.
   static BoxDecoration panel(
     LumenPalette p,
     LumenStyle s, {
@@ -61,8 +62,8 @@ abstract final class LumenDecorations {
     ]),
   );
 
-  /// Item selecionável (drawer, navegação, list tile): fundo e borda no
-  /// [accent] com glow quando [selected]; transparente quando não.
+  /// Selectable item (drawer, navigation, list tile): background and border
+  /// [accent] glows when [selected]; transparent when not.
   static BoxDecoration selectable(
     LumenPalette p,
     LumenStyle s, {
@@ -98,7 +99,7 @@ abstract final class LumenDecorations {
     ),
   );
 
-  /// Ícone em caixa translúcida no [accent] (cabeçalho de dialog, cards).
+  /// Icon in translucent box in [accent] (dialog header, cards).
   static BoxDecoration iconBox(
     LumenStyle s, {
     required Color accent,
@@ -111,7 +112,7 @@ abstract final class LumenDecorations {
     border: s.borderAll(color: accent.withValues(alpha: borderAlpha)),
   );
 
-  /// Decoração de campo de texto (text field, busca, dropdown, data).
+  /// Text field decoration (text field, search, dropdown, date).
   static InputDecoration input(
     LumenPalette p,
     LumenStyle s, {

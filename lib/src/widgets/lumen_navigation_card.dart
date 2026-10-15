@@ -5,10 +5,12 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Card de navegação reutilizável da tela principal.
-/// Recebe o que mostrar e o que fazer ao tocar — não decide nada por si.
+/// Reusable main screen navigation card.
+///
+/// You get what to show and what to do when playing — you don't decide anything
+/// for yourself.
 class LumenNavigationCard extends StatefulWidget {
-  /// Cria um card de navegação com destaque visual e hover.
+  /// Creates a navigation card with visual highlighting and hover.
   const LumenNavigationCard({
     required this.title,
     required this.subtitle,
@@ -20,25 +22,25 @@ class LumenNavigationCard extends StatefulWidget {
     this.actionLabel = 'ACESSAR MÓDULO',
   });
 
-  /// Título do módulo ou destino.
+  /// Title of the module or target.
   final String title;
 
-  /// Descrição curta exibida abaixo do título.
+  /// Short description displayed below the title.
   final String subtitle;
 
-  /// Ícone usado no badge visual do card.
+  /// Icon used in the card's visual badge.
   final IconData icon;
 
-  /// Cor de destaque do card.
+  /// Card highlight color.
   final Color accent;
 
-  /// Callback executado ao tocar no card.
+  /// Callback executed when touching the card.
   final VoidCallback onTap;
 
-  /// Tag opcional exibida no canto superior direito.
+  /// Optional tag displayed in the top right corner.
   final String? tag;
 
-  /// Texto da chamada no rodapé do card.
+  /// Call text at the footer of the card.
   final String actionLabel;
 
   @override

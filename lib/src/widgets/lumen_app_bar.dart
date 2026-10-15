@@ -3,10 +3,10 @@ import 'package:material_ui/material_ui.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// AppBar com identidade neon: transparente, com linha de gradiente inferior
-/// e tipografia consistente com o tema.
+/// AppBar with neon identity: transparent, with bottom gradient line and
+/// typography consistent with the theme.
 class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
-  /// Cria uma app bar neon compatível com [Scaffold.appBar].
+  /// Create a neon bar app compatible with [Scaffold.appBar].
   const LumenAppBar({
     required this.title,
     super.key,
@@ -18,25 +18,27 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showDivider = true,
   });
 
-  /// Título principal exibido na app bar.
+  /// Main title displayed in the app bar.
   final String title;
 
-  /// Texto auxiliar exibido abaixo de [title].
+  /// Auxiliary text displayed below [title].
   final String? subtitle;
 
-  /// Widget exibido antes do título.
+  /// Widget displayed before the title.
   final Widget? leading;
 
-  /// Ações exibidas no lado direito.
+  /// Actions displayed on the right side.
   final List<Widget>? actions;
 
-  /// Gradiente da linha decorativa inferior. Default: `palette.accentGradient`.
+  /// Bottom decorative line gradient.
+  ///
+  /// Default: `palette.accentGradient`.
   final Gradient? accentGradient;
 
-  /// Altura da área de conteúdo da app bar.
+  /// Height of the app bar content area.
   final double height;
 
-  /// Se `true`, exibe a linha decorativa inferior.
+  /// Whether to display the bottom decorative line.
   final bool showDivider;
 
   @override

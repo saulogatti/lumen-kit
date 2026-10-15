@@ -2,12 +2,9 @@ import 'package:material_ui/material_ui.dart';
 
 import 'lumen_tokens.dart';
 
-/// Base tocável do kit: aplica a opacidade de desabilitado, o ripple recortado
-/// em [borderRadius], foco de teclado e semântica de botão.
-///
-/// Use para construir componentes próprios com o mesmo comportamento dos
-/// botões do kit:
-///
+/// Touchable Kit Base: Applies Disabled Opacity, Cropped Ripple in
+/// [borderRadius], keyboard focus and button semantics.
+/// Use to build your own components with the same behavior as kit buttons:
 /// ```dart
 /// LumenPressable(
 ///   onTap: save,
@@ -16,8 +13,10 @@ import 'lumen_tokens.dart';
 /// )
 /// ```
 class LumenPressable extends StatelessWidget {
-  /// Cria uma área tocável. Fica desabilitada quando [onTap] e [onLongPress]
-  /// são `null` ou [enabled] é `false`.
+  /// Creates a touchable area.
+  ///
+  /// It is disabled when [onTap] and [onLongPress] are `null` or [enabled] is
+  /// `false`.
   const LumenPressable({
     required this.child,
     super.key,
@@ -35,49 +34,51 @@ class LumenPressable extends StatelessWidget {
     this.mergeSemantics = true,
   });
 
-  /// Conteúdo visual.
+  /// Visual content.
   final Widget child;
 
-  /// Callback de toque.
+  /// Ring callback.
   final VoidCallback? onTap;
 
-  /// Callback de toque longo.
+  /// Long press callback.
   final VoidCallback? onLongPress;
 
-  /// Força o estado desabilitado mesmo com callbacks presentes (ex.: `busy`).
+  /// Forces the disabled state even with callbacks present (e.g.: `busy`).
   final bool enabled;
 
-  /// Raio usado no recorte do ripple e do [Material].
+  /// Radius used to cut ripple and [Material].
   final BorderRadius? borderRadius;
 
-  /// Forma alternativa ao [borderRadius] (ex.: [CircleBorder]).
+  /// Alternative form to [borderRadius] (e.g.: [CircleBorder]).
   final ShapeBorder? customBorder;
 
-  /// Se `true`, aplica [kLumenDisabledOpacity] quando desabilitado.
+  /// Whether to apply [kLumenDisabledOpacity] when disabled.
   final bool dimWhenDisabled;
 
-  /// Rótulo de acessibilidade, somado ao texto dos filhos. Use quando o
-  /// conteúdo não tem texto (ex.: só ícone).
+  /// Accessibility label, added to the children's text.
+  ///
+  /// Use when the content has no text (e.g. only icon).
   final String? semanticLabel;
 
-  /// Anuncia o widget como botão para leitores de tela.
+  /// Announces the widget as a button for screen readers.
   final bool button;
 
-  /// Estado de seleção anunciado (abas, itens de navegação).
+  /// Advertised selection state (tabs, navigation items).
   final bool? selected;
 
-  /// Estado marcado anunciado (checkbox, radio).
+  /// State marked announced (checkbox, radio).
   final bool? checked;
 
-  /// Estado ligado anunciado (switch).
+  /// Announced on state (switch).
   final bool? toggled;
 
-  /// Junta os textos dos filhos num único nó (como o `ListTile` faz), para o
-  /// leitor de tela ler "Aceito, marcado" em vez de dois itens. Desligue
-  /// quando o filho tiver outros controles dentro (ex.: card com botões).
+  /// Joins the children's texts into a single node (like `ListTile` does), for
+  /// the screen reader read "Accepted, checked" instead of two items.
+  ///
+  /// Hang up when the child has other controls inside (e.g. card with buttons).
   final bool mergeSemantics;
 
-  /// Se o widget responde a toque com as props atuais.
+  /// Whether the widget responds to touch with the current props.
   bool get isEnabled => enabled && (onTap != null || onLongPress != null);
 
   @override

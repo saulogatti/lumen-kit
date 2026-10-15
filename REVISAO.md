@@ -1,149 +1,149 @@
-# Revisão do kit
+# Kit review
 
-Leitura do repositório em 12 out 2026, quando o pacote ainda se chamava `neon_ui`.
-Depois disso ele foi renomeado para `lumen_kit` e o prefixo `Neon` virou `Lumen`.
-Os nomes abaixo são os daquela leitura.
+Reading from the repository on Oct 12, 2026, when the package was still called `neon_ui`.
+After that it was renamed to `lumen_kit` and the prefix `Neon` became `Lumen`.
+The names below are those from that reading.
 
-Pacote Flutter 0.1.0, não publicado. 7.482 linhas em `lib`, 41 arquivos de
-widget, cinco estilos visuais e uma base de tema que já separa cor de efeito.
-O kit está bem desenhado; a dívida que sobrou é teste e distribuição. O tema
-claro foi o item tratado na branch `fix/tema-claro-alpha`.
+Flutter package 0.1.0, unpublished. 7,482 lines in `lib`, 41 files
+widget, five visual styles and a theme base that already separates color from effect.
+The kit is well designed; the remaining debt is testing and distribution. The theme
+Of course it was the item addressed in the `fix/tema-claro-alpha` branch.
 
-| Medida | Valor |
+| Measure | Value |
 | --- | --- |
-| Arquivos de widget | 41 |
+| Widget Files | 41 |
 | Sem nenhum teste | 13 |
-| Arquivos com alpha quebrado no claro | 12 na leitura; o caminho foi fechado nesta branch |
-| Workflows de CI | 0 |
+| Files with broken alpha in clear | 12 na leitura; the path was closed on this branch |
+| CI Workflows | 0 |
 
-Contagens de linha: `lib` 7.482, `test` 1.399, galeria 1.014.
+Row counts: `lib` 7,482, `test` 1,399, gallery 1,014.
 
-## O exemplo público ensina o import errado
+## The public example teaches the wrong import
 
-O README importa `package:flutter/material.dart` junto com `neon_ui`. O kit
-usa `material_ui`, e os dois `ThemeData` não são o mesmo tipo. O `AGENTS.md`
-já avisa que essa mistura compila às vezes e quebra em runtime. Quem copia o
-uso mínimo cai nessa armadilha.
+The README imports `package:flutter/material.dart` along with `neon_ui`. The kit
+uses `material_ui`, and the two `ThemeData` are not the same type. THE `AGENTS.md`
+Warning that this mixture sometimes compiles and breaks at runtime. Quem copia o
+Minimal usage falls into this trap.
 
 ## O que segura o kit
 
-**Tema ortogonal.** `NeonPalette` e `NeonStyle` são independentes. Preset,
-`fromSeed`, `NeonScope` e o fallback sem nada registrado no `ThemeData` cobrem
-os três jeitos de usar o kit. Widgets novos já nascem no `bareApp`.
+**Orthogonal theme.** `NeonPalette` and `NeonStyle` are independent. Preset,
+`fromSeed`, `NeonScope` and the fallback with nothing registered in `ThemeData` cover
+the three ways to use the kit. New widgets are already created in `bareApp`.
 
-**Base reaproveitável.** `NeonPressable`, `NeonDecorations`,
-`NeonActionContent`, `NeonLabeled` e `NeonMotion` concentram toque, semântica,
-painel e reduzir animações. O catálogo não reimplementa `InkWell` em cada
-arquivo.
+**Reusable base.** `NeonPressable`, `NeonDecorations`,
+`NeonActionContent`, `NeonLabeled` and `NeonMotion` focus touch, semantics,
+panel and reduce animations. The catalog does not redeploy `InkWell` on each
+file.
 
-**Contrato de API estável.** Dois imports públicos, `components.dart` sem
-`AppTheme` e `AppColors`, construtor const, `onChanged` nulo desabilita,
-`busy` mostra spinner. A skill e o `AGENTS.md` repetem as mesmas regras que o
-código segue.
+**Stable API Agreement.** Two public imports, `components.dart` without
+`AppTheme` and `AppColors`, const constructor, `onChanged` null disables,
+`busy` shows spinner. The skill and `AGENTS.md` repeat the same rules as the
+code follows.
 
-**Acessibilidade de verdade.** Há testes de semântica, teclado no switch,
-`Form` no text field e animações que param com `disableAnimations`. Isso é
-raro num kit visual e vale preservar.
+**Real accessibility.** There are semantic tests, keyboard on the switch,
+`Form` in the text field and animations that stop with `disableAnimations`. That's it
+Rare in a visual kit and worth preserving.
 
-## Cobertura dos 41 arquivos de widget
+## Coverage of 41 widget files
 
-Cruzamento de `lib/src/widgets` com `test/` em 12 out 2026.
+Crossing of `lib/src/widgets` with `test/` on October 12, 2026.
 
-| Tipo | Arquivos | O que conta |
+| Type | Files | What counts |
 | --- | ---: | --- |
-| Com asserção | 22 | Interação ou semântica |
-| Só render | 6 | Só entra num pump que não pode estourar |
-| Ausente do teste | 13 | O arquivo não é referenciado |
+| With assertion | 22 | Interaction or semantics |
+| Just render | 6 | It only enters a pump that cannot explode |
+| Absent from the test | 13 | File is not referenced |
 
-## Onde dói
+## Where does it hurt
 
-**A rede de testes cobre a leva nova, não o catálogo.** 1.399 linhas de teste
-contra 7.482 de `lib`. Os widgets do PR de menu, chips, rating, carrossel e
-loading têm arquivo próprio. Dialog, dropdown, drawer, sheet, stepper, tabela
-e busca não aparecem em nenhum teste. Não há golden: uma regressão de flat,
-glass ou brutal passa no `flutter test`.
+**Testnet covers the new wave, not the catalog.** 1,399 test lines
+against 7,482 from `lib`. PR widgets for menu, chips, rating, carousel and
+loading have their own file. Dialog, dropdown, drawer, sheet, stepper, table
+and search do not appear in any test. There is no golden: a regression of flat,
+glass or brutal passes `flutter test`.
 
-**Tema claro substituía alpha em vez de multiplicar.** `surfaceOutline` no
-claro já é translúcido. `withValues(alpha: 0.9)` troca esse alpha e vira
-quase preto. Na leitura, checkbox, radio, switch, slider, progress, tabs,
-stepper, data table, list tile, expansion, bottom nav e a borda desabilitada
-de `LumenDecorations` ainda passavam por esse caminho. Isso foi fechado:
-contorno usa `outlineAlpha`, e token que já nasce translúcido usa
-`scaleAlpha`. Detalhe na seção seguinte.
+**Clear theme replaced alpha instead of multiply.** `surfaceOutline` no
+clear is already translucent. `withValues(alpha: 0.9)` changes this alpha and becomes
+almost black. In reading, checkbox, radio, switch, slider, progress, tabs,
+stepper, data table, list tile, expansion, bottom nav and border disabled
+from `LumenDecorations` still passed this way. This has been closed:
+contour uses `outlineAlpha`, and token that is born translucent uses
+`scaleAlpha`. Details in the following section.
 
-**Distribuição é git em `main`, versão 0.1.0.** `publish_to: none`, sem
+**Distribution is git on `main`, version 0.1.0.** `publish_to: none`, without
 CHANGELOG, sem tag e sem CI. O README pede `ref: main`. Quem consome o kit
-não tem como fixar uma revisão nem saber o que quebrou entre um `pub get` e
-o seguinte.
+there is no way to fix a revision or know what broke between a `pub get` and
+the following.
 
-## Arquivos que o teste nunca abre
+## Files that the test never opens
 
-| Widget | Área | O que falta provar |
+| Widget | Area | What remains to be proven |
 | --- | --- | --- |
-| NeonDialog | overlay | Abre rota; o Future só completa ao fechar |
-| NeonDropdown | formulário | Seleção, item desabilitado, valor nulo |
-| NeonDrawer | navegação | Item selecionado e fechamento |
-| NeonBottomSheet | overlay | `showNeonBottomSheet` e gesto de fechar |
-| NeonStepper | navegação | Passo atual, erro e direção |
-| NeonDataTable | dados | Cabeçalho, linha e rolagem |
-| NeonSearchBar | formulário | Controller, limpar, `onChanged` |
-| NeonTooltip | feedback | Hover, foco e reduce motion |
-| NeonFab | ação | `onPressed` nulo e `busy` |
-| GradientCta | ação | Desabilitado e semântica |
-| NeonAppBar | estrutura | Título, subtitle e ações |
-| NavigationCard | navegação | Hover e `onTap` |
-| NeonDivider | display | Gradiente some no estilo flat |
-| NeonBottomNavBar | navegação | O rail tem teste; a barra não |
-| NeonSegmentedControl | navegação | Só o `NeonTabs` é exercitado |
-| NeonTag | display | O badge só aparece de carona no rail |
+| NeonDialog | overlay | Open route; Future only completes when closing |
+| NeonDropdown | form | Selection, disabled item, null value |
+| NeonDrawer | navigation | Selected item and closing |
+| NeonBottomSheet | overlay | `showNeonBottomSheet` and close gesture |
+| NeonStepper | navigation | Current step, error and direction |
+| NeonDataTable | data | Header, line and scroll |
+| NeonSearchBar | form | Controller, clean, `onChanged` |
+| NeonTooltip | feedback | Hover, focus and reduce motion |
+| NeonFab | action | null `onPressed` and `busy` |
+| GradientCta | action | Disabled and semantics |
+| NeonAppBar | structure | Title, subtitle and actions |
+| NavigationCard | navigation | Hover and `onTap` |
+| NeonDivider | display | Gradient disappears in flat style |
+| NeonBottomNavBar | navigation | The rail has a test; the bar does not |
+| NeonSegmentedControl | navigation | Only `NeonTabs` is exercised |
+| NeonTag | display | The badge only appears when riding on the rail |
 
-## Melhorias, na ordem em que valem o esforço
+## Improvements, in the order they are worth the effort
 
-1. **CI com `flutter analyze` e `flutter test`.** O analyzer é estrito e hoje
-   só roda na máquina de quem lembra.
-2. **Corrigir o import do README para `material_ui`.** É o primeiro código
-   que um app novo copia.
-3. **Testes dos 13 arquivos ausentes, overlays primeiro.** Dialog, sheet e
-   menu são os que travam teste se o Future for awaited.
-4. **Helper de alpha (`c.a * x`) e corrigir o tema claro.** Feito. Ver abaixo.
-5. **Trocar `ref: main` por tag e abrir um CHANGELOG.** 0.1.0 parado não
-   comunica o que os nove widgets novos já entregaram.
-6. **Alinhar os nomes públicos ao prefixo `Lumen`.** `LumenCta`,
-   `LumenNavigationCard` e `LumenStatusChip` já estavam certos. Nesta branch
-   faltavam o fundo e o posicionamento do menu. Feito, com alias deprecated.
-7. **Fatiar `example/lib/main.dart` (1.014 linhas) e tirar `Colors.white` /
-   `Colors.black`.** A galeria é o único lugar que mostra os cinco estilos.
-   Badge, thumb do slider, sombra do menu e a barreira do sheet ignoram a
-   paleta.
+1. **CI with `flutter analyze` and `flutter test`.** The analyzer is strict and today
+It only runs on the machine of those who remember it.
+2. **Correct the README import for `material_ui`.** It is the first code
+that a new app copies.
+3. **Tests the 13 missing files, overlays first.** Dialog, sheet and
+menu are the ones that crash the test if the Future is awaited.
+4. **Alpha helper (`c.a * x`) and fix light theme.** Done. See below.
+5. **Exchange `ref: main` for tag and open a CHANGELOG.** 0.1.0 not stopped
+communicates what the nine new widgets have already delivered.
+6. **Align public names to the prefix `Lumen`.** `LumenCta`,
+`LumenNavigationCard` and `LumenStatusChip` were already right. In this branch
+the background and menu positioning were missing. Done, alias deprecated.
+7. **Slice `example/lib/main.dart` (1,014 lines) and take `Colors.white` /
+`Colors.black`.** The gallery is the only place that showcases all five styles.
+Badge, slider thumb, menu shadow and sheet barrier ignore the
+palette.
 
-## Feito na `fix/tema-claro-alpha`
+## Made at `fix/tema-claro-alpha`
 
-**`Color.scaleAlpha`.** Multiplica o alpha que a cor já tem (`a * factor`),
-com teto em `1`. `outlineAlpha` continua o caminho do contorno: no escuro o
-pedido entra direto, no claro o preto fraco é só escalado e não passa de
-`0.28`. Accent opaco segue em `withValues`, porque ali o alpha pedido é
-absoluto.
+**`Color.scaleAlpha`.** Multiplies the alpha that the color already has (`a * factor`),
+with roof in `1`. `outlineAlpha` continues the contour path: in the dark the
+order goes straight in, in light the weak black is just scaled and is nothing more than
+`0.28`. Opaque accent follows in `withValues`, because there the requested alpha is
+absolute.
 
-O helper entrou onde o token já era translúcido ou o código já multiplicava:
+The helper came in where the token was already translucent or the code already multiplied:
 
-- `textMuted` no rating, no thumb desligado do switch, no handle do bottom
-  sheet e no ponto inativo do page indicator
-- borda de `LumenStyle.borderAll` e o glow adaptado das sombras
-- pontos do fundo, que compensam a opacidade da grade com `scaleAlpha(3)`
+- `textMuted` in the rating, in the thumb off the switch, in the bottom handle
+sheet and in the inactive point of the page indicator
+- `LumenStyle.borderAll` edge and adapted shadow glow
+- background dots, which compensate the opacity of the grid with `scaleAlpha(3)`
 
-**`LumenPalette.fromSeed` no claro.** `surfaceOutline` e `surfaceHighlight`
-passam a ser o preto fraco de `LumenPalette.light` (`0x15000000` e
-`0x08000000`). Antes o contorno era o accent a 25%, e `outlineAlpha` subia
-isso para `0.6`–`0.9`.
+**`LumenPalette.fromSeed` in the clear.** `surfaceOutline` and `surfaceHighlight`
+become the faint black of `LumenPalette.light` (`0x15000000` and
+`0x08000000`). Before the contour was the accent at 25%, and `outlineAlpha` went up
+this for `0.6`–`0.9`.
 
-**Nomes.** `animated_grid_background.dart` virou
-`lumen_animated_grid_background.dart`. `AnimatedGridBackground` e
-`GlowOrbSpec` viraram `LumenAnimatedGridBackground` e `LumenGlowOrbSpec`.
-`neonMenuPositionAt` virou `lumenMenuPositionAt`. Os três nomes antigos
-continuam, marcados como deprecated.
+**Names.** `animated_grid_background.dart` turned
+`lumen_animated_grid_background.dart`. `AnimatedGridBackground` and
+`GlowOrbSpec` became `LumenAnimatedGridBackground` and `LumenGlowOrbSpec`.
+`neonMenuPositionAt` became `lumenMenuPositionAt`. The three ancient names
+continue, marked as deprecated.
 
-## Roadmap
+##Roadmap
 
-Ainda aberto naquela leitura: banner, empty state, pin field, timeline e
-file upload. A seção “A fazer” está quase toda marcada e não serve mais como
-plano.
+Still open in that reading: banner, empty state, pin field, timeline and
+file upload. The “To do” section is almost completely marked and no longer serves as a
+flat.

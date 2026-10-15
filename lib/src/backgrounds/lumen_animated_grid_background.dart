@@ -3,20 +3,21 @@ import 'package:material_ui/material_ui.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Nome antigo de [LumenAnimatedGridBackground].
+/// Old name of [LumenAnimatedGridBackground].
 @Deprecated('Use LumenAnimatedGridBackground')
 typedef AnimatedGridBackground = LumenAnimatedGridBackground;
 
-/// Nome antigo de [LumenGlowOrbSpec].
+/// Old name of [LumenGlowOrbSpec].
 @Deprecated('Use LumenGlowOrbSpec')
 typedef GlowOrbSpec = LumenGlowOrbSpec;
 
-/// Pano de fundo decorativo com grade futurística, gradiente e glow orbs.
-/// Totalmente parametrizável — defaults reproduzem o visual original do tema.
+/// Decorative backdrop with futuristic grid, gradient and glow orbs.
+///
+/// Fully configurable — defaults reproduce the original look of the theme.
 class LumenAnimatedGridBackground extends StatelessWidget {
-  /// Cria um fundo decorativo para envolver [child].
-  ///
-  /// Quando não recebe customizações, usa o gradiente e os orbs padrão do kit.
+  /// Creates a decorative background to surround [child].
+  /// When it doesn't receive customizations, it uses the kit's default gradient
+  /// and orbs.
   const LumenAnimatedGridBackground({
     required this.child,
     super.key,
@@ -28,28 +29,35 @@ class LumenAnimatedGridBackground extends StatelessWidget {
     this.showGrid = true,
   });
 
-  /// Conteúdo renderizado acima do gradiente, grid e orbs.
+  /// Content rendered above the gradient, grid and orbs.
   final Widget child;
 
-  /// Gradiente de fundo. Default: `palette.backgroundGradient`.
+  /// Background gradient.
+  ///
+  /// Default: `palette.backgroundGradient`.
   final Gradient? gradient;
 
-  /// Lista de orbs. Default: `palette.primary` no canto superior direito e
-  /// `palette.secondary` no inferior esquerdo, ou nenhum quando
-  /// [LumenStyle.orbs] é `false`.
+  /// Orb list.
+  ///
+  /// Default: `palette.primary` in the upper right corner and `palette.secondary`
+  /// at bottom left, or none when [LumenStyle.orbs] is `false`.
   final List<LumenGlowOrbSpec>? orbs;
 
-  /// Distância em px entre linhas da grid.
+  /// Distance in px between grid lines.
   final double gridSpacing;
 
-  /// Cor das linhas da grid. Default: `palette.primary`.
+  /// Color of the grid lines.
+  ///
+  /// Default: `palette.primary`.
   final Color? gridColor;
 
-  /// Opacidade das linhas da grid (0..1).
+  /// Opacity of the grid lines (0..1).
   final double gridOpacity;
 
-  /// Se `false`, omite a grid/pontos e mantém só gradiente + orbs. O tipo de
-  /// decoração (grid, pontos ou nenhuma) vem de [LumenStyle.background].
+  /// If `false`, omits the grid/points and only keeps gradient + orbs.
+  ///
+  /// The type of decoration (grid, dots or none) comes from
+  /// [LumenStyle.background].
   final bool showGrid;
 
   @override
@@ -99,12 +107,11 @@ class LumenAnimatedGridBackground extends StatelessWidget {
   ];
 }
 
-/// Configuração de um glow orb posicionado no fundo.
+/// Configuration of a glow orb positioned in the background.
 @immutable
 class LumenGlowOrbSpec {
-  /// Cria a configuração de um orb de brilho.
-  ///
-  /// Os campos de posição seguem a mesma semântica de [Positioned].
+  /// Creates a glow orb configuration.
+  /// Position fields follow the same semantics as [Positioned].
   const LumenGlowOrbSpec({
     required this.color,
     required this.size,
@@ -115,25 +122,25 @@ class LumenGlowOrbSpec {
     this.opacity = 0.35,
   });
 
-  /// Cor base usada no centro do gradiente radial.
+  /// Base color used at the center of the radial gradient.
   final Color color;
 
-  /// Diâmetro do orb em pixels lógicos.
+  /// Orb diameter in logical pixels.
   final double size;
 
-  /// Distância opcional até o topo do [Stack].
+  /// Optional distance to the top of the [Stack].
   final double? top;
 
-  /// Distância opcional até a direita do [Stack].
+  /// Optional distance to the right of [Stack].
   final double? right;
 
-  /// Distância opcional até a base do [Stack].
+  /// Optional distance to the base of the [Stack].
   final double? bottom;
 
-  /// Distância opcional até a esquerda do [Stack].
+  /// Optional distance to the left of the [Stack].
   final double? left;
 
-  /// Opacidade aplicada ao centro do orb.
+  /// Opacity applied to the center of the orb.
   final double opacity;
 }
 

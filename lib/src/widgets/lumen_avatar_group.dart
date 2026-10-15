@@ -5,12 +5,11 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_avatar.dart';
 
-/// Avatares empilhados com sobreposição e um "+N" para o excedente.
-/// Para participantes, membros de equipe, quem curtiu…
+/// Stacked avatars with overlay and a "+N" for overflow.
 ///
-/// Os [avatars] são redesenhados com o [radius] do grupo: o `radius` e o
-/// `statusColor` de cada [LumenAvatar] são ignorados aqui.
-///
+/// For participants, team members, anyone who liked…
+/// The [avatars] are redesigned with the [radius] from the group: the `radius`
+/// and the `statusColor` of each [LumenAvatar] are ignored here.
 /// ```dart
 /// LumenAvatarGroup(
 ///   avatars: <LumenAvatar>[
@@ -21,7 +20,7 @@ import 'lumen_avatar.dart';
 /// )
 /// ```
 class LumenAvatarGroup extends StatelessWidget {
-  /// Cria o grupo.
+  /// Create the group.
   const LumenAvatarGroup({
     required this.avatars,
     super.key,
@@ -36,33 +35,41 @@ class LumenAvatarGroup extends StatelessWidget {
   }) : assert(maxVisible > 0),
        assert(overlap >= 0 && overlap < 1);
 
-  /// Avatares do grupo, na ordem de exibição.
+  /// Group avatars, in display order.
   final List<LumenAvatar> avatars;
 
-  /// Quantos avatares aparecem antes do "+N".
+  /// How many avatars appear before the "+N".
   final int maxVisible;
 
-  /// Total real de pessoas, quando [avatars] traz só uma amostra (ex.: a API
-  /// devolve 3 fotos e "128 participantes"). Default: `avatars.length`.
+  /// Real total of people, when [avatars] only brings a sample (e.g.
+  ///
+  /// the API returns 3 photos and "128 participants"). Default: `avatars.length`.
   final int? total;
 
-  /// Raio de cada avatar.
+  /// Radius of each avatar.
   final double radius;
 
-  /// Fração do diâmetro que cada avatar cobre do anterior (0 a 1).
+  /// Fraction of the diameter that each avatar covers the previous one (0 to 1).
   final double overlap;
 
-  /// Accent dos anéis e do "+N". Default: `palette.primary`.
+  /// Accent of rings and "+N".
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Cor do contorno que separa os avatares. Default:
-  /// `palette.backgroundDeep`.
+  /// Color of the outline that separates the avatars.
+  ///
+  /// Default: `palette.backgroundDeep`.
   final Color? ringColor;
 
-  /// Chamado ao tocar no "+N". `null` = não tocável.
+  /// Called by touching "+N".
+  ///
+  /// `null` = not touchable.
   final VoidCallback? onOverflowTap;
 
-  /// Rótulo do grupo para leitores de tela (ex.: "5 participantes").
+  /// Group label for screen readers (e.g.
+  ///
+  /// "5 participants").
   final String? semanticLabel;
 
   static const double _ring = 2;

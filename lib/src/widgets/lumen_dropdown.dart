@@ -4,29 +4,32 @@ import '../foundation/lumen_decorations.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Item exibido no [LumenDropdown]. Mantém o tipo do valor genérico.
+/// Item displayed on [LumenDropdown].
+///
+/// Maintains the type of the generic value.
 class LumenDropdownItem<T> {
-  /// Cria um item de dropdown com [value] e [label].
+  /// Creates a dropdown item with [value] and [label].
   const LumenDropdownItem({
     required this.value,
     required this.label,
     this.icon,
   });
 
-  /// Valor retornado quando este item é selecionado.
+  /// Value returned when this item is selected.
   final T value;
 
-  /// Texto exibido na lista de opções.
+  /// Text displayed in the options list.
   final String label;
 
-  /// Ícone opcional exibido antes de [label].
+  /// Optional icon displayed before [label].
   final IconData? icon;
 }
 
-/// Dropdown estilizado com a borda e o glow do tema. Substitui o
-/// [DropdownButton] padrão usando [DropdownButtonFormField].
+/// Stylized dropdown with theme border and glow.
+///
+/// Replaces the [DropdownButton] defaults to [DropdownButtonFormField].
 class LumenDropdown<T> extends StatelessWidget {
-  /// Cria um dropdown neon para valores do tipo [T].
+  /// Creates a neon dropdown for values ​​of type [T].
   const LumenDropdown({
     required this.value,
     required this.items,
@@ -41,36 +44,37 @@ class LumenDropdown<T> extends StatelessWidget {
     this.autovalidateMode,
   });
 
-  /// Valor atualmente selecionado.
+  /// Currently selected value.
   final T? value;
 
-  /// Opções exibidas pelo dropdown.
+  /// Options displayed by dropdown.
   final List<LumenDropdownItem<T>> items;
 
-  /// Callback chamado quando a seleção muda.
-  ///
-  /// Quando `null`, o dropdown fica desabilitado pelo [DropdownButtonFormField].
+  /// Callback called when the selection changes.
+  /// When `null`, the dropdown is disabled by [DropdownButtonFormField].
   final ValueChanged<T?>? onChanged;
 
-  /// Rótulo exibido pelo campo.
+  /// Label displayed by the field.
   final String? label;
 
-  /// Texto exibido quando nenhum valor foi selecionado.
+  /// Text displayed when no value has been selected.
   final String? hint;
 
-  /// Ícone opcional exibido no início do campo.
+  /// Optional icon displayed at the beginning of the field.
   final IconData? icon;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Mensagem de erro exibida abaixo do campo.
+  /// Error message displayed below the field.
   final String? errorText;
 
-  /// Validação usada por um [Form] ancestral.
+  /// Validation used by an ancestor [Form].
   final FormFieldValidator<T>? validator;
 
-  /// Quando validar automaticamente.
+  /// When to validate automatically.
   final AutovalidateMode? autovalidateMode;
 
   @override

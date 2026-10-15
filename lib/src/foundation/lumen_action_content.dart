@@ -1,9 +1,11 @@
 import 'package:material_ui/material_ui.dart';
 
-/// Conteúdo padrão de ação: spinner (quando [busy]) ou [icon], seguido do
-/// [label]. Compartilhado por botões, CTA e FAB.
+/// Default action content: spinner (when [busy]) or [icon], followed by the
+/// [label].
+///
+/// Shared by buttons, CTA and FAB.
 class LumenActionContent extends StatelessWidget {
-  /// Cria o conteúdo de uma ação.
+  /// Creates the content of an action.
   const LumenActionContent({
     required this.color,
     super.key,
@@ -17,31 +19,35 @@ class LumenActionContent extends StatelessWidget {
     this.textStyle,
   });
 
-  /// Cor do texto, ícone e spinner.
+  /// Text, icon and spinner color.
   final Color color;
 
-  /// Texto. Se `null`, mostra só o ícone/spinner.
+  /// Text.
+  ///
+  /// If `null`, it only shows the icon/spinner.
   final String? label;
 
-  /// Ícone exibido antes do [label].
+  /// Icon displayed before [label].
   final IconData? icon;
 
-  /// Troca o ícone por um spinner.
+  /// Swap the icon for a spinner.
   final bool busy;
 
-  /// Tamanho do ícone.
+  /// Icon size.
   final double iconSize;
 
-  /// Lado do spinner.
+  /// Spinner side.
   final double spinnerSize;
 
-  /// Espaço entre ícone e texto.
+  /// Space between icon and text.
   final double gap;
 
-  /// Ocupa toda a largura, centralizando o conteúdo.
+  /// It occupies the entire width, centralizing the content.
   final bool expand;
 
-  /// Estilo do texto. Default: `labelLarge` do tema.
+  /// Text style.
+  ///
+  /// Default: `labelLarge` of the theme.
   final TextStyle? textStyle;
 
   @override

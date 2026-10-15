@@ -5,9 +5,9 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_icon_button.dart';
 
-/// Input numérico "− 1 +" para carrinho e configurações. Não confundir com
-/// o `LumenStepper`, que mostra etapas de um fluxo.
+/// Numeric input "− 1 +" for cart and settings.
 ///
+/// Not to be confused with o `LumenStepper`, which shows steps in a flow.
 /// ```dart
 /// LumenQuantityStepper(
 ///   value: _qtd,
@@ -17,7 +17,9 @@ import 'lumen_icon_button.dart';
 /// )
 /// ```
 class LumenQuantityStepper extends StatelessWidget {
-  /// Cria o stepper. Com [onChanged] `null`, fica desabilitado.
+  /// Creates the stepper.
+  ///
+  /// With [onChanged] `null` is disabled.
   const LumenQuantityStepper({
     required this.value,
     required this.onChanged,
@@ -32,31 +34,39 @@ class LumenQuantityStepper extends StatelessWidget {
   }) : assert(step > 0),
        assert(max == null || max >= min);
 
-  /// Valor atual.
+  /// Current value.
   final int value;
 
-  /// Chamado com o novo valor, já limitado a [min]..[max].
+  /// Called with the new value, already limited to [min]..[max].
   final ValueChanged<int>? onChanged;
 
-  /// Menor valor. No mínimo, o "−" fica desabilitado.
+  /// Lower value.
+  ///
+  /// At the very least, the "−" is disabled.
   final int min;
 
-  /// Maior valor. `null` = sem limite.
+  /// Greater value.
+  ///
+  /// `null` = no limit.
   final int? max;
 
-  /// Quanto cada toque soma ou subtrai.
+  /// How much each touch adds or subtracts.
   final int step;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Lado dos botões − e +.
+  /// Side of the − and + buttons.
   final double buttonSize;
 
-  /// Rótulo para leitores de tela (ex.: "Quantidade").
+  /// Label for screen readers (e.g.
+  ///
+  /// "Quantity").
   final String? semanticLabel;
 
-  /// Formata o valor exibido (ex.: `(v) => '$v un.'`).
+  /// Formats the displayed value (e.g.: `(v) => '$v un.'`).
   final String Function(int value)? format;
 
   int _clamp(int v) {

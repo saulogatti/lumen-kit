@@ -6,36 +6,37 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Definição de cada step.
+/// Definition of each step.
 class LumenStep {
-  /// Cria a definição de um passo do [LumenStepper].
+  /// Creates a [LumenStepper] one-step definition.
   const LumenStep({required this.title, this.subtitle, this.content});
 
-  /// Título exibido no step.
+  /// Title displayed on the step.
   final String title;
 
-  /// Texto auxiliar exibido abaixo de [title].
+  /// Auxiliary text displayed below [title].
   final String? subtitle;
 
-  /// Conteúdo exibido abaixo do título quando o step está ativo (apenas no
-  /// modo vertical).
+  /// Content displayed below the title when the step is active (only in vertical
+  /// mode).
   final Widget? content;
 }
 
-/// Direção de apresentação do [LumenStepper].
+/// [LumenStepper] presentation direction.
 enum LumenStepperDirection {
-  /// Mostra os steps em linha como indicador de progresso.
+  /// Shows steps in line as a progress indicator.
   horizontal,
 
-  /// Mostra os steps em coluna e expande o conteúdo do step ativo.
+  /// Shows the steps in a column and expands the content of the active step.
   vertical,
 }
 
-/// Stepper temático com bolas conectadas por linhas em gradiente. Modo
-/// `horizontal` é puramente indicador; o `vertical` expande o conteúdo do
-/// step ativo.
+/// Themed stepper with balls connected by gradient lines.
+///
+/// Mode `horizontal` is purely indicator; `vertical` expands the content of
+/// active step.
 class LumenStepper extends StatelessWidget {
-  /// Cria um stepper neon controlado por [currentStep].
+  /// Creates a neon stepper controlled by [currentStep].
   const LumenStepper({
     required this.steps,
     required this.currentStep,
@@ -45,19 +46,21 @@ class LumenStepper extends StatelessWidget {
     this.accentColor,
   });
 
-  /// Lista de steps exibidos.
+  /// List of displayed steps.
   final List<LumenStep> steps;
 
-  /// Índice do step atual.
+  /// Current step index.
   final int currentStep;
 
-  /// Direção visual do stepper.
+  /// Visual direction of the stepper.
   final LumenStepperDirection direction;
 
-  /// Callback chamado com o índice do step tocado.
+  /// Callback called with the index of the played step.
   final ValueChanged<int>? onStepTapped;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
   @override

@@ -3,27 +3,27 @@ import 'package:material_ui/material_ui.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Tom semântico para um chip de status.
+/// Semantic tone for a status chip.
 enum LumenStatusTone {
-  /// Estado neutro ou sem prioridade.
+  /// Neutral or non-priority state.
   neutral,
 
-  /// Estado informativo.
+  /// Informational status.
   info,
 
-  /// Estado de sucesso.
+  /// Success status.
   success,
 
-  /// Estado de atenção ou alerta.
+  /// State of attention or alert.
   warning,
 
-  /// Estado de erro ou perigo.
+  /// Error or danger state.
   danger,
 }
 
-/// Resolve a cor de um [LumenStatusTone] a partir da paleta ativa.
+/// Resolves the color of a [LumenStatusTone] from the active palette.
 extension LumenStatusToneColor on LumenStatusTone {
-  /// Cor do tom na paleta [p].
+  /// Shade color in the [p] palette.
   Color colorOf(LumenPalette p) => switch (this) {
     LumenStatusTone.neutral => p.textMuted,
     LumenStatusTone.info => p.primary,
@@ -32,7 +32,7 @@ extension LumenStatusToneColor on LumenStatusTone {
     LumenStatusTone.danger => p.danger,
   };
 
-  /// Ícone padrão do tom (snackbar, toast).
+  /// Default tone icon (snackbar, toast).
   IconData get icon => switch (this) {
     LumenStatusTone.neutral => Icons.info_outline_rounded,
     LumenStatusTone.info => Icons.bolt_rounded,
@@ -42,9 +42,9 @@ extension LumenStatusToneColor on LumenStatusTone {
   };
 }
 
-/// Chip compacto que comunica um status por cor semântica.
+/// Compact chip that communicates status by color semantics.
 class LumenStatusChip extends StatelessWidget {
-  /// Cria um chip de status com [label] e [tone].
+  /// Creates a status chip with [label] and [tone].
   const LumenStatusChip({
     required this.label,
     required this.tone,
@@ -52,15 +52,14 @@ class LumenStatusChip extends StatelessWidget {
     this.icon,
   });
 
-  /// Texto exibido no chip.
+  /// Text displayed on the chip.
   final String label;
 
-  /// Tom semântico usado para escolher a cor do chip.
+  /// Semantic tone used to choose the color of the chip.
   final LumenStatusTone tone;
 
-  /// Ícone opcional exibido antes de [label].
-  ///
-  /// Quando `null`, o chip exibe um ponto colorido.
+  /// Optional icon displayed before [label].
+  /// When `null`, the chip displays a colored dot.
   final IconData? icon;
 
   @override

@@ -8,23 +8,23 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_status_chip.dart';
 
-/// Posição vertical do toast na tela.
+/// Vertical position of the toast on the screen.
 enum LumenToastPosition {
-  /// Toast alinhado próximo ao topo, respeitando o padding seguro.
+  /// Toast aligned close to the top, respecting safe padding.
   top,
 
-  /// Toast alinhado próximo à base, respeitando o padding seguro.
+  /// Toast aligned close to the base, respecting safe padding.
   bottom,
 }
 
-/// Exibe um toast flutuante sobre o app via `Overlay`, sem depender de
-/// `ScaffoldMessenger`. Útil para feedbacks rápidos em telas sem `Scaffold`
-/// (ex.: splash, onboarding).
+/// Displays a floating toast over the app via `Overlay`, without depending on
+/// `ScaffoldMessenger`.
 ///
-/// Retorna um [Future] que completa quando o toast sai da tela.
-///
-/// [tone] define cor e ícone padrão, [position] escolhe o alinhamento vertical
-/// e [margin] controla a distância horizontal e vertical das bordas seguras.
+/// Useful for quick feedback on screens without `Scaffold` (e.g. splash,
+/// onboarding).
+/// Returns a [Future] that completes when the toast leaves the screen.
+/// [tone] sets default color and icon, [position] chooses vertical alignment
+/// and [margin] controls the horizontal and vertical distance from safe edges.
 Future<void> showLumenToast({
   required BuildContext context,
   required String message,

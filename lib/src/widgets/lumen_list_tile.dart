@@ -5,10 +5,10 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// ListTile temático com surface translúcida, borda accent suave e estado
-/// selecionado destacado por glow.
+/// Themed ListTile with translucent surface, soft accent border and state
+/// selected highlighted by glow.
 class LumenListTile extends StatelessWidget {
-  /// Cria um item de lista neon.
+  /// Creates a neon list item.
   const LumenListTile({
     required this.title,
     super.key,
@@ -22,31 +22,33 @@ class LumenListTile extends StatelessWidget {
     this.dense = false,
   });
 
-  /// Texto principal do item.
+  /// Main text of the item.
   final String title;
 
-  /// Texto auxiliar exibido abaixo de [title].
+  /// Auxiliary text displayed below [title].
   final String? subtitle;
 
-  /// Widget opcional exibido antes do texto.
+  /// Optional widget displayed before text.
   final Widget? leading;
 
-  /// Widget opcional exibido no fim da linha.
+  /// Optional widget displayed at the end of the line.
   final Widget? trailing;
 
-  /// Callback executado ao tocar no item.
+  /// Callback executed when touching the item.
   final VoidCallback? onTap;
 
-  /// Callback executado no toque longo.
+  /// Callback executed on long press.
   final VoidCallback? onLongPress;
 
-  /// Se `true`, aplica destaque visual de seleção.
+  /// Whether to apply visual selection highlighting.
   final bool selected;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Highlight color override.
+  ///
+  /// Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Se `true`, reduz o espaçamento vertical.
+  /// Whether to reduce vertical spacing.
   final bool dense;
 
   @override
