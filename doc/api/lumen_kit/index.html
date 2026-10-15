@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="lumen_kit library API docs, for the Dart programming language.">
+  <title>lumen_kit library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">lumen_kit</a></li>
+    <li class="self-crumb">lumen_kit.dart</li>
+  </ol>
+  <div class="self-name">lumen_kit</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar=""
+    data-below-sidebar="lumen_kit&#47;lumen_kit-library-sidebar.html">
+  
+    <div>
+      
+
+      <h1>
+        <span class="kind-library">lumen_kit</span>
+        library 
+ 
+
+      </h1>
+    </div>
+
+    
+<section class="desc markdown">
+  <p>Complete kit: components + theme (<code>AppTheme</code>, <code>AppColors</code>).
+To use just the widgets, without any themes, import
+<code>package:lumen_kit/components.dart</code>.</p>
+</section>
+
+
+    <section class="summary offset-anchor" id="classes">
+      <h2>Classes</h2>
+      <dl>
+          <dt id="AppColors">
+  <span class="name "><a href="../lumen_kit/AppColors-class.html">AppColors</a></span> 
+
+</dt>
+<dd>
+  Application color palette (futuristic theme).
+</dd>
+
+          <dt id="AppTheme">
+  <span class="name "><a href="../lumen_kit/AppTheme-class.html">AppTheme</a></span> 
+
+</dt>
+<dd>
+  Central theme of the application.
+</dd>
+
+          <dt id="LumenActionContent">
+  <span class="name "><a href="../lumen_kit/LumenActionContent-class.html">LumenActionContent</a></span> 
+
+</dt>
+<dd>
+  Default action content: spinner (when <a href="../lumen_kit/LumenActionContent/busy.html">busy</a>) or <a href="../lumen_kit/LumenActionContent/icon.html">icon</a>, followed by the
+<a href="../lumen_kit/LumenActionContent/label.html">label</a>.
+</dd>
+
+          <dt id="LumenAnimatedGridBackground">
+  <span class="name "><a href="../lumen_kit/LumenAnimatedGridBackground-class.html">LumenAnimatedGridBackground</a></span> 
+
+</dt>
+<dd>
+  Decorative backdrop with futuristic grid, gradient and glow orbs.
+</dd>
+
+          <dt id="LumenAppBar">
+  <span class="name "><a href="../lumen_kit/LumenAppBar-class.html">LumenAppBar</a></span> 
+
+</dt>
+<dd>
+  AppBar with neon identity: transparent, with bottom gradient line and
+typography consistent with the theme.
+</dd>
+
+          <dt id="LumenAvatar">
+  <span class="name "><a href="../lumen_kit/LumenAvatar-class.html">LumenAvatar</a></span> 
+
+</dt>
+<dd>
+  Circular avatar with gradient border and optional glow.
+</dd>
+
+          <dt id="LumenAvatarGroup">
+  <span class="name "><a href="../lumen_kit/LumenAvatarGroup-class.html">LumenAvatarGroup</a></span> 
+
+</dt>
+<dd>
+  Stacked avatars with overlay and a "+N" for overflow.
+</dd>
+
+          <dt id="LumenBadge">
+  <span class="name "><a href="../lumen_kit/LumenBadge-class.html">LumenBadge</a></span> 
+
+</dt>
+<dd>
+  Small stamp (usually for accountants) that can be left free or anchored to
+<a href="../lumen_kit/LumenBadge/child.html">child</a> in the upper right corner.
+</dd>
+
+          <dt id="LumenBanner">
+  <span class="name "><a href="../lumen_kit/LumenBanner-class.html">LumenBanner</a></span> 
+
+</dt>
+<dd>
+  Inline alert that remains on the screen until someone closes.
+Unlike toast and snack bars, it doesn't disappear on its own. No <a href="../lumen_kit/LumenBanner/onDismiss.html">onDismiss</a>
+there is close button.
+</dd>
+
+          <dt id="LumenBottomNavBar">
+  <span class="name "><a href="../lumen_kit/LumenBottomNavBar-class.html">LumenBottomNavBar</a></span> 
+
+</dt>
+<dd>
+  Bottom bar with 3-5 items, selected item highlighted with glow pill.
+</dd>
+
+          <dt id="LumenButton">
+  <span class="name "><a href="../lumen_kit/LumenButton-class.html">LumenButton</a></span> 
+
+</dt>
+<dd>
+  Neon button with three variants: <a href="../lumen_kit/LumenButtonVariant.html">LumenButtonVariant.solid</a>,
+<a href="../lumen_kit/LumenButtonVariant.html">LumenButtonVariant.outline</a> and <a href="../lumen_kit/LumenButtonVariant.html">LumenButtonVariant.ghost</a>.
+For primary CTA with full gradient, prefer <a href="../lumen_kit/LumenButtonVariant.html">LumenButtonVariant.solid</a> (or
+the historical shortcut <code>LumenCta</code>).
+</dd>
+
+          <dt id="LumenCard">
+  <span class="name "><a href="../lumen_kit/LumenCard-class.html">LumenCard</a></span> 
+
+</dt>
+<dd>
+  Neon theme base container: subtle gradient + accent border + optional onTap.
+</dd>
+
+          <dt id="LumenCarousel">
+  <span class="name "><a href="../lumen_kit/LumenCarousel-class.html">LumenCarousel</a></span> 
+
+</dt>
+<dd>
+  <code>PageView</code> with rounded cards, the current page highlighted and a
+<a href="../lumen_kit/LumenPageIndicator-class.html">LumenPageIndicator</a> below.
+</dd>
+
+          <dt id="LumenCheckbox">
+  <span class="name "><a href="../lumen_kit/LumenCheckbox-class.html">LumenCheckbox</a></span> 
+
+</dt>
+<dd>
+  Square checkbox with accent border and gradient marker when active.
+</dd>
+
+          <dt id="LumenChip">
+  <span class="name "><a href="../lumen_kit/LumenChip-class.html">LumenChip</a></span> 
+
+</dt>
+<dd>
+  Selectable chip: base of filters and choices.
+</dd>
+
+          <dt id="LumenChipItem">
+  <span class="name "><a href="../lumen_kit/LumenChipItem-class.html">LumenChipItem</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Option of <a href="../lumen_kit/LumenChoiceChips-class.html">LumenChoiceChips</a> and <a href="../lumen_kit/LumenFilterChips-class.html">LumenFilterChips</a>.
+</dd>
+
+          <dt id="LumenChoiceChips">
+  <span class="name "><a href="../lumen_kit/LumenChoiceChips-class.html">LumenChoiceChips</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Group of single-choice chips (e.g.
+</dd>
+
+          <dt id="LumenCircularProgress">
+  <span class="name "><a href="../lumen_kit/LumenCircularProgress-class.html">LumenCircularProgress</a></span> 
+
+</dt>
+<dd>
+  Circular spinner with neon gradient.
+</dd>
+
+          <dt id="LumenContextMenu">
+  <span class="name "><a href="../lumen_kit/LumenContextMenu-class.html">LumenContextMenu</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Open a context menu with right click (desktop/web) or long press (mobile) on
+<a href="../lumen_kit/LumenContextMenu/child.html">child</a>, in the pointer position.
+It uses <code>GestureDetector</code> because it needs the position of the pointer,
+which the <code>LumenPressable</code> does not expose; Screen readers open the menu by
+swiping long press.
+</dd>
+
+          <dt id="LumenCta">
+  <span class="name "><a href="../lumen_kit/LumenCta-class.html">LumenCta</a></span> 
+
+</dt>
+<dd>
+  Primary CTA with neon gradient.
+</dd>
+
+          <dt id="LumenDataTable">
+  <span class="name "><a href="../lumen_kit/LumenDataTable-class.html">LumenDataTable</a></span> 
+
+</dt>
+<dd>
+  Themed wrapper about <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataTable-class.html">DataTable</a>.
+</dd>
+
+          <dt id="LumenDatePicker">
+  <span class="name "><a href="../lumen_kit/LumenDatePicker-class.html">LumenDatePicker</a></span> 
+
+</dt>
+<dd>
+  Read-only field that opens <a href="../lumen_kit/showLumenDatePicker.html">showLumenDatePicker</a> when touched.
+</dd>
+
+          <dt id="LumenDecorations">
+  <span class="name "><a href="../lumen_kit/LumenDecorations-class.html">LumenDecorations</a></span> 
+
+</dt>
+<dd>
+  Decorations shared by kit widgets.
+</dd>
+
+          <dt id="LumenDialog">
+  <span class="name "><a href="../lumen_kit/LumenDialog-class.html">LumenDialog</a></span> 
+
+</dt>
+<dd>
+  Stylized dialog with gradient surface, accent border and theme typography.
+</dd>
+
+          <dt id="LumenDivider">
+  <span class="name "><a href="../lumen_kit/LumenDivider-class.html">LumenDivider</a></span> 
+
+</dt>
+<dd>
+  Gradient accent divider that fades at the ends.
+</dd>
+
+          <dt id="LumenDrawer">
+  <span class="name "><a href="../lumen_kit/LumenDrawer-class.html">LumenDrawer</a></span> 
+
+</dt>
+<dd>
+  Side drawer with gradient background and vertical accent border.
+Use directly on <code>Scaffold(drawer: LumenDrawer(...))</code>. Children can be any
+widgets — usually a custom header followed by <a href="../lumen_kit/LumenDrawerItem-class.html">LumenDrawerItem</a>s.
+</dd>
+
+          <dt id="LumenDrawerItem">
+  <span class="name "><a href="../lumen_kit/LumenDrawerItem-class.html">LumenDrawerItem</a></span> 
+
+</dt>
+<dd>
+  Item defaults to <a href="../lumen_kit/LumenDrawer-class.html">LumenDrawer</a>, with glow in the selected state.
+</dd>
+
+          <dt id="LumenDropdown">
+  <span class="name "><a href="../lumen_kit/LumenDropdown-class.html">LumenDropdown</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Stylized dropdown with theme border and glow.
+</dd>
+
+          <dt id="LumenDropdownItem">
+  <span class="name "><a href="../lumen_kit/LumenDropdownItem-class.html">LumenDropdownItem</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Item displayed on <a href="../lumen_kit/LumenDropdown-class.html">LumenDropdown</a>.
+</dd>
+
+          <dt id="LumenEmptyState">
+  <span class="name "><a href="../lumen_kit/LumenEmptyState-class.html">LumenEmptyState</a></span> 
+
+</dt>
+<dd>
+  Block for when there is no data: icon, title, text and a CTA.
+Without <a href="../lumen_kit/LumenEmptyState/onPressed.html">onPressed</a>, the button does not appear.
+</dd>
+
+          <dt id="LumenExpansionTile">
+  <span class="name "><a href="../lumen_kit/LumenExpansionTile-class.html">LumenExpansionTile</a></span> 
+
+</dt>
+<dd>
+  Expandable tile with surface header, icon with animated rotation and border
+accent when opened.
+</dd>
+
+          <dt id="LumenFab">
+  <span class="name "><a href="../lumen_kit/LumenFab-class.html">LumenFab</a></span> 
+
+</dt>
+<dd>
+  Floating Action Button in neon style.
+</dd>
+
+          <dt id="LumenFilterChips">
+  <span class="name "><a href="../lumen_kit/LumenFilterChips-class.html">LumenFilterChips</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Group of filter chips (several marked at the same time, with check).
+</dd>
+
+          <dt id="LumenGlowOrbSpec">
+  <span class="name "><a href="../lumen_kit/LumenGlowOrbSpec-class.html">LumenGlowOrbSpec</a></span> 
+
+</dt>
+<dd>
+  Configuration of a glow orb positioned in the background.
+</dd>
+
+          <dt id="LumenIconButton">
+  <span class="name "><a href="../lumen_kit/LumenIconButton-class.html">LumenIconButton</a></span> 
+
+</dt>
+<dd>
+  Circular/square button containing just one icon, in neon style.
+</dd>
+
+          <dt id="LumenLabeled">
+  <span class="name "><a href="../lumen_kit/LumenLabeled-class.html">LumenLabeled</a></span> 
+
+</dt>
+<dd>
+  Control followed by a text label, with the color turned off when disabled.
+</dd>
+
+          <dt id="LumenLinearProgress">
+  <span class="name "><a href="../lumen_kit/LumenLinearProgress-class.html">LumenLinearProgress</a></span> 
+
+</dt>
+<dd>
+  Linear progress bar with neon and glow gradient.
+If <a href="../lumen_kit/LumenLinearProgress/value.html">value</a> is <code>null</code>, displays indeterminate animation.
+</dd>
+
+          <dt id="LumenList">
+  <span class="name "><a href="../lumen_kit/LumenList-class.html">LumenList</a></span> 
+
+</dt>
+<dd>
+  Lazy list for many items.
+</dd>
+
+          <dt id="LumenListTile">
+  <span class="name "><a href="../lumen_kit/LumenListTile-class.html">LumenListTile</a></span> 
+
+</dt>
+<dd>
+  Themed ListTile with translucent surface, soft accent border and state
+selected highlighted by glow.
+</dd>
+
+          <dt id="LumenLoadingOverlay">
+  <span class="name "><a href="../lumen_kit/LumenLoadingOverlay-class.html">LumenLoadingOverlay</a></span> 
+
+</dt>
+<dd>
+  Covers <a href="../lumen_kit/LumenLoadingOverlay/child.html">child</a> with a layer that blocks touch, focus and screen reader while
+<a href="../lumen_kit/LumenLoadingOverlay/loading.html">loading</a> is <code>true</code>, with spinner and <a href="../lumen_kit/LumenLoadingOverlay/message.html">message</a> in the center.
+To lock the entire screen during an operation (e.g. submit), without save
+loading state, use <a href="../lumen_kit/showLumenLoading.html">showLumenLoading</a>.
+</dd>
+
+          <dt id="LumenLoadingPanel">
+  <span class="name "><a href="../lumen_kit/LumenLoadingPanel-class.html">LumenLoadingPanel</a></span> 
+
+</dt>
+<dd>
+  Panel with spinner and message used by <a href="../lumen_kit/LumenLoadingOverlay-class.html">LumenLoadingOverlay</a> and
+<a href="../lumen_kit/showLumenLoading.html">showLumenLoading</a>.
+</dd>
+
+          <dt id="LumenMenuButton">
+  <span class="name "><a href="../lumen_kit/LumenMenuButton-class.html">LumenMenuButton</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  "⋮" button (or another <a href="../lumen_kit/LumenMenuButton/icon.html">icon</a>) that opens an action menu anchored to it.
+</dd>
+
+          <dt id="LumenMenuDivider">
+  <span class="name "><a href="../lumen_kit/LumenMenuDivider-class.html">LumenMenuDivider</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Line separating groups of actions.
+</dd>
+
+          <dt id="LumenMenuEntry">
+  <span class="name "><a href="../lumen_kit/LumenMenuEntry-class.html">LumenMenuEntry</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Entering a neon menu: <a href="../lumen_kit/LumenMenuItem-class.html">LumenMenuItem</a> or <a href="../lumen_kit/LumenMenuDivider-class.html">LumenMenuDivider</a>.
+</dd>
+
+          <dt id="LumenMenuItem">
+  <span class="name "><a href="../lumen_kit/LumenMenuItem-class.html">LumenMenuItem</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Action of a neon menu.
+</dd>
+
+          <dt id="LumenMotion">
+  <span class="name "><a href="../lumen_kit/LumenMotion-class.html">LumenMotion</a></span> 
+
+</dt>
+<dd>
+  Motion helpers that respect the system's "reduce animations".
+</dd>
+
+          <dt id="LumenNavigationCard">
+  <span class="name "><a href="../lumen_kit/LumenNavigationCard-class.html">LumenNavigationCard</a></span> 
+
+</dt>
+<dd>
+  Reusable main screen navigation card.
+</dd>
+
+          <dt id="LumenNavItem">
+  <span class="name "><a href="../lumen_kit/LumenNavItem-class.html">LumenNavItem</a></span> 
+
+</dt>
+<dd>
+  Item from <a href="../lumen_kit/LumenBottomNavBar-class.html">LumenBottomNavBar</a> / <a href="../lumen_kit/LumenNavRail-class.html">LumenNavRail</a>.
+</dd>
+
+          <dt id="LumenNavRail">
+  <span class="name "><a href="../lumen_kit/LumenNavRail-class.html">LumenNavRail</a></span> 
+
+</dt>
+<dd>
+  Side variant (tablet/desktop).
+</dd>
+
+          <dt id="LumenPageIndicator">
+  <span class="name "><a href="../lumen_kit/LumenPageIndicator-class.html">LumenPageIndicator</a></span> 
+
+</dt>
+<dd>
+  Page dots for onboarding and galleries.
+</dd>
+
+          <dt id="LumenPalette">
+  <span class="name "><a href="../lumen_kit/LumenPalette-class.html">LumenPalette</a></span> 
+
+</dt>
+<dd>
+  Neon theme instantiable palette.
+</dd>
+
+          <dt id="LumenPinField">
+  <span class="name "><a href="../lumen_kit/LumenPinField-class.html">LumenPinField</a></span> 
+
+</dt>
+<dd>
+  Code field (OTP): a sequence of places controlled by <a href="../lumen_kit/LumenPinField/value.html">value</a>.
+<code>onChanged == null</code> disables. <a href="../lumen_kit/LumenPinField/onCompleted.html">onCompleted</a> fires when the last house is
+filled. Pasting a code completes the sequence all at once.
+</dd>
+
+          <dt id="LumenPressable">
+  <span class="name "><a href="../lumen_kit/LumenPressable-class.html">LumenPressable</a></span> 
+
+</dt>
+<dd>
+  Touchable Kit Base: Applies Disabled Opacity, Cropped Ripple in
+<a href="../lumen_kit/LumenPressable/borderRadius.html">borderRadius</a>, keyboard focus and button semantics.
+Use to build your own components with the same behavior as kit buttons:
+</dd>
+
+          <dt id="LumenQuantityStepper">
+  <span class="name "><a href="../lumen_kit/LumenQuantityStepper-class.html">LumenQuantityStepper</a></span> 
+
+</dt>
+<dd>
+  Numeric input "− 1 +" for cart and settings.
+</dd>
+
+          <dt id="LumenRadio">
+  <span class="name "><a href="../lumen_kit/LumenRadio-class.html">LumenRadio</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Circular radio with glow in the selected state.
+</dd>
+
+          <dt id="LumenRangeSlider">
+  <span class="name "><a href="../lumen_kit/LumenRangeSlider-class.html">LumenRangeSlider</a></span> 
+
+</dt>
+<dd>
+  Interval slider (two thumbs) with the same look as <a href="../lumen_kit/LumenSlider-class.html">LumenSlider</a>.
+</dd>
+
+          <dt id="LumenRating">
+  <span class="name "><a href="../lumen_kit/LumenRating-class.html">LumenRating</a></span> 
+
+</dt>
+<dd>
+  Rating stars.
+</dd>
+
+          <dt id="LumenScope">
+  <span class="name "><a href="../lumen_kit/LumenScope-class.html">LumenScope</a></span> 
+
+</dt>
+<dd>
+  Sets palette and neon style for a subtree without touching <code>ThemeData</code>.
+Useful when the app has its own theme and only wants to use some components
+of the kit with other colors:
+</dd>
+
+          <dt id="LumenSearchBar">
+  <span class="name "><a href="../lumen_kit/LumenSearchBar-class.html">LumenSearchBar</a></span> 
+
+</dt>
+<dd>
+  Compact search bar, with magnifying glass prefix and clear button when there
+is content.
+</dd>
+
+          <dt id="LumenSegmentedControl">
+  <span class="name "><a href="../lumen_kit/LumenSegmentedControl-class.html">LumenSegmentedControl</a></span> 
+
+</dt>
+<dd>
+  Segmented control compact (pill).
+</dd>
+
+          <dt id="LumenSkeleton">
+  <span class="name "><a href="../lumen_kit/LumenSkeleton-class.html">LumenSkeleton</a></span> 
+
+</dt>
+<dd>
+  Skeleton/shimmer in neon style.
+</dd>
+
+          <dt id="LumenSlider">
+  <span class="name "><a href="../lumen_kit/LumenSlider-class.html">LumenSlider</a></span> 
+
+</dt>
+<dd>
+  Slider with accent gradient track and glow thumb.
+</dd>
+
+          <dt id="LumenStatusChip">
+  <span class="name "><a href="../lumen_kit/LumenStatusChip-class.html">LumenStatusChip</a></span> 
+
+</dt>
+<dd>
+  Compact chip that communicates status by color semantics.
+</dd>
+
+          <dt id="LumenStep">
+  <span class="name "><a href="../lumen_kit/LumenStep-class.html">LumenStep</a></span> 
+
+</dt>
+<dd>
+  Definition of each step.
+</dd>
+
+          <dt id="LumenStepper">
+  <span class="name "><a href="../lumen_kit/LumenStepper-class.html">LumenStepper</a></span> 
+
+</dt>
+<dd>
+  Themed stepper with balls connected by gradient lines.
+</dd>
+
+          <dt id="LumenStyle">
+  <span class="name "><a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span> 
+
+</dt>
+<dd>
+  Kit visual effect tokens: shadow, fill, surface, border and background.
+</dd>
+
+          <dt id="LumenSwitch">
+  <span class="name "><a href="../lumen_kit/LumenSwitch-class.html">LumenSwitch</a></span> 
+
+</dt>
+<dd>
+  Stylized switch with translucent track, thumb accent and glow when active.
+</dd>
+
+          <dt id="LumenTabItem">
+  <span class="name "><a href="../lumen_kit/LumenTabItem-class.html">LumenTabItem</a></span> 
+
+</dt>
+<dd>
+  Item from <a href="../lumen_kit/LumenTabs-class.html">LumenTabs</a> / <a href="../lumen_kit/LumenSegmentedControl-class.html">LumenSegmentedControl</a>.
+</dd>
+
+          <dt id="LumenTableRow">
+  <span class="name "><a href="../lumen_kit/LumenTableRow-class.html">LumenTableRow</a></span> 
+
+</dt>
+<dd>
+  "By hand" line for those who want to compose a light table without
+<a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataTable-class.html">DataTable</a> (ex: inside cards).
+</dd>
+
+          <dt id="LumenTabs">
+  <span class="name "><a href="../lumen_kit/LumenTabs-class.html">LumenTabs</a></span> 
+
+</dt>
+<dd>
+  Horizontal tabs with accent gradient indicator.
+Controlled: indicator tracks <a href="../lumen_kit/LumenTabs/selectedIndex.html">selectedIndex</a> even when it changes from the
+outside (e.g. swipe on a <code>PageView</code> or programmatic navigation).
+</dd>
+
+          <dt id="LumenTag">
+  <span class="name "><a href="../lumen_kit/LumenTag-class.html">LumenTag</a></span> 
+
+</dt>
+<dd>
+  Compact tag — lightweight variation of <code>LumenStatusChip</code>, with no required
+icon and no strong glow.
+</dd>
+
+          <dt id="LumenTextField">
+  <span class="name "><a href="../lumen_kit/LumenTextField-class.html">LumenTextField</a></span> 
+
+</dt>
+<dd>
+  Neon text field.
+</dd>
+
+          <dt id="LumenThemeExt">
+  <span class="name "><a href="../lumen_kit/LumenThemeExt-class.html">LumenThemeExt</a></span> 
+
+</dt>
+<dd>
+  ThemeExtension to access the palette via
+<code>Theme.of(context).extension&lt;LumenThemeExt&gt;()</code>.
+</dd>
+
+          <dt id="LumenTimePicker">
+  <span class="name "><a href="../lumen_kit/LumenTimePicker-class.html">LumenTimePicker</a></span> 
+
+</dt>
+<dd>
+  Read-only field that opens <a href="../lumen_kit/showLumenTimePicker.html">showLumenTimePicker</a> when touched.
+</dd>
+
+          <dt id="LumenTooltip">
+  <span class="name "><a href="../lumen_kit/LumenTooltip-class.html">LumenTooltip</a></span> 
+
+</dt>
+<dd>
+  Stylized tooltip following the neon identity (translucent surface, accent +
+glow).
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="enums">
+      <h2>Enums</h2>
+      <dl>
+          <dt id="LumenBackgroundKind">
+  <span class="name "><a href="../lumen_kit/LumenBackgroundKind.html">LumenBackgroundKind</a></span> 
+
+</dt>
+<dd>
+  <a href="../lumen_kit/LumenAnimatedGridBackground-class.html">LumenAnimatedGridBackground</a> decoration.
+</dd>
+
+          <dt id="LumenButtonVariant">
+  <span class="name "><a href="../lumen_kit/LumenButtonVariant.html">LumenButtonVariant</a></span> 
+
+</dt>
+<dd>
+  Visual variants of <a href="../lumen_kit/LumenButton-class.html">LumenButton</a>.
+</dd>
+
+          <dt id="LumenIconButtonShape">
+  <span class="name "><a href="../lumen_kit/LumenIconButtonShape.html">LumenIconButtonShape</a></span> 
+
+</dt>
+<dd>
+  <a href="../lumen_kit/LumenIconButton-class.html">LumenIconButton</a> format.
+</dd>
+
+          <dt id="LumenIconButtonVariant">
+  <span class="name "><a href="../lumen_kit/LumenIconButtonVariant.html">LumenIconButtonVariant</a></span> 
+
+</dt>
+<dd>
+  Visual variants of <a href="../lumen_kit/LumenIconButton-class.html">LumenIconButton</a>.
+</dd>
+
+          <dt id="LumenPreset">
+  <span class="name "><a href="../lumen_kit/LumenPreset.html">LumenPreset</a></span> 
+
+</dt>
+<dd>
+  Ready-made palettes.
+</dd>
+
+          <dt id="LumenShadowKind">
+  <span class="name "><a href="../lumen_kit/LumenShadowKind.html">LumenShadowKind</a></span> 
+
+</dt>
+<dd>
+  How widget shadows are drawn.
+</dd>
+
+          <dt id="LumenStatusTone">
+  <span class="name "><a href="../lumen_kit/LumenStatusTone.html">LumenStatusTone</a></span> 
+
+</dt>
+<dd>
+  Semantic tone for a status chip.
+</dd>
+
+          <dt id="LumenStepperDirection">
+  <span class="name "><a href="../lumen_kit/LumenStepperDirection.html">LumenStepperDirection</a></span> 
+
+</dt>
+<dd>
+  <a href="../lumen_kit/LumenStepper-class.html">LumenStepper</a> presentation direction.
+</dd>
+
+          <dt id="LumenToastPosition">
+  <span class="name "><a href="../lumen_kit/LumenToastPosition.html">LumenToastPosition</a></span> 
+
+</dt>
+<dd>
+  Vertical position of the toast on the screen.
+</dd>
+
+      </dl>
+    </section>
+
+
+
+    <section class="summary offset-anchor" id="extensions">
+      <h2>Extensions</h2>
+      <dl>
+          <dt id="LumenOutlineColor">
+  <span class="name "><a href="../lumen_kit/LumenOutlineColor.html">LumenOutlineColor</a></span>
+  on <a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>
+  
+
+</dt>
+<dd>
+  Alpha that does not erase what the color in the palette already carries.
+<a href="https://api.flutter.dev/flutter/dart-ui/Color/withValues.html">Color.withValues</a> replaces alpha. <a href="../lumen_kit/LumenOutlineColor/scaleAlpha.html">scaleAlpha</a> multiplies (<code>a * factor</code>).
+<a href="../lumen_kit/LumenOutlineColor/outlineAlpha.html">outlineAlpha</a> is the contour case: in the dark,
+<a href="../lumen_kit/LumenPalette/surfaceOutline.html">LumenPalette.surfaceOutline</a> is a translucent cyan and the widgets ask for
+<code>0.4</code>–<code>0.9</code> for the border to appear, so this value comes directly. In light
+the token is black at ~8% (<code>0x15000000</code>). Replacing with <code>0.9</code> turns a black
+border. In this case the order is scaled based on the token's alpha, with a
+ceiling of <code>0.28</code>.
+</dd>
+
+          <dt id="LumenStatusToneColor">
+  <span class="name "><a href="../lumen_kit/LumenStatusToneColor.html">LumenStatusToneColor</a></span>
+  on <a href="../lumen_kit/LumenStatusTone.html">LumenStatusTone</a>
+  
+
+</dt>
+<dd>
+  Resolves the color of a <a href="../lumen_kit/LumenStatusTone.html">LumenStatusTone</a> from the active palette.
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="constants">
+      <h2>Constants</h2>
+      <dl class="properties">
+          <dt id="kLumenDisabledOpacity" class="constant">
+    <span class="name "><a href="../lumen_kit/kLumenDisabledOpacity-constant.html">kLumenDisabledOpacity</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  Opacity applied to any disabled widgets in the kit.
+  
+
+</dd>
+
+          <dt id="kLumenFastDuration" class="constant">
+    <span class="name "><a href="../lumen_kit/kLumenFastDuration-constant.html">kLumenFastDuration</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span>
+  
+
+</dt>
+<dd>
+  Duration of short transitions (hover, selection, toggle).
+  
+
+</dd>
+
+          <dt id="kLumenMediumDuration" class="constant">
+    <span class="name "><a href="../lumen_kit/kLumenMediumDuration-constant.html">kLumenMediumDuration</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span>
+  
+
+</dt>
+<dd>
+  Duration of average transitions (expand, swap content).
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="functions">
+      <h2>Functions</h2>
+      <dl class="callables">
+          <dt id="lumenMenuPositionAt" class="callable">
+  <span class="name"><a href="../lumen_kit/lumenMenuPositionAt.html">lumenMenuPositionAt</a></span><span class="signature">(<wbr><span class="parameter" id="lumenMenuPositionAt-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="lumenMenuPositionAt-param-globalPosition"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Offset-class.html">Offset</a></span> <span class="parameter-name">globalPosition</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/rendering/RelativeRect-class.html">RelativeRect</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Position for <a href="../lumen_kit/showLumenMenu.html">showLumenMenu</a> at a global point on the screen (e.g.:
+<code>TapUpDetails.globalPosition</code> from a right click).
+  
+
+</dd>
+
+          <dt id="neonMenuPositionAt" class="callable">
+  <span class="name deprecated"><a class="deprecated" href="../lumen_kit/neonMenuPositionAt.html">neonMenuPositionAt</a></span><span class="signature">(<wbr><span class="parameter" id="neonMenuPositionAt-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="neonMenuPositionAt-param-globalPosition"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Offset-class.html">Offset</a></span> <span class="parameter-name">globalPosition</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/rendering/RelativeRect-class.html">RelativeRect</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Old name of <a href="../lumen_kit/lumenMenuPositionAt.html">lumenMenuPositionAt</a>.
+  
+
+</dd>
+
+          <dt id="showLumenBottomSheet" class="callable">
+  <span class="name"><a href="../lumen_kit/showLumenBottomSheet.html">showLumenBottomSheet</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr>{<span class="parameter" id="showLumenBottomSheet-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="showLumenBottomSheet-param-builder"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/WidgetBuilder.html">WidgetBuilder</a></span> <span class="parameter-name">builder</span>, </span><span class="parameter" id="showLumenBottomSheet-param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span><span class="parameter" id="showLumenBottomSheet-param-isScrollControlled"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isScrollControlled</span> = <span class="default-value">true</span>, </span><span class="parameter" id="showLumenBottomSheet-param-isDismissible"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isDismissible</span> = <span class="default-value">true</span>, </span><span class="parameter" id="showLumenBottomSheet-param-enableDrag"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">enableDrag</span> = <span class="default-value">true</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Opens a bottom sheet modal with the neon theme aesthetic (background
+gradient, accent border on top and handle).
+<code>builder</code> creates the internal content. The <code>isScrollControlled</code> flags,
+<code>isDismissible</code> and <code>enableDrag</code> are passed to <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showModalBottomSheet.html">showModalBottomSheet</a>.
+  
+
+</dd>
+
+          <dt id="showLumenDatePicker" class="callable">
+  <span class="name"><a href="../lumen_kit/showLumenDatePicker.html">showLumenDatePicker</a></span><span class="signature">(<wbr>{<span class="parameter" id="showLumenDatePicker-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="showLumenDatePicker-param-initialDate"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span> <span class="parameter-name">initialDate</span>, </span><span class="parameter" id="showLumenDatePicker-param-firstDate"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span> <span class="parameter-name">firstDate</span>, </span><span class="parameter" id="showLumenDatePicker-param-lastDate"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span> <span class="parameter-name">lastDate</span>, </span><span class="parameter" id="showLumenDatePicker-param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span><span class="parameter" id="showLumenDatePicker-param-helpText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">helpText</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Opens the default <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showDatePicker.html">showDatePicker</a> applying the neon theme.
+Uses <code>initialDate</code> as the start date and limits the selection to the range
+between <code>firstDate</code> and <code>lastDate</code>. <code>accentColor</code> replaces the default
+accent and <code>helpText</code> is passed to the Material picker.
+  
+
+</dd>
+
+          <dt id="showLumenDialog" class="callable">
+  <span class="name"><a href="../lumen_kit/showLumenDialog.html">showLumenDialog</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr>{<span class="parameter" id="showLumenDialog-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="showLumenDialog-param-title"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">title</span>, </span><span class="parameter" id="showLumenDialog-param-content"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">content</span>, </span><span class="parameter" id="showLumenDialog-param-actions"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>&gt;</span></span> <span class="parameter-name">actions</span> = <span class="default-value">const &lt;Widget&gt;[]</span>, </span><span class="parameter" id="showLumenDialog-param-accent"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accent</span>, </span><span class="parameter" id="showLumenDialog-param-icon"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/IconData-class.html">IconData</a>?</span> <span class="parameter-name">icon</span>, </span><span class="parameter" id="showLumenDialog-param-barrierDismissible"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">barrierDismissible</span> = <span class="default-value">true</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Helper to display a <a href="../lumen_kit/LumenDialog-class.html">LumenDialog</a> with <code>showDialog</code>.
+Returns the same result as <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showDialog.html">showDialog</a>. <code>barrierDismissible</code> controls
+whether tapping outside the dialog closes the modal route.
+  
+
+</dd>
+
+          <dt id="showLumenLoading" class="callable">
+  <span class="name"><a href="../lumen_kit/showLumenLoading.html">showLumenLoading</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr>{<span class="parameter" id="showLumenLoading-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="showLumenLoading-param-task"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">task</span>(), </span><span class="parameter" id="showLumenLoading-param-message"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">message</span>, </span><span class="parameter" id="showLumenLoading-param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span><span class="parameter" id="showLumenLoading-param-barrierColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">barrierColor</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Lock the entire screen with <a href="../lumen_kit/LumenLoadingPanel-class.html">LumenLoadingPanel</a> while <code>task</code> runs and
+returns its result.
+  
+
+</dd>
+
+          <dt id="showLumenMenu" class="callable">
+  <span class="name"><a href="../lumen_kit/showLumenMenu.html">showLumenMenu</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr>{<span class="parameter" id="showLumenMenu-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="showLumenMenu-param-items"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../lumen_kit/LumenMenuEntry-class.html">LumenMenuEntry</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">items</span>, </span><span class="parameter" id="showLumenMenu-param-position"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/rendering/RelativeRect-class.html">RelativeRect</a>?</span> <span class="parameter-name">position</span>, </span><span class="parameter" id="showLumenMenu-param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span><span class="parameter" id="showLumenMenu-param-initialValue"><span class="type-annotation">T?</span> <span class="parameter-name">initialValue</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Opens a floating menu with <code>items</code> and returns the chosen value, or <code>null</code>
+if the menu is closed without a choice.
+Without <code>position</code>, the menu opens anchored just below the widget owner of
+<code>context</code> (like the "⋮" on a card). To open at a point on the screen (e.g.:
+right click), use <a href="../lumen_kit/lumenMenuPositionAt.html">lumenMenuPositionAt</a>.
+  
+
+</dd>
+
+          <dt id="showLumenSnackBar" class="callable">
+  <span class="name"><a href="../lumen_kit/showLumenSnackBar.html">showLumenSnackBar</a></span><span class="signature">(<wbr>{<span class="parameter" id="showLumenSnackBar-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="showLumenSnackBar-param-message"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span><span class="parameter" id="showLumenSnackBar-param-tone"><span class="type-annotation"><a href="../lumen_kit/LumenSnackTone.html">LumenSnackTone</a></span> <span class="parameter-name">tone</span> = <span class="default-value">LumenStatusTone.info</span>, </span><span class="parameter" id="showLumenSnackBar-param-icon"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/IconData-class.html">IconData</a>?</span> <span class="parameter-name">icon</span>, </span><span class="parameter" id="showLumenSnackBar-param-duration"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">duration</span> = <span class="default-value">const Duration(seconds: 4)</span>, </span><span class="parameter" id="showLumenSnackBar-param-action"><span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/SnackBarAction-class.html">SnackBarAction</a>?</span> <span class="parameter-name">action</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/ScaffoldFeatureController-class.html">ScaffoldFeatureController</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/SnackBar-class.html">SnackBar</a></span>, <span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/SnackBarClosedReason.html">SnackBarClosedReason</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Displays a styled snackbar on the nearest <code>ScaffoldMessenger</code>.
+Reuses the <code>SnackBar</code> from the Material but exchanges the content for a
+surface with accent + glow border, in the style of the rest of the kit.
+<code>tone</code> sets default color and icon, <code>duration</code> controls display time and
+<code>action</code> adds a textual action at the end of the snackbar.
+  
+
+</dd>
+
+          <dt id="showLumenTimePicker" class="callable">
+  <span class="name"><a href="../lumen_kit/showLumenTimePicker.html">showLumenTimePicker</a></span><span class="signature">(<wbr>{<span class="parameter" id="showLumenTimePicker-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="showLumenTimePicker-param-initialTime"><span>required</span> <span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimeOfDay-class.html">TimeOfDay</a></span> <span class="parameter-name">initialTime</span>, </span><span class="parameter" id="showLumenTimePicker-param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span><span class="parameter" id="showLumenTimePicker-param-helpText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">helpText</span>, </span><span class="parameter" id="showLumenTimePicker-param-use24HourFormat"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">use24HourFormat</span>, </span><span class="parameter" id="showLumenTimePicker-param-initialEntryMode"><span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimePickerEntryMode.html">TimePickerEntryMode</a></span> <span class="parameter-name">initialEntryMode</span> = <span class="default-value">TimePickerEntryMode.dial</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimeOfDay-class.html">TimeOfDay</a>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Opens the default <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showTimePicker.html">showTimePicker</a> applying the neon theme.
+<code>initialTime</code> is the start time, <code>accentColor</code> replaces the default accent
+and <code>helpText</code> is passed to the Material picker. <code>use24HourFormat</code> strength
+(or turns off) the 24-hour clock; when <code>null</code>, it follows the configuration
+of the system.
+  
+
+</dd>
+
+          <dt id="showLumenToast" class="callable">
+  <span class="name"><a href="../lumen_kit/showLumenToast.html">showLumenToast</a></span><span class="signature">(<wbr>{<span class="parameter" id="showLumenToast-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span><span class="parameter" id="showLumenToast-param-message"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span><span class="parameter" id="showLumenToast-param-tone"><span class="type-annotation"><a href="../lumen_kit/LumenStatusTone.html">LumenStatusTone</a></span> <span class="parameter-name">tone</span> = <span class="default-value">LumenStatusTone.info</span>, </span><span class="parameter" id="showLumenToast-param-icon"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/IconData-class.html">IconData</a>?</span> <span class="parameter-name">icon</span>, </span><span class="parameter" id="showLumenToast-param-duration"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">duration</span> = <span class="default-value">const Duration(seconds: 3)</span>, </span><span class="parameter" id="showLumenToast-param-position"><span class="type-annotation"><a href="../lumen_kit/LumenToastPosition.html">LumenToastPosition</a></span> <span class="parameter-name">position</span> = <span class="default-value">LumenToastPosition.bottom</span>, </span><span class="parameter" id="showLumenToast-param-margin"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">margin</span> = <span class="default-value">24</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Displays a floating toast over the app via <code>Overlay</code>, without depending on
+<code>ScaffoldMessenger</code>.
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="typedefs">
+      <h2>Typedefs</h2>
+      <dl>
+          
+  <dt id="AnimatedGridBackground" class="">
+  <span class="name deprecated"><a class="deprecated" href="../lumen_kit/AnimatedGridBackground.html">AnimatedGridBackground</a></span>
+    = <a href="../lumen_kit/LumenAnimatedGridBackground-class.html">LumenAnimatedGridBackground</a>
+  </span>
+  
+
+</dt>
+<dd>
+  Old name of <a href="../lumen_kit/LumenAnimatedGridBackground-class.html">LumenAnimatedGridBackground</a>.
+  
+
+</dd>
+
+
+          
+  <dt id="GlowOrbSpec" class="">
+  <span class="name deprecated"><a class="deprecated" href="../lumen_kit/GlowOrbSpec.html">GlowOrbSpec</a></span>
+    = <a href="../lumen_kit/LumenGlowOrbSpec-class.html">LumenGlowOrbSpec</a>
+  </span>
+  
+
+</dt>
+<dd>
+  Old name of <a href="../lumen_kit/LumenGlowOrbSpec-class.html">LumenGlowOrbSpec</a>.
+  
+
+</dd>
+
+
+          
+  <dt id="LumenSnackTone" class="">
+  <span class="name"><a href="../lumen_kit/LumenSnackTone.html">LumenSnackTone</a></span>
+    = <a href="../lumen_kit/LumenStatusTone.html">LumenStatusTone</a>
+  </span>
+  
+
+</dt>
+<dd>
+  Snackbar semantic tone — uses the same colors as <a href="../lumen_kit/LumenStatusTone.html">LumenStatusTone</a>.
+  
+
+</dd>
+
+
+      </dl>
+    </section>
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">lumen_kit</a></li>
+    <li class="self-crumb">lumen_kit.dart</li>
+</ol>
+
+    <h5><span class="package-name">lumen_kit</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="../components/">components</a></li>
+      <li><a href="../lumen_kit/">lumen_kit</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>lumen_kit library</h5>
+  </div><!--/sidebar-offcanvas-right-->
+</main>
+<footer>
+  <span class="no-break">
+    lumen_kit
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the showLumenMenu function from the lumen_kit library, for the Dart programming language.">
+  <title>showLumenMenu function - lumen_kit library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">lumen_kit</a></li>
+    <li><a href="../lumen_kit/">lumen_kit.dart</a></li>
+    <li class="self-crumb">showLumenMenu&lt;<wbr><span class="type-parameter">T</span>&gt; function</li>
+  </ol>
+  <div class="self-name">showLumenMenu</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="lumen_kit&#47;lumen_kit-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">showLumenMenu&lt;<wbr><span class="type-parameter">T</span>&gt;</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T?</span>&gt;</span></span>
+<span class="name ">showLumenMenu</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="showLumenMenu-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
+<li><span class="parameter" id="showLumenMenu-param-items"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../lumen_kit/LumenMenuEntry-class.html">LumenMenuEntry</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">items</span>, </span></li>
+<li><span class="parameter" id="showLumenMenu-param-position"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/rendering/RelativeRect-class.html">RelativeRect</a>?</span> <span class="parameter-name">position</span>, </span></li>
+<li><span class="parameter" id="showLumenMenu-param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span></li>
+<li><span class="parameter" id="showLumenMenu-param-initialValue"><span class="type-annotation">T?</span> <span class="parameter-name">initialValue</span>, </span></li>
+</ol>})
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Opens a floating menu with <code>items</code> and returns the chosen value, or <code>null</code>
+if the menu is closed without a choice.
+Without <code>position</code>, the menu opens anchored just below the widget owner of
+<code>context</code> (like the "⋮" on a card). To open at a point on the screen (e.g.:
+right click), use <a href="../lumen_kit/lumenMenuPositionAt.html">lumenMenuPositionAt</a>.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;T?&gt; showLumenMenu&lt;T&gt;({
+  required BuildContext context,
+  required List&lt;LumenMenuEntry&lt;T&gt;&gt; items,
+  RelativeRect? position,
+  Color? accentColor,
+  T? initialValue,
+}) {
+  assert(items.isNotEmpty, &#39;O menu precisa de ao menos uma entrada.&#39;);
+  final p = LumenThemeExt.of(context).palette;
+  final s = LumenStyle.of(context);
+  final accent = accentColor ?? p.primary;
+  final text = Theme.of(context).textTheme.bodyMedium;
+  final border = s.borderAll(color: accent.withValues(alpha: 0.45), width: 1.2);
+
+  return showMenu&lt;T&gt;(
+    context: context,
+    position: position ?? _anchorBelow(context),
+    initialValue: initialValue,
+    color: p.surface.withValues(alpha: s.surfaceAlpha(0.98)),
+    surfaceTintColor: Colors.transparent,
+    elevation: s.shadow == LumenShadowKind.none ? 0 : 10,
+    shadowColor: s.shadow == LumenShadowKind.glow
+        ? accent.withValues(alpha: 0.45 * s.shadowStrength)
+        : Theme.of(context).brightness == Brightness.dark
+        ? Colors.white24
+        : Colors.black54,
+    shape: RoundedRectangleBorder(
+      borderRadius: s.radius(14),
+      side: s.borderScale == 0 ? BorderSide.none : border.top,
+    ),
+    clipBehavior: Clip.antiAlias,
+    popUpAnimationStyle: LumenMotion.reduced(context) ? AnimationStyle.noAnimation : null,
+    items: &lt;PopupMenuEntry&lt;T&gt;&gt;[
+      for (final LumenMenuEntry&lt;T&gt; entry in items)
+        switch (entry) {
+          LumenMenuDivider&lt;T&gt;() =&gt; PopupMenuDivider(height: 9, color: p.surfaceOutline),
+          final LumenMenuItem&lt;T&gt; item =&gt; PopupMenuItem&lt;T&gt;(
+            value: item.value,
+            enabled: item.enabled,
+            height: 44,
+            child: _LumenMenuRow(
+              item: item,
+              color: item.destructive ? p.danger : p.textPrimary,
+              iconColor: item.destructive ? p.danger : accent,
+              selected: initialValue != null &amp;&amp; initialValue == item.value,
+              selectedColor: accent,
+              style: text,
+            ),
+          ),
+        },
+    ],
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">lumen_kit</a></li>
+    <li><a href="../lumen_kit/">lumen_kit</a></li>
+    <li class="self-crumb">showLumenMenu&lt;<wbr><span class="type-parameter">T</span>&gt; function</li>
+</ol>
+
+    <h5>lumen_kit library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    lumen_kit
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

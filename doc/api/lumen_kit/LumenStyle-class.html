@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the LumenStyle class from the lumen_kit library, for the Dart programming language.">
+  <title>LumenStyle class - lumen_kit library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">lumen_kit</a></li>
+    <li><a href="../lumen_kit/">lumen_kit.dart</a></li>
+    <li class="self-crumb">LumenStyle class</li>
+  </ol>
+  <div class="self-name">LumenStyle</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="lumen_kit&#47;lumen_kit-library-sidebar.html"
+    data-below-sidebar="lumen_kit&#47;LumenStyle-class-sidebar.html">
+    <div>
+<h1><span class="kind-class">LumenStyle</span> class 
+ 
+</h1></div>
+
+    
+<section class="desc markdown">
+  <p>Kit visual effect tokens: shadow, fill, surface, border and background.</p>
+<p>Independent of colors (<a href="../lumen_kit/LumenPalette-class.html">LumenPalette</a>) — any style works with any palette.
+Use a preset (<a href="../lumen_kit/LumenStyle/neon-constant.html">neon</a>, <a href="../lumen_kit/LumenStyle/flat-constant.html">flat</a>, <a href="../lumen_kit/LumenStyle/glass-constant.html">glass</a>, <a href="../lumen_kit/LumenStyle/soft-constant.html">soft</a>, <a href="../lumen_kit/LumenStyle/brutal-constant.html">brutal</a>) or adjust via
+<a href="../lumen_kit/LumenStyle/copyWith.html">copyWith</a>:</p>
+<pre class="language-dart"><code class="language-dart">AppTheme.fromPreset(LumenPreset.matrix, style: LumenStyle.flat);
+</code></pre>
+</section>
+
+
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+        
+
+
+        
+        
+  <dt>Annotations</dt>
+  <dd>
+    <ul class="annotation-list clazz-relationships">
+        <li>@<a href="https://pub.dev/documentation/meta/1.19.0/meta/immutable-constant.html">immutable</a></li>
+    </ul>
+  </dd>
+
+
+      </dl>
+    </section>
+
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
+    <dl class="constructor-summary-list">
+        <dt id="LumenStyle.new" class="callable">
+          <span class="name"><a href="../lumen_kit/LumenStyle/LumenStyle.html">LumenStyle</a></span><span class="signature">({<span class="parameter" id="param-shadow"><span class="type-annotation"><a href="../lumen_kit/LumenShadowKind.html">LumenShadowKind</a></span> <span class="parameter-name">shadow</span> = <span class="default-value">LumenShadowKind.glow</span>, </span><span class="parameter" id="param-shadowStrength"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">shadowStrength</span> = <span class="default-value">1</span>, </span><span class="parameter" id="param-gradients"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">gradients</span> = <span class="default-value">true</span>, </span><span class="parameter" id="param-surfaceOpacity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">surfaceOpacity</span> = <span class="default-value">1</span>, </span><span class="parameter" id="param-blurSigma"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">blurSigma</span> = <span class="default-value">0</span>, </span><span class="parameter" id="param-radiusScale"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">radiusScale</span> = <span class="default-value">1</span>, </span><span class="parameter" id="param-borderScale"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">borderScale</span> = <span class="default-value">1</span>, </span><span class="parameter" id="param-borderOpacity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">borderOpacity</span> = <span class="default-value">1</span>, </span><span class="parameter" id="param-background"><span class="type-annotation"><a href="../lumen_kit/LumenBackgroundKind.html">LumenBackgroundKind</a></span> <span class="parameter-name">background</span> = <span class="default-value">LumenBackgroundKind.grid</span>, </span><span class="parameter" id="param-orbs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">orbs</span> = <span class="default-value">true</span></span>})</span>
+        </dt>
+        <dd>
+          Creates a custom style.
+            <div class="constructor-modifier features">const</div>
+        </dd>
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
+        <dt id="background" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/background.html">background</a></span>
+  <span class="signature">&#8594; <a href="../lumen_kit/LumenBackgroundKind.html">LumenBackgroundKind</a></span>
+  
+
+</dt>
+<dd>
+  Background decoration.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="blurSigma" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/blurSigma.html">blurSigma</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  Blur applied behind surfaces (glass effect).
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="borderOpacity" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/borderOpacity.html">borderOpacity</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  Edge opacity multiplier.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="borderScale" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/borderScale.html">borderScale</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  Edge thickness multiplier.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="gradients" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/gradients.html">gradients</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  If <code>false</code>, gradients become solid color (the first color of the gradient).
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="hashCode" class="property inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="orbs" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/orbs.html">orbs</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  Whether to draw the glow orbs in the bottom corners.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="radiusScale" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/radiusScale.html">radiusScale</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  Corner radius multiplier.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="shadow" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/shadow.html">shadow</a></span>
+  <span class="signature">&#8594; <a href="../lumen_kit/LumenShadowKind.html">LumenShadowKind</a></span>
+  
+
+</dt>
+<dd>
+  Shadow type applied to all widgets.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="shadowStrength" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/shadowStrength.html">shadowStrength</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  Shadow opacity multiplier.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="surfaceOpacity" class="property">
+  <span class="name"><a href="../lumen_kit/LumenStyle/surfaceOpacity.html">surfaceOpacity</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  Surface opacity multiplier (cards, dialogs, sheets…).
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
+        <dt id="borderAll" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenStyle/borderAll.html">borderAll</a></span><span class="signature">(<wbr>{<span class="parameter" id="borderAll-param-color"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a></span> <span class="parameter-name">color</span> = <span class="default-value">const Color(0xFF000000)</span>, </span><span class="parameter" id="borderAll-param-width"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">width</span> = <span class="default-value">1</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/painting/Border-class.html">Border</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Uniform border with style-adjusted thickness and opacity.
+  
+
+</dd>
+
+        <dt id="copyWith" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenStyle/copyWith.html">copyWith</a></span><span class="signature">(<wbr>{<span class="parameter" id="copyWith-param-shadow"><span class="type-annotation"><a href="../lumen_kit/LumenShadowKind.html">LumenShadowKind</a>?</span> <span class="parameter-name">shadow</span>, </span><span class="parameter" id="copyWith-param-shadowStrength"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">shadowStrength</span>, </span><span class="parameter" id="copyWith-param-gradients"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">gradients</span>, </span><span class="parameter" id="copyWith-param-surfaceOpacity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">surfaceOpacity</span>, </span><span class="parameter" id="copyWith-param-blurSigma"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">blurSigma</span>, </span><span class="parameter" id="copyWith-param-radiusScale"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">radiusScale</span>, </span><span class="parameter" id="copyWith-param-borderScale"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">borderScale</span>, </span><span class="parameter" id="copyWith-param-borderOpacity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">borderOpacity</span>, </span><span class="parameter" id="copyWith-param-background"><span class="type-annotation"><a href="../lumen_kit/LumenBackgroundKind.html">LumenBackgroundKind</a>?</span> <span class="parameter-name">background</span>, </span><span class="parameter" id="copyWith-param-orbs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">orbs</span></span>})
+    <span class="returntype parameter">&#8594; <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns a new style preserving unspecified tokens.
+  
+
+</dd>
+
+        <dt id="fill" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenStyle/fill.html">fill</a></span><span class="signature">(<wbr><span class="parameter" id="fill-param-gradient"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/Gradient-class.html">Gradient</a>?</span> <span class="parameter-name">gradient</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/painting/Gradient-class.html">Gradient</a>?</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fill gradient; turns solid color when <a href="../lumen_kit/LumenStyle/gradients.html">gradients</a> is false.
+  
+
+</dd>
+
+        <dt id="frost" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenStyle/frost.html">frost</a></span><span class="signature">(<wbr>{<span class="parameter" id="frost-param-child"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">child</span>, </span><span class="parameter" id="frost-param-borderRadius"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/BorderRadius-class.html">BorderRadius</a>?</span> <span class="parameter-name">borderRadius</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Wraps a surface with background blur when <a href="../lumen_kit/LumenStyle/blurSigma.html">blurSigma</a> &gt; 0.
+  
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="radius" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenStyle/radius.html">radius</a></span><span class="signature">(<wbr><span class="parameter" id="radius-param-r"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">r</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/painting/BorderRadius-class.html">BorderRadius</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Corner radius scaled by <a href="../lumen_kit/LumenStyle/radiusScale.html">radiusScale</a>.
+  
+
+</dd>
+
+        <dt id="shadows" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenStyle/shadows.html">shadows</a></span><span class="signature">(<wbr><span class="parameter" id="shadows-param-glows"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/painting/BoxShadow-class.html">BoxShadow</a></span>&gt;</span>?</span> <span class="parameter-name">glows</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/painting/BoxShadow-class.html">BoxShadow</a></span>&gt;</span>?</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Adapts shadows written in a neon (glow) look to the current style.
+Small glows (blur &lt; 10, e.g. status points) are decorative and only exist in
+style <a href="../lumen_kit/LumenShadowKind.html">LumenShadowKind.glow</a>.
+  
+
+</dd>
+
+        <dt id="surfaceAlpha" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenStyle/surfaceAlpha.html">surfaceAlpha</a></span><span class="signature">(<wbr><span class="parameter" id="surfaceAlpha-param-alpha"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">alpha</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Opacity of a surface adjusted by <a href="../lumen_kit/LumenStyle/surfaceOpacity.html">surfaceOpacity</a>.
+  
+
+</dd>
+
+        <dt id="toString" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  A string representation of this object.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  The equality operator.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+    
+  <section class="summary offset-anchor" id="static-methods">
+    <h2>Static Methods</h2>
+    <dl class="callables">
+        <dt id="of" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenStyle/of.html">of</a></span><span class="signature">(<wbr><span class="parameter" id="of-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span>)
+    <span class="returntype parameter">&#8594; <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Style registered with the nearest <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/Theme-class.html">Theme</a>.
+  
+
+</dd>
+
+    </dl>
+  </section>
+    
+
+  <section class="summary offset-anchor" id="constants">
+    <h2>Constants</h2>
+    <dl class="properties">
+        <dt id="brutal" class="constant">
+    <span class="name "><a href="../lumen_kit/LumenStyle/brutal-constant.html">brutal</a></span>
+  <span class="signature">&#8594; const <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span>
+  
+
+</dt>
+<dd>
+  Straight corners, thick border and offset hard shadow.
+  
+
+</dd>
+
+        <dt id="flat" class="constant">
+    <span class="name "><a href="../lumen_kit/LumenStyle/flat-constant.html">flat</a></span>
+  <span class="signature">&#8594; const <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span>
+  
+
+</dt>
+<dd>
+  No glow or gradient, neutral shade, smooth background.
+  
+
+</dd>
+
+        <dt id="glass" class="constant">
+    <span class="name "><a href="../lumen_kit/LumenStyle/glass-constant.html">glass</a></span>
+  <span class="signature">&#8594; const <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span>
+  
+
+</dt>
+<dd>
+  Frosted glass: translucent surfaces with blur and soft glow.
+  
+
+</dd>
+
+        <dt id="neon" class="constant">
+    <span class="name "><a href="../lumen_kit/LumenStyle/neon-constant.html">neon</a></span>
+  <span class="signature">&#8594; const <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span>
+  
+
+</dt>
+<dd>
+  Original look: colorful glow, gradients, grid and orbs.
+  
+
+</dd>
+
+        <dt id="presets" class="constant">
+    <span class="name "><a href="../lumen_kit/LumenStyle/presets-constant.html">presets</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  All presets, in displayed order.
+  
+
+</dd>
+
+        <dt id="soft" class="constant">
+    <span class="name "><a href="../lumen_kit/LumenStyle/soft-constant.html">soft</a></span>
+  <span class="signature">&#8594; const <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span>
+  
+
+</dt>
+<dd>
+  Well-rounded corners, diffuse shadows and no edges.
+  
+
+</dd>
+
+    </dl>
+  </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">lumen_kit</a></li>
+    <li><a href="../lumen_kit/">lumen_kit</a></li>
+    <li class="self-crumb">LumenStyle class</li>
+</ol>
+
+    <h5>lumen_kit library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    lumen_kit
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
