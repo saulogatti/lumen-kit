@@ -5,21 +5,21 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Variantes visuais do [LumenIconButton].
+/// Visual variants of [LumenIconButton].
 enum LumenIconButtonVariant {
-  /// Preenchido com gradiente neon.
+  /// Filled with a neon gradient.
   solid,
 
-  /// Borda neon com fundo translúcido.
+  /// Neon border with translucent background.
   outline,
 
-  /// Apenas ícone na cor de accent, sem fundo nem borda.
+  /// Accent-colored icon only, without a background or border.
   ghost,
 }
 
-/// Botão circular/quadrado contendo apenas um ícone, no estilo neon.
+/// Circular/square button containing only an icon, in the neon style.
 class LumenIconButton extends StatelessWidget {
-  /// Cria um botão de ícone na variante [variant].
+  /// Creates an icon button using the [variant].
   const LumenIconButton({
     required this.icon,
     required this.onPressed,
@@ -34,7 +34,7 @@ class LumenIconButton extends StatelessWidget {
     this.semanticLabel,
   });
 
-  /// Atalho para [LumenIconButtonVariant.solid].
+  /// Shortcut for [LumenIconButtonVariant.solid].
   const LumenIconButton.solid({
     required this.icon,
     required this.onPressed,
@@ -48,7 +48,7 @@ class LumenIconButton extends StatelessWidget {
     this.semanticLabel,
   }) : variant = LumenIconButtonVariant.solid;
 
-  /// Atalho para [LumenIconButtonVariant.ghost].
+  /// Shortcut for [LumenIconButtonVariant.ghost].
   const LumenIconButton.ghost({
     required this.icon,
     required this.onPressed,
@@ -62,36 +62,36 @@ class LumenIconButton extends StatelessWidget {
     this.semanticLabel,
   }) : variant = LumenIconButtonVariant.ghost;
 
-  /// Ícone exibido no botão.
+  /// Icon displayed on the button.
   final IconData icon;
 
-  /// Callback executado ao tocar no botão.
+  /// Callback run when the button is tapped.
   ///
-  /// Quando `null`, o botão fica visualmente desabilitado.
+  /// When `null`, the button appears disabled.
   final VoidCallback? onPressed;
 
-  /// Variante visual aplicada ao botão.
+  /// Visual variant applied to the button.
   final LumenIconButtonVariant variant;
 
-  /// Mensagem opcional exibida em um [Tooltip].
+  /// Optional message displayed in a [Tooltip].
   final String? tooltip;
 
-  /// Se `true`, exibe indicador de progresso e bloqueia o toque.
+  /// If `true`, displays a progress indicator and blocks taps.
   final bool busy;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Tamanho da área total (largura = altura).
+  /// Total area size (width = height).
   final double size;
 
-  /// Tamanho do ícone ou do indicador de progresso.
+  /// Icon or progress indicator size.
   final double iconSize;
 
-  /// Formato do botão: círculo ou quadrado arredondado.
+  /// Button shape: circle or rounded square.
   final LumenIconButtonShape shape;
 
-  /// Rótulo para leitores de tela quando não há [tooltip].
+  /// Label for screen readers when there is no [tooltip].
   final String? semanticLabel;
 
   @override
@@ -178,7 +178,7 @@ class LumenIconButton extends StatelessWidget {
       onTap: onPressed,
       enabled: !busy,
       borderRadius: radius,
-      // Com tooltip o Tooltip já anuncia a mensagem.
+      // The Tooltip already announces the message when present.
       semanticLabel: tooltip == null ? semanticLabel : null,
       child: body,
     );
@@ -189,11 +189,11 @@ class LumenIconButton extends StatelessWidget {
   }
 }
 
-/// Formato do [LumenIconButton].
+/// Shape of [LumenIconButton].
 enum LumenIconButtonShape {
-  /// Botão circular.
+  /// Circular button.
   circle,
 
-  /// Botão quadrado com cantos arredondados.
+  /// Square button with rounded corners.
   rounded,
 }

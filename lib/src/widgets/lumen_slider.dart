@@ -4,9 +4,9 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Slider com track em gradiente accent e thumb com glow.
+/// Slider with an accent gradient track and glowing thumb.
 class LumenSlider extends StatelessWidget {
-  /// Cria um slider neon.
+  /// Creates a neon slider.
   const LumenSlider({
     required this.value,
     required this.onChanged,
@@ -18,29 +18,29 @@ class LumenSlider extends StatelessWidget {
     this.accentColor,
   });
 
-  /// Valor atual do slider.
+  /// Current slider value.
   ///
-  /// O valor é limitado visualmente ao intervalo entre [min] e [max].
+  /// The value is visually clamped to the range between [min] and [max].
   final double value;
 
-  /// Callback chamado quando o usuário muda o valor.
+  /// Callback called when the user changes the value.
   ///
-  /// Quando `null`, o slider fica visualmente desabilitado.
+  /// When `null`, the slider appears disabled.
   final ValueChanged<double>? onChanged;
 
-  /// Menor valor permitido.
+  /// Minimum allowed value.
   final double min;
 
-  /// Maior valor permitido.
+  /// Maximum allowed value.
   final double max;
 
-  /// Número opcional de divisões discretas do intervalo.
+  /// Optional number of discrete divisions in the range.
   final int? divisions;
 
-  /// Texto exibido no indicador de valor do [Slider].
+  /// Text displayed in the [Slider] value indicator.
   final String? label;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
@@ -117,8 +117,8 @@ SliderThemeData _lumenSliderTheme(
     rangeThumbShape: _GlowRangeThumbShape(glow: accent, showGlow: glow),
     rangeTrackShape: const RoundedRectRangeSliderTrackShape(),
     rangeValueIndicatorShape: const PaddleRangeSliderValueIndicatorShape(),
-    // Com divisions, os ticks do Material viram um pontilhado sobre o
-    // trilho; o thumb já mostra onde o valor encaixa.
+    // With divisions, Material ticks become dots over the track; the thumb
+    // already shows where the value snaps.
     rangeTickMarkShape: const RoundRangeSliderTickMarkShape(tickMarkRadius: 0),
   );
 }
@@ -146,8 +146,8 @@ void _paintGlowThumb(
   );
 }
 
-/// Slider de intervalo (dois thumbs) com o mesmo visual do [LumenSlider].
-/// Para filtros de preço, faixa etária, horário…
+/// Range slider (two thumbs) with the same look as [LumenSlider].
+/// For price ranges, age ranges, time ranges…
 ///
 /// ```dart
 /// LumenRangeSlider(
@@ -159,7 +159,7 @@ void _paintGlowThumb(
 /// )
 /// ```
 class LumenRangeSlider extends StatelessWidget {
-  /// Cria um slider de intervalo neon.
+  /// Creates a neon range slider.
   const LumenRangeSlider({
     required this.values,
     required this.onChanged,
@@ -174,36 +174,36 @@ class LumenRangeSlider extends StatelessWidget {
     this.semanticFormatterCallback,
   });
 
-  /// Intervalo selecionado. É limitado visualmente a [min]..[max].
+  /// Selected range. Visually clamped to [min]..[max].
   final RangeValues values;
 
-  /// Callback chamado enquanto o usuário arrasta um dos thumbs.
+  /// Callback called while the user drags either thumb.
   ///
-  /// Quando `null`, o slider fica visualmente desabilitado.
+  /// When `null`, the slider appears disabled.
   final ValueChanged<RangeValues>? onChanged;
 
-  /// Chamado quando o usuário começa a arrastar.
+  /// Called when the user starts dragging.
   final ValueChanged<RangeValues>? onChangeStart;
 
-  /// Chamado quando o usuário solta o thumb (bom para disparar a busca).
+  /// Called when the user releases the thumb (useful for triggering a search).
   final ValueChanged<RangeValues>? onChangeEnd;
 
-  /// Menor valor permitido.
+  /// Minimum allowed value.
   final double min;
 
-  /// Maior valor permitido.
+  /// Maximum allowed value.
   final double max;
 
-  /// Número opcional de divisões discretas do intervalo.
+  /// Optional number of discrete divisions in the range.
   final int? divisions;
 
-  /// Textos dos indicadores de valor (aparecem só com [divisions]).
+  /// Value indicator labels (shown only when [divisions] is set).
   final RangeLabels? labels;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Texto lido por leitores de tela para cada valor (ex.: "R\$ 120").
+  /// Text read by screen readers for each value (e.g. "$120").
   final SemanticFormatterCallback? semanticFormatterCallback;
 
   @override

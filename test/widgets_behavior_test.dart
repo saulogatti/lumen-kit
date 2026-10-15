@@ -1,4 +1,4 @@
-// Regressões da refatoração: comportamento, acessibilidade e movimento.
+// Refactor regressions: behavior, accessibility, and motion.
 import 'dart:async';
 
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
@@ -304,7 +304,7 @@ void main() {
         reduceMotion: true,
       ),
     );
-    // Com repeat() ativo, pumpAndSettle estoura o timeout.
+    // With repeat() active, pumpAndSettle times out.
     await tester.pumpAndSettle();
     expect(tester.hasRunningAnimations, isFalse);
   });

@@ -30,8 +30,8 @@ final ValueNotifier<Brightness> _brightness = ValueNotifier<Brightness>(
   Brightness.light,
 );
 
-/// Preset, estilo e brilho atuais da galeria. Trocar qualquer um re-tematiza
-/// o app inteiro (cores com transição animada via [LumenThemeExt.lerp]).
+/// Current gallery preset, style, and brightness. Changing any of them
+/// re-themes the entire app (colors transition with [LumenThemeExt.lerp]).
 final ValueNotifier<LumenPreset> _preset = ValueNotifier<LumenPreset>(
   LumenPreset.neon,
 );
@@ -104,7 +104,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   bool _bannerVisible = true;
   String _pin = '';
 
-  // Navegação
+  // Navigation
   int _tab = 0;
   int _segment = 1;
   int _bottomNav = 0;

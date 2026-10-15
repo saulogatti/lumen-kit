@@ -5,25 +5,25 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Variantes visuais do [LumenButton].
+/// Visual variants of [LumenButton].
 enum LumenButtonVariant {
-  /// Preenchido com gradiente neon. Equivale ao CTA primário.
+  /// Filled with a neon gradient. Equivalent to the primary CTA.
   solid,
 
-  /// Borda neon com fundo translúcido. Ação secundária.
+  /// Neon border with translucent background. Secondary action.
   outline,
 
-  /// Sem borda nem fundo — apenas texto/ícone com cor de accent. Ação terciária.
+  /// No border or background — only text/icon in the accent color. Tertiary action.
   ghost,
 }
 
-/// Botão neon com três variantes: [LumenButtonVariant.solid],
+/// Neon button with three variants: [LumenButtonVariant.solid],
 /// [LumenButtonVariant.outline] e [LumenButtonVariant.ghost].
 ///
-/// Para o CTA primário com gradiente cheio, prefira [LumenButtonVariant.solid]
-/// (ou o atalho histórico `LumenCta`).
+/// For a primary CTA with a full gradient, prefer [LumenButtonVariant.solid]
+/// (or the legacy `LumenCta` shortcut).
 class LumenButton extends StatelessWidget {
-  /// Cria um botão neon na [variant] informada.
+  /// Creates a neon button with the specified [variant].
   const LumenButton({
     required this.label,
     required this.onPressed,
@@ -36,7 +36,7 @@ class LumenButton extends StatelessWidget {
     this.expand = false,
   });
 
-  /// Atalho para [LumenButtonVariant.outline].
+  /// Shortcut for [LumenButtonVariant.outline].
   const LumenButton.outline({
     required this.label,
     required this.onPressed,
@@ -48,7 +48,7 @@ class LumenButton extends StatelessWidget {
     this.expand = false,
   }) : variant = LumenButtonVariant.outline;
 
-  /// Atalho para [LumenButtonVariant.ghost].
+  /// Shortcut for [LumenButtonVariant.ghost].
   const LumenButton.ghost({
     required this.label,
     required this.onPressed,
@@ -60,31 +60,31 @@ class LumenButton extends StatelessWidget {
     this.expand = false,
   }) : variant = LumenButtonVariant.ghost;
 
-  /// Texto exibido no botão.
+  /// Text displayed on the button.
   final String label;
 
-  /// Callback executado ao tocar no botão.
+  /// Callback run when the button is tapped.
   ///
-  /// Quando `null`, o botão fica visualmente desabilitado.
+  /// When `null`, the button appears disabled.
   final VoidCallback? onPressed;
 
-  /// Variante visual aplicada ao botão.
+  /// Visual variant applied to the button.
   final LumenButtonVariant variant;
 
-  /// Ícone opcional exibido antes de [label].
+  /// Optional icon displayed before [label].
   final IconData? icon;
 
-  /// Se `true`, exibe indicador de progresso e bloqueia o toque.
+  /// If `true`, displays a progress indicator and blocks taps.
   final bool busy;
 
-  /// Override do accent. Default: `palette.primary` para outline/ghost,
-  /// `palette.accentGradient` para solid.
+  /// Accent override. Default: `palette.primary` for outline/ghost,
+  /// `palette.accentGradient` for solid.
   final Color? accentColor;
 
-  /// Raio dos cantos do botão em pixels lógicos.
+  /// Button corner radius in logical pixels.
   final double borderRadius;
 
-  /// Se `true`, ocupa toda a largura disponível.
+  /// If `true`, fills the available width.
   final bool expand;
 
   @override

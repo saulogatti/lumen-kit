@@ -7,22 +7,22 @@ import 'lumen_button.dart';
 import 'lumen_icon_button.dart';
 import 'lumen_status_chip.dart';
 
-/// Alerta inline que permanece na tela até alguém fechar.
+/// Inline alert that stays on screen until dismissed.
 ///
-/// Diferente do toast e do snack bar, não some sozinho. Sem [onDismiss] não
-/// há botão de fechar.
+/// Unlike a toast or snack bar, it does not disappear on its own. Without
+/// [onDismiss], there is no close button.
 ///
 /// ```dart
 /// LumenBanner(
-///   message: 'Sincronização pausada',
+///   message: 'Sync paused',
 ///   tone: LumenStatusTone.warning,
-///   actionLabel: 'Retomar',
+///   actionLabel: 'Resume',
 ///   onAction: retomar,
 ///   onDismiss: () => setState(() => _aviso = false),
 /// )
 /// ```
 class LumenBanner extends StatelessWidget {
-  /// Cria um alerta inline com [message].
+  /// Creates an inline alert with [message].
   const LumenBanner({
     required this.message,
     super.key,
@@ -33,22 +33,22 @@ class LumenBanner extends StatelessWidget {
     this.onDismiss,
   });
 
-  /// Texto do alerta.
+  /// Alert text.
   final String message;
 
-  /// Tom semântico. Default: [LumenStatusTone.info].
+  /// Semantic tone. Default: [LumenStatusTone.info].
   final LumenStatusTone tone;
 
-  /// Ícone à esquerda. Default: o ícone do [tone].
+  /// Icon on the left. Default: the icon for [tone].
   final IconData? icon;
 
-  /// Rótulo da ação opcional, ao lado do fechar.
+  /// Optional action label, next to the close button.
   final String? actionLabel;
 
-  /// Callback da ação. Sem ele, [actionLabel] não aparece.
+  /// Action callback. Without it, [actionLabel] is not shown.
   final VoidCallback? onAction;
 
-  /// Fecha o alerta. Sem ele, não há botão de fechar.
+  /// Dismisses the alert. Without it, there is no close button.
   final VoidCallback? onDismiss;
 
   @override

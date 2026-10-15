@@ -112,7 +112,7 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(external.hasClients, isTrue);
 
-    // Volta ao controller interno, que é criado de novo.
+    // Returns to the internal controller, which is recreated.
     await tester.pumpWidget(build(null));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);

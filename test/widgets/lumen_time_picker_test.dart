@@ -55,7 +55,7 @@ void main() {
     expect(find.text('14h30'), findsOneWidget);
     expect(find.text('Escolha a hora'), findsOneWidget);
 
-    // Desabilitado: tocar não abre nada.
+    // Disabled: tapping does not open anything.
     await tester.tap(find.text('Escolha a hora'), warnIfMissed: false);
     await tester.pumpAndSettle();
     expect(find.byType(TimePickerDialog), findsNothing);

@@ -5,8 +5,8 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_icon_button.dart';
 
-/// Posição para [showLumenMenu] num ponto global da tela (ex.:
-/// `TapUpDetails.globalPosition` de um clique direito).
+/// Position for [showLumenMenu] at a global screen point (e.g.
+/// `TapUpDetails.globalPosition` from a right-click).
 RelativeRect lumenMenuPositionAt(BuildContext context, Offset globalPosition) {
   final overlay =
       Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
@@ -14,17 +14,17 @@ RelativeRect lumenMenuPositionAt(BuildContext context, Offset globalPosition) {
   return RelativeRect.fromRect(local & Size.zero, Offset.zero & overlay.size);
 }
 
-/// Nome antigo de [lumenMenuPositionAt].
+/// Former name for [lumenMenuPositionAt].
 @Deprecated('Use lumenMenuPositionAt')
 RelativeRect neonMenuPositionAt(BuildContext context, Offset globalPosition) =>
     lumenMenuPositionAt(context, globalPosition);
 
-/// Abre um menu flutuante com [items] e devolve o valor escolhido, ou `null`
-/// se o menu for fechado sem escolha.
+/// Opens a floating menu with [items] and returns the selected value, or
+/// `null` if the menu is dismissed without a selection.
 ///
-/// Sem [position], o menu abre ancorado logo abaixo do widget dono de
-/// [context] (como o "⋮" de um card). Para abrir num ponto da tela (ex.:
-/// clique direito), use [lumenMenuPositionAt].
+/// Without [position], the menu opens anchored just below the widget that owns
+/// [context] (such as the "⋮" on a card). To open at a screen point (e.g. a
+/// right-click), use [lumenMenuPositionAt].
 Future<T?> showLumenMenu<T>({
   required BuildContext context,
   required List<LumenMenuEntry<T>> items,
@@ -105,14 +105,14 @@ RelativeRect _anchorBelow(BuildContext context) {
   );
 }
 
-/// Abre um menu de contexto com clique direito (desktop/web) ou toque longo
-/// (mobile) sobre [child], na posição do ponteiro.
+/// Opens a context menu on right-click (desktop/web) or long-press (mobile)
+/// over [child], at the pointer position.
 ///
-/// Usa `GestureDetector` porque precisa da posição do ponteiro, que o
-/// `LumenPressable` não expõe; leitores de tela abrem o menu pela ação de
-/// toque longo.
+/// Uses `GestureDetector` because it needs the pointer position, which
+/// `LumenPressable` does not expose; screen readers open the menu with the
+/// long-press action.
 class LumenContextMenu<T> extends StatelessWidget {
-  /// Cria a região de menu de contexto.
+  /// Creates the context menu region.
   const LumenContextMenu({
     required this.items,
     required this.onSelected,
@@ -121,16 +121,16 @@ class LumenContextMenu<T> extends StatelessWidget {
     this.accentColor,
   });
 
-  /// Ações do menu.
+  /// Menu actions.
   final List<LumenMenuEntry<T>> items;
 
-  /// Chamado com o valor da ação escolhida. `null` desliga o menu.
+  /// Called with the value of the selected action. `null` disables the menu.
   final ValueChanged<T>? onSelected;
 
-  /// Conteúdo que recebe o gesto.
+  /// Content that receives the gesture.
   final Widget child;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
@@ -167,21 +167,21 @@ class LumenContextMenu<T> extends StatelessWidget {
   }
 }
 
-/// Botão "⋮" (ou outro [icon]) que abre um menu de ações ancorado nele.
-/// Para cards, list tiles e app bars.
+/// "⋮" button (or another [icon]) that opens an action menu anchored to it.
+/// For cards, list tiles, and app bars.
 ///
 /// ```dart
 /// LumenMenuButton<String>(
 ///   items: const <LumenMenuEntry<String>>[
-///     LumenMenuItem(value: 'edit', label: 'Editar', icon: Icons.edit),
+///     LumenMenuItem(value: 'edit', label: 'Edit', icon: Icons.edit),
 ///     LumenMenuDivider(),
-///     LumenMenuItem(value: 'del', label: 'Excluir', destructive: true),
+///     LumenMenuItem(value: 'del', label: 'Delete', destructive: true),
 ///   ],
 ///   onSelected: handle,
 /// )
 /// ```
 class LumenMenuButton<T> extends StatelessWidget {
-  /// Cria o botão de menu. Com [onSelected] `null`, fica desabilitado.
+  /// Creates the menu button. It is disabled when [onSelected] is `null`.
   const LumenMenuButton({
     required this.items,
     required this.onSelected,
@@ -195,31 +195,31 @@ class LumenMenuButton<T> extends StatelessWidget {
     this.onCanceled,
   });
 
-  /// Ações do menu.
+  /// Menu actions.
   final List<LumenMenuEntry<T>> items;
 
-  /// Chamado com o valor da ação escolhida.
+  /// Called with the value of the selected action.
   final ValueChanged<T>? onSelected;
 
-  /// Chamado quando o menu fecha sem escolha.
+  /// Called when the menu is dismissed without a selection.
   final VoidCallback? onCanceled;
 
-  /// Ícone do botão.
+  /// Button icon.
   final IconData icon;
 
-  /// Tooltip do botão. Default: rótulo "mostrar menu" do Material.
+  /// Button tooltip. Default: Material's "show menu" label.
   final String? tooltip;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Valor marcado com um check no menu.
+  /// Value marked with a check in the menu.
   final T? initialValue;
 
-  /// Variante visual do botão.
+  /// Button visual variant.
   final LumenIconButtonVariant variant;
 
-  /// Lado do botão.
+  /// Button side.
   final double size;
 
   @override
@@ -252,20 +252,20 @@ class LumenMenuButton<T> extends StatelessWidget {
   }
 }
 
-/// Linha separando grupos de ações.
+/// Line separating groups of actions.
 class LumenMenuDivider<T> extends LumenMenuEntry<T> {
-  /// Cria um separador.
+  /// Creates a divider.
   const LumenMenuDivider();
 }
 
-/// Entrada de um menu neon: [LumenMenuItem] ou [LumenMenuDivider].
+/// Entry in a neon menu: [LumenMenuItem] or [LumenMenuDivider].
 sealed class LumenMenuEntry<T> {
   const LumenMenuEntry();
 }
 
-/// Ação de um menu neon.
+/// Action in a neon menu.
 class LumenMenuItem<T> extends LumenMenuEntry<T> {
-  /// Cria uma ação com [value] devolvido ao ser escolhida.
+  /// Creates an action that returns [value] when selected.
   const LumenMenuItem({
     required this.value,
     required this.label,
@@ -274,19 +274,19 @@ class LumenMenuItem<T> extends LumenMenuEntry<T> {
     this.destructive = false,
   });
 
-  /// Valor devolvido por [showLumenMenu] / `onSelected`.
+  /// Value returned by [showLumenMenu] / `onSelected`.
   final T value;
 
-  /// Texto da ação.
+  /// Action text.
   final String label;
 
-  /// Ícone opcional antes do [label].
+  /// Optional icon before [label].
   final IconData? icon;
 
-  /// Se `false`, a ação aparece apagada e não pode ser escolhida.
+  /// If `false`, the action appears dimmed and cannot be selected.
   final bool enabled;
 
-  /// Pinta a ação com `palette.danger` (ex.: "Excluir").
+  /// Colors the action with `palette.danger` (e.g. "Delete").
   final bool destructive;
 }
 

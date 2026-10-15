@@ -3,10 +3,11 @@ import 'package:material_ui/material_ui.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Divider em gradiente accent que desbota nas pontas. Suporta orientação
-/// horizontal (default) ou vertical, e um [label] opcional centralizado.
+/// Divider with an accent gradient that fades at the ends. Supports
+/// horizontal (default) or vertical orientation, and an optional centered
+/// [label].
 class LumenDivider extends StatelessWidget {
-  /// Cria um divisor neon horizontal ou vertical.
+  /// Creates a horizontal or vertical neon divider.
   const LumenDivider({
     super.key,
     this.thickness = 1,
@@ -17,22 +18,22 @@ class LumenDivider extends StatelessWidget {
     this.accentColor,
   });
 
-  /// Espessura da linha em pixels lógicos.
+  /// Line thickness in logical pixels.
   final double thickness;
 
-  /// Espaço antes da linha no eixo principal.
+  /// Space before the line along the main axis.
   final double indent;
 
-  /// Espaço depois da linha no eixo principal.
+  /// Space after the line along the main axis.
   final double endIndent;
 
-  /// Se `true`, desenha o divisor na vertical.
+  /// If `true`, draws the divider vertically.
   final bool vertical;
 
-  /// Texto central exibido apenas no modo horizontal.
+  /// Centered text, displayed only in horizontal mode.
   final String? label;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
   @override

@@ -3,20 +3,20 @@ import 'package:material_ui/material_ui.dart';
 import 'lumen_palette.dart';
 import 'lumen_style.dart';
 
-/// Tema central da aplicação. Mantém ThemeData isolado da camada de UI
-/// para que telas não conheçam detalhes de estilo globais.
+/// Central application theme. Keeps ThemeData isolated from the UI layer so
+/// screens do not need to know global styling details.
 class AppTheme {
   const AppTheme._();
 
-  /// Tema dark default usando a paleta padrão.
+  /// Default dark theme using the standard palette.
   static ThemeData get dark => fromPalette(LumenPalette.defaultDark());
 
-  /// Tema claro usando a paleta clara padrão.
+  /// Light theme using the standard light palette.
   static ThemeData get light =>
       fromPalette(LumenPalette.light(), brightness: Brightness.light);
 
-  /// Atalho para trocar as cores do kit inteiro a partir de uma ou duas
-  /// cores. Equivale a `fromPalette(LumenPalette.fromSeed(...))`.
+  /// Shortcut to change the colors of the entire kit from one or two colors.
+  /// Equivalent to `fromPalette(LumenPalette.fromSeed(...))`.
   static ThemeData fromSeed({
     required Color primary,
     Color? secondary,
@@ -34,7 +34,7 @@ class AppTheme {
     style: style,
   );
 
-  /// Atalho para usar um [LumenPreset].
+  /// Shortcut for using a [LumenPreset].
   static ThemeData fromPreset(
     LumenPreset preset, {
     Brightness brightness = Brightness.dark,
@@ -45,10 +45,10 @@ class AppTheme {
     style: style,
   );
 
-  /// Constrói um [ThemeData] a partir da paleta [p].
+  /// Builds a [ThemeData] from palette [p].
   ///
-  /// Registra [LumenThemeExt] em [ThemeData.extensions] para que os widgets do
-  /// kit acessem os mesmos tokens via [LumenThemeExt.of].
+  /// Registers [LumenThemeExt] in [ThemeData.extensions] so the kit's widgets
+  /// can access the same tokens via [LumenThemeExt.of].
   static ThemeData fromPalette(
     LumenPalette p, {
     Brightness brightness = Brightness.dark,

@@ -2,11 +2,11 @@ import 'package:material_ui/material_ui.dart';
 
 import 'lumen_tokens.dart';
 
-/// Base tocável do kit: aplica a opacidade de desabilitado, o ripple recortado
-/// em [borderRadius], foco de teclado e semântica de botão.
+/// Tappable foundation of the kit: applies disabled opacity, a ripple clipped
+/// to [borderRadius], keyboard focus, and button semantics.
 ///
-/// Use para construir componentes próprios com o mesmo comportamento dos
-/// botões do kit:
+/// Use it to build custom components with the same behavior as the kit's
+/// buttons:
 ///
 /// ```dart
 /// LumenPressable(
@@ -16,8 +16,8 @@ import 'lumen_tokens.dart';
 /// )
 /// ```
 class LumenPressable extends StatelessWidget {
-  /// Cria uma área tocável. Fica desabilitada quando [onTap] e [onLongPress]
-  /// são `null` ou [enabled] é `false`.
+  /// Creates a tappable area. Disabled when [onTap] and [onLongPress] are `null`
+  /// or [enabled] is `false`.
   const LumenPressable({
     required this.child,
     super.key,
@@ -35,49 +35,49 @@ class LumenPressable extends StatelessWidget {
     this.mergeSemantics = true,
   });
 
-  /// Conteúdo visual.
+  /// Visual content.
   final Widget child;
 
-  /// Callback de toque.
+  /// Tap callback.
   final VoidCallback? onTap;
 
-  /// Callback de toque longo.
+  /// Long-press callback.
   final VoidCallback? onLongPress;
 
-  /// Força o estado desabilitado mesmo com callbacks presentes (ex.: `busy`).
+  /// Forces the disabled state even when callbacks are present (e.g. `busy`).
   final bool enabled;
 
-  /// Raio usado no recorte do ripple e do [Material].
+  /// Radius used to clip the ripple and [Material].
   final BorderRadius? borderRadius;
 
-  /// Forma alternativa ao [borderRadius] (ex.: [CircleBorder]).
+  /// Shape alternative to [borderRadius] (e.g. [CircleBorder]).
   final ShapeBorder? customBorder;
 
-  /// Se `true`, aplica [kLumenDisabledOpacity] quando desabilitado.
+  /// If `true`, applies [kLumenDisabledOpacity] when disabled.
   final bool dimWhenDisabled;
 
-  /// Rótulo de acessibilidade, somado ao texto dos filhos. Use quando o
-  /// conteúdo não tem texto (ex.: só ícone).
+  /// Accessibility label, combined with the children's text. Use when the
+  /// content has no text (e.g. an icon only).
   final String? semanticLabel;
 
-  /// Anuncia o widget como botão para leitores de tela.
+  /// Announces the widget as a button to screen readers.
   final bool button;
 
-  /// Estado de seleção anunciado (abas, itens de navegação).
+  /// Announced selected state (tabs, navigation items).
   final bool? selected;
 
-  /// Estado marcado anunciado (checkbox, radio).
+  /// Announced checked state (checkbox, radio).
   final bool? checked;
 
-  /// Estado ligado anunciado (switch).
+  /// Announced toggled state (switch).
   final bool? toggled;
 
-  /// Junta os textos dos filhos num único nó (como o `ListTile` faz), para o
-  /// leitor de tela ler "Aceito, marcado" em vez de dois itens. Desligue
-  /// quando o filho tiver outros controles dentro (ex.: card com botões).
+  /// Combines the children's text into one node (as `ListTile` does), so a
+  /// screen reader says "Accepted, checked" instead of reading two items.
+  /// Disable when the child contains other controls (e.g. a card with buttons).
   final bool mergeSemantics;
 
-  /// Se o widget responde a toque com as props atuais.
+  /// Whether the widget responds to taps with the current properties.
   bool get isEnabled => enabled && (onTap != null || onLongPress != null);
 
   @override
@@ -92,7 +92,7 @@ class LumenPressable extends StatelessWidget {
         onLongPress: active ? onLongPress : null,
         borderRadius: borderRadius,
         customBorder: customBorder,
-        // A semântica vem do Semantics abaixo; evita nó duplicado.
+        // Semantics below provides this semantics; avoid a duplicate node.
         excludeFromSemantics: true,
         child: child,
       ),

@@ -65,7 +65,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Enviando…'), findsOneWidget);
 
-    // Voltar não fecha a camada.
+    // Back does not close the overlay.
     await tester.binding.handlePopRoute();
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Enviando…'), findsOneWidget);

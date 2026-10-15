@@ -3,11 +3,11 @@ import 'package:material_ui/material_ui.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Abre um modal bottom sheet com a estética do tema neon (gradiente de fundo,
-/// borda accent no topo e handle).
+/// Opens a modal bottom sheet with the neon theme aesthetic (background
+/// gradient, accent border at the top, and handle).
 ///
-/// [builder] cria o conteúdo interno. As flags [isScrollControlled],
-/// [isDismissible] e [enableDrag] são repassadas ao [showModalBottomSheet].
+/// [builder] creates the inner content. The [isScrollControlled],
+/// [isDismissible], and [enableDrag] flags are passed to [showModalBottomSheet].
 Future<T?> showLumenBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,

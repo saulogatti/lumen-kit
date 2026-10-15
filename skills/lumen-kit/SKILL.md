@@ -8,7 +8,7 @@ description: Apply the lumen_kit package (saulogatti/lumen-kit) to an existing F
 Use this when the user asks to use `lumen_kit`, "the neon components" or
 "this kit" in a Flutter app that is not the kit's own repository. To change
 the kit itself, read the repository's `AGENTS.md`. Talk to the user in
-their language; the kit's own docs and comments are in Portuguese.
+their language; the kit's documentation and comments are in English.
 
 The full widget map (Material → Lumen, with signatures) is in
 [`references/widgets.md`](references/widgets.md). Read it before swapping

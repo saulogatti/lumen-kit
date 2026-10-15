@@ -6,21 +6,21 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_progress_indicator.dart';
 
-/// Cobre [child] com uma camada que bloqueia toque, foco e leitor de tela
-/// enquanto [loading] é `true`, com spinner e [message] no centro.
+/// Covers [child] with a layer that blocks taps, focus, and screen readers
+/// while [loading] is `true`, showing a centered spinner and [message].
 ///
-/// Para bloquear a tela inteira durante uma operação (ex.: submit), sem
-/// guardar estado de loading, use [showLumenLoading].
+/// To block the entire screen during an operation (e.g. submission) without
+/// keeping loading state, use [showLumenLoading].
 ///
 /// ```dart
 /// LumenLoadingOverlay(
 ///   loading: _saving,
-///   message: 'Salvando…',
+///   message: 'Saving…',
 ///   child: myForm,
 /// )
 /// ```
 class LumenLoadingOverlay extends StatelessWidget {
-  /// Cria a camada de loading sobre [child].
+  /// Creates the loading layer over [child].
   const LumenLoadingOverlay({
     required this.loading,
     required this.child,
@@ -31,23 +31,23 @@ class LumenLoadingOverlay extends StatelessWidget {
     this.borderRadius,
   });
 
-  /// Se `true`, mostra a camada e bloqueia [child].
+  /// If `true`, displays the layer and blocks [child].
   final bool loading;
 
-  /// Conteúdo coberto.
+  /// Covered content.
   final Widget child;
 
-  /// Texto abaixo do spinner, também anunciado por leitores de tela.
+  /// Text below the spinner, also announced by screen readers.
   final String? message;
 
-  /// Override do accent da borda do painel. Default: `palette.primary`.
+  /// Panel border accent override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Cor do véu sobre [child]. Default: `palette.backgroundDeep` translúcido.
+  /// Color of the veil over [child]. Default: translucent `palette.backgroundDeep`.
   final Color? barrierColor;
 
-  /// Recorte do véu, para acompanhar os cantos de [child] (ex.: um card).
-  /// Use `LumenStyle.of(context).radius(...)` para seguir o estilo.
+  /// Clips the veil to match [child]'s corners (e.g. a card).
+  /// Use `LumenStyle.of(context).radius(...)` to follow the style.
   final BorderRadius? borderRadius;
 
   @override
@@ -93,16 +93,16 @@ class LumenLoadingOverlay extends StatelessWidget {
 Color _defaultBarrier(LumenPalette p) =>
     p.backgroundDeep.withValues(alpha: 0.6);
 
-/// Painel com spinner e mensagem usado pelo [LumenLoadingOverlay] e pelo
-/// [showLumenLoading]. Útil para montar telas de loading próprias.
+/// Panel with a spinner and message, used by [LumenLoadingOverlay] and
+/// [showLumenLoading]. Useful for building custom loading screens.
 class LumenLoadingPanel extends StatelessWidget {
-  /// Cria o painel de loading.
+  /// Creates the loading panel.
   const LumenLoadingPanel({super.key, this.message, this.accentColor});
 
-  /// Texto abaixo do spinner.
+  /// Text below the spinner.
   final String? message;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
@@ -146,14 +146,14 @@ class LumenLoadingPanel extends StatelessWidget {
   }
 }
 
-/// Bloqueia a tela inteira com o [LumenLoadingPanel] enquanto [task] roda e
-/// devolve o resultado dela. A camada some mesmo se [task] lançar erro (o
-/// erro é repassado), e o botão voltar fica bloqueado nesse meio-tempo.
+/// Blocks the entire screen with [LumenLoadingPanel] while [task] runs and
+/// returns its result. The layer disappears even if [task] throws (the error
+/// is rethrown), and the back button is blocked in the meantime.
 ///
 /// ```dart
 /// final bool ok = await showLumenLoading(
 ///   context: context,
-///   message: 'Enviando…',
+///   message: 'Sending…',
 ///   task: () => api.submit(form),
 /// );
 /// ```
@@ -171,8 +171,8 @@ Future<T> showLumenLoading<T>({
     barrierDismissible: false,
     barrierColor: barrierColor ?? _defaultBarrier(ext.palette),
     themes: InheritedTheme.capture(from: context, to: navigator.context),
-    // O LumenScope não é um InheritedTheme: repassa paleta e estilo à mão
-    // para a rota herdar o mesmo visual do chamador.
+    // LumenScope is not an InheritedTheme: pass the palette and style manually
+    // so the route inherits the caller's visual settings.
     builder: (BuildContext _) => LumenScope(
       palette: ext.palette,
       style: ext.style,
@@ -194,8 +194,8 @@ Future<T> showLumenLoading<T>({
   try {
     return await task();
   } finally {
-    // removeRoute em vez de pop: não fecha por engano outra rota que tenha
-    // sido aberta por cima durante a tarefa.
+    // Use removeRoute instead of pop: this avoids accidentally closing
+    // another route that was opened above it while the task was running.
     if (route.isActive) {
       navigator.removeRoute(route);
     }

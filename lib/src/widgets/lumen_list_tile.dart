@@ -5,10 +5,10 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// ListTile temático com surface translúcida, borda accent suave e estado
-/// selecionado destacado por glow.
+/// Themed ListTile with a translucent surface, subtle accent border, and
+/// selected state highlighted with a glow.
 class LumenListTile extends StatelessWidget {
-  /// Cria um item de lista neon.
+  /// Creates a neon list item.
   const LumenListTile({
     required this.title,
     super.key,
@@ -22,31 +22,31 @@ class LumenListTile extends StatelessWidget {
     this.dense = false,
   });
 
-  /// Texto principal do item.
+  /// Main item text.
   final String title;
 
-  /// Texto auxiliar exibido abaixo de [title].
+  /// Supporting text displayed below [title].
   final String? subtitle;
 
-  /// Widget opcional exibido antes do texto.
+  /// Optional widget displayed before the text.
   final Widget? leading;
 
-  /// Widget opcional exibido no fim da linha.
+  /// Optional widget displayed at the end of the row.
   final Widget? trailing;
 
-  /// Callback executado ao tocar no item.
+  /// Callback run when the item is tapped.
   final VoidCallback? onTap;
 
-  /// Callback executado no toque longo.
+  /// Callback run on long press.
   final VoidCallback? onLongPress;
 
-  /// Se `true`, aplica destaque visual de seleção.
+  /// If `true`, applies visual selection highlighting.
   final bool selected;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Se `true`, reduz o espaçamento vertical.
+  /// If `true`, reduces vertical spacing.
   final bool dense;
 
   @override
@@ -56,8 +56,8 @@ class LumenListTile extends StatelessWidget {
     final Color accent = accentColor ?? p.primary;
     final bool disabled = onTap == null && onLongPress == null;
 
-    // Tile sem ação é só informativo: apaga menos que um controle
-    // desabilitado (0.7 em vez de kLumenDisabledOpacity).
+    // A tile without an action is informational: dim it less than a disabled
+    // control (0.7 instead of kLumenDisabledOpacity).
     return Opacity(
       opacity: disabled && !selected ? 0.7 : 1,
       child: LumenPressable(

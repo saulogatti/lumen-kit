@@ -7,26 +7,26 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_badge.dart';
 
-/// Item de [LumenBottomNavBar] / [LumenNavRail].
+/// Item in [LumenBottomNavBar] / [LumenNavRail].
 class LumenNavItem {
-  /// Cria um item compartilhado pela navegação inferior e lateral.
+  /// Creates an item shared by bottom and side navigation.
   const LumenNavItem({required this.icon, required this.label, this.badge});
 
-  /// Ícone exibido no item de navegação.
+  /// Icon displayed in the navigation item.
   final IconData icon;
 
-  /// Texto exibido abaixo do ícone.
+  /// Text displayed below the icon.
   final String label;
 
-  /// Pequeno texto exibido como badge sobre o ícone (ex: "3", "•").
+  /// Small text displayed as a badge over the icon (e.g. "3", "•").
   final String? badge;
 }
 
-/// Barra inferior com 3-5 itens, item selecionado destacado com pílula glow.
+/// Bottom bar with 3–5 items; the selected item is highlighted with a glowing pill.
 class LumenBottomNavBar extends StatelessWidget {
-  /// Cria uma barra de navegação inferior.
+  /// Creates a bottom navigation bar.
   ///
-  /// Use entre 3 e 5 [items] para manter a leitura e o toque confortáveis.
+  /// Use 3 to 5 [items] for comfortable reading and tapping.
   const LumenBottomNavBar({
     required this.items,
     required this.selectedIndex,
@@ -35,16 +35,16 @@ class LumenBottomNavBar extends StatelessWidget {
     this.accentColor,
   });
 
-  /// Itens exibidos na barra.
+  /// Items displayed in the bar.
   final List<LumenNavItem> items;
 
-  /// Índice do item atualmente selecionado.
+  /// Index of the currently selected item.
   final int selectedIndex;
 
-  /// Callback chamado com o índice do item tocado.
+  /// Callback called with the index of the tapped item.
   final ValueChanged<int> onChanged;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Override for the accent color. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
@@ -101,9 +101,9 @@ class LumenBottomNavBar extends StatelessWidget {
   }
 }
 
-/// Variante lateral (tablet / desktop).
+/// Side navigation variant (tablet / desktop).
 class LumenNavRail extends StatelessWidget {
-  /// Cria a variante lateral da navegação neon.
+  /// Creates the neon side navigation variant.
   const LumenNavRail({
     required this.items,
     required this.selectedIndex,
@@ -114,22 +114,22 @@ class LumenNavRail extends StatelessWidget {
     this.trailing,
   });
 
-  /// Itens exibidos no rail.
+  /// Items displayed in the rail.
   final List<LumenNavItem> items;
 
-  /// Índice do item atualmente selecionado.
+  /// Index of the currently selected item.
   final int selectedIndex;
 
-  /// Callback chamado com o índice do item tocado.
+  /// Callback called with the index of the tapped item.
   final ValueChanged<int> onChanged;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Override for the accent color. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Widget opcional exibido acima da lista.
+  /// Optional widget displayed above the list.
   final Widget? leading;
 
-  /// Widget opcional exibido abaixo da lista.
+  /// Optional widget displayed below the list.
   final Widget? trailing;
 
   @override
@@ -203,8 +203,8 @@ class LumenNavRail extends StatelessWidget {
   }
 }
 
-/// Ícone (com badge) + rótulo de um [LumenNavItem]. Compartilhado pela barra
-/// inferior e pelo rail, que antes ignorava o `badge`.
+/// Icon (with badge) + label for a [LumenNavItem]. Shared by the bottom bar
+/// and rail, both of which previously ignored `badge`.
 class _NavItemContent extends StatelessWidget {
   const _NavItemContent({
     required this.item,

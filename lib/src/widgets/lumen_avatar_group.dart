@@ -5,11 +5,11 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_avatar.dart';
 
-/// Avatares empilhados com sobreposição e um "+N" para o excedente.
-/// Para participantes, membros de equipe, quem curtiu…
+/// Stacked avatars with overlap and a "+N" for the remaining people.
+/// For participants, team members, people who liked something…
 ///
-/// Os [avatars] são redesenhados com o [radius] do grupo: o `radius` e o
-/// `statusColor` de cada [LumenAvatar] são ignorados aqui.
+/// The [avatars] are redrawn using the group's [radius]: each [LumenAvatar]'s
+/// `radius` and `statusColor` are ignored here.
 ///
 /// ```dart
 /// LumenAvatarGroup(
@@ -21,7 +21,7 @@ import 'lumen_avatar.dart';
 /// )
 /// ```
 class LumenAvatarGroup extends StatelessWidget {
-  /// Cria o grupo.
+  /// Creates the group.
   const LumenAvatarGroup({
     required this.avatars,
     super.key,
@@ -36,33 +36,33 @@ class LumenAvatarGroup extends StatelessWidget {
   }) : assert(maxVisible > 0),
        assert(overlap >= 0 && overlap < 1);
 
-  /// Avatares do grupo, na ordem de exibição.
+  /// Group avatars, in display order.
   final List<LumenAvatar> avatars;
 
-  /// Quantos avatares aparecem antes do "+N".
+  /// Number of avatars shown before "+N".
   final int maxVisible;
 
-  /// Total real de pessoas, quando [avatars] traz só uma amostra (ex.: a API
-  /// devolve 3 fotos e "128 participantes"). Default: `avatars.length`.
+  /// Actual number of people when [avatars] contains only a sample (e.g. the
+  /// API returns 3 photos and "128 participants"). Default: `avatars.length`.
   final int? total;
 
-  /// Raio de cada avatar.
+  /// Radius of each avatar.
   final double radius;
 
-  /// Fração do diâmetro que cada avatar cobre do anterior (0 a 1).
+  /// Fraction of the diameter each avatar covers from the previous one (0 to 1).
   final double overlap;
 
-  /// Accent dos anéis e do "+N". Default: `palette.primary`.
+  /// Accent color for the rings and "+N". Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Cor do contorno que separa os avatares. Default:
+  /// Color of the outline separating the avatars. Default:
   /// `palette.backgroundDeep`.
   final Color? ringColor;
 
-  /// Chamado ao tocar no "+N". `null` = não tocável.
+  /// Called when "+N" is tapped. `null` = not tappable.
   final VoidCallback? onOverflowTap;
 
-  /// Rótulo do grupo para leitores de tela (ex.: "5 participantes").
+  /// Group label for screen readers (e.g. "5 participants").
   final String? semanticLabel;
 
   static const double _ring = 2;
@@ -119,7 +119,7 @@ class LumenAvatarGroup extends StatelessWidget {
         ),
       );
       overflow = onOverflowTap == null
-          // O rótulo do grupo já diz quantos são; "+3" solto seria ruído.
+          // The group label already says how many there are; a bare "+3" would be noise.
           ? ExcludeSemantics(excluding: semanticLabel != null, child: chip)
           : LumenPressable(
               onTap: onOverflowTap,

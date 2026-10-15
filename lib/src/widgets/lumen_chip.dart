@@ -5,13 +5,13 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Chip selecionável: base de filtros e escolhas. Diferente do `LumenStatusChip`
-/// e do `LumenTag`, que só exibem.
+/// Selectable chip: a building block for filters and choices. Unlike
+/// `LumenStatusChip` and `LumenTag`, which are display-only.
 ///
-/// Para grupos prontos, use [LumenChoiceChips] (um valor) ou
-/// [LumenFilterChips] (vários).
+/// For ready-made groups, use [LumenChoiceChips] (one value) or
+/// [LumenFilterChips] (multiple values).
 class LumenChip extends StatelessWidget {
-  /// Cria um chip. Com [onSelected] `null`, fica desabilitado.
+  /// Creates a chip. It is disabled when [onSelected] is `null`.
   const LumenChip({
     required this.label,
     required this.selected,
@@ -22,22 +22,22 @@ class LumenChip extends StatelessWidget {
     this.showCheckmark = false,
   });
 
-  /// Texto do chip.
+  /// Chip text.
   final String label;
 
-  /// Se o chip está marcado.
+  /// Whether the chip is selected.
   final bool selected;
 
-  /// Chamado com o novo estado (`!selected`) ao tocar.
+  /// Called with the new state (`!selected`) when tapped.
   final ValueChanged<bool>? onSelected;
 
-  /// Ícone antes do [label]. Some quando o check aparece.
+  /// Icon before [label]. Hidden when the check appears.
   final IconData? icon;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Mostra um check quando [selected] (padrão de chips de filtro).
+  /// Shows a check when [selected] (the usual filter chip pattern).
   final bool showCheckmark;
 
   @override
@@ -101,9 +101,9 @@ class LumenChip extends StatelessWidget {
   }
 }
 
-/// Opção de [LumenChoiceChips] e [LumenFilterChips].
+/// Option for [LumenChoiceChips] and [LumenFilterChips].
 class LumenChipItem<T> {
-  /// Cria uma opção com [value] e [label].
+  /// Creates an option with [value] and [label].
   const LumenChipItem({
     required this.value,
     required this.label,
@@ -111,23 +111,23 @@ class LumenChipItem<T> {
     this.enabled = true,
   });
 
-  /// Valor da opção.
+  /// Option value.
   final T value;
 
-  /// Texto do chip.
+  /// Chip text.
   final String label;
 
-  /// Ícone opcional antes do [label].
+  /// Optional icon before [label].
   final IconData? icon;
 
-  /// Se `false`, o chip fica desabilitado.
+  /// If `false`, the chip is disabled.
   final bool enabled;
 }
 
-/// Grupo de chips de escolha única (ex.: "Dia / Semana / Mês" em formato de
-/// chip, tamanho P/M/G).
+/// Group of single-choice chips (e.g. "Day / Week / Month" as chips, or sizes
+/// S/M/L).
 class LumenChoiceChips<T> extends StatelessWidget {
-  /// Cria o grupo. Com [onChanged] `null`, todos ficam desabilitados.
+  /// Creates the group. When [onChanged] is `null`, all chips are disabled.
   const LumenChoiceChips({
     required this.items,
     required this.value,
@@ -139,25 +139,25 @@ class LumenChoiceChips<T> extends StatelessWidget {
     this.runSpacing = 8,
   });
 
-  /// Opções.
+  /// Options.
   final List<LumenChipItem<T>> items;
 
-  /// Valor selecionado.
+  /// Selected value.
   final T? value;
 
-  /// Chamado com o novo valor (ou `null` ao desmarcar, se permitido).
+  /// Called with the new value (or `null` when deselected, if allowed).
   final ValueChanged<T?>? onChanged;
 
-  /// Se `true`, tocar no chip marcado desmarca (manda `null`).
+  /// If `true`, tapping the selected chip deselects it (sends `null`).
   final bool allowDeselect;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Espaço horizontal entre chips.
+  /// Horizontal spacing between chips.
   final double spacing;
 
-  /// Espaço entre linhas quando quebra.
+  /// Spacing between wrapped rows.
   final double runSpacing;
 
   @override
@@ -187,9 +187,9 @@ class LumenChoiceChips<T> extends StatelessWidget {
   }
 }
 
-/// Grupo de chips de filtro (vários marcados ao mesmo tempo, com check).
+/// Group of filter chips (multiple can be selected at once, with a check).
 class LumenFilterChips<T> extends StatelessWidget {
-  /// Cria o grupo. Com [onChanged] `null`, todos ficam desabilitados.
+  /// Creates the group. When [onChanged] is `null`, all chips are disabled.
   const LumenFilterChips({
     required this.items,
     required this.values,
@@ -201,25 +201,25 @@ class LumenFilterChips<T> extends StatelessWidget {
     this.runSpacing = 8,
   });
 
-  /// Opções.
+  /// Options.
   final List<LumenChipItem<T>> items;
 
-  /// Valores marcados.
+  /// Selected values.
   final Set<T> values;
 
-  /// Chamado com o novo conjunto (uma cópia; [values] não é alterado).
+  /// Called with the new set (a copy; [values] is not modified).
   final ValueChanged<Set<T>>? onChanged;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Mostra o check nos chips marcados.
+  /// Shows a check on selected chips.
   final bool showCheckmark;
 
-  /// Espaço horizontal entre chips.
+  /// Horizontal spacing between chips.
   final double spacing;
 
-  /// Espaço entre linhas quando quebra.
+  /// Spacing between wrapped rows.
   final double runSpacing;
 
   @override
@@ -238,8 +238,8 @@ class LumenFilterChips<T> extends StatelessWidget {
             onSelected: onChanged == null || !item.enabled
                 ? null
                 : (bool on) {
-                    // Cascata dentro de ternário pega a expressão inteira;
-                    // por isso o if explícito.
+                    // A ternary within a cascade captures the whole
+                    // expression; use an explicit if instead.
                     final next = <T>{...values};
                     if (on) {
                       next.add(item.value);

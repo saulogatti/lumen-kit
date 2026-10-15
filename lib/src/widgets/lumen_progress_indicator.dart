@@ -4,11 +4,11 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Barra de progresso linear com gradiente neon e glow.
+/// Linear progress bar with a neon gradient and glow.
 ///
-/// Se [value] for `null`, exibe animação indeterminada.
+/// If [value] is `null`, displays an indeterminate animation.
 class LumenLinearProgress extends StatelessWidget {
-  /// Cria uma barra de progresso linear.
+  /// Creates a linear progress bar.
   const LumenLinearProgress({
     super.key,
     this.value,
@@ -20,25 +20,25 @@ class LumenLinearProgress extends StatelessWidget {
     this.semanticsLabel,
   });
 
-  /// Valor entre 0 e 1. `null` = indeterminado.
+  /// Value from 0 to 1. `null` = indeterminate.
   final double? value;
 
-  /// Altura da barra em pixels lógicos.
+  /// Bar height in logical pixels.
   final double height;
 
-  /// Gradiente da porção preenchida. Default: `palette.accentGradient`.
+  /// Gradient of the filled portion. Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Cor do glow da porção preenchida. Default: `palette.secondary`.
+  /// Glow color of the filled portion. Default: `palette.secondary`.
   final Color? glowColor;
 
-  /// Cor da trilha de fundo.
+  /// Background track color.
   final Color? trackColor;
 
-  /// Raio dos cantos da barra.
+  /// Bar corner radius.
   final double borderRadius;
 
-  /// Rótulo lido por leitores de tela (ex.: "Enviando arquivo").
+  /// Label read by screen readers (e.g. "Uploading file").
   final String? semanticsLabel;
 
   @override
@@ -74,8 +74,8 @@ class LumenLinearProgress extends StatelessWidget {
   }
 }
 
-/// Anuncia o progresso como o `ProgressIndicator` do Material: valor em %
-/// quando determinado, só o rótulo quando indeterminado.
+/// Announces progress like Material's `ProgressIndicator`: percentage when
+/// determinate, label only when indeterminate.
 class _ProgressSemantics extends StatelessWidget {
   const _ProgressSemantics({
     required this.label,
@@ -170,10 +170,10 @@ class _IndeterminateBarState extends State<_IndeterminateBar>
   }
 }
 
-/// Spinner circular com gradiente neon. Se [value] for `null`, gira em
-/// loop; caso contrário, desenha um arco proporcional ao progresso.
+/// Circular spinner with a neon gradient. If [value] is `null`, it spins in a
+/// loop; otherwise, it draws an arc proportional to progress.
 class LumenCircularProgress extends StatefulWidget {
-  /// Cria um indicador circular de progresso.
+  /// Creates a circular progress indicator.
   const LumenCircularProgress({
     super.key,
     this.value,
@@ -185,25 +185,25 @@ class LumenCircularProgress extends StatefulWidget {
     this.semanticsLabel,
   });
 
-  /// Valor entre 0 e 1. `null` = indeterminado.
+  /// Value from 0 to 1. `null` = indeterminate.
   final double? value;
 
-  /// Largura e altura do indicador.
+  /// Indicator width and height.
   final double size;
 
-  /// Espessura do arco.
+  /// Arc thickness.
   final double strokeWidth;
 
-  /// Gradiente do arco ativo. Default: `palette.accentGradient`.
+  /// Gradient of the active arc. Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Cor do glow do arco ativo. Default: `palette.secondary`.
+  /// Glow color of the active arc. Default: `palette.secondary`.
   final Color? glowColor;
 
-  /// Cor da trilha circular de fundo.
+  /// Background circular track color.
   final Color? trackColor;
 
-  /// Rótulo lido por leitores de tela (ex.: "Carregando").
+  /// Label read by screen readers (e.g. "Loading").
   final String? semanticsLabel;
 
   @override

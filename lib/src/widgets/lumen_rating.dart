@@ -4,15 +4,15 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Estrelas de avaliação. Com [onChanged], o usuário escolhe a nota tocando;
-/// sem ele, só exibe (inclusive notas fracionadas, como 4.3).
+/// Rating stars. With [onChanged], the user picks a rating by tapping;
+/// without it, the stars are display-only (including fractional ratings such as 4.3).
 ///
 /// ```dart
 /// LumenRating(value: _nota, onChanged: (double v) => setState(() => _nota = v))
-/// LumenRating(value: produto.media) // somente leitura
+/// LumenRating(value: produto.media) // read-only
 /// ```
 class LumenRating extends StatelessWidget {
-  /// Cria a avaliação.
+  /// Creates the rating.
   const LumenRating({
     required this.value,
     super.key,
@@ -27,34 +27,34 @@ class LumenRating extends StatelessWidget {
     this.semanticLabel,
   }) : assert(max > 0);
 
-  /// Nota atual, de 0 a [max]. Aceita frações na exibição.
+  /// Current rating, from 0 to [max]. Supports fractional display values.
   final double value;
 
-  /// Chamado com a nota tocada. `null` = somente leitura.
+  /// Called with the tapped rating. `null` = read-only.
   final ValueChanged<double>? onChanged;
 
-  /// Número de estrelas.
+  /// Number of stars.
   final int max;
 
-  /// Permite escolher meia estrela (toque na metade esquerda).
+  /// Allows selecting half stars (tap the left half).
   final bool allowHalf;
 
-  /// Tamanho de cada estrela.
+  /// Size of each star.
   final double size;
 
-  /// Espaço entre estrelas.
+  /// Space between stars.
   final double spacing;
 
-  /// Cor das estrelas preenchidas. Default: `palette.warning`.
+  /// Color of filled stars. Default: `palette.warning`.
   final Color? color;
 
-  /// Ícone preenchido.
+  /// Filled icon.
   final IconData icon;
 
-  /// Ícone vazio.
+  /// Empty icon.
   final IconData emptyIcon;
 
-  /// Rótulo para leitores de tela (ex.: "Avaliação").
+  /// Label for screen readers (e.g. "Rating").
   final String? semanticLabel;
 
   String _fmt(double v) =>

@@ -5,13 +5,13 @@ import '../foundation/lumen_decorations.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Campo de texto neon. Funciona solto ou dentro de um [Form] (via
-/// [validator]) e vira textarea com [maxLines] > 1.
+/// Neon text field. Works standalone or inside a [Form] (via [validator])
+/// and becomes a textarea when [maxLines] > 1.
 ///
-/// Sem [controller], mantém um controller interno inicializado com
-/// [initialValue] para preservar foco/cursor entre rebuilds.
+/// Without [controller], keeps an internal controller initialized with
+/// [initialValue] to preserve focus/cursor across rebuilds.
 class LumenTextField extends StatefulWidget {
-  /// Cria um campo de texto neon.
+  /// Creates a neon text field.
   const LumenTextField({
     required this.label,
     super.key,
@@ -41,79 +41,79 @@ class LumenTextField extends StatefulWidget {
     this.accentColor,
   });
 
-  /// Rótulo exibido pelo campo.
+  /// Label displayed by the field.
   final String label;
 
-  /// Texto inicial do controller interno. Ignorado quando há [controller].
+  /// Initial text for the internal controller. Ignored when [controller] is set.
   final String initialValue;
 
-  /// Callback chamado quando o texto muda.
+  /// Callback called when the text changes.
   final ValueChanged<String>? onChanged;
 
-  /// Controller externo. Quem cria é quem descarta.
+  /// External controller. The creator is responsible for disposing it.
   final TextEditingController? controller;
 
-  /// Foco externo, para encadear campos ou focar via código.
+  /// External focus, for chaining fields or focusing programmatically.
   final FocusNode? focusNode;
 
-  /// Mensagem de erro exibida abaixo do campo (sobrepõe o [validator]).
+  /// Error message displayed below the field (overrides [validator]).
   final String? errorText;
 
-  /// Texto de dica exibido com o campo vazio.
+  /// Hint text displayed when the field is empty.
   final String? hint;
 
-  /// Texto de ajuda exibido abaixo do campo.
+  /// Helper text displayed below the field.
   final String? helperText;
 
-  /// Ícone opcional exibido antes do texto.
+  /// Optional icon displayed before the text.
   final IconData? icon;
 
-  /// Se `true`, oculta o texto digitado.
+  /// If `true`, hides the entered text.
   final bool obscure;
 
-  /// Tipo de teclado solicitado ao sistema.
+  /// Keyboard type requested from the system.
   final TextInputType? keyboardType;
 
-  /// Ação do botão de confirmação do teclado (próximo, concluir…).
+  /// Keyboard action button type (next, done…).
   final TextInputAction? textInputAction;
 
-  /// Widget opcional exibido no final do campo.
+  /// Optional widget displayed at the end of the field.
   final Widget? suffix;
 
-  /// Validação usada por um [Form] ancestral.
+  /// Validation used by an ancestor [Form].
   final FormFieldValidator<String>? validator;
 
-  /// Callback ao confirmar pelo teclado.
+  /// Callback when submitting from the keyboard.
   final ValueChanged<String>? onSubmitted;
 
-  /// Quando validar automaticamente.
+  /// When to validate automatically.
   final AutovalidateMode? autovalidateMode;
 
-  /// Se `false`, o campo fica desabilitado.
+  /// If `false`, the field is disabled.
   final bool enabled;
 
-  /// Se `true`, o texto não pode ser editado (mas pode ser selecionado).
+  /// If `true`, the text cannot be edited (but can be selected).
   final bool readOnly;
 
-  /// Se `true`, solicita foco ao aparecer.
+  /// If `true`, requests focus when shown.
   final bool autofocus;
 
-  /// Mínimo de linhas visíveis (textarea).
+  /// Minimum number of visible lines (textarea).
   final int? minLines;
 
-  /// Máximo de linhas. `null` cresce sem limite.
+  /// Maximum number of lines. `null` grows without a limit.
   final int? maxLines;
 
-  /// Limite de caracteres, com contador.
+  /// Character limit, with a counter.
   final int? maxLength;
 
-  /// Formatadores aplicados à entrada.
+  /// Formatters applied to the input.
   final List<TextInputFormatter>? inputFormatters;
 
-  /// Dicas de preenchimento automático.
+  /// Autofill hints.
   final Iterable<String>? autofillHints;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
   @override
@@ -171,7 +171,7 @@ class _LumenTextFieldState extends State<LumenTextField> {
   @override
   void didUpdateWidget(LumenTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Passou a usar controller interno: herda o texto do externo antigo.
+    // Switched to an internal controller: inherit text from the previous external one.
     if (oldWidget.controller != null && widget.controller == null) {
       _internal ??= TextEditingController.fromValue(
         oldWidget.controller!.value,

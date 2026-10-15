@@ -5,12 +5,12 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Floating Action Button no estilo neon. Funciona em dois modos:
+/// Floating Action Button in the neon style. Works in two modes:
 ///
-/// - **Compacto** (default, só [icon]) — círculo com gradiente e glow.
-/// - **Estendido** (com [label]) — pílula com ícone + texto.
+/// - **Compact** (default, [icon] only) — circle with gradient and glow.
+/// - **Extended** (with [label]) — pill with icon + text.
 class LumenFab extends StatelessWidget {
-  /// Cria um FAB compacto ou estendido quando [label] é informado.
+  /// Creates a compact FAB, or an extended one when [label] is provided.
   const LumenFab({
     required this.icon,
     required this.onPressed,
@@ -25,7 +25,7 @@ class LumenFab extends StatelessWidget {
     this.semanticLabel,
   });
 
-  /// Construtor explícito para o modo estendido.
+  /// Explicit constructor for extended mode.
   const LumenFab.extended({
     required this.icon,
     required this.onPressed,
@@ -39,36 +39,36 @@ class LumenFab extends StatelessWidget {
   }) : size = 56,
        semanticLabel = null;
 
-  /// Ícone exibido no botão.
+  /// Icon displayed on the button.
   final IconData icon;
 
-  /// Callback executado ao tocar no FAB.
+  /// Callback run when the FAB is tapped.
   ///
-  /// Quando `null`, o FAB fica visualmente desabilitado.
+  /// When `null`, the FAB appears disabled.
   final VoidCallback? onPressed;
 
-  /// Se informado, vira FAB estendido (ícone + texto).
+  /// When provided, turns this into an extended FAB (icon + text).
   final String? label;
 
-  /// Se `true`, exibe indicador de progresso e bloqueia o toque.
+  /// If `true`, displays a progress indicator and blocks taps.
   final bool busy;
 
-  /// Gradiente do botão. Default: `palette.accentGradient`.
+  /// Button gradient. Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Cor do glow (boxShadow). Default: `palette.secondary`.
+  /// Glow color (boxShadow). Default: `palette.secondary`.
   final Color? glowColor;
 
-  /// Cor do texto/ícone. Default: `palette.backgroundDeep`.
+  /// Text/icon color. Default: `palette.backgroundDeep`.
   final Color? foregroundColor;
 
-  /// Diâmetro no modo compacto. No modo estendido define apenas a altura.
+  /// Diameter in compact mode. In extended mode, sets only the height.
   final double size;
 
-  /// Tag para Hero animation. Repassada ao [Material] interno via [Hero].
+  /// Tag for Hero animation. Passed to the inner [Material] via [Hero].
   final Object? heroTag;
 
-  /// Rótulo para leitores de tela no modo compacto (só ícone).
+  /// Label for screen readers in compact mode (icon only).
   final String? semanticLabel;
 
   @override

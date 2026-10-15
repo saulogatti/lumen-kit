@@ -1,23 +1,23 @@
 # lumen_kit
 
-Kit de widgets Flutter com os mesmos desenhos e a cor livre. O visual neon (glow, gradiente, grid e orbs) é o estilo padrão; flat, glass, soft e brutal usam qualquer paleta. Pensado para reaproveitar entre projetos sem reescrever tokens e estilos a cada novo app.
+Flutter widget kit with consistent designs and flexible colors. The neon look (glow, gradients, grid, and orbs) is the default style; flat, glass, soft, and brutal work with any palette. Designed for reuse across projects without rewriting tokens and styles for every new app.
 
-## O que vem dentro
+## What's included
 
-| Categoria   | Componentes                                                        |
+| Category    | Components                                                         |
 |-------------|--------------------------------------------------------------------|
-| Tema        | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `AppTheme` |
+| Theme       | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `AppTheme` |
 | Background  | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec`                  |
-| Estrutura   | `LumenAppBar`, `LumenCard`                                           |
-| Ação        | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
-| Input       | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
+| Structure   | `LumenAppBar`, `LumenCard`                                           |
+| Actions     | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
+| Inputs      | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
 | Feedback    | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `LumenSnackBar`, `LumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
-| Navegação   | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
+| Navigation  | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
 | Display     | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
 
-Tudo desacoplado de domínio — recebe `child`, callbacks e tokens; não conhece nenhuma regra de negócio.
+Everything is domain-agnostic — it receives `child`, callbacks, and tokens; it knows no business rules.
 
-## Instalação
+## Installation
 
 ```yaml
 dependencies:
@@ -27,31 +27,31 @@ dependencies:
       ref: main
 ```
 
-## Só os componentes (sem o tema)
+## Components only (without the theme)
 
-Se o seu app já tem o próprio `ThemeData`, importe só os widgets:
+If your app already has its own `ThemeData`, import only the widgets:
 
 ```dart
 import 'package:lumen_kit/components.dart';
 ```
 
-Esse import não traz `AppTheme` nem `AppColors` (nada de conflito de nomes) e
-não exige registrar nada no tema: os widgets usam a paleta default, clara ou
-escura conforme o brilho do seu tema. Para outras cores ou outro estilo em
-uma parte da tela, sem tocar no `ThemeData`, use `LumenScope`:
+This import does not include `AppTheme` or `AppColors` (so there are no naming
+conflicts) and requires no theme registration: widgets use the default palette,
+light or dark according to your theme's brightness. To use different colors or
+another style in part of a screen without touching `ThemeData`, use `LumenScope`:
 
 ```dart
 LumenScope(
   palette: LumenPalette.fromSeed(primary: Colors.teal),
   style: LumenStyle.flat,
-  child: LumenButton(label: 'Salvar', onPressed: salvar),
+  child: LumenButton(label: 'Save', onPressed: salvar),
 )
 ```
 
-Tipografia vem do `textTheme` do seu app. O import completo
-(`package:lumen_kit/lumen_kit.dart`) continua igual, com tudo.
+Typography comes from your app's `textTheme`. The full import
+(`package:lumen_kit/lumen_kit.dart`) remains unchanged and includes everything.
 
-## Uso mínimo
+## Minimal usage
 
 ```dart
 import 'package:lumen_kit/lumen_kit.dart';
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.dark,
       home: Scaffold(
-        appBar: const LumenAppBar(title: 'Dashboard', subtitle: 'em tempo real'),
+        appBar: const LumenAppBar(title: 'Dashboard', subtitle: 'real time'),
         body: LumenAnimatedGridBackground(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -77,12 +77,12 @@ class MyApp extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const Text('Serviço online'),
+                  const Text('Service online'),
                   const SizedBox(height: 12),
                   const LumenStatusChip(label: 'OK', tone: LumenStatusTone.success),
                   const SizedBox(height: 20),
                   LumenCta(
-                    label: 'EXECUTAR',
+                    label: 'RUN',
                     icon: Icons.play_arrow_rounded,
                     onPressed: () {},
                   ),
@@ -97,56 +97,56 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-## Trocando as cores
+## Changing colors
 
-Todos os widgets leem a paleta do tema, então trocar o tema troca o kit inteiro.
-Do mais simples ao mais detalhado:
+All widgets read the theme palette, so changing the theme changes the entire
+kit. From simplest to most detailed:
 
 ```dart
-// 1. Preset pronto: neon (default), matrix, synthwave, ultraviolet, ember.
+// 1. Ready-made preset: neon (default), matrix, synthwave, ultraviolet, ember.
 MaterialApp(theme: AppTheme.fromPreset(LumenPreset.matrix), home: ...);
 
-// 2. Uma ou duas cores: fundos, superfícies, textos, glows e gradientes
-//    são derivados automaticamente.
+// 2. One or two colors: backgrounds, surfaces, text, glows, and gradients
+//    are derived automatically.
 MaterialApp(
   theme: AppTheme.fromSeed(
     primary: Colors.greenAccent,
-    secondary: Colors.orangeAccent, // opcional
-    brightness: Brightness.dark,     // ou Brightness.light
+    secondary: Colors.orangeAccent, // optional
+    brightness: Brightness.dark,     // or Brightness.light
   ),
   home: ...,
 );
 
-// 3. Ajuste fino de tokens específicos (gradientes se recalculam sozinhos).
+// 3. Fine-tune specific tokens (gradients recalculate automatically).
 final palette = LumenPalette.defaultDark().copyWith(primary: Colors.greenAccent);
 MaterialApp(theme: AppTheme.fromPalette(palette), home: ...);
 ```
 
-Trocas de tema em runtime são animadas (`LumenThemeExt.lerp` interpola a
-paleta). O app de `example/` tem um seletor de preset e modo claro/escuro.
+Runtime theme changes are animated (`LumenThemeExt.lerp` interpolates the
+palette). The app in `example/` has a preset and light/dark mode selector.
 
-> `accentCyan`, `accentMagenta` e `accentBlue` viraram `primary`, `secondary`
-> e `tertiary`. Os nomes antigos continuam funcionando como `@Deprecated`.
+> `accentCyan`, `accentMagenta`, and `accentBlue` became `primary`, `secondary`,
+> and `tertiary`. The old names remain available as `@Deprecated`.
 
-Dentro de qualquer widget, acesse via extension:
+Inside any widget, access it through the extension:
 
 ```dart
 final p = LumenThemeExt.of(context).palette;
 return Container(color: p.surface);
 ```
 
-## Trocando o estilo (além da cor)
+## Changing the style (beyond color)
 
-O "neon" (glow, gradientes, grid) é só um dos estilos. `LumenStyle` controla
-sombra, preenchimento, superfície, borda e fundo, e combina com qualquer paleta:
+"Neon" (glow, gradients, grid) is just one of the styles. `LumenStyle` controls
+shadows, fills, surfaces, borders, and backgrounds, and works with any palette:
 
-| Estilo   | Visual                                                        |
+| Style    | Appearance                                                    |
 |----------|---------------------------------------------------------------|
-| `neon`   | Glow colorido, gradientes, grid + orbs (default)              |
-| `flat`   | Sem glow nem gradiente, sombra neutra, fundo liso             |
-| `glass`  | Superfícies translúcidas com blur, glow suave                 |
-| `soft`   | Cantos bem redondos, sombras difusas, sem borda, fundo pontilhado |
-| `brutal` | Cantos retos, borda grossa, sombra dura deslocada             |
+| `neon`   | Colored glow, gradients, grid + orbs (default)                |
+| `flat`   | No glow or gradients, neutral shadow, plain background        |
+| `glass`  | Translucent surfaces with blur, soft glow                     |
+| `soft`   | Very rounded corners, diffuse shadows, no border, dotted background |
+| `brutal` | Square corners, thick border, hard offset shadow              |
 
 ```dart
 MaterialApp(
@@ -154,49 +154,48 @@ MaterialApp(
   home: ...,
 );
 
-// Ajuste fino a partir de um preset.
+// Fine-tune starting from a preset.
 final style = LumenStyle.soft.copyWith(
   background: LumenBackgroundKind.grid,
   radiusScale: 1.2,
 );
 ```
 
-As animações dos widgets (hover, transições, toasts) continuam iguais em todos
-os estilos.
+Widget animations (hover, transitions, toasts) remain the same in every style.
 
-## Montando componentes próprios
+## Building your own components
 
-As peças que os widgets do kit usam por dentro também são públicas
-(`package:lumen_kit/components.dart`), então um widget seu ganha o mesmo
-comportamento e acompanha paleta e estilo sem copiar código:
+The building blocks used internally by the kit's widgets are also public
+(`package:lumen_kit/components.dart`), so your widget can get the same behavior
+and follow the palette and style without copying code:
 
 ```dart
 final LumenPalette p = LumenThemeExt.of(context).palette;
 final LumenStyle s = LumenStyle.of(context);
 
-LumenPressable(                       // ripple, foco, desabilitado 0.55, semântica
+LumenPressable(                       // ripple, focus, disabled opacity 0.55, semantics
   onTap: save,
   borderRadius: s.radius(14),
   child: Container(
     padding: const EdgeInsets.all(16),
     decoration: LumenDecorations.panel(p, s, accent: p.secondary),
-    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Salvar', busy: saving),
+    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Save', busy: saving),
   ),
 );
 ```
 
-| Peça | Para quê |
+| Component | Purpose |
 |---|---|
-| `LumenPressable` | Área tocável com ripple, teclado, `selected`/`checked`/`toggled` para leitores de tela e opacidade de desabilitado |
-| `LumenDecorations` | `panel` (dialog/toast/tooltip), `selectable` (item de navegação), `iconBox`, `input` (`InputDecoration`), `accent`/`diagonal` (gradientes) |
-| `LumenActionContent` | Spinner ou ícone + texto, como nos botões |
-| `LumenLabeled` | Controle + rótulo (checkbox, radio, switch) |
-| `LumenMotion` / `kLumen*` | Durações, opacidade de desabilitado e respeito a "reduzir animações" |
+| `LumenPressable` | Tappable area with ripple, keyboard support, `selected`/`checked`/`toggled` for screen readers, and disabled opacity |
+| `LumenDecorations` | `panel` (dialog/toast/tooltip), `selectable` (navigation item), `iconBox`, `input` (`InputDecoration`), `accent`/`diagonal` (gradients) |
+| `LumenActionContent` | Spinner or icon + text, as in buttons |
+| `LumenLabeled` | Control + label (checkbox, radio, switch) |
+| `LumenMotion` / `kLumen*` | Durations, disabled opacity, and respect for "reduce animations" |
 
-Animações em loop (skeleton, progresso indeterminado) e transições param ou
-viram instantâneas quando o sistema pede para reduzir animações.
+Looping animations (skeleton, indeterminate progress) and transitions stop or
+become instantaneous when the system requests reduced motion.
 
-## Background configurável
+## Configurable background
 
 ```dart
 LumenAnimatedGridBackground(
@@ -215,17 +214,17 @@ LumenAnimatedGridBackground(
 );
 ```
 
-## Lista grande e código
+## Large lists and code
 
-`LumenList` usa `ListView.builder`: só o que está na tela é construído. Com
-`itemCount: 0` ele mostra o `empty`.
+`LumenList` uses `ListView.builder`: only visible items are built. With
+`itemCount: 0`, it shows `empty`.
 
 ```dart
 LumenList(
   itemCount: eventos.length,
   empty: const LumenEmptyState(
     icon: Icons.inbox_outlined,
-    title: 'Nenhum evento',
+    title: 'No events',
   ),
   itemBuilder: (context, i) => LumenListTile(
     title: eventos[i].titulo,
@@ -234,8 +233,8 @@ LumenList(
 )
 ```
 
-`LumenPinField` é controlado (`value` + `onChanged`). `onChanged == null`
-desabilita. `onCompleted` dispara quando a última casa preenche.
+`LumenPinField` is controlled (`value` + `onChanged`). `onChanged == null`
+disables it. `onCompleted` fires when the last digit is entered.
 
 ```dart
 LumenPinField(
@@ -245,28 +244,28 @@ LumenPinField(
 )
 ```
 
-`LumenBanner` fica na tela até `onDismiss`. Sem esse callback não há botão
-de fechar.
+`LumenBanner` stays on screen until `onDismiss`. Without this callback, there is
+no close button.
 
-## Variantes de botão
+## Button variants
 
 ```dart
 Row(
   children: <Widget>[
-    LumenButton(label: 'CONFIRMAR', icon: Icons.check, onPressed: () {}),
+    LumenButton(label: 'CONFIRM', icon: Icons.check, onPressed: () {}),
     const SizedBox(width: 12),
-    LumenButton.outline(label: 'EDITAR', icon: Icons.edit, onPressed: () {}),
+    LumenButton.outline(label: 'EDIT', icon: Icons.edit, onPressed: () {}),
     const SizedBox(width: 12),
-    LumenButton.ghost(label: 'cancelar', onPressed: () {}),
+    LumenButton.ghost(label: 'cancel', onPressed: () {}),
   ],
 );
 ```
 
-- `solid` — gradiente neon cheio (mesma identidade do `LumenCta`).
-- `outline` — borda glow + fundo translúcido. Ação secundária.
-- `ghost` — só texto/ícone na cor de accent. Ação terciária.
+- `solid` — full neon gradient (same look as `LumenCta`).
+- `outline` — glowing border + translucent background. Secondary action.
+- `ghost` — only text/icon in the accent color. Tertiary action.
 
-## Inputs de seleção
+## Selection inputs
 
 ```dart
 LumenSwitch(value: on, onChanged: (v) => setState(() => on = v));
@@ -276,7 +275,7 @@ LumenCheckbox(value: checked, tristate: true, onChanged: (v) => …);
 LumenRadio<String>(
   value: 'a',
   groupValue: selected,
-  label: 'Opção A',
+  label: 'Option A',
   onChanged: (v) => setState(() => selected = v ?? selected),
 );
 
@@ -291,7 +290,7 @@ LumenDropdown<String>(
 );
 
 LumenDatePicker(
-  label: 'Início',
+  label: 'Start',
   value: date,
   firstDate: DateTime(2020),
   lastDate: DateTime(2030),
@@ -299,7 +298,7 @@ LumenDatePicker(
 );
 
 LumenTimePicker(
-  label: 'Horário',
+  label: 'Time',
   value: time,
   onChanged: (t) => setState(() => time = t),
 );
@@ -309,14 +308,14 @@ LumenRangeSlider(
   max: 500,
   divisions: 50,
   onChanged: (v) => setState(() => preco = v),
-  onChangeEnd: (v) => buscar(v), // dispara a busca só ao soltar
+  onChangeEnd: (v) => buscar(v), // trigger the search only when released
 );
 ```
 
-## Chips, quantidade e avaliação
+## Chips, quantity, and rating
 
 ```dart
-// Escolha única.
+// Single selection.
 LumenChoiceChips<String>(
   value: tamanho,
   onChanged: (v) => setState(() => tamanho = v),
@@ -326,57 +325,57 @@ LumenChoiceChips<String>(
   ],
 );
 
-// Filtros (vários marcados). Recebe e devolve um Set novo.
+// Filters (multiple selections). Receives and returns a new Set.
 LumenFilterChips<String>(
   values: filtros,
   onChanged: (v) => setState(() => filtros = v),
   items: const [
-    LumenChipItem(value: 'promo', label: 'Promoção'),
-    LumenChipItem(value: 'frete', label: 'Frete grátis'),
+    LumenChipItem(value: 'promo', label: 'Sale'),
+    LumenChipItem(value: 'frete', label: 'Free shipping'),
   ],
 );
 
 LumenQuantityStepper(value: qtd, min: 1, max: 10, onChanged: (v) => setState(() => qtd = v));
 
 LumenRating(value: nota, allowHalf: true, onChanged: (v) => setState(() => nota = v));
-LumenRating(value: 4.3, size: 16); // somente leitura, com fração
+LumenRating(value: 4.3, size: 16); // read-only, with fractional value
 ```
 
-## Menu, loading e carrossel
+## Menu, loading, and carousel
 
 ```dart
-// O "⋮" de card / app bar.
+// The "⋮" on a card / app bar.
 LumenMenuButton<String>(
   items: const [
-    LumenMenuItem(value: 'edit', label: 'Editar', icon: Icons.edit),
+    LumenMenuItem(value: 'edit', label: 'Edit', icon: Icons.edit),
     LumenMenuDivider(),
-    LumenMenuItem(value: 'del', label: 'Excluir', destructive: true),
+    LumenMenuItem(value: 'del', label: 'Delete', destructive: true),
   ],
   onSelected: (v) => …,
 );
 
-// Clique direito (desktop/web) ou toque longo (mobile).
+// Right-click (desktop/web) or long-press (mobile).
 LumenContextMenu<String>(items: itens, onSelected: …, child: linha);
 
-// Bloqueia a tela durante o submit e devolve o resultado da tarefa.
+// Blocks the screen during submission and returns the task result.
 final ok = await showLumenLoading(
   context: context,
-  message: 'Enviando…',
+  message: 'Sending…',
   task: () => api.enviar(form),
 );
 
-// Ou só uma área, controlada por estado.
-LumenLoadingOverlay(loading: salvando, message: 'Salvando…', child: form);
+// Or just one area, controlled by state.
+LumenLoadingOverlay(loading: salvando, message: 'Saving…', child: form);
 
-// Galeria / onboarding com os pontinhos de página.
+// Gallery / onboarding with page dots.
 LumenCarousel(
   itemCount: fotos.length,
   itemBuilder: (context, i) => Image.network(fotos[i], fit: BoxFit.cover),
 );
-// Ou só os pontos, ligados ao seu PageView.
+// Or just the dots, connected to your PageView.
 LumenPageIndicator(count: 4, controller: pageController);
 
-// Avatares empilhados com "+N".
+// Stacked avatars with "+N".
 LumenAvatarGroup(
   avatars: [for (final u in membros) LumenAvatar(initials: u.iniciais)],
   maxVisible: 3,
@@ -384,61 +383,61 @@ LumenAvatarGroup(
 );
 ```
 
-## Navegação
+## Navigation
 
 ```dart
-// Pílula compacta — ótima para alternar visões dentro de uma tela.
+// Compact pill — great for switching views within a screen.
 LumenSegmentedControl(
   selectedIndex: i,
   onChanged: (v) => setState(() => i = v),
   items: const [
-    LumenTabItem(label: 'Dia'),
-    LumenTabItem(label: 'Semana'),
-    LumenTabItem(label: 'Mês'),
+    LumenTabItem(label: 'Day'),
+    LumenTabItem(label: 'Week'),
+    LumenTabItem(label: 'Month'),
   ],
 );
 
-// Bottom nav com badge.
+// Bottom navigation with a badge.
 Scaffold(
   bottomNavigationBar: LumenBottomNavBar(
     selectedIndex: tab,
     onChanged: (v) => setState(() => tab = v),
     items: const [
       LumenNavItem(icon: Icons.home_outlined, label: 'Home'),
-      LumenNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
-      LumenNavItem(icon: Icons.person_outline, label: 'Conta'),
+      LumenNavItem(icon: Icons.bolt_outlined, label: 'Events', badge: '3'),
+      LumenNavItem(icon: Icons.person_outline, label: 'Account'),
     ],
   ),
 );
 
-// Modal bottom sheet temático.
+// Themed modal bottom sheet.
 showLumenBottomSheet<void>(
   context: context,
   builder: (_) => const Padding(
     padding: EdgeInsets.all(20),
-    child: Text('Ações rápidas'),
+    child: Text('Quick actions'),
   ),
 );
 ```
 
-## Dialog estilizado
+## Styled dialog
 
 ```dart
 await showLumenDialog<void>(
   context: context,
-  title: 'Confirmar ação',
+  title: 'Confirm action',
   icon: Icons.warning_amber_rounded,
-  content: const Text('Esta operação não pode ser desfeita.'),
+  content: const Text('This operation cannot be undone.'),
   actions: <Widget>[
-    TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
-    LumenCta(label: 'CONFIRMAR', onPressed: () => Navigator.pop(context)),
+    TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+    LumenCta(label: 'CONFIRM', onPressed: () => Navigator.pop(context)),
   ],
 );
 ```
 
-## App de exemplo
+## Example app
 
-Há um app demo em [`example/`](example/) com uma única tela que exercita todos os componentes do kit — cards, status, botões, icon buttons, FAB, inputs (texto, busca, switch, checkbox, radio, slider, range slider, dropdown, date e time picker), chips de escolha e filtro, quantity stepper, rating, menu de ações e de contexto, loading overlay, carrossel, progresso linear/circular, skeleton, snackbar, toast, dialog, bottom sheet, tabs, segmented, bottom nav, drawer, stepper, avatar, avatar group, badge, tag, list tile, divider, expansion tile, data table e navigation cards.
+There is a demo app in [`example/`](example/) with a single screen that exercises all kit components — cards, status, buttons, icon buttons, FAB, inputs (text, search, switch, checkbox, radio, slider, range slider, dropdown, date and time picker), choice and filter chips, quantity stepper, rating, action and context menus, loading overlay, carousel, linear/circular progress, skeleton, snackbar, toast, dialog, bottom sheet, tabs, segmented control, bottom navigation, drawer, stepper, avatar, avatar group, badge, tag, list tile, divider, expansion tile, data table, and navigation cards.
 
 ```bash
 cd example
@@ -448,4 +447,4 @@ flutter run
 
 ## Status
 
-Em desenvolvimento ativo — API ainda pode mudar entre versões `0.x`. Use `ref: <commit-sha>` ou tags (`ref: v0.1.0`) em produção para evitar quebras silenciosas vindas da `main`.
+In active development — the API may still change between `0.x` versions. Use `ref: <commit-sha>` or tags (`ref: v0.1.0`) in production to avoid silent breaking changes from `main`.

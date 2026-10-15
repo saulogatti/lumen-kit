@@ -2,10 +2,10 @@ import 'package:material_ui/material_ui.dart';
 
 import '../theme/lumen_palette.dart';
 
-/// Controle seguido de um rótulo de texto, com a cor apagada quando
-/// desabilitado. Base de checkbox, radio e switch com `label`.
+/// Control followed by a text label, dimmed when disabled. Used by checkbox,
+/// radio, and switch widgets with a `label`.
 class LumenLabeled extends StatelessWidget {
-  /// Cria um controle rotulado. Sem [label], devolve só o [control].
+  /// Creates a labeled control. Without [label], returns only [control].
   const LumenLabeled({
     required this.control,
     super.key,
@@ -14,16 +14,16 @@ class LumenLabeled extends StatelessWidget {
     this.gap = 10,
   });
 
-  /// O controle (caixa, círculo, trilho…).
+  /// The control (box, circle, track…).
   final Widget control;
 
-  /// Texto ao lado do controle.
+  /// Text next to the control.
   final String? label;
 
-  /// Se `false`, o texto usa `palette.textMuted`.
+  /// If `false`, the text uses `palette.textMuted`.
   final bool enabled;
 
-  /// Espaço entre controle e texto.
+  /// Space between the control and text.
   final double gap;
 
   @override

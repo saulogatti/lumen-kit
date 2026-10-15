@@ -4,10 +4,10 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Tile expansível com header em surface, ícone com rotação animada e borda
-/// accent quando aberto.
+/// Expandable tile with a surface header, animated rotating icon, and accent
+/// border when open.
 class LumenExpansionTile extends StatefulWidget {
-  /// Cria um tile expansível com [children] revelados ao abrir.
+  /// Creates an expandable tile that reveals [children] when opened.
   const LumenExpansionTile({
     required this.title,
     required this.children,
@@ -19,25 +19,25 @@ class LumenExpansionTile extends StatefulWidget {
     this.onExpansionChanged,
   });
 
-  /// Título exibido no cabeçalho.
+  /// Title displayed in the header.
   final String title;
 
-  /// Texto auxiliar exibido abaixo de [title].
+  /// Supporting text displayed below [title].
   final String? subtitle;
 
-  /// Widget opcional exibido antes do texto.
+  /// Optional widget displayed before the text.
   final Widget? leading;
 
-  /// Conteúdo exibido quando o tile está expandido.
+  /// Content displayed when the tile is expanded.
   final List<Widget> children;
 
-  /// Se `true`, inicia o tile expandido.
+  /// If `true`, starts with the tile expanded.
   final bool initiallyExpanded;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Callback chamado sempre que o estado expandido muda.
+  /// Callback called whenever the expanded state changes.
   final ValueChanged<bool>? onExpansionChanged;
 
   @override
@@ -52,7 +52,7 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
     duration: kLumenMediumDuration,
     value: _expanded ? 1 : 0,
   );
-  // Criadas uma vez: criar no build vazava um listener por frame.
+  // Created once: creating these in build leaked a listener every frame.
   late final CurvedAnimation _size = CurvedAnimation(
     parent: _ctrl,
     curve: Curves.easeOut,
@@ -166,7 +166,7 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
           ),
           SizeTransition(
             sizeFactor: _size,
-            // Fechado, o conteúdo some também do foco e do leitor de tela.
+            // When closed, the content is also removed from focus and screen readers.
             child: ExcludeFocus(
               excluding: !_expanded,
               child: ExcludeSemantics(

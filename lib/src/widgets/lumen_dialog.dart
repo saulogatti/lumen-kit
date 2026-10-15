@@ -4,10 +4,10 @@ import '../foundation/lumen_decorations.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Dialog estilizado com surface gradiente, borda accent e tipografia do tema.
-/// Pode ser usado direto via [showLumenDialog].
+/// Styled dialog with a gradient surface, accent border, and theme typography.
+/// Can be used directly via [showLumenDialog].
 class LumenDialog extends StatelessWidget {
-  /// Cria um diálogo neon com conteúdo customizado.
+  /// Creates a neon dialog with custom content.
   const LumenDialog({
     required this.title,
     required this.content,
@@ -18,22 +18,22 @@ class LumenDialog extends StatelessWidget {
     this.maxWidth = 460,
   });
 
-  /// Título exibido no cabeçalho do diálogo.
+  /// Title displayed in the dialog header.
   final String title;
 
-  /// Conteúdo principal do diálogo.
+  /// Main dialog content.
   final Widget content;
 
-  /// Ações exibidas no rodapé, alinhadas à direita.
+  /// Actions displayed in the footer, aligned to the right.
   final List<Widget> actions;
 
-  /// Cor de destaque (borda + ícone). Default: `palette.primary`.
+  /// Accent color (border + icon). Default: `palette.primary`.
   final Color? accent;
 
-  /// Ícone opcional exibido antes do título.
+  /// Optional icon displayed before the title.
   final IconData? icon;
 
-  /// Largura máxima do diálogo.
+  /// Maximum dialog width.
   final double maxWidth;
 
   @override
@@ -91,7 +91,7 @@ class LumenDialog extends StatelessWidget {
                 ),
                 if (actions.isNotEmpty) ...<Widget>[
                   const SizedBox(height: 24),
-                  // Wrap: ações longas quebram linha em vez de estourar.
+                  // Wrap: long actions wrap instead of overflowing.
                   Wrap(
                     alignment: WrapAlignment.end,
                     spacing: 12,
@@ -108,10 +108,10 @@ class LumenDialog extends StatelessWidget {
   }
 }
 
-/// Helper para exibir um [LumenDialog] com `showDialog`.
+/// Helper to display a [LumenDialog] with `showDialog`.
 ///
-/// Retorna o mesmo resultado de [showDialog]. [barrierDismissible] controla se
-/// o toque fora do diálogo fecha a rota modal.
+/// Returns the same result as [showDialog]. [barrierDismissible] controls
+/// whether tapping outside the dialog closes the modal route.
 Future<T?> showLumenDialog<T>({
   required BuildContext context,
   required String title,

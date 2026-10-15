@@ -3,21 +3,21 @@ import 'package:material_ui/material_ui.dart';
 import '../theme/lumen_palette.dart';
 import 'lumen_button.dart';
 
-/// Bloco para quando não há dados: ícone, título, texto e um CTA.
+/// Block shown when there is no data: icon, title, text, and a CTA.
 ///
-/// Sem [onPressed], o botão não aparece.
+/// Without [onPressed], the button is not shown.
 ///
 /// ```dart
 /// LumenEmptyState(
 ///   icon: Icons.inbox_outlined,
-///   title: 'Nada por aqui',
-///   message: 'Quando chegar um evento, ele aparece nesta lista.',
-///   actionLabel: 'Atualizar',
+///   title: 'Nothing here',
+///   message: 'When an event arrives, it will appear in this list.',
+///   actionLabel: 'Refresh',
 ///   onPressed: atualizar,
 /// )
 /// ```
 class LumenEmptyState extends StatelessWidget {
-  /// Cria o estado vazio com [title].
+  /// Creates the empty state with [title].
   const LumenEmptyState({
     required this.title,
     super.key,
@@ -27,19 +27,19 @@ class LumenEmptyState extends StatelessWidget {
     this.onPressed,
   });
 
-  /// Ícone acima do título.
+  /// Icon above the title.
   final IconData? icon;
 
-  /// Título do estado vazio.
+  /// Empty state title.
   final String title;
 
-  /// Texto de apoio abaixo do título.
+  /// Supporting text below the title.
   final String? message;
 
-  /// Rótulo do CTA. Sem [onPressed], o botão não é desenhado.
+  /// CTA label. Without [onPressed], the button is not rendered.
   final String? actionLabel;
 
-  /// Callback do CTA. `null` omite o botão.
+  /// CTA callback. `null` hides the button.
   final VoidCallback? onPressed;
 
   @override

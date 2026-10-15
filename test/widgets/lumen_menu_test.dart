@@ -63,7 +63,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(picked, isNull);
 
-    await tester.tapAt(const Offset(5, 5)); // fora do menu
+    await tester.tapAt(const Offset(5, 5)); // outside the menu
     await tester.pumpAndSettle();
     expect(canceled, 1);
     expect(picked, isNull);

@@ -1,8 +1,8 @@
-/// Só os componentes do kit, sem `AppTheme` nem `AppColors`.
+/// Only the kit components, without `AppTheme` or `AppColors`.
 ///
-/// Use este import em apps que já têm o próprio `ThemeData`: os widgets não
-/// exigem nenhuma configuração de tema e usam a paleta default até você
-/// fornecer outra via [LumenScope] ou [LumenThemeExt].
+/// Use this import in apps that already have their own `ThemeData`: widgets
+/// require no theme configuration and use the default palette until you
+/// provide another through [LumenScope] or [LumenThemeExt].
 ///
 /// ```dart
 /// import 'package:lumen_kit/components.dart';

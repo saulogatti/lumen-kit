@@ -4,16 +4,15 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Skeleton/shimmer no estilo neon. Use enquanto o conteúdo real está
-/// carregando.
+/// Skeleton/shimmer in the neon style. Use while real content is loading.
 ///
-/// Exemplos:
+/// Examples:
 /// ```dart
 /// LumenSkeleton(width: 200, height: 14);
 /// LumenSkeleton.circle(size: 48);
 /// ```
 class LumenSkeleton extends StatefulWidget {
-  /// Cria um skeleton retangular.
+  /// Creates a rectangular skeleton.
   const LumenSkeleton({
     super.key,
     this.width,
@@ -23,7 +22,7 @@ class LumenSkeleton extends StatefulWidget {
     this.highlightColor,
   }) : shape = BoxShape.rectangle;
 
-  /// Cria um skeleton circular com largura e altura iguais a [size].
+  /// Creates a circular skeleton with width and height equal to [size].
   const LumenSkeleton.circle({
     super.key,
     required double size,
@@ -34,22 +33,22 @@ class LumenSkeleton extends StatefulWidget {
        borderRadius = 0,
        shape = BoxShape.circle;
 
-  /// Largura do skeleton. Quando `null`, ocupa a largura imposta pelo pai.
+  /// Skeleton width. When `null`, fills the width imposed by the parent.
   final double? width;
 
-  /// Altura do skeleton.
+  /// Skeleton height.
   final double height;
 
-  /// Raio dos cantos quando [shape] é [BoxShape.rectangle].
+  /// Corner radius when [shape] is [BoxShape.rectangle].
   final double borderRadius;
 
-  /// Forma visual do skeleton.
+  /// Skeleton visual shape.
   final BoxShape shape;
 
-  /// Cor base do shimmer. Default: surface translúcida da paleta.
+  /// Shimmer base color. Default: translucent palette surface.
   final Color? baseColor;
 
-  /// Cor do brilho animado. Default: accent cyan translúcido da paleta.
+  /// Animated shimmer color. Default: translucent palette cyan accent.
   final Color? highlightColor;
 
   @override
@@ -66,7 +65,7 @@ class _LumenSkeletonState extends State<LumenSkeleton>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Com "reduzir animações", o brilho fica parado no meio.
+    // With "reduce animations" enabled, the shimmer stays still in the middle.
     LumenMotion.syncRepeat(_ctrl, context);
   }
 

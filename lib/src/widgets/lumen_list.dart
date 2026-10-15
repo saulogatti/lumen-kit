@@ -1,16 +1,16 @@
 import 'package:material_ui/material_ui.dart';
 
-/// Lista preguiçosa para muitos itens. O corpo é um [ListView.builder]: só
-/// o que está na tela é construído.
+/// Lazy list for many items. Its body is a [ListView.builder]: only visible
+/// items are built.
 ///
-/// Com [itemCount] `0`, mostra [empty] (ou nada, se [empty] for `null`).
-/// A altura vem do pai. Não use `shrinkWrap` aqui: numa lista longa isso
-/// constrói todos os filhos e anula o builder.
+/// When [itemCount] is `0`, displays [empty] (or nothing if [empty] is `null`).
+/// The parent provides the height. Do not use `shrinkWrap` here: for a long
+/// list, it builds all children and defeats the builder.
 ///
 /// ```dart
 /// LumenList(
 ///   itemCount: eventos.length,
-///   empty: const LumenEmptyState(title: 'Nenhum evento'),
+///   empty: const LumenEmptyState(title: 'No events'),
 ///   itemBuilder: (BuildContext context, int i) => LumenListTile(
 ///     title: eventos[i].titulo,
 ///     onTap: () => abrir(eventos[i]),
@@ -18,7 +18,7 @@ import 'package:material_ui/material_ui.dart';
 /// )
 /// ```
 class LumenList extends StatelessWidget {
-  /// Cria a lista. [itemBuilder] só é chamado para índices visíveis.
+  /// Creates the list. [itemBuilder] is called only for visible indices.
   const LumenList({
     required this.itemCount,
     required this.itemBuilder,
@@ -29,22 +29,22 @@ class LumenList extends StatelessWidget {
     this.padding,
   });
 
-  /// Quantidade de itens. `0` mostra [empty].
+  /// Number of items. `0` displays [empty].
   final int itemCount;
 
-  /// Constrói o item em [index]. Em geral um `LumenListTile`.
+  /// Builds the item at [index]. Usually a `LumenListTile`.
   final Widget Function(BuildContext context, int index) itemBuilder;
 
-  /// Widget entre dois itens. Sem ele, os itens ficam colados.
+  /// Widget between two items. Without it, items sit directly together.
   final Widget Function(BuildContext context, int index)? separatorBuilder;
 
-  /// Controller opcional da rolagem.
+  /// Optional scroll controller.
   final ScrollController? controller;
 
-  /// Conteúdo quando [itemCount] é `0`.
+  /// Content when [itemCount] is `0`.
   final Widget? empty;
 
-  /// Espaço interno da lista.
+  /// List padding.
   final EdgeInsetsGeometry? padding;
 
   @override

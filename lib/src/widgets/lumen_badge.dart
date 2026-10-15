@@ -4,10 +4,10 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Pequeno selo (geralmente para contadores) que pode ficar livre ou
-/// ancorado em [child] no canto superior direito.
+/// Small badge (usually for counts) that can be standalone or anchored to
+/// [child] in the top-right corner.
 class LumenBadge extends StatelessWidget {
-  /// Cria um badge com texto ou ancorado em [child].
+  /// Creates a badge with text or anchored to [child].
   const LumenBadge({
     required this.label,
     super.key,
@@ -17,25 +17,25 @@ class LumenBadge extends StatelessWidget {
     this.dense = false,
   });
 
-  /// Modo "ponto" (sem texto), útil para indicar atividade.
+  /// "Dot" mode (no text), useful for indicating activity.
   const LumenBadge.dot({super.key, this.color, this.child})
     : label = '',
       dot = true,
       dense = false;
 
-  /// Texto exibido dentro do badge quando [dot] é `false`.
+  /// Text displayed inside the badge when [dot] is `false`.
   final String label;
 
-  /// Cor de fundo do badge. Default: `palette.danger`.
+  /// Badge background color. Default: `palette.danger`.
   final Color? color;
 
-  /// Widget opcional usado como âncora para posicionar o badge.
+  /// Optional widget used as the badge's positioning anchor.
   final Widget? child;
 
-  /// Se `true`, renderiza apenas um ponto sem [label].
+  /// If `true`, renders only a dot without [label].
   final bool dot;
 
-  /// Versão menor, para ícones de navegação.
+  /// Smaller version for navigation icons.
   final bool dense;
 
   @override
@@ -44,7 +44,7 @@ class LumenBadge extends StatelessWidget {
     final LumenStyle style = LumenStyle.of(context);
     final Color c = color ?? p.danger;
 
-    // Texto legível sobre qualquer cor de fundo, não só sobre vermelho.
+    // Keep the text legible on any background color, not only red.
     final Color fg = ThemeData.estimateBrightnessForColor(c) == Brightness.dark
         ? Colors.white
         : Colors.black;
@@ -97,10 +97,10 @@ class LumenBadge extends StatelessWidget {
   }
 }
 
-/// Tag compacta — variação leve do `LumenStatusChip`, sem ícone obrigatório e sem
-/// glow forte. Boa para metadados em listas.
+/// Compact tag — a lightweight `LumenStatusChip` variant, with no required
+/// icon and no strong glow. Good for list metadata.
 class LumenTag extends StatelessWidget {
-  /// Cria uma tag compacta para metadados ou filtros.
+  /// Creates a compact tag for metadata or filters.
   const LumenTag({
     required this.label,
     super.key,
@@ -109,18 +109,18 @@ class LumenTag extends StatelessWidget {
     this.onTap,
   });
 
-  /// Texto exibido na tag.
+  /// Text displayed in the tag.
   final String label;
 
-  /// Cor de destaque da tag. Default: `palette.primary`.
+  /// Tag accent color. Default: `palette.primary`.
   final Color? color;
 
-  /// Ícone opcional exibido antes de [label].
+  /// Optional icon displayed before [label].
   final IconData? icon;
 
-  /// Callback executado ao tocar na tag.
+  /// Callback run when the tag is tapped.
   ///
-  /// Quando `null`, a tag é renderizada sem comportamento interativo.
+  /// When `null`, the tag is rendered without interactive behavior.
   final VoidCallback? onTap;
 
   @override

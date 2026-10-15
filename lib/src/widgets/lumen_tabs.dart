@@ -6,24 +6,24 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Item de [LumenTabs] / [LumenSegmentedControl].
+/// Item in [LumenTabs] / [LumenSegmentedControl].
 class LumenTabItem {
-  /// Cria um item de tab com texto e ícone opcional.
+  /// Creates a tab item with text and an optional icon.
   const LumenTabItem({required this.label, this.icon});
 
-  /// Texto exibido na tab.
+  /// Text displayed in the tab.
   final String label;
 
-  /// Ícone opcional exibido acima ou antes de [label].
+  /// Optional icon displayed above or before [label].
   final IconData? icon;
 }
 
-/// Tabs horizontais com indicador em gradiente accent.
+/// Horizontal tabs with an accent gradient indicator.
 ///
-/// Controlado: o indicador acompanha [selectedIndex] mesmo quando ele muda
-/// por fora (ex.: swipe num `PageView` ou navegação programática).
+/// Controlled: the indicator follows [selectedIndex] even when it changes
+/// externally (e.g. a `PageView` swipe or programmatic navigation).
 class LumenTabs extends StatefulWidget {
-  /// Cria uma barra de tabs controlada por [selectedIndex].
+  /// Creates a tab bar controlled by [selectedIndex].
   const LumenTabs({
     required this.items,
     required this.selectedIndex,
@@ -33,19 +33,19 @@ class LumenTabs extends StatefulWidget {
     this.isScrollable = false,
   });
 
-  /// Itens exibidos na barra.
+  /// Items displayed in the bar.
   final List<LumenTabItem> items;
 
-  /// Índice da tab selecionada, limitado ao intervalo válido.
+  /// Index of the selected tab, clamped to the valid range.
   final int selectedIndex;
 
-  /// Callback chamado com o índice da tab tocada.
+  /// Callback called with the index of the tapped tab.
   final ValueChanged<int> onChanged;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Se `true`, permite rolagem horizontal das tabs.
+  /// If `true`, allows horizontal scrolling of the tabs.
   final bool isScrollable;
 
   @override
@@ -113,9 +113,9 @@ class _LumenTabsState extends State<LumenTabs> with TickerProviderStateMixin {
   }
 }
 
-/// Segmented control compacto (pílula). Os itens dividem largura igualmente.
+/// Compact segmented control (pill). Items share the width equally.
 class LumenSegmentedControl extends StatelessWidget {
-  /// Cria um controle segmentado com seleção por índice.
+  /// Creates a segmented control with selection by index.
   const LumenSegmentedControl({
     required this.items,
     required this.selectedIndex,
@@ -124,16 +124,16 @@ class LumenSegmentedControl extends StatelessWidget {
     this.accentColor,
   });
 
-  /// Segmentos exibidos no controle.
+  /// Segments displayed in the control.
   final List<LumenTabItem> items;
 
-  /// Índice do segmento selecionado.
+  /// Index of the selected segment.
   final int selectedIndex;
 
-  /// Callback chamado com o índice do segmento tocado.
+  /// Callback called with the index of the tapped segment.
   final ValueChanged<int> onChanged;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
   @override

@@ -32,12 +32,12 @@ void main() {
     await tester.pump();
     expect(value, 'm');
 
-    // Tocar no marcado não desmarca sem allowDeselect.
+    // Tapping the selected chip does not deselect it without allowDeselect.
     await tester.tap(find.text('M'));
     await tester.pump();
     expect(value, 'm');
 
-    // Desabilitado não muda nada.
+    // Disabled state does not change anything.
     await tester.tap(find.text('G'));
     await tester.pump();
     expect(value, 'm');

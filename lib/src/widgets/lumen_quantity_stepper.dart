@@ -5,8 +5,8 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_icon_button.dart';
 
-/// Input numérico "− 1 +" para carrinho e configurações. Não confundir com
-/// o `LumenStepper`, que mostra etapas de um fluxo.
+/// Numeric input "− 1 +" for carts and settings. Do not confuse it with
+/// `LumenStepper`, which displays the steps in a flow.
 ///
 /// ```dart
 /// LumenQuantityStepper(
@@ -17,7 +17,7 @@ import 'lumen_icon_button.dart';
 /// )
 /// ```
 class LumenQuantityStepper extends StatelessWidget {
-  /// Cria o stepper. Com [onChanged] `null`, fica desabilitado.
+  /// Creates the stepper. It is disabled when [onChanged] is `null`.
   const LumenQuantityStepper({
     required this.value,
     required this.onChanged,
@@ -32,31 +32,31 @@ class LumenQuantityStepper extends StatelessWidget {
   }) : assert(step > 0),
        assert(max == null || max >= min);
 
-  /// Valor atual.
+  /// Current value.
   final int value;
 
-  /// Chamado com o novo valor, já limitado a [min]..[max].
+  /// Called with the new value, already limited to [min]..[max].
   final ValueChanged<int>? onChanged;
 
-  /// Menor valor. No mínimo, o "−" fica desabilitado.
+  /// Minimum value. At the minimum, "−" is disabled.
   final int min;
 
-  /// Maior valor. `null` = sem limite.
+  /// Maximum value. `null` = no limit.
   final int? max;
 
-  /// Quanto cada toque soma ou subtrai.
+  /// Amount added or subtracted with each tap.
   final int step;
 
-  /// Override do accent. Default: `palette.primary`.
+  /// Accent override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Lado dos botões − e +.
+  /// Side length of the − and + buttons.
   final double buttonSize;
 
-  /// Rótulo para leitores de tela (ex.: "Quantidade").
+  /// Label for screen readers (e.g. "Quantity").
   final String? semanticLabel;
 
-  /// Formata o valor exibido (ex.: `(v) => '$v un.'`).
+  /// Formats the displayed value (e.g. `(v) => '$v units'`).
   final String Function(int value)? format;
 
   int _clamp(int v) {

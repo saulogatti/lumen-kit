@@ -1,5 +1,5 @@
-// Simula um app que já tem o próprio tema (e classes com os mesmos nomes do
-// kit) e importa só os componentes.
+// Simulates an app that already has its own theme (and classes with the same
+// names as the kit) and imports only the components.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lumen_kit/components.dart';
 import 'package:material_ui/material_ui.dart';
@@ -36,7 +36,7 @@ void main() {
     expect(tester.takeException(), isNull);
     final Text chip = tester.widget<Text>(find.text('info'));
     expect(chip.style?.color, LumenPalette.light().primary);
-    // O tema do app continua intacto.
+    // The app's theme remains intact.
     final BuildContext ctx = tester.element(find.text('card'));
     expect(Theme.of(ctx).extension<LumenThemeExt>(), isNull);
     expect(AppColors.brand, const Color(0xFF3F51B5));

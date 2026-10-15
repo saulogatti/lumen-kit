@@ -28,7 +28,7 @@ void main() {
 
     final RangeSlider slider = tester.widget(find.byType(RangeSlider));
     final Rect box = tester.getRect(find.byType(RangeSlider));
-    // Arrasta o thumb da direita para perto do fim.
+    // Drag the right thumb close to the end.
     final double trackStart = box.left + 24;
     final double trackWidth = box.width - 48;
     final endThumb = Offset(trackStart + trackWidth * 0.8, box.center.dy);

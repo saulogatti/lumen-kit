@@ -7,9 +7,9 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Checkbox quadrado com borda accent e marcador em gradiente quando ativo.
+/// Square checkbox with an accent border and gradient marker when active.
 class LumenCheckbox extends StatelessWidget {
-  /// Cria um checkbox neon.
+  /// Creates a neon checkbox.
   const LumenCheckbox({
     required this.value,
     required this.onChanged,
@@ -19,23 +19,23 @@ class LumenCheckbox extends StatelessWidget {
     this.tristate = false,
   });
 
-  /// Valor atual do checkbox.
+  /// Current checkbox value.
   ///
-  /// Quando [tristate] é `true`, `null` representa o estado indeterminado.
+  /// When [tristate] is `true`, `null` represents the indeterminate state.
   final bool? value;
 
-  /// Callback chamado com o próximo valor ao tocar no checkbox.
+  /// Callback called with the next value when the checkbox is tapped.
   ///
-  /// Quando `null`, o checkbox fica visualmente desabilitado.
+  /// When `null`, the checkbox appears disabled.
   final ValueChanged<bool?>? onChanged;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Texto opcional exibido ao lado do checkbox.
+  /// Optional text displayed next to the checkbox.
   final String? label;
 
-  /// Se `true`, alterna entre `false`, `true` e `null`.
+  /// If `true`, cycles between `false`, `true`, and `null`.
   final bool tristate;
 
   @override

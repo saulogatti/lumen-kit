@@ -8,23 +8,24 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_status_chip.dart';
 
-/// Posição vertical do toast na tela.
+/// Vertical position of the toast on screen.
 enum LumenToastPosition {
-  /// Toast alinhado próximo ao topo, respeitando o padding seguro.
+  /// Toast aligned near the top, respecting safe padding.
   top,
 
-  /// Toast alinhado próximo à base, respeitando o padding seguro.
+  /// Toast aligned near the bottom, respecting safe padding.
   bottom,
 }
 
-/// Exibe um toast flutuante sobre o app via `Overlay`, sem depender de
-/// `ScaffoldMessenger`. Útil para feedbacks rápidos em telas sem `Scaffold`
-/// (ex.: splash, onboarding).
+/// Displays a floating toast over the app via `Overlay`, without depending on
+/// `ScaffoldMessenger`. Useful for quick feedback on screens without a
+/// `Scaffold` (e.g. splash, onboarding).
 ///
-/// Retorna um [Future] que completa quando o toast sai da tela.
+/// Returns a [Future] that completes when the toast leaves the screen.
 ///
-/// [tone] define cor e ícone padrão, [position] escolhe o alinhamento vertical
-/// e [margin] controla a distância horizontal e vertical das bordas seguras.
+/// [tone] defines the default color and icon, [position] chooses the vertical
+/// alignment, and [margin] controls the horizontal and vertical distance from
+/// the safe edges.
 Future<void> showLumenToast({
   required BuildContext context,
   required String message,
@@ -120,7 +121,7 @@ class _LumenToastWidgetState extends State<_LumenToastWidget>
       return;
     }
     await _ctrl.reverse();
-    // O OverlayEntry é removido fora do frame de build.
+    // The OverlayEntry is removed outside the build frame.
     widget.onDone();
   }
 
@@ -150,7 +151,7 @@ class _LumenToastWidgetState extends State<_LumenToastWidget>
           child: SlideTransition(
             position: _slide,
             child: Center(
-              // liveRegion: leitores de tela anunciam o toast ao aparecer.
+              // liveRegion: screen readers announce the toast when it appears.
               child: Semantics(
                 liveRegion: true,
                 container: true,

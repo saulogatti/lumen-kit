@@ -4,38 +4,38 @@ import 'package:material_ui/material_ui.dart';
 
 import 'lumen_palette.dart';
 
-/// Como as sombras dos widgets são desenhadas.
+/// How widget shadows are drawn.
 enum LumenShadowKind {
-  /// Glow colorido no accent (visual neon original).
+  /// Colored glow in the accent (original neon look).
   glow,
 
-  /// Sombra neutra e difusa, estilo elevation do Material.
+  /// Neutral, diffuse shadow in Material elevation style.
   elevation,
 
-  /// Sombra dura, sem blur, deslocada para baixo/direita.
+  /// Hard shadow, without blur, offset down and right.
   hard,
 
-  /// Sem sombra.
+  /// No shadow.
   none,
 }
 
-/// Decoração do [LumenAnimatedGridBackground].
+/// Decoration for [LumenAnimatedGridBackground].
 enum LumenBackgroundKind {
-  /// Grade de linhas.
+  /// Line grid.
   grid,
 
-  /// Grade de pontos.
+  /// Dot grid.
   dots,
 
-  /// Só o gradiente de fundo.
+  /// Background gradient only.
   plain,
 }
 
-/// Tokens de efeito visual do kit: sombra, preenchimento, superfície, borda e
-/// fundo. Independe das cores ([LumenPalette]) — qualquer estilo funciona com
-/// qualquer paleta.
+/// Visual effect tokens for the kit: shadow, fill, surface, border, and
+/// background. Independent of colors ([LumenPalette]) — any style works with
+/// any palette.
 ///
-/// Use um preset ([neon], [flat], [glass], [soft], [brutal]) ou ajuste via
+/// Use a preset ([neon], [flat], [glass], [soft], [brutal]) or customize it via
 /// [copyWith]:
 ///
 /// ```dart
@@ -43,7 +43,7 @@ enum LumenBackgroundKind {
 /// ```
 @immutable
 class LumenStyle {
-  /// Cria um estilo customizado. Prefira partir de um preset com [copyWith].
+  /// Creates a custom style. Prefer starting from a preset with [copyWith].
   const LumenStyle({
     this.shadow = LumenShadowKind.glow,
     this.shadowStrength = 1,
@@ -57,40 +57,40 @@ class LumenStyle {
     this.orbs = true,
   });
 
-  /// Tipo de sombra aplicado a todos os widgets.
+  /// Shadow type applied to all widgets.
   final LumenShadowKind shadow;
 
-  /// Multiplicador da opacidade das sombras.
+  /// Shadow opacity multiplier.
   final double shadowStrength;
 
-  /// Se `false`, gradientes viram cor sólida (a primeira cor do gradiente).
+  /// If `false`, gradients become solid colors (the first color of the gradient).
   final bool gradients;
 
-  /// Multiplicador da opacidade de superfícies (cards, dialogs, sheets…).
+  /// Surface opacity multiplier (cards, dialogs, sheets…).
   final double surfaceOpacity;
 
-  /// Blur aplicado atrás de superfícies (efeito vidro). `0` desliga.
+  /// Blur applied behind surfaces (glass effect). `0` disables it.
   final double blurSigma;
 
-  /// Multiplicador dos raios de canto. `0` deixa tudo quadrado.
+  /// Corner radius multiplier. `0` makes everything square.
   final double radiusScale;
 
-  /// Multiplicador da espessura das bordas. `0` remove as bordas.
+  /// Border thickness multiplier. `0` removes borders.
   final double borderScale;
 
-  /// Multiplicador da opacidade das bordas.
+  /// Border opacity multiplier.
   final double borderOpacity;
 
-  /// Decoração do fundo.
+  /// Background decoration.
   final LumenBackgroundKind background;
 
-  /// Se `true`, desenha os glow orbs nos cantos do fundo.
+  /// If `true`, draws glow orbs in the background corners.
   final bool orbs;
 
-  /// Visual original: glow colorido, gradientes, grid e orbs.
+  /// Original look: colored glow, gradients, grid, and orbs.
   static const LumenStyle neon = LumenStyle();
 
-  /// Sem glow nem gradiente, sombra neutra, fundo liso.
+  /// No glow or gradient, neutral shadow, plain background.
   static const LumenStyle flat = LumenStyle(
     shadow: LumenShadowKind.elevation,
     gradients: false,
@@ -100,7 +100,7 @@ class LumenStyle {
     orbs: false,
   );
 
-  /// Vidro fosco: superfícies translúcidas com blur e glow suave.
+  /// Frosted glass: translucent surfaces with blur and soft glow.
   static const LumenStyle glass = LumenStyle(
     shadowStrength: 0.5,
     surfaceOpacity: 0.45,
@@ -110,7 +110,7 @@ class LumenStyle {
     background: LumenBackgroundKind.plain,
   );
 
-  /// Cantos bem arredondados, sombras difusas e sem bordas.
+  /// Very rounded corners, diffuse shadows, and no borders.
   static const LumenStyle soft = LumenStyle(
     shadow: LumenShadowKind.elevation,
     shadowStrength: 0.8,
@@ -120,7 +120,7 @@ class LumenStyle {
     orbs: false,
   );
 
-  /// Cantos retos, borda grossa e sombra dura deslocada.
+  /// Square corners, thick border, and hard offset shadow.
   static const LumenStyle brutal = LumenStyle(
     shadow: LumenShadowKind.hard,
     gradients: false,
@@ -131,7 +131,7 @@ class LumenStyle {
     orbs: false,
   );
 
-  /// Todos os presets, na ordem de exibição.
+  /// All presets, in display order.
   static const Map<String, LumenStyle> presets = <String, LumenStyle>{
     'neon': neon,
     'flat': flat,
@@ -140,13 +140,13 @@ class LumenStyle {
     'brutal': brutal,
   };
 
-  /// Estilo registrado no [Theme] mais próximo.
+  /// Style registered in the nearest [Theme].
   static LumenStyle of(BuildContext context) => LumenThemeExt.of(context).style;
 
-  /// Adapta sombras escritas no visual neon (glow) ao estilo atual.
+  /// Adapts shadows written for the neon look (glow) to the current style.
   ///
-  /// Glows pequenos (blur < 10, ex. pontos de status) são decorativos e só
-  /// existem no estilo [LumenShadowKind.glow].
+  /// Small glows (blur < 10, e.g. status dots) are decorative and only exist in
+  /// [LumenShadowKind.glow] style.
   List<BoxShadow>? shadows(List<BoxShadow>? glows) {
     if (glows == null || shadow == LumenShadowKind.none) {
       return null;
@@ -188,7 +188,7 @@ class LumenStyle {
     }
   }
 
-  /// Gradiente de preenchimento; vira cor sólida quando [gradients] é falso.
+  /// Fill gradient; becomes a solid color when [gradients] is false.
   Gradient? fill(Gradient? gradient) {
     if (gradient == null || gradients || gradient.colors.isEmpty) {
       return gradient;
@@ -197,13 +197,13 @@ class LumenStyle {
     return LinearGradient(colors: <Color>[c, c]);
   }
 
-  /// Opacidade de uma superfície ajustada por [surfaceOpacity].
+  /// Surface opacity adjusted by [surfaceOpacity].
   double surfaceAlpha(double alpha) => (alpha * surfaceOpacity).clamp(0, 1);
 
-  /// Raio de canto escalado por [radiusScale].
+  /// Corner radius scaled by [radiusScale].
   BorderRadius radius(double r) => BorderRadius.circular(r * radiusScale);
 
-  /// Borda uniforme com espessura e opacidade ajustadas ao estilo.
+  /// Uniform border with thickness and opacity adjusted to the style.
   Border borderAll({Color color = const Color(0xFF000000), double width = 1}) {
     if (borderScale == 0) {
       return const Border();
@@ -214,7 +214,7 @@ class LumenStyle {
     );
   }
 
-  /// Envolve uma superfície com blur de fundo quando [blurSigma] > 0.
+  /// Wraps a surface in background blur when [blurSigma] > 0.
   Widget frost({required Widget child, BorderRadius? borderRadius}) {
     if (blurSigma <= 0) {
       return child;
@@ -228,7 +228,7 @@ class LumenStyle {
     );
   }
 
-  /// Retorna um novo estilo preservando os tokens não informados.
+  /// Returns a new style preserving any unspecified tokens.
   LumenStyle copyWith({
     LumenShadowKind? shadow,
     double? shadowStrength,

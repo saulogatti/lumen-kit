@@ -24,7 +24,7 @@ void main() {
     expect(find.text('+2'), findsOneWidget);
     expect(find.text('DD'), findsNothing);
 
-    // Todos com o raio do grupo, sobrepostos.
+    // All use the group's radius and are overlapped.
     for (final LumenAvatar a in tester.widgetList<LumenAvatar>(
       find.byType(LumenAvatar),
     )) {

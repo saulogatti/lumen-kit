@@ -7,9 +7,9 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Switch estilizado com track translúcida, thumb em accent e glow quando ativo.
+/// Styled switch with a translucent track, accent thumb, and glow when active.
 class LumenSwitch extends StatelessWidget {
-  /// Cria um switch neon.
+  /// Creates a neon switch.
   const LumenSwitch({
     required this.value,
     required this.onChanged,
@@ -18,18 +18,18 @@ class LumenSwitch extends StatelessWidget {
     this.label,
   });
 
-  /// Valor atual do switch.
+  /// Current switch value.
   final bool value;
 
-  /// Callback chamado com o valor invertido ao tocar no switch.
+  /// Callback called with the inverted value when the switch is tapped.
   ///
-  /// Quando `null`, o switch fica visualmente desabilitado.
+  /// When `null`, the switch appears disabled.
   final ValueChanged<bool>? onChanged;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Texto opcional exibido ao lado do switch.
+  /// Optional text displayed next to the switch.
   final String? label;
 
   @override

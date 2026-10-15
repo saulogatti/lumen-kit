@@ -1,22 +1,22 @@
 # Roadmap — lumen_kit
 
-Componentes planejados para o kit. Marque conforme forem entregues.
+Components planned for the kit. Check them off as they are delivered.
 
-## Já implementado
+## Already implemented
 
-- [x] **Tema**: `AppColors`, `LumenPalette` (+ `fromSeed`), `LumenPreset`, `LumenStyle` (neon / flat / glass / soft / brutal), `LumenThemeExt`, `AppTheme`
+- [x] **Theme**: `AppColors`, `LumenPalette` (+ `fromSeed`), `LumenPreset`, `LumenStyle` (neon / flat / glass / soft / brutal), `LumenThemeExt`, `AppTheme`
 - [x] **Background**: `LumenAnimatedGridBackground`, `LumenGlowOrbSpec`
-- [x] **Base reaproveitável**: `LumenPressable`, `LumenDecorations`, `LumenActionContent`, `LumenLabeled`, `LumenMotion`
-- [x] **Estrutura**: `LumenAppBar`, `LumenCard`
-- [x] **Ações**: `LumenCta`, `LumenButton` (solid / outline / ghost), `LumenIconButton`, `LumenFab`, `LumenMenuButton` / `LumenContextMenu` (+ `showLumenMenu`)
-- [x] **Input**: `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenDropdown`, `LumenRangeSlider`, `LumenSearchBar`, `LumenDatePicker` (+ `showLumenDatePicker`), `LumenTimePicker` (+ `showLumenTimePicker`), `LumenChip` / `LumenChoiceChips` / `LumenFilterChips`, `LumenQuantityStepper`, `LumenRating`
+- [x] **Reusable foundation**: `LumenPressable`, `LumenDecorations`, `LumenActionContent`, `LumenLabeled`, `LumenMotion`
+- [x] **Structure**: `LumenAppBar`, `LumenCard`
+- [x] **Actions**: `LumenCta`, `LumenButton` (solid / outline / ghost), `LumenIconButton`, `LumenFab`, `LumenMenuButton` / `LumenContextMenu` (+ `showLumenMenu`)
+- [x] **Inputs**: `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenDropdown`, `LumenRangeSlider`, `LumenSearchBar`, `LumenDatePicker` (+ `showLumenDatePicker`), `LumenTimePicker` (+ `showLumenTimePicker`), `LumenChip` / `LumenChoiceChips` / `LumenFilterChips`, `LumenQuantityStepper`, `LumenRating`
 - [x] **Feedback**: `LumenStatusChip`, `LumenDialog` (+ `showLumenDialog`), `LumenSnackBar` (+ `showLumenSnackBar`), `LumenToast`, `LumenProgressIndicator`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`)
-- [x] **Navegação**: `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet` (+ `showLumenBottomSheet`), `LumenDrawer` (+ `LumenDrawerItem`), `LumenStepper`, `LumenPageIndicator`, `LumenCarousel`
+- [x] **Navigation**: `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet` (+ `showLumenBottomSheet`), `LumenDrawer` (+ `LumenDrawerItem`), `LumenStepper`, `LumenPageIndicator`, `LumenCarousel`
 - [x] **Display**: `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable` (+ `LumenTableRow`)
 
-## A fazer
+## To do
 
-### Inputs / formulários
+### Inputs / forms
 
 - [x] `LumenSwitch`
 - [x] `LumenCheckbox`
@@ -24,60 +24,72 @@ Componentes planejados para o kit. Marque conforme forem entregues.
 - [x] `LumenSlider`
 - [x] `LumenDropdown` / `LumenSelect`
 - [x] `LumenSearchBar`
-- [x] `LumenDatePicker` (wrapper temático)
+- [x] `LumenDatePicker` (themed wrapper)
 
 ### Feedback / status
 
 - [x] `LumenSnackBar` (+ `showLumenSnackBar`)
 - [x] `LumenToast`
-- [x] `LumenProgressIndicator` (linear e circular com glow)
+- [x] `LumenProgressIndicator` (linear and circular with glow)
 - [x] `LumenSkeleton` / shimmer loader
 - [x] `LumenTooltip`
 
-### Navegação / layout
+### Navigation / layout
 
 - [x] `LumenTabs` / `LumenSegmentedControl`
-- [x] `LumenBottomNavBar` ou `LumenNavRail`
+- [x] `LumenBottomNavBar` or `LumenNavRail`
 - [x] `LumenBottomSheet` (+ `showLumenBottomSheet`)
 - [x] `LumenDrawer`
 - [x] `LumenStepper`
 
-### Display / dados
+### Display / data
 
-- [x] `LumenBadge` / `LumenTag` (variação menor que `LumenStatusChip`)
+- [x] `LumenBadge` / `LumenTag` (smaller variant of `LumenStatusChip`)
 - [x] `LumenAvatar`
 - [x] `LumenListTile`
-- [x] `LumenDivider` (com gradiente)
+- [x] `LumenDivider` (with gradient)
 - [x] `LumenExpansionTile`
-- [x] `LumenDataTable` (ou ao menos `LumenTableRow`)
+- [x] `LumenDataTable` (or at least `LumenTableRow`)
 
-## Convenções
+## Conventions
 
-- Arquivo por widget em `lib/src/widgets/`.
-- Paleta sempre acessada via `LumenThemeExt.of(context).palette` — nunca importar `AppColors` diretamente em widgets (senão a cor ignora `AppTheme.fromSeed` e os presets).
-- Sombra, gradiente, raio e borda sempre via `LumenStyle.of(context)` (`shadows`, `fill`, `radius`, `borderAll`, `surfaceAlpha`) — nunca `BoxShadow`/`BorderRadius.circular` crus, senão o widget ignora o estilo.
-- Exportar widgets em `lib/components.dart` (o `lib/lumen_kit.dart` reexporta). Nada de tema global (`AppTheme`/`AppColors`) dentro de widgets.
-- Estados padrão a suportar quando fizer sentido: `onPressed == null` → desabilitado (`kLumenDisabledOpacity`), `busy: true` → spinner inline.
-- Antes de escrever `Opacity` + `InkWell`, gradiente diagonal, painel com borda/glow ou `InputDecoration` na mão, use as peças de `lib/src/foundation/` (`LumenPressable`, `LumenDecorations`, `LumenActionContent`, `LumenLabeled`).
-- Nada de `GestureDetector` para ações: sem foco de teclado nem semântica. Use `LumenPressable`.
-- Animações: controllers e `CurvedAnimation` criados uma vez no `State` (nunca no `build`), durações via `LumenMotion.duration` e loops via `LumenMotion.syncRepeat`.
-- Espaço entre filhos de `Row`/`Column` com `spacing:` em vez de `SizedBox` intercalado.
-- Documentar uso mínimo no `README.md` quando o componente sair do roadmap.
+- One file per widget in `lib/src/widgets/`.
+- Always access the palette via `LumenThemeExt.of(context).palette` — never
+  import `AppColors` directly in widgets (otherwise the color ignores
+  `AppTheme.fromSeed` and presets).
+- Always use `LumenStyle.of(context)` for shadows, gradients, radius, and
+  borders (`shadows`, `fill`, `radius`, `borderAll`, `surfaceAlpha`) — never raw
+  `BoxShadow`/`BorderRadius.circular`, or the widget will ignore the style.
+- Export widgets in `lib/components.dart` (`lib/lumen_kit.dart` re-exports it).
+  No global theme (`AppTheme`/`AppColors`) inside widgets.
+- Default states to support when relevant: `onPressed == null` → disabled
+  (`kLumenDisabledOpacity`), `busy: true` → inline spinner.
+- Before writing `Opacity` + `InkWell`, diagonal gradients, a bordered/glowing
+  panel, or `InputDecoration` by hand, use the pieces in `lib/src/foundation/`
+  (`LumenPressable`, `LumenDecorations`, `LumenActionContent`, `LumenLabeled`).
+- No `GestureDetector` for actions: it has no keyboard focus or semantics. Use
+  `LumenPressable`.
+- Animations: create controllers and `CurvedAnimation` once in `State` (never
+  in `build`); use `LumenMotion.duration` for durations and
+  `LumenMotion.syncRepeat` for loops.
+- Use `spacing:` between `Row`/`Column` children instead of interleaved
+  `SizedBox` widgets.
+- Document minimal usage in `README.md` when a component leaves the roadmap.
 
-## Próximos
+## Next
 
-- [x] `LumenChip` selecionável (`LumenChoiceChips` / `LumenFilterChips`)
+- [x] Selectable `LumenChip` (`LumenChoiceChips` / `LumenFilterChips`)
 - [x] `LumenTimePicker`
 - [x] `LumenRangeSlider`
 - [x] `LumenMenuButton` / `LumenContextMenu`
-- [x] `LumenBanner` / alerta inline que fica até alguém fechar
-- [x] `LumenEmptyState` (ícone, texto e CTA)
+- [x] `LumenBanner` / inline alert that stays until dismissed
+- [x] `LumenEmptyState` (icon, text, and CTA)
 - [x] `LumenPinField` (OTP)
-- [x] `LumenList` (`ListView.builder` para listas grandes)
+- [x] `LumenList` (`ListView.builder` for large lists)
 - [x] `LumenPageIndicator` / `LumenCarousel`
 - [x] `LumenQuantityStepper`
 - [x] `LumenRating`
 - [x] `LumenAvatarGroup`
-- [ ] `LumenTimeline` (histórico de pedidos e atividades)
+- [ ] `LumenTimeline` (order and activity history)
 - [x] `LumenLoadingOverlay` (+ `showLumenLoading`)
-- [ ] `LumenFileUpload` / dropzone (só se o kit for usado em web/desktop)
+- [ ] `LumenFileUpload` / drop zone (only if the kit is used on web/desktop)

@@ -5,16 +5,16 @@ import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 import 'lumen_status_chip.dart';
 
-/// Tom semântico do snackbar — usa as mesmas cores de [LumenStatusTone].
+/// Semantic snackbar tone — uses the same colors as [LumenStatusTone].
 typedef LumenSnackTone = LumenStatusTone;
 
-/// Exibe um snackbar estilizado no `ScaffoldMessenger` mais próximo.
+/// Displays a styled snackbar in the nearest `ScaffoldMessenger`.
 ///
-/// Reutiliza o `SnackBar` do Material mas troca o conteúdo por uma surface
-/// com borda accent + glow, no estilo do resto do kit.
+/// Reuses Material's `SnackBar` but replaces its content with a surface that
+/// has an accent border + glow, matching the rest of the kit.
 ///
-/// [tone] define cor e ícone padrão, [duration] controla o tempo de exibição e
-/// [action] adiciona uma ação textual no fim do snackbar.
+/// [tone] defines the default color and icon, [duration] controls the display
+/// time, and [action] adds a text action at the end of the snackbar.
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showLumenSnackBar({
   required BuildContext context,
   required String message,
@@ -53,7 +53,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showLumenSnackBar({
             ),
             if (action != null)
               TextButton(
-                // Igual ao SnackBarAction: a ação também fecha o snackbar.
+                // Like SnackBarAction, the action also closes the snackbar.
                 onPressed: () {
                   messenger.hideCurrentSnackBar(
                     reason: SnackBarClosedReason.action,

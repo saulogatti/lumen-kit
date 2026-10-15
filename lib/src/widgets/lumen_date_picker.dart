@@ -5,11 +5,11 @@ import '../foundation/lumen_pressable.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Abre o [showDatePicker] padrão aplicando o tema neon.
+/// Opens the standard [showDatePicker] with the neon theme applied.
 ///
-/// Usa [initialDate] como data inicial e limita a seleção ao intervalo entre
-/// [firstDate] e [lastDate]. [accentColor] substitui o accent padrão e
-/// [helpText] é repassado ao picker do Material.
+/// Uses [initialDate] as the initial date and limits selection to the range
+/// between [firstDate] and [lastDate]. [accentColor] overrides the default
+/// accent, and [helpText] is passed to the Material picker.
 Future<DateTime?> showLumenDatePicker({
   required BuildContext context,
   required DateTime initialDate,
@@ -48,9 +48,9 @@ Future<DateTime?> showLumenDatePicker({
   );
 }
 
-/// Campo somente-leitura que abre o [showLumenDatePicker] ao ser tocado.
+/// Read-only field that opens [showLumenDatePicker] when tapped.
 class LumenDatePicker extends StatelessWidget {
-  /// Cria um campo somente-leitura que abre um date picker ao toque.
+  /// Creates a read-only field that opens a date picker when tapped.
   const LumenDatePicker({
     required this.value,
     required this.firstDate,
@@ -63,30 +63,30 @@ class LumenDatePicker extends StatelessWidget {
     this.format,
   });
 
-  /// Data atualmente selecionada.
+  /// Currently selected date.
   final DateTime? value;
 
-  /// Primeira data permitida no picker.
+  /// Earliest date allowed in the picker.
   final DateTime firstDate;
 
-  /// Última data permitida no picker.
+  /// Latest date allowed in the picker.
   final DateTime lastDate;
 
-  /// Callback chamado quando uma nova data é escolhida.
+  /// Callback called when a new date is selected.
   ///
-  /// Quando `null`, o campo fica visualmente desabilitado.
+  /// When `null`, the field appears disabled.
   final ValueChanged<DateTime>? onChanged;
 
-  /// Rótulo exibido pelo campo.
+  /// Label displayed by the field.
   final String? label;
 
-  /// Texto exibido quando [value] é `null`.
+  /// Text displayed when [value] is `null`.
   final String? hint;
 
-  /// Override da cor de destaque. Default: `palette.primary`.
+  /// Accent color override. Default: `palette.primary`.
   final Color? accentColor;
 
-  /// Formatador usado para exibir [value].
+  /// Formatter used to display [value].
   final String Function(DateTime)? format;
 
   String _defaultFormat(DateTime d) =>
@@ -139,8 +139,8 @@ class LumenDatePicker extends StatelessWidget {
     );
   }
 
-  // showDatePicker exige initialDate dentro de [firstDate, lastDate]; "hoje"
-  // fora do intervalo derrubava o app com assert.
+  // showDatePicker requires initialDate to be within [firstDate, lastDate];
+  // "today" outside the range caused an assertion failure in the app.
   DateTime _clamp(DateTime d) => d.isBefore(firstDate)
       ? firstDate
       : d.isAfter(lastDate)

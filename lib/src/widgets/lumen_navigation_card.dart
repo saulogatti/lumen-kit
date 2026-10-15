@@ -5,10 +5,11 @@ import '../foundation/lumen_tokens.dart';
 import '../theme/lumen_palette.dart';
 import '../theme/lumen_style.dart';
 
-/// Card de navegação reutilizável da tela principal.
-/// Recebe o que mostrar e o que fazer ao tocar — não decide nada por si.
+/// Reusable navigation card for a home screen.
+/// Receives what to display and what to do when tapped — it makes no
+/// decisions on its own.
 class LumenNavigationCard extends StatefulWidget {
-  /// Cria um card de navegação com destaque visual e hover.
+  /// Creates a navigation card with visual highlighting and hover.
   const LumenNavigationCard({
     required this.title,
     required this.subtitle,
@@ -20,25 +21,25 @@ class LumenNavigationCard extends StatefulWidget {
     this.actionLabel = 'ACESSAR MÓDULO',
   });
 
-  /// Título do módulo ou destino.
+  /// Module or destination title.
   final String title;
 
-  /// Descrição curta exibida abaixo do título.
+  /// Short description displayed below the title.
   final String subtitle;
 
-  /// Ícone usado no badge visual do card.
+  /// Icon used in the card's visual badge.
   final IconData icon;
 
-  /// Cor de destaque do card.
+  /// Card accent color.
   final Color accent;
 
-  /// Callback executado ao tocar no card.
+  /// Callback run when the card is tapped.
   final VoidCallback onTap;
 
-  /// Tag opcional exibida no canto superior direito.
+  /// Optional tag displayed in the top-right corner.
   final String? tag;
 
-  /// Texto da chamada no rodapé do card.
+  /// Call-to-action text in the card footer.
   final String actionLabel;
 
   @override
@@ -55,7 +56,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
     final LumenPalette p = LumenThemeExt.of(context).palette;
     final LumenStyle style = LumenStyle.of(context);
 
-    // Hover e foco de teclado levantam o card do mesmo jeito.
+    // Hover and keyboard focus lift the card in the same way.
     void highlight(bool on) {
       if (_hovering != on) {
         setState(() => _hovering = on);
