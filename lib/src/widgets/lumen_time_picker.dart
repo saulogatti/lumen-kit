@@ -51,9 +51,7 @@ Future<TimeOfDay?> showLumenTimePicker({
             shape: RoundedRectangleBorder(borderRadius: s.radius(24)),
             hourMinuteShape: RoundedRectangleBorder(borderRadius: s.radius(12)),
             dayPeriodShape: RoundedRectangleBorder(borderRadius: s.radius(10)),
-            dayPeriodBorderSide: BorderSide(
-              color: accent.withValues(alpha: 0.45),
-            ),
+            dayPeriodBorderSide: BorderSide(color: accent.withValues(alpha: 0.45)),
           ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(foregroundColor: accent),
@@ -63,8 +61,7 @@ Future<TimeOfDay?> showLumenTimePicker({
       );
       if (use24HourFormat != null) {
         picker = MediaQuery(
-          data: MediaQuery.of(ctx)
-              .copyWith(alwaysUse24HourFormat: use24HourFormat),
+          data: MediaQuery.of(ctx).copyWith(alwaysUse24HourFormat: use24HourFormat),
           child: picker,
         );
       }
@@ -130,8 +127,7 @@ class LumenTimePicker extends StatelessWidget {
               MaterialLocalizations.of(context).formatTimeOfDay(
                 value!,
                 alwaysUse24HourFormat:
-                    use24HourFormat ??
-                    MediaQuery.alwaysUse24HourFormatOf(context),
+                    use24HourFormat ?? MediaQuery.alwaysUse24HourFormatOf(context),
               ));
 
     return LumenPressable(
@@ -161,8 +157,7 @@ class LumenTimePicker extends StatelessWidget {
         isEmpty: text == null,
         child: Text(
           text ?? '',
-          style: Theme.of(context).textTheme.titleMedium
-              ?.copyWith(color: p.textPrimary),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
         ),
       ),
     );

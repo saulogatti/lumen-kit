@@ -12,11 +12,7 @@ Widget bareApp(Widget child, {bool reduceMotion = false}) => MaterialApp(
 );
 
 /// Bombeia [widget] num [bareApp] e garante que nada explodiu.
-Future<void> pumpBare(
-  WidgetTester tester,
-  Widget widget, {
-  bool reduceMotion = false,
-}) async {
+Future<void> pumpBare(WidgetTester tester, Widget widget, {bool reduceMotion = false}) async {
   await tester.pumpWidget(bareApp(widget, reduceMotion: reduceMotion));
   expect(tester.takeException(), isNull);
 }

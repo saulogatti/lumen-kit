@@ -71,8 +71,7 @@ class LumenPageIndicator extends StatelessWidget {
     }
     return AnimatedBuilder(
       animation: c,
-      builder: (context, _) =>
-          _build(context, _pageOf(c), animated: false),
+      builder: (context, _) => _build(context, _pageOf(c), animated: false),
     );
   }
 
@@ -82,11 +81,8 @@ class LumenPageIndicator extends StatelessWidget {
     final accent = accentColor ?? p.primary;
     final idle = p.textMuted.scaleAlpha(0.35);
     final current = page.round().clamp(0, count == 0 ? 0 : count - 1);
-    final label =
-        semanticsLabel ?? (int i, int n) => '${i + 1}/$n';
-    final duration = animated
-        ? LumenMotion.duration(context, kLumenMediumDuration)
-        : Duration.zero;
+    final label = semanticsLabel ?? (int i, int n) => '${i + 1}/$n';
+    final duration = animated ? LumenMotion.duration(context, kLumenMediumDuration) : Duration.zero;
 
     Widget dot(int i) {
       final t = (1 - (page - i).abs()).clamp(0.0, 1.0);
@@ -98,15 +94,10 @@ class LumenPageIndicator extends StatelessWidget {
         height: dotSize,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(dotSize / 2),
+          borderRadius: s.radius(dotSize / 2),
           boxShadow: s.shadows(
             t > 0
-                ? <BoxShadow>[
-                    BoxShadow(
-                      color: accent.withValues(alpha: 0.55 * t),
-                      blurRadius: 8,
-                    ),
-                  ]
+                ? <BoxShadow>[BoxShadow(color: accent.withValues(alpha: 0.55 * t), blurRadius: 8)]
                 : null,
           ),
         ),
@@ -116,7 +107,7 @@ class LumenPageIndicator extends StatelessWidget {
       }
       return LumenPressable(
         onTap: () => onDotTapped!(i),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: s.radius(12),
         selected: i == current,
         semanticLabel: label(i, count),
         child: Padding(
@@ -214,8 +205,7 @@ class _LumenCarouselState extends State<LumenCarousel> {
   PageController? _own;
 
   PageController get _controller =>
-      widget.controller ??
-      (_own ??= PageController(viewportFraction: widget.viewportFraction));
+      widget.controller ?? (_own ??= PageController(viewportFraction: widget.viewportFraction));
 
   @override
   void didUpdateWidget(covariant LumenCarousel old) {

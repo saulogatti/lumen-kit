@@ -132,8 +132,7 @@ class _LumenTextFieldState extends State<LumenTextField> {
   TextEditingController? _internal;
 
   TextEditingController get _controller =>
-      widget.controller ??
-      (_internal ??= TextEditingController(text: widget.initialValue));
+      widget.controller ?? (_internal ??= TextEditingController(text: widget.initialValue));
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +158,7 @@ class _LumenTextFieldState extends State<LumenTextField> {
       inputFormatters: widget.inputFormatters,
       autofillHints: widget.autofillHints,
       cursorColor: accent,
-      style: Theme.of(context).textTheme.titleMedium,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
       decoration: LumenDecorations.input(
         p,
         style,
@@ -168,9 +167,7 @@ class _LumenTextFieldState extends State<LumenTextField> {
         hint: widget.hint,
         helper: widget.helperText,
         error: widget.errorText,
-        prefixIcon: widget.icon == null
-            ? null
-            : Icon(widget.icon, color: accent),
+        prefixIcon: widget.icon == null ? null : Icon(widget.icon, color: accent),
         suffixIcon: widget.suffix,
       ).copyWith(alignLabelWithHint: (widget.maxLines ?? 2) > 1),
     );
@@ -181,9 +178,7 @@ class _LumenTextFieldState extends State<LumenTextField> {
     super.didUpdateWidget(oldWidget);
     // Passou a usar controller interno: herda o texto do externo antigo.
     if (oldWidget.controller != null && widget.controller == null) {
-      _internal ??= TextEditingController.fromValue(
-        oldWidget.controller!.value,
-      );
+      _internal ??= TextEditingController.fromValue(oldWidget.controller!.value);
     }
   }
 

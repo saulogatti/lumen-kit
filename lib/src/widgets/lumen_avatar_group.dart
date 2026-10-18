@@ -80,9 +80,7 @@ class LumenAvatarGroup extends StatelessWidget {
     final accent = accentColor ?? p.primary;
     final ring = ringColor ?? p.backgroundDeep;
     final count = total ?? avatars.length;
-    final visible = avatars.length < maxVisible
-        ? avatars.length
-        : maxVisible;
+    final visible = avatars.length < maxVisible ? avatars.length : maxVisible;
     final extra = count - visible;
     final outer = (radius + _ring) * 2;
     final stepX = outer * (1 - overlap);
@@ -127,11 +125,7 @@ class LumenAvatarGroup extends StatelessWidget {
       overflow = onOverflowTap == null
           // O rótulo do grupo já diz quantos são; "+3" solto seria ruído.
           ? ExcludeSemantics(excluding: semanticLabel != null, child: chip)
-          : LumenPressable(
-              onTap: onOverflowTap,
-              customBorder: const CircleBorder(),
-              child: chip,
-            );
+          : LumenPressable(onTap: onOverflowTap, customBorder: const CircleBorder(), child: chip);
     }
 
     return Semantics(
@@ -157,8 +151,7 @@ class LumenAvatarGroup extends StatelessWidget {
                   ),
                 ),
               ),
-            if (overflow != null)
-              Positioned(left: stepX * visible, child: overflow),
+            if (overflow != null) Positioned(left: stepX * visible, child: overflow),
           ],
         ),
       ),

@@ -44,9 +44,7 @@ class LumenSearchBar extends StatefulWidget {
 }
 
 class _LumenSearchBarState extends State<LumenSearchBar> {
-  late final TextEditingController _controller = TextEditingController(
-    text: widget.initialValue,
-  );
+  late final TextEditingController _controller = TextEditingController(text: widget.initialValue);
 
   @override
   void dispose() {
@@ -76,7 +74,7 @@ class _LumenSearchBarState extends State<LumenSearchBar> {
       autofocus: widget.autofocus,
       onChanged: _handleChanged,
       onSubmitted: widget.onSubmitted,
-      style: Theme.of(context).textTheme.titleMedium,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
       textInputAction: TextInputAction.search,
       decoration: LumenDecorations.input(
         p,
@@ -93,10 +91,7 @@ class _LumenSearchBarState extends State<LumenSearchBar> {
                 tooltip: 'Limpar',
               )
             : null,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 14,
-        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }

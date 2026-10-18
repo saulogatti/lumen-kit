@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the showLumenTimePicker function from the lumen_kit library, for the Dart programming language.">
+  <title>showLumenTimePicker function - lumen_kit library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">lumen_kit</a></li>
+    <li><a href="../lumen_kit/">lumen_kit.dart</a></li>
+    <li class="self-crumb">showLumenTimePicker function</li>
+  </ol>
+  <div class="self-name">showLumenTimePicker</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="lumen_kit&#47;lumen_kit-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">showLumenTimePicker</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimeOfDay-class.html">TimeOfDay</a>?</span>&gt;</span></span>
+<span class="name ">showLumenTimePicker</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="showLumenTimePicker-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
+<li><span class="parameter" id="showLumenTimePicker-param-initialTime"><span>required</span> <span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimeOfDay-class.html">TimeOfDay</a></span> <span class="parameter-name">initialTime</span>, </span></li>
+<li><span class="parameter" id="showLumenTimePicker-param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span></li>
+<li><span class="parameter" id="showLumenTimePicker-param-helpText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">helpText</span>, </span></li>
+<li><span class="parameter" id="showLumenTimePicker-param-use24HourFormat"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">use24HourFormat</span>, </span></li>
+<li><span class="parameter" id="showLumenTimePicker-param-initialEntryMode"><span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimePickerEntryMode.html">TimePickerEntryMode</a></span> <span class="parameter-name">initialEntryMode</span> = <span class="default-value">TimePickerEntryMode.dial</span>, </span></li>
+</ol>})
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Opens the default <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showTimePicker.html">showTimePicker</a> applying the neon theme.
+<code>initialTime</code> is the start time, <code>accentColor</code> replaces the default accent
+and <code>helpText</code> is passed to the Material picker. <code>use24HourFormat</code> strength
+(or turns off) the 24-hour clock; when <code>null</code>, it follows the configuration
+of the system.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;TimeOfDay?&gt; showLumenTimePicker({
+  required BuildContext context,
+  required TimeOfDay initialTime,
+  Color? accentColor,
+  String? helpText,
+  bool? use24HourFormat,
+  TimePickerEntryMode initialEntryMode = TimePickerEntryMode.dial,
+}) {
+  final p = LumenThemeExt.of(context).palette;
+  final s = LumenStyle.of(context);
+  final accent = accentColor ?? p.primary;
+
+  return showTimePicker(
+    context: context,
+    initialTime: initialTime,
+    helpText: helpText,
+    initialEntryMode: initialEntryMode,
+    builder: (ctx, child) {
+      final base = Theme.of(ctx);
+      Widget picker = Theme(
+        data: base.copyWith(
+          colorScheme: base.colorScheme.copyWith(
+            primary: accent,
+            onPrimary: p.textPrimary,
+            surface: p.surface,
+            onSurface: p.textPrimary,
+            onSurfaceVariant: p.textSecondary,
+            primaryContainer: accent.withValues(alpha: 0.22),
+            onPrimaryContainer: accent,
+            tertiaryContainer: accent.withValues(alpha: 0.22),
+            onTertiaryContainer: accent,
+            surfaceContainerHighest: p.backgroundSoft,
+            outline: p.surfaceOutline,
+          ),
+          timePickerTheme: TimePickerThemeData(
+            backgroundColor: p.backgroundMid,
+            dialBackgroundColor: p.surface,
+            dialHandColor: accent,
+            entryModeIconColor: accent,
+            shape: RoundedRectangleBorder(borderRadius: s.radius(24)),
+            hourMinuteShape: RoundedRectangleBorder(borderRadius: s.radius(12)),
+            dayPeriodShape: RoundedRectangleBorder(borderRadius: s.radius(10)),
+            dayPeriodBorderSide: BorderSide(color: accent.withValues(alpha: 0.45)),
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(foregroundColor: accent),
+          ),
+        ),
+        child: child ?? const SizedBox.shrink(),
+      );
+      if (use24HourFormat != null) {
+        picker = MediaQuery(
+          data: MediaQuery.of(ctx).copyWith(alwaysUse24HourFormat: use24HourFormat),
+          child: picker,
+        );
+      }
+      return picker;
+    },
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">lumen_kit</a></li>
+    <li><a href="../lumen_kit/">lumen_kit</a></li>
+    <li class="self-crumb">showLumenTimePicker function</li>
+</ol>
+
+    <h5>lumen_kit library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    lumen_kit
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

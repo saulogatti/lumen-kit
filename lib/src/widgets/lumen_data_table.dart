@@ -52,9 +52,7 @@ class LumenDataTable extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
-          headingRowColor: WidgetStateProperty.all(
-            accent.withValues(alpha: 0.1),
-          ),
+          headingRowColor: WidgetStateProperty.all(accent.withValues(alpha: 0.1)),
           dataRowColor: WidgetStateProperty.resolveWith((s) {
             if (s.contains(WidgetState.selected)) {
               return accent.withValues(alpha: 0.16);
@@ -68,9 +66,7 @@ class LumenDataTable extends StatelessWidget {
           ),
           dataTextStyle: TextStyle(color: p.textSecondary),
           dividerThickness: 0.6,
-          decoration: BoxDecoration(
-            border: style.borderAll(color: Colors.transparent),
-          ),
+          decoration: BoxDecoration(border: style.borderAll(color: Colors.transparent)),
           sortColumnIndex: sortColumnIndex,
           sortAscending: sortAscending,
           columns: columns,
@@ -124,9 +120,7 @@ class LumenTableRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: isHeader ? accent.withValues(alpha: 0.1) : null,
-        border: Border(
-          bottom: BorderSide(color: p.surfaceOutline.outlineAlpha(0.35)),
-        ),
+        border: Border(bottom: BorderSide(color: p.surfaceOutline.outlineAlpha(0.35))),
       ),
       child: DefaultTextStyle.merge(
         style: TextStyle(
@@ -136,8 +130,7 @@ class LumenTableRow extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            for (int i = 0; i < cells.length; i++)
-              Expanded(flex: flexValues[i], child: cells[i]),
+            for (int i = 0; i < cells.length; i++) Expanded(flex: flexValues[i], child: cells[i]),
           ],
         ),
       ),
