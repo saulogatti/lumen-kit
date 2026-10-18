@@ -21,10 +21,8 @@ Everything decoupled from domain — receives `child`, callbacks and tokens; doe
 
 ```yaml
 dependencies:
-  lumen_kit:
-    git:
-      url: https://github.com/saulogatti/lumen-kit.git
-      ref: main
+  lumen_kit: any
+
 ```
 
 ## Only the components (without the theme)
@@ -448,4 +446,4 @@ flutter run
 
 ## Status
 
-In active development — API may still change between `0.x` versions. Use `ref: <commit-sha>` or tags (`ref: v0.1.0`) in production to avoid silent breaks coming from `main`.
+In active development — API may still change between `0.x` versions. Use `ref: <commit-sha>` or tags (`ref: v1.0.0`) in production to avoid silent breaks coming from `main`.
