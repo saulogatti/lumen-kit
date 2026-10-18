@@ -28,4 +28,30 @@ void main() {
     expect(taps, 1);
     expect(tester.widget<LumenPressable>(find.byType(LumenPressable).last).onTap, isNull);
   });
+
+  testWidgets('LumenDrawer abre no Scaffold com header, itens, footer e largura', (tester) async {
+    final scaffold = GlobalKey<ScaffoldState>();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          key: scaffold,
+          drawer: LumenDrawer(
+            width: 280,
+            header: const Text('Cabeçalho'),
+            footer: const Text('Rodapé'),
+            children: <Widget>[LumenDrawerItem(icon: Icons.home, label: 'Início', onTap: () {})],
+          ),
+          body: const SizedBox(),
+        ),
+      ),
+    );
+    scaffold.currentState!.openDrawer();
+    await tester.pumpAndSettle();
+
+    expect(find.text('Cabeçalho'), findsOneWidget);
+    expect(find.text('Início'), findsOneWidget);
+    expect(find.text('Rodapé'), findsOneWidget);
+    expect(tester.getSize(find.byType(Drawer)).width, 280);
+    expect(tester.takeException(), isNull);
+  });
 }

@@ -27,6 +27,14 @@ void main() {
       expect(LumenStyle.neon.copyWith(shadow: LumenShadowKind.none).shadows(_glow), isNull);
     });
 
+    test('copyWith preserva os tokens que não foram passados', () {
+      final s = LumenStyle.brutal.copyWith(radiusScale: 2);
+      expect(s.radius(10), BorderRadius.circular(20));
+      expect(s.shadow, LumenStyle.brutal.shadow);
+      expect(s.borderScale, LumenStyle.brutal.borderScale);
+      expect(s.gradients, LumenStyle.brutal.gradients);
+    });
+
     test('fill vira cor sólida quando gradients é falso', () {
       const g = LinearGradient(colors: <Color>[Color(0xFF111111), Color(0xFF222222)]);
       expect(LumenStyle.neon.fill(g), g);

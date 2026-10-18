@@ -31,4 +31,21 @@ void main() {
     await tester.pump();
     expect(taps, 1);
   });
+
+  testWidgets('LumenDataTable pinta a linha selecionada com o accent', (tester) async {
+    const accent = Color(0xFF00E5FF);
+    await pumpBare(
+      tester,
+      const LumenDataTable(
+        accentColor: accent,
+        columns: <DataColumn>[DataColumn(label: Text('Nome'))],
+        rows: <DataRow>[
+          DataRow(selected: true, cells: <DataCell>[DataCell(Text('Ada'))]),
+        ],
+      ),
+    );
+    final rowColor = tester.widget<DataTable>(find.byType(DataTable)).dataRowColor!;
+    expect(rowColor.resolve(<WidgetState>{WidgetState.selected}), accent.withValues(alpha: 0.16));
+    expect(rowColor.resolve(<WidgetState>{}), isNull);
+  });
 }
