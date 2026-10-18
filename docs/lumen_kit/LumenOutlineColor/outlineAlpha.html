@@ -71,8 +71,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Color outlineAlpha(double alpha) {
-  final faintNeutral =
-      HSLColor.fromColor(this).saturation &lt; 0.15 &amp;&amp; a &lt; 0.35;
+  final faintNeutral = HSLColor.fromColor(this).saturation &lt; 0.15 &amp;&amp; a &lt; 0.35;
   if (!faintNeutral) {
     return withValues(alpha: alpha);
   }

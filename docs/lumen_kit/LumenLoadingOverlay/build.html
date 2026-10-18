@@ -126,15 +126,9 @@ Widget build(BuildContext context) {
                 ? Stack(
                     key: const ValueKey&lt;bool&gt;(true),
                     children: &lt;Widget&gt;[
-                      ModalBarrier(
-                        dismissible: false,
-                        color: barrierColor ?? _defaultBarrier(p),
-                      ),
+                      ModalBarrier(dismissible: false, color: barrierColor ?? _defaultBarrier(p)),
                       Center(
-                        child: LumenLoadingPanel(
-                          message: message,
-                          accentColor: accentColor,
-                        ),
+                        child: LumenLoadingPanel(message: message, accentColor: accentColor),
                       ),
                     ],
                   )

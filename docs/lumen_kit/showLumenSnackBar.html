@@ -111,17 +111,14 @@ surface with accent + glow border, in the style of the rest of the kit.
             Expanded(
               child: Text(
                 message,
-                style: Theme.of(context).textTheme.bodyMedium
-                    ?.copyWith(color: p.textPrimary),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textPrimary),
               ),
             ),
             if (action != null)
               TextButton(
                 &#47;&#47; Igual ao SnackBarAction: a ação também fecha o snackbar.
                 onPressed: () {
-                  messenger.hideCurrentSnackBar(
-                    reason: SnackBarClosedReason.action,
-                  );
+                  messenger.hideCurrentSnackBar(reason: SnackBarClosedReason.action);
                   action.onPressed();
                 },
                 style: TextButton.styleFrom(foregroundColor: accent),

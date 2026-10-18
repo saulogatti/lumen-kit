@@ -135,9 +135,7 @@ Widget build(BuildContext context) {
     label: semanticLabel,
     onTap: active ? onTap : null,
     onLongPress: active ? onLongPress : null,
-    child: dimWhenDisabled &amp;&amp; !active
-        ? Opacity(opacity: kLumenDisabledOpacity, child: ink)
-        : ink,
+    child: dimWhenDisabled &amp;&amp; !active ? Opacity(opacity: kLumenDisabledOpacity, child: ink) : ink,
   );
   return mergeSemantics ? MergeSemantics(child: semantics) : semantics;
 }</code></pre>

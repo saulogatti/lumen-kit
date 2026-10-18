@@ -14,16 +14,6 @@ import 'package:material_ui/material_ui.dart';
 /// )
 /// ```
 class LumenEmptyState extends StatelessWidget {
-  /// Creates the empty state with [title].
-  const LumenEmptyState({
-    required this.title,
-    super.key,
-    this.icon,
-    this.message,
-    this.actionLabel,
-    this.onPressed,
-  });
-
   /// Icon above the title.
   final IconData? icon;
 
@@ -42,6 +32,16 @@ class LumenEmptyState extends StatelessWidget {
   ///
   /// `null` omits the button.
   final VoidCallback? onPressed;
+
+  /// Creates the empty state with [title].
+  const LumenEmptyState({
+    required this.title,
+    super.key,
+    this.icon,
+    this.message,
+    this.actionLabel,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

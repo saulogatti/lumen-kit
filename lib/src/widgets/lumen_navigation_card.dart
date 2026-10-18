@@ -9,18 +9,6 @@ import 'package:material_ui/material_ui.dart';
 /// You get what to show and what to do when playing — you don't decide anything
 /// for yourself.
 class LumenNavigationCard extends StatefulWidget {
-  /// Creates a navigation card with visual highlighting and hover.
-  const LumenNavigationCard({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.accent,
-    required this.onTap,
-    super.key,
-    this.tag,
-    this.actionLabel = 'ACESSAR MÓDULO',
-  });
-
   /// Title of the module or target.
   final String title;
 
@@ -42,8 +30,38 @@ class LumenNavigationCard extends StatefulWidget {
   /// Call text at the footer of the card.
   final String actionLabel;
 
+  /// Creates a navigation card with visual highlighting and hover.
+  const LumenNavigationCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.accent,
+    required this.onTap,
+    super.key,
+    this.tag,
+    this.actionLabel = 'ACESSAR MÓDULO',
+  });
+
   @override
   State<LumenNavigationCard> createState() => _LumenNavigationCardState();
+}
+
+class _IconBadge extends StatelessWidget {
+  final IconData icon;
+
+  final Color accent;
+  const _IconBadge({required this.icon, required this.accent});
+
+  @override
+  Widget build(BuildContext context) {
+    final style = LumenStyle.of(context);
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: LumenDecorations.iconBox(style, accent: accent, radius: 14),
+      child: Icon(icon, color: accent, size: 28),
+    );
+  }
 }
 
 class _LumenNavigationCardState extends State<LumenNavigationCard> {
@@ -57,7 +75,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
     final style = LumenStyle.of(context);
 
     // Hover e foco de teclado levantam o card do mesmo jeito.
-    void highlight(bool on) {
+    void highlight({required bool on}) {
       if (_hovering != on) {
         setState(() => _hovering = on);
       }
@@ -83,8 +101,8 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
         borderRadius: style.radius(20),
         child: InkWell(
           onTap: widget.onTap,
-          onHover: highlight,
-          onFocusChange: highlight,
+          onHover: (on) => highlight(on: on),
+          onFocusChange: (on) => highlight(on: on),
           borderRadius: style.radius(20),
           child: Container(
             padding: const EdgeInsets.all(24),
@@ -132,29 +150,11 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
   }
 }
 
-class _IconBadge extends StatelessWidget {
-  const _IconBadge({required this.icon, required this.accent});
-
-  final IconData icon;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = LumenStyle.of(context);
-    return Container(
-      width: 56,
-      height: 56,
-      decoration: LumenDecorations.iconBox(style, accent: accent, radius: 14),
-      child: Icon(icon, color: accent, size: 28),
-    );
-  }
-}
-
 class _Tag extends StatelessWidget {
-  const _Tag({required this.label, required this.accent});
-
   final String label;
+
   final Color accent;
+  const _Tag({required this.label, required this.accent});
 
   @override
   Widget build(BuildContext context) {

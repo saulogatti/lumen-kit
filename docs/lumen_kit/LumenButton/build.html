@@ -118,13 +118,7 @@ Widget build(BuildContext context) {
 
   final body = switch (variant) {
     LumenButtonVariant.solid =&gt; _solid(context, palette, content, enabled),
-    LumenButtonVariant.outline =&gt; _outline(
-      context,
-      palette,
-      accent,
-      content,
-      enabled,
-    ),
+    LumenButtonVariant.outline =&gt; _outline(context, palette, accent, content, enabled),
     LumenButtonVariant.ghost =&gt; _ghost(content),
   };
 

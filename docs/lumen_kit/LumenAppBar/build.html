@@ -111,8 +111,7 @@ and</li>
 Widget build(BuildContext context) {
   final style = LumenStyle.of(context);
   final text = Theme.of(context).textTheme;
-  final g =
-      accentGradient ?? LumenThemeExt.of(context).palette.accentGradient;
+  final g = accentGradient ?? LumenThemeExt.of(context).palette.accentGradient;
 
   return Material(
     color: Colors.transparent,
@@ -125,10 +124,7 @@ Widget build(BuildContext context) {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: &lt;Widget&gt;[
-                if (leading != null) ...&lt;Widget&gt;[
-                  leading!,
-                  const SizedBox(width: 12),
-                ],
+                if (leading != null) ...&lt;Widget&gt;[leading!, const SizedBox(width: 12)],
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -143,17 +139,12 @@ Widget build(BuildContext context) {
                     ],
                   ),
                 ),
-                if (actions != null)
-                  Row(mainAxisSize: MainAxisSize.min, children: actions!),
+                if (actions != null) Row(mainAxisSize: MainAxisSize.min, children: actions!),
               ],
             ),
           ),
         ),
-        if (showDivider)
-          Container(
-            height: 2,
-            decoration: BoxDecoration(gradient: style.fill(g)),
-          ),
+        if (showDivider) Container(height: 2, decoration: BoxDecoration(gradient: style.fill(g))),
       ],
     ),
   );

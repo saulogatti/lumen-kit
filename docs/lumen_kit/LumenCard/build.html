@@ -126,10 +126,7 @@ Widget build(BuildContext context) {
             p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.85)),
           ),
         ),
-        border: style.borderAll(
-          color: a.withValues(alpha: borderOpacity),
-          width: 1.2,
-        ),
+        border: style.borderAll(color: a.withValues(alpha: borderOpacity), width: 1.2),
       ),
       child: child,
     ),
@@ -137,12 +134,7 @@ Widget build(BuildContext context) {
 
   final body = onTap == null
       ? content
-      : LumenPressable(
-          onTap: onTap,
-          borderRadius: radius,
-          mergeSemantics: false,
-          child: content,
-        );
+      : LumenPressable(onTap: onTap, borderRadius: radius, mergeSemantics: false, child: content);
 
   if (!glow) {
     return body;
@@ -152,11 +144,7 @@ Widget build(BuildContext context) {
     decoration: BoxDecoration(
       borderRadius: radius,
       boxShadow: style.shadows(&lt;BoxShadow&gt;[
-        BoxShadow(
-          color: a.withValues(alpha: 0.18),
-          blurRadius: 24,
-          offset: const Offset(0, 12),
-        ),
+        BoxShadow(color: a.withValues(alpha: 0.18), blurRadius: 24, offset: const Offset(0, 12)),
       ]),
     ),
     child: body,

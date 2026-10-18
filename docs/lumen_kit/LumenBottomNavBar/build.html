@@ -116,9 +116,7 @@ Widget build(BuildContext context) {
   return Container(
     decoration: BoxDecoration(
       color: p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
-      border: Border(
-        top: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5)),
-      ),
+      border: Border(top: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5))),
     ),
     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
     child: SafeArea(
@@ -134,10 +132,7 @@ Widget build(BuildContext context) {
               borderRadius: style.radius(20),
               child: AnimatedContainer(
                 duration: LumenMotion.duration(context, kLumenMediumDuration),
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 6,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                 decoration: LumenDecorations.selectable(
                   p,
                   style,

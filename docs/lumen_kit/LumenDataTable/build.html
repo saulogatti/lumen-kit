@@ -123,9 +123,7 @@ Widget build(BuildContext context) {
     child: SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-        headingRowColor: WidgetStateProperty.all(
-          accent.withValues(alpha: 0.1),
-        ),
+        headingRowColor: WidgetStateProperty.all(accent.withValues(alpha: 0.1)),
         dataRowColor: WidgetStateProperty.resolveWith((s) {
           if (s.contains(WidgetState.selected)) {
             return accent.withValues(alpha: 0.16);
@@ -139,9 +137,7 @@ Widget build(BuildContext context) {
         ),
         dataTextStyle: TextStyle(color: p.textSecondary),
         dividerThickness: 0.6,
-        decoration: BoxDecoration(
-          border: style.borderAll(color: Colors.transparent),
-        ),
+        decoration: BoxDecoration(border: style.borderAll(color: Colors.transparent)),
         sortColumnIndex: sortColumnIndex,
         sortAscending: sortAscending,
         columns: columns,

@@ -7,20 +7,6 @@ import 'package:material_ui/material_ui.dart';
 /// Themed ListTile with translucent surface, soft accent border and state
 /// selected highlighted by glow.
 class LumenListTile extends StatelessWidget {
-  /// Creates a neon list item.
-  const LumenListTile({
-    required this.title,
-    super.key,
-    this.subtitle,
-    this.leading,
-    this.trailing,
-    this.onTap,
-    this.onLongPress,
-    this.selected = false,
-    this.accentColor,
-    this.dense = false,
-  });
-
   /// Main text of the item.
   final String title;
 
@@ -49,6 +35,20 @@ class LumenListTile extends StatelessWidget {
 
   /// Whether to reduce vertical spacing.
   final bool dense;
+
+  /// Creates a neon list item.
+  const LumenListTile({
+    required this.title,
+    super.key,
+    this.subtitle,
+    this.leading,
+    this.trailing,
+    this.onTap,
+    this.onLongPress,
+    this.selected = false,
+    this.accentColor,
+    this.dense = false,
+  });
 
   @override
   Widget build(BuildContext context) {

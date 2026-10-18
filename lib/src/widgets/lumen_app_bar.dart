@@ -5,18 +5,6 @@ import 'package:material_ui/material_ui.dart';
 /// AppBar with neon identity: transparent, with bottom gradient line and
 /// typography consistent with the theme.
 class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
-  /// Create a neon bar app compatible with [Scaffold.appBar].
-  const LumenAppBar({
-    required this.title,
-    super.key,
-    this.subtitle,
-    this.leading,
-    this.actions,
-    this.accentGradient,
-    this.height = 64,
-    this.showDivider = true,
-  });
-
   /// Main title displayed in the app bar.
   final String title;
 
@@ -39,6 +27,18 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   /// Whether to display the bottom decorative line.
   final bool showDivider;
+
+  /// Create a neon bar app compatible with [Scaffold.appBar].
+  const LumenAppBar({
+    required this.title,
+    super.key,
+    this.subtitle,
+    this.leading,
+    this.actions,
+    this.accentGradient,
+    this.height = 64,
+    this.showDivider = true,
+  });
 
   @override
   Size get preferredSize => Size.fromHeight(height + (showDivider ? 2 : 0));

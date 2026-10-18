@@ -99,9 +99,7 @@
   color: selected ? accent.withValues(alpha: fillAlpha) : Colors.transparent,
   borderRadius: s.radius(radius),
   border: s.borderAll(
-    color: selected
-        ? accent.withValues(alpha: borderAlpha)
-        : Colors.transparent,
+    color: selected ? accent.withValues(alpha: borderAlpha) : Colors.transparent,
     width: borderWidth,
   ),
   boxShadow: s.shadows(

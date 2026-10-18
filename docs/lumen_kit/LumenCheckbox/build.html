@@ -130,17 +130,13 @@ Widget build(BuildContext context) {
     decoration: BoxDecoration(
       borderRadius: style.radius(6),
       gradient: style.fill(
-        isChecked || isIndeterminate
-            ? LumenDecorations.accent(p, accent)
-            : null,
+        isChecked || isIndeterminate ? LumenDecorations.accent(p, accent) : null,
       ),
       color: (isChecked || isIndeterminate)
           ? null
           : p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
       border: style.borderAll(
-        color: (isChecked || isIndeterminate)
-            ? accent
-            : p.surfaceOutline.outlineAlpha(0.9),
+        color: (isChecked || isIndeterminate) ? accent : p.surfaceOutline.outlineAlpha(0.9),
         width: 1.2,
       ),
       boxShadow: style.shadows(

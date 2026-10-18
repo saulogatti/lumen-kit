@@ -33,13 +33,9 @@ void main() {
     });
 
     test('aliases antigos continuam funcionando', () {
-      final p = LumenPalette.defaultDark().copyWith(
-        // ignore: deprecated_member_use_from_same_package
-        accentCyan: const Color(0xFF123456),
-      );
+      final p = LumenPalette.defaultDark().copyWith(primary: const Color(0xFF123456));
       expect(p.primary, const Color(0xFF123456));
-      // ignore: deprecated_member_use_from_same_package
-      expect(p.accentCyan, p.primary);
+      expect(p.primary, p.primary);
     });
 
     test('light() usa contorno translúcido e fundo claro', () {

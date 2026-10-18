@@ -97,11 +97,10 @@
   bool isDense = false,
   double enabledBorderAlpha = 0.35,
 }) {
-  OutlineInputBorder border(Color color, [double width = 1]) =&gt;
-      OutlineInputBorder(
-        borderRadius: s.radius(radius),
-        borderSide: BorderSide(color: color, width: width),
-      );
+  OutlineInputBorder border(Color color, [double width = 1]) =&gt; OutlineInputBorder(
+    borderRadius: s.radius(radius),
+    borderSide: BorderSide(color: color, width: width),
+  );
 
   return InputDecoration(
     labelText: label,

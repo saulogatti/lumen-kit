@@ -114,9 +114,7 @@ Widget build(BuildContext context) {
   final accent = accentColor ?? p.primary;
   final radius = s.radius(20);
   final fg = selected ? accent : p.textSecondary;
-  final leading = selected &amp;&amp; showCheckmark
-      ? Icons.check_rounded
-      : icon;
+  final leading = selected &amp;&amp; showCheckmark ? Icons.check_rounded : icon;
 
   return LumenPressable(
     onTap: onSelected == null ? null : () =&gt; onSelected!(!selected),
@@ -132,9 +130,7 @@ Widget build(BuildContext context) {
             ? accent.withValues(alpha: 0.16)
             : p.surface.withValues(alpha: s.surfaceAlpha(0.5)),
         border: s.borderAll(
-          color: selected
-              ? accent.withValues(alpha: 0.8)
-              : accent.withValues(alpha: 0.35),
+          color: selected ? accent.withValues(alpha: 0.8) : accent.withValues(alpha: 0.35),
           width: 1.2,
         ),
         boxShadow: s.shadows(
@@ -156,10 +152,8 @@ Widget build(BuildContext context) {
           if (leading != null) Icon(leading, size: 16, color: fg),
           Text(
             label,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: fg,
-              fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: fg, fontWeight: selected ? FontWeight.w600 : FontWeight.w500),
           ),
         ],
       ),

@@ -127,11 +127,7 @@ Widget build(BuildContext context) {
         if (icon != null) Icon(icon, size: 12, color: c),
         Text(
           label,
-          style: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w600,
-            color: c,
-          ),
+          style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: c),
         ),
       ],
     ),
@@ -140,11 +136,7 @@ Widget build(BuildContext context) {
   if (onTap == null) {
     return content;
   }
-  return LumenPressable(
-    onTap: onTap,
-    borderRadius: style.radius(20),
-    child: content,
-  );
+  return LumenPressable(onTap: onTap, borderRadius: style.radius(20), child: content);
 }</code></pre>
 </section>
 

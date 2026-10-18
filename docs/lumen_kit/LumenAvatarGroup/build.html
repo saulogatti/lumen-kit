@@ -114,9 +114,7 @@ Widget build(BuildContext context) {
   final accent = accentColor ?? p.primary;
   final ring = ringColor ?? p.backgroundDeep;
   final count = total ?? avatars.length;
-  final visible = avatars.length &lt; maxVisible
-      ? avatars.length
-      : maxVisible;
+  final visible = avatars.length &lt; maxVisible ? avatars.length : maxVisible;
   final extra = count - visible;
   final outer = (radius + _ring) * 2;
   final stepX = outer * (1 - overlap);
@@ -161,11 +159,7 @@ Widget build(BuildContext context) {
     overflow = onOverflowTap == null
         &#47;&#47; O rótulo do grupo já diz quantos são; &quot;+3&quot; solto seria ruído.
         ? ExcludeSemantics(excluding: semanticLabel != null, child: chip)
-        : LumenPressable(
-            onTap: onOverflowTap,
-            customBorder: const CircleBorder(),
-            child: chip,
-          );
+        : LumenPressable(onTap: onOverflowTap, customBorder: const CircleBorder(), child: chip);
   }
 
   return Semantics(
@@ -191,8 +185,7 @@ Widget build(BuildContext context) {
                 ),
               ),
             ),
-          if (overflow != null)
-            Positioned(left: stepX * visible, child: overflow),
+          if (overflow != null) Positioned(left: stepX * visible, child: overflow),
         ],
       ),
     ),

@@ -9,7 +9,7 @@ import '_harness.dart';
 void main() {
   testWidgets('LumenLoadingOverlay bloqueia toques só enquanto carrega', (tester) async {
     var taps = 0;
-    Widget build(bool loading) => bareApp(
+    Widget build({required bool loading}) => bareApp(
       LumenLoadingOverlay(
         loading: loading,
         message: 'Salvando…',
@@ -23,13 +23,13 @@ void main() {
       ),
     );
 
-    await tester.pumpWidget(build(true));
+    await tester.pumpWidget(build(loading: true));
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Salvando…'), findsOneWidget);
     await tester.tap(find.text('Salvar'), warnIfMissed: false);
     expect(taps, 0);
 
-    await tester.pumpWidget(build(false));
+    await tester.pumpWidget(build(loading: false));
     await tester.pumpAndSettle();
     expect(find.text('Salvando…'), findsNothing);
     await tester.tap(find.text('Salvar'));
