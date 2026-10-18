@@ -47,8 +47,7 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final style = LumenStyle.of(context);
     final text = Theme.of(context).textTheme;
-    final g =
-        accentGradient ?? LumenThemeExt.of(context).palette.accentGradient;
+    final g = accentGradient ?? LumenThemeExt.of(context).palette.accentGradient;
 
     return Material(
       color: Colors.transparent,
@@ -61,10 +60,7 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: <Widget>[
-                  if (leading != null) ...<Widget>[
-                    leading!,
-                    const SizedBox(width: 12),
-                  ],
+                  if (leading != null) ...<Widget>[leading!, const SizedBox(width: 12)],
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -79,17 +75,12 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ],
                     ),
                   ),
-                  if (actions != null)
-                    Row(mainAxisSize: MainAxisSize.min, children: actions!),
+                  if (actions != null) Row(mainAxisSize: MainAxisSize.min, children: actions!),
                 ],
               ),
             ),
           ),
-          if (showDivider)
-            Container(
-              height: 2,
-              decoration: BoxDecoration(gradient: style.fill(g)),
-            ),
+          if (showDivider) Container(height: 2, decoration: BoxDecoration(gradient: style.fill(g))),
         ],
       ),
     );

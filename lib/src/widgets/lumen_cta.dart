@@ -82,12 +82,7 @@ class LumenCta extends StatelessWidget {
                 : null,
           ),
         ),
-        child: LumenActionContent(
-          color: fg,
-          label: label,
-          icon: icon,
-          busy: busy,
-        ),
+        child: LumenActionContent(color: fg, label: label, icon: icon, busy: busy),
       ),
     );
   }

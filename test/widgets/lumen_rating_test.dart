@@ -5,17 +5,13 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenRating escolhe a nota pela estrela tocada', (
-    tester,
-  ) async {
+  testWidgets('LumenRating escolhe a nota pela estrela tocada', (tester) async {
     double nota = 0;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (context, setState) => LumenRating(
-            value: nota,
-            onChanged: (v) => setState(() => nota = v),
-          ),
+          builder: (context, setState) =>
+              LumenRating(value: nota, onChanged: (v) => setState(() => nota = v)),
         ),
       ),
     );
@@ -28,35 +24,20 @@ void main() {
     expect(find.byIcon(Icons.star_rounded), findsNWidgets(4));
   });
 
-  testWidgets('allowHalf: metade esquerda dá meia estrela', (
-    tester,
-  ) async {
+  testWidgets('allowHalf: metade esquerda dá meia estrela', (tester) async {
     final calls = <double>[];
-    await pumpBare(
-      tester,
-      LumenRating(value: 0, allowHalf: true, size: 40, onChanged: calls.add),
-    );
-    final second = tester.getRect(
-      find.byIcon(Icons.star_outline_rounded).at(1),
-    );
+    await pumpBare(tester, LumenRating(value: 0, allowHalf: true, size: 40, onChanged: calls.add));
+    final second = tester.getRect(find.byIcon(Icons.star_outline_rounded).at(1));
     await tester.tapAt(second.centerLeft + const Offset(4, 0));
     await tester.tapAt(second.centerRight - const Offset(4, 0));
     expect(calls, <double>[1.5, 2]);
   });
 
-  testWidgets('somente leitura mostra fração e anuncia a nota', (
-    tester,
-  ) async {
+  testWidgets('somente leitura mostra fração e anuncia a nota', (tester) async {
     final handle = tester.ensureSemantics();
-    await pumpBare(
-      tester,
-      const LumenRating(value: 3.5, semanticLabel: 'Avaliação'),
-    );
+    await pumpBare(tester, const LumenRating(value: 3.5, semanticLabel: 'Avaliação'));
     final half = tester.widget<Align>(
-      find.ancestor(
-        of: find.byIcon(Icons.star_rounded).at(3),
-        matching: find.byType(Align),
-      ),
+      find.ancestor(of: find.byIcon(Icons.star_rounded).at(3), matching: find.byType(Align)),
     );
     expect(half.widthFactor, 0.5);
     expect(find.byType(LumenPressable), findsNothing);
@@ -67,9 +48,7 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets('leitor de tela sobe e desce a nota', (
-    tester,
-  ) async {
+  testWidgets('leitor de tela sobe e desce a nota', (tester) async {
     final handle = tester.ensureSemantics();
     await pumpBare(tester, LumenRating(value: 5, onChanged: (_) {}));
     expect(

@@ -66,8 +66,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
     return AnimatedContainer(
       duration: LumenMotion.duration(context, kLumenMediumDuration),
       curve: Curves.easeOut,
-      transform: Matrix4.identity()
-        ..translateByDouble(0, _hovering ? -4.0 : 0.0, 0, 1),
+      transform: Matrix4.identity()..translateByDouble(0, _hovering ? -4.0 : 0.0, 0, 1),
       decoration: BoxDecoration(
         borderRadius: style.radius(20),
         boxShadow: style.shadows(<BoxShadow>[
@@ -109,8 +108,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
                   children: <Widget>[
                     _IconBadge(icon: widget.icon, accent: accent),
                     const Spacer(),
-                    if (widget.tag case final String tag)
-                      _Tag(label: tag, accent: accent),
+                    if (widget.tag case final String tag) _Tag(label: tag, accent: accent),
                   ],
                 ),
                 const SizedBox(height: 28),
@@ -121,10 +119,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
                 Row(
                   spacing: 8,
                   children: <Widget>[
-                    Text(
-                      widget.actionLabel,
-                      style: text.labelLarge?.copyWith(color: accent),
-                    ),
+                    Text(widget.actionLabel, style: text.labelLarge?.copyWith(color: accent)),
                     Icon(Icons.arrow_forward_rounded, size: 16, color: accent),
                   ],
                 ),
@@ -171,10 +166,7 @@ class _Tag extends StatelessWidget {
         borderRadius: style.radius(999),
         border: style.borderAll(color: accent.withValues(alpha: 0.4)),
       ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: accent),
-      ),
+      child: Text(label, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: accent)),
     );
   }
 }

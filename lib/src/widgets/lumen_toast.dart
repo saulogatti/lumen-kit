@@ -93,8 +93,7 @@ class _LumenToastWidget extends StatefulWidget {
   State<_LumenToastWidget> createState() => _LumenToastWidgetState();
 }
 
-class _LumenToastWidgetState extends State<_LumenToastWidget>
-    with SingleTickerProviderStateMixin {
+class _LumenToastWidgetState extends State<_LumenToastWidget> with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
     duration: kLumenMediumDuration,
@@ -179,10 +178,7 @@ class _LumenToastWidgetState extends State<_LumenToastWidget>
                   child: style.frost(
                     borderRadius: style.radius(999),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 18,
-                        vertical: 12,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                       decoration: LumenDecorations.panel(
                         p,
                         style,

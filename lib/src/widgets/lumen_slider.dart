@@ -72,8 +72,7 @@ class _GlowThumbShape extends SliderComponentShape {
   final bool showGlow;
 
   @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
-      const Size.fromRadius(_thumbRadius);
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) => const Size.fromRadius(_thumbRadius);
 
   @override
   void paint(
@@ -96,11 +95,7 @@ class _GlowThumbShape extends SliderComponentShape {
 
 const double _thumbRadius = 10;
 
-SliderThemeData _lumenSliderTheme(
-  BuildContext context,
-  LumenPalette p,
-  Color accent,
-) {
+SliderThemeData _lumenSliderTheme(BuildContext context, LumenPalette p, Color accent) {
   final glow = LumenStyle.of(context).shadow == LumenShadowKind.glow;
   return SliderTheme.of(context).copyWith(
     trackHeight: 4,
@@ -109,8 +104,7 @@ SliderThemeData _lumenSliderTheme(
     thumbColor: accent,
     overlayColor: accent.withValues(alpha: 0.18),
     valueIndicatorColor: p.surface,
-    valueIndicatorTextStyle: Theme.of(context).textTheme.bodySmall
-        ?.copyWith(color: p.textPrimary),
+    valueIndicatorTextStyle: Theme.of(context).textTheme.bodySmall?.copyWith(color: p.textPrimary),
     thumbShape: _GlowThumbShape(glow: accent, showGlow: glow),
     trackShape: const RoundedRectSliderTrackShape(),
     rangeThumbShape: _GlowRangeThumbShape(glow: accent, showGlow: glow),
@@ -122,12 +116,7 @@ SliderThemeData _lumenSliderTheme(
   );
 }
 
-void _paintGlowThumb(
-  Canvas canvas,
-  Offset center,
-  Color glow, {
-  required bool showGlow,
-}) {
+void _paintGlowThumb(Canvas canvas, Offset center, Color glow, {required bool showGlow}) {
   if (showGlow) {
     canvas.drawCircle(
       center,
@@ -242,8 +231,7 @@ class _GlowRangeThumbShape extends RangeSliderThumbShape {
   final bool showGlow;
 
   @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
-      const Size.fromRadius(_thumbRadius);
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) => const Size.fromRadius(_thumbRadius);
 
   @override
   void paint(
@@ -251,7 +239,8 @@ class _GlowRangeThumbShape extends RangeSliderThumbShape {
     Offset center, {
     required Animation<double> activationAnimation,
     required Animation<double> enableAnimation,
-    required SliderThemeData sliderTheme, bool isDiscrete = false,
+    required SliderThemeData sliderTheme,
+    bool isDiscrete = false,
     bool isEnabled = false,
     bool? isOnTop,
     TextDirection? textDirection,

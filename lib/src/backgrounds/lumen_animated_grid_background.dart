@@ -64,10 +64,8 @@ class LumenAnimatedGridBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
-    final orbList =
-        orbs ?? (style.orbs ? _defaultOrbs(p) : const <LumenGlowOrbSpec>[]);
-    final drawPattern =
-        showGrid && style.background != LumenBackgroundKind.plain;
+    final orbList = orbs ?? (style.orbs ? _defaultOrbs(p) : const <LumenGlowOrbSpec>[]);
+    final drawPattern = showGrid && style.background != LumenBackgroundKind.plain;
     final effectiveGridColor = gridColor ?? p.primary;
     final effectiveGradient = gradient ?? p.backgroundGradient;
 
@@ -99,9 +97,7 @@ class LumenAnimatedGridBackground extends StatelessWidget {
     );
   }
 
-  static List<LumenGlowOrbSpec> _defaultOrbs(
-    LumenPalette p,
-  ) => <LumenGlowOrbSpec>[
+  static List<LumenGlowOrbSpec> _defaultOrbs(LumenPalette p) => <LumenGlowOrbSpec>[
     LumenGlowOrbSpec(color: p.primary, size: 320, top: -120, right: -80),
     LumenGlowOrbSpec(color: p.secondary, size: 360, bottom: -160, left: -100),
   ];
@@ -187,11 +183,7 @@ class _GlowOrb extends StatelessWidget {
 }
 
 class _GridPainter extends CustomPainter {
-  _GridPainter({
-    required this.spacing,
-    required this.color,
-    required this.dots,
-  });
+  _GridPainter({required this.spacing, required this.color, required this.dots});
 
   final double spacing;
   final Color color;

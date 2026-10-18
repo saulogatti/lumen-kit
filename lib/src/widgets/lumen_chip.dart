@@ -52,9 +52,7 @@ class LumenChip extends StatelessWidget {
     final accent = accentColor ?? p.primary;
     final radius = s.radius(20);
     final fg = selected ? accent : p.textSecondary;
-    final leading = selected && showCheckmark
-        ? Icons.check_rounded
-        : icon;
+    final leading = selected && showCheckmark ? Icons.check_rounded : icon;
 
     return LumenPressable(
       onTap: onSelected == null ? null : () => onSelected!(!selected),
@@ -70,9 +68,7 @@ class LumenChip extends StatelessWidget {
               ? accent.withValues(alpha: 0.16)
               : p.surface.withValues(alpha: s.surfaceAlpha(0.5)),
           border: s.borderAll(
-            color: selected
-                ? accent.withValues(alpha: 0.8)
-                : accent.withValues(alpha: 0.35),
+            color: selected ? accent.withValues(alpha: 0.8) : accent.withValues(alpha: 0.35),
             width: 1.2,
           ),
           boxShadow: s.shadows(
@@ -94,10 +90,8 @@ class LumenChip extends StatelessWidget {
             if (leading != null) Icon(leading, size: 16, color: fg),
             Text(
               label,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: fg,
-                fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(color: fg, fontWeight: selected ? FontWeight.w600 : FontWeight.w500),
             ),
           ],
         ),
@@ -109,12 +103,7 @@ class LumenChip extends StatelessWidget {
 /// Option of [LumenChoiceChips] and [LumenFilterChips].
 class LumenChipItem<T> {
   /// Creates an option with [value] and [label].
-  const LumenChipItem({
-    required this.value,
-    required this.label,
-    this.icon,
-    this.enabled = true,
-  });
+  const LumenChipItem({required this.value, required this.label, this.icon, this.enabled = true});
 
   /// Option value.
   final T value;

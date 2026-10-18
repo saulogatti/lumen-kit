@@ -5,9 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenRangeSlider arrasta os thumbs e informa o intervalo', (
-    tester,
-  ) async {
+  testWidgets('LumenRangeSlider arrasta os thumbs e informa o intervalo', (tester) async {
     var values = const RangeValues(20, 80);
     RangeValues? ended;
     await tester.pumpWidget(
@@ -41,35 +39,24 @@ void main() {
     expect(ended, values);
   });
 
-  testWidgets('valores fora do intervalo são limitados e null desabilita', (
-    tester,
-  ) async {
+  testWidgets('valores fora do intervalo são limitados e null desabilita', (tester) async {
     await pumpBare(
       tester,
       const SizedBox(
         width: 300,
-        child: LumenRangeSlider(
-          values: RangeValues(-10, 150),
-          max: 100,
-          onChanged: null,
-        ),
+        child: LumenRangeSlider(values: RangeValues(-10, 150), max: 100, onChanged: null),
       ),
     );
     final slider = tester.widget<RangeSlider>(find.byType(RangeSlider));
     expect(slider.values, const RangeValues(0, 100));
     expect(slider.onChanged, isNull);
     final dim = tester.widget<Opacity>(
-      find.ancestor(
-        of: find.byType(RangeSlider),
-        matching: find.byType(Opacity),
-      ),
+      find.ancestor(of: find.byType(RangeSlider), matching: find.byType(Opacity)),
     );
     expect(dim.opacity, kLumenDisabledOpacity);
   });
 
-  testWidgets('LumenRangeSlider usa o accent do tema nos trilhos', (
-    tester,
-  ) async {
+  testWidgets('LumenRangeSlider usa o accent do tema nos trilhos', (tester) async {
     const teal = Color(0xFF00BFA5);
     await pumpBare(
       tester,
@@ -77,10 +64,7 @@ void main() {
         palette: LumenPalette.fromSeed(primary: teal),
         child: SizedBox(
           width: 300,
-          child: LumenRangeSlider(
-            values: const RangeValues(0.2, 0.6),
-            onChanged: (_) {},
-          ),
+          child: LumenRangeSlider(values: const RangeValues(0.2, 0.6), onChanged: (_) {}),
         ),
       ),
     );

@@ -5,9 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenEmptyState mostra o CTA só com onPressed', (
-    tester,
-  ) async {
+  testWidgets('LumenEmptyState mostra o CTA só com onPressed', (tester) async {
     var taps = 0;
     await pumpBare(
       tester,
@@ -25,10 +23,7 @@ void main() {
     await tester.pump();
     expect(taps, 1);
 
-    await pumpBare(
-      tester,
-      const LumenEmptyState(title: 'Nada por aqui', actionLabel: 'Atualizar'),
-    );
+    await pumpBare(tester, const LumenEmptyState(title: 'Nada por aqui', actionLabel: 'Atualizar'));
     expect(find.text('Atualizar'), findsNothing);
   });
 }

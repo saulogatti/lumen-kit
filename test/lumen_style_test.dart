@@ -10,15 +10,12 @@ void main() {
       expect(out!.first.color, _glow.first.color);
     });
 
-    test(
-      'elevation troca glow por sombra neutra e descarta glows pequenos',
-      () {
-        final out = LumenStyle.flat.shadows(_glow);
-        expect(out, hasLength(1));
-        expect(out!.single.color.r, 0);
-        expect(out.single.offset.dy, greaterThan(0));
-      },
-    );
+    test('elevation troca glow por sombra neutra e descarta glows pequenos', () {
+      final out = LumenStyle.flat.shadows(_glow);
+      expect(out, hasLength(1));
+      expect(out!.single.color.r, 0);
+      expect(out.single.offset.dy, greaterThan(0));
+    });
 
     test('hard vira sombra sem blur deslocada', () {
       final s = LumenStyle.brutal.shadows(_glow)!.single;
@@ -27,16 +24,11 @@ void main() {
     });
 
     test('none remove as sombras', () {
-      expect(
-        LumenStyle.neon.copyWith(shadow: LumenShadowKind.none).shadows(_glow),
-        isNull,
-      );
+      expect(LumenStyle.neon.copyWith(shadow: LumenShadowKind.none).shadows(_glow), isNull);
     });
 
     test('fill vira cor sólida quando gradients é falso', () {
-      const g = LinearGradient(
-        colors: <Color>[Color(0xFF111111), Color(0xFF222222)],
-      );
+      const g = LinearGradient(colors: <Color>[Color(0xFF111111), Color(0xFF222222)]);
       expect(LumenStyle.neon.fill(g), g);
       expect((LumenStyle.flat.fill(g)! as LinearGradient).colors, <Color>[
         const Color(0xFF111111),
@@ -52,9 +44,7 @@ void main() {
   });
 
   for (final e in LumenStyle.presets.entries) {
-    testWidgets('estilo ${e.key} renderiza o kit sem erros', (
-      tester,
-    ) async {
+    testWidgets('estilo ${e.key} renderiza o kit sem erros', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           theme: AppTheme.fromPreset(LumenPreset.matrix, style: e.value),
@@ -71,10 +61,7 @@ void main() {
                   LumenSlider(value: 0.4, onChanged: (_) {}),
                   const LumenLinearProgress(value: 0.5),
                   const LumenCircularProgress(value: 0.5),
-                  const LumenStatusChip(
-                    label: 'ok',
-                    tone: LumenStatusTone.success,
-                  ),
+                  const LumenStatusChip(label: 'ok', tone: LumenStatusTone.success),
                   LumenListTile(title: 'tile', selected: true, onTap: () {}),
                 ],
               ),

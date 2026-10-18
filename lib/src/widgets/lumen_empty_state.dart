@@ -57,15 +57,13 @@ class LumenEmptyState extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium
-                ?.copyWith(color: p.textPrimary),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
           ),
           if (message != null)
             Text(
               message!,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium
-                  ?.copyWith(color: p.textSecondary),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textSecondary),
             ),
           if (showAction) ...<Widget>[
             const SizedBox(height: 8),
