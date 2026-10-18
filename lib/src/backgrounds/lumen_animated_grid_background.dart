@@ -186,8 +186,10 @@ class _GridPainter extends CustomPainter {
   final double spacing;
 
   final Color color;
+
   final bool dots;
-  _GridPainter({required this.spacing, required this.color, required this.dots});
+
+  const _GridPainter({required this.spacing, required this.color, required this.dots});
 
   @override
   void paint(Canvas canvas, Size size) {

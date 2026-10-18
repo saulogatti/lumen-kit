@@ -158,7 +158,7 @@ class _LumenTextFieldState extends State<LumenTextField> {
       inputFormatters: widget.inputFormatters,
       autofillHints: widget.autofillHints,
       cursorColor: accent,
-      style: Theme.of(context).textTheme.titleMedium,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
       decoration: LumenDecorations.input(
         p,
         style,

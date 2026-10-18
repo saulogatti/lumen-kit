@@ -74,7 +74,7 @@ class _LumenSearchBarState extends State<LumenSearchBar> {
       autofocus: widget.autofocus,
       onChanged: _handleChanged,
       onSubmitted: widget.onSubmitted,
-      style: Theme.of(context).textTheme.titleMedium,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
       textInputAction: TextInputAction.search,
       decoration: LumenDecorations.input(
         p,

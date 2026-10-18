@@ -64,6 +64,32 @@ void main() {
     expect(find.text('salvo'), findsNothing);
   });
 
+  testWidgets('showLumenToast completa se o Overlay sai da árvore no meio', (tester) async {
+    late BuildContext ctx;
+    await tester.pumpWidget(
+      _app(
+        Builder(
+          builder: (c) {
+            ctx = c;
+            return const SizedBox();
+          },
+        ),
+      ),
+    );
+
+    var done = false;
+    unawaited(showLumenToast(context: ctx, message: 'salvo').then((_) => done = true));
+    await tester.pump();
+    expect(find.text('salvo'), findsOneWidget);
+
+    // Troca o app inteiro: o Overlay (e o toast) são descartados antes do
+    // timer, e a Future não pode ficar pendente para sempre.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
+    expect(done, isTrue);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('ação do LumenSnackBar executa e fecha o snackbar', (tester) async {
     late BuildContext ctx;
     await tester.pumpWidget(

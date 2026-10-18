@@ -85,7 +85,7 @@ class LumenDropdown<T> extends StatelessWidget {
       autovalidateMode: autovalidateMode,
       dropdownColor: p.surface,
       iconEnabledColor: accent,
-      style: Theme.of(context).textTheme.titleMedium,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
       isExpanded: true,
       borderRadius: style.radius(12),
       hint: hint == null ? null : Text(hint!, style: TextStyle(color: p.textMuted)),
