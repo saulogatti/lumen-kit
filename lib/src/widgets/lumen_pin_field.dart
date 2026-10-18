@@ -87,9 +87,7 @@ class _LumenPinFieldState extends State<LumenPinField> {
                 for (int i = 0; i < widget.length; i++)
                   Expanded(
                     child: _PinCell(
-                      char: i < text.length
-                          ? (widget.obscure ? '•' : text[i])
-                          : '',
+                      char: i < text.length ? (widget.obscure ? '•' : text[i]) : '',
                       active: _enabled && _focus.hasFocus && i == cursor,
                       accent: accent,
                       palette: p,
@@ -113,10 +111,7 @@ class _LumenPinFieldState extends State<LumenPinField> {
                     maxLength: widget.length,
                     showCursor: false,
                     enableInteractiveSelection: _enabled,
-                    style: const TextStyle(
-                      color: Color(0x00000000),
-                      fontSize: 1,
-                    ),
+                    style: const TextStyle(color: Color(0x00000000), fontSize: 1),
                     decoration: const InputDecoration(
                       counterText: '',
                       border: InputBorder.none,
@@ -179,8 +174,7 @@ class _LumenPinFieldState extends State<LumenPinField> {
         selection: TextSelection.collapsed(offset: next.length),
       );
     }
-    final justCompleted =
-        next.length == widget.length && _previousLength != widget.length;
+    final justCompleted = next.length == widget.length && _previousLength != widget.length;
     _previousLength = next.length;
     if (next != widget.value) {
       widget.onChanged!(next);
@@ -237,8 +231,7 @@ class _PinCell extends StatelessWidget {
         child: Center(
           child: Text(
             char,
-            style: Theme.of(context).textTheme.titleLarge
-                ?.copyWith(color: palette.textPrimary),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: palette.textPrimary),
           ),
         ),
       ),

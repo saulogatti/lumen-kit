@@ -70,9 +70,7 @@ class LumenDivider extends StatelessWidget {
 
     final Widget line = Container(
       height: thickness,
-      decoration: BoxDecoration(
-        gradient: style.fill(LinearGradient(colors: colors)),
-      ),
+      decoration: BoxDecoration(gradient: style.fill(LinearGradient(colors: colors))),
     );
 
     if (label == null) {

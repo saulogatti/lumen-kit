@@ -5,9 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenDataTable mostra a célula e LumenTableRow toca', (
-    tester,
-  ) async {
+  testWidgets('LumenDataTable mostra a célula e LumenTableRow toca', (tester) async {
     var taps = 0;
     await pumpBare(
       tester,
@@ -22,10 +20,7 @@ void main() {
                 DataRow(cells: <DataCell>[DataCell(Text('Ada'))]),
               ],
             ),
-            LumenTableRow(
-              onTap: () => taps++,
-              cells: const <Widget>[Text('linha')],
-            ),
+            LumenTableRow(onTap: () => taps++, cells: const <Widget>[Text('linha')]),
           ],
         ),
       ),

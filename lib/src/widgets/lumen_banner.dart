@@ -80,16 +80,11 @@ class LumenBanner extends StatelessWidget {
           Expanded(
             child: Text(
               message,
-              style: Theme.of(context).textTheme.bodyMedium
-                  ?.copyWith(color: p.textPrimary),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textPrimary),
             ),
           ),
           if (showAction)
-            LumenButton.ghost(
-              label: actionLabel!,
-              onPressed: onAction,
-              accentColor: color,
-            ),
+            LumenButton.ghost(label: actionLabel!, onPressed: onAction, accentColor: color),
           if (onDismiss != null)
             LumenIconButton.ghost(
               icon: Icons.close_rounded,

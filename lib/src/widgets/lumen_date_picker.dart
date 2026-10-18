@@ -99,9 +99,7 @@ class LumenDatePicker extends StatelessWidget {
     final style = LumenStyle.of(context);
     final accent = accentColor ?? p.primary;
     final disabled = onChanged == null;
-    final text = value == null
-        ? null
-        : (format ?? _defaultFormat)(value!);
+    final text = value == null ? null : (format ?? _defaultFormat)(value!);
 
     return LumenPressable(
       borderRadius: style.radius(12),
@@ -131,8 +129,7 @@ class LumenDatePicker extends StatelessWidget {
         isEmpty: text == null,
         child: Text(
           text ?? '',
-          style: Theme.of(context).textTheme.titleMedium
-              ?.copyWith(color: p.textPrimary),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
         ),
       ),
     );

@@ -13,8 +13,7 @@ class AppTheme {
   static ThemeData get dark => fromPalette(LumenPalette.defaultDark());
 
   /// Light theme using the default light palette.
-  static ThemeData get light =>
-      fromPalette(LumenPalette.light(), brightness: Brightness.light);
+  static ThemeData get light => fromPalette(LumenPalette.light(), brightness: Brightness.light);
 
   /// Shortcut to change the colors of the entire kit from one or two colors.
   ///
@@ -88,17 +87,9 @@ class AppTheme {
         fontWeight: FontWeight.w600,
         letterSpacing: 0.4,
       ),
-      titleMedium: TextStyle(
-        color: p.textPrimary,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-      ),
+      titleMedium: TextStyle(color: p.textPrimary, fontSize: 16, fontWeight: FontWeight.w500),
       bodyMedium: TextStyle(color: p.textSecondary, fontSize: 14, height: 1.45),
-      bodySmall: TextStyle(
-        color: p.textMuted,
-        fontSize: 12,
-        letterSpacing: 0.6,
-      ),
+      bodySmall: TextStyle(color: p.textMuted, fontSize: 12, letterSpacing: 0.6),
       labelLarge: TextStyle(
         color: p.primary,
         fontSize: 12,
@@ -121,9 +112,7 @@ class AppTheme {
       ),
       iconTheme: IconThemeData(color: p.primary),
       dividerColor: p.surfaceOutline,
-      extensions: <ThemeExtension<dynamic>>[
-        LumenThemeExt(palette: p, style: style),
-      ],
+      extensions: <ThemeExtension<dynamic>>[LumenThemeExt(palette: p, style: style)],
     );
   }
 }

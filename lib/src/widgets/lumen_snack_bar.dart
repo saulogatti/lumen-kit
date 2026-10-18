@@ -44,17 +44,14 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showLumenSnackBar({
             Expanded(
               child: Text(
                 message,
-                style: Theme.of(context).textTheme.bodyMedium
-                    ?.copyWith(color: p.textPrimary),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textPrimary),
               ),
             ),
             if (action != null)
               TextButton(
                 // Igual ao SnackBarAction: a ação também fecha o snackbar.
                 onPressed: () {
-                  messenger.hideCurrentSnackBar(
-                    reason: SnackBarClosedReason.action,
-                  );
+                  messenger.hideCurrentSnackBar(reason: SnackBarClosedReason.action);
                   action.onPressed();
                 },
                 style: TextButton.styleFrom(foregroundColor: accent),

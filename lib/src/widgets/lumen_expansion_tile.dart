@@ -54,13 +54,8 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
     value: _expanded ? 1 : 0,
   );
   // Criadas uma vez: criar no build vazava um listener por frame.
-  late final CurvedAnimation _size = CurvedAnimation(
-    parent: _ctrl,
-    curve: Curves.easeOut,
-  );
-  late final Animation<double> _turns = _ctrl.drive(
-    Tween<double>(begin: 0, end: 0.5),
-  );
+  late final CurvedAnimation _size = CurvedAnimation(parent: _ctrl, curve: Curves.easeOut);
+  late final Animation<double> _turns = _ctrl.drive(Tween<double>(begin: 0, end: 0.5));
 
   @override
   void didChangeDependencies() {
@@ -97,18 +92,12 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
         borderRadius: style.radius(14),
         color: p.surface.withValues(alpha: style.surfaceAlpha(0.55)),
         border: style.borderAll(
-          color: _expanded
-              ? accent.withValues(alpha: 0.6)
-              : p.surfaceOutline.outlineAlpha(0.45),
+          color: _expanded ? accent.withValues(alpha: 0.6) : p.surfaceOutline.outlineAlpha(0.45),
         ),
         boxShadow: style.shadows(
           _expanded
               ? <BoxShadow>[
-                  BoxShadow(
-                    color: accent.withValues(alpha: 0.2),
-                    blurRadius: 14,
-                    spreadRadius: -3,
-                  ),
+                  BoxShadow(color: accent.withValues(alpha: 0.2), blurRadius: 14, spreadRadius: -3),
                 ]
               : null,
         ),
@@ -122,10 +111,7 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
               onTap: _toggle,
               borderRadius: style.radius(14),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 child: Row(
                   spacing: 12,
                   children: <Widget>[
@@ -137,20 +123,14 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
                           Text(
                             widget.title,
                             style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(
-                                  color: p.textPrimary,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                ?.copyWith(color: p.textPrimary, fontWeight: FontWeight.w600),
                           ),
                           if (widget.subtitle case final String subtitle)
                             Padding(
                               padding: const EdgeInsets.only(top: 2),
                               child: Text(
                                 subtitle,
-                                style: TextStyle(
-                                  color: p.textMuted,
-                                  fontSize: 12,
-                                ),
+                                style: TextStyle(color: p.textMuted, fontSize: 12),
                               ),
                             ),
                         ],

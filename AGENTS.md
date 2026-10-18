@@ -40,12 +40,13 @@ gallery screenshots: `flutter build web --no-web-resources-cdn` on
 `example/` and Playwright with `locale: 'en-US'` (without locale the app breaks with
 "Incorrect locale information").
 
-`analysis_options.yaml` is very strict (`strict-casts`, `strict-inference`,
-`always_put_control_body_on_new_line`, `prefer_relative_imports`,
-`specify_nonobvious_*`…). `flutter analyze` with zero issues is the default
-repo.
+`analysis_options.yaml` is very strict (`always_use_package_imports`,
+`directives_ordering`, `strict_top_level_inference`, `specify_nonobvious_*`,
+several inference/null-safety checks promoted to `error`…). Imports inside
+`lib/` are package imports (`package:lumen_kit/src/...`), never relative.
+`flutter analyze` with zero issues is the default repo.
 
-Formatting: `dart format` in the 80-column pattern (without `page_width` in the
+Formatting: `dart format` at 100 columns (`formatter: page_width: 100` in
 `analysis_options.yaml`). The entire repo is already formatted, so
 `dart format lib test example/lib` should not generate diff other than yours.
 
@@ -56,9 +57,10 @@ lib/
   lumen_kit.dart          # import completo: components.dart + AppTheme + AppColors
   components.dart       # só widgets + paleta/estilo, sem AppTheme/AppColors
   src/
-    theme/              # LumenPalette, LumenPreset, LumenThemeExt, LumenScope, LumenStyle, AppTheme, AppColors
+    theme/              # lumen_palette.dart (LumenPalette, LumenPreset, LumenScope, LumenThemeExt),
+                        #   lumen_style.dart, app_theme.dart, app_colors.dart
     foundation/         # peças reaproveitáveis: LumenPressable, LumenDecorations,
-                        #   LumenActionContent, LumenLabeled, LumenMotion + kLumen* tokens
+                        #   LumenActionContent, LumenLabeled; lumen_tokens.dart (LumenMotion + kLumen* tokens)
     backgrounds/        # LumenAnimatedGridBackground, LumenGlowOrbSpec
     widgets/            # um arquivo por widget (ou família: lumen_tabs.dart tem LumenTabs + LumenSegmentedControl)
 test/

@@ -3,9 +3,7 @@ import 'package:lumen_kit/components.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() {
-  testWidgets('LumenAppBar mostra título, subtítulo e a ação', (
-    tester,
-  ) async {
+  testWidgets('LumenAppBar mostra título, subtítulo e a ação', (tester) async {
     var taps = 0;
     await tester.pumpWidget(
       MaterialApp(
@@ -14,10 +12,7 @@ void main() {
             title: 'Painel',
             subtitle: 'agora',
             actions: <Widget>[
-              IconButton(
-                onPressed: () => taps++,
-                icon: const Icon(Icons.settings),
-              ),
+              IconButton(onPressed: () => taps++, icon: const Icon(Icons.settings)),
             ],
           ),
           body: const SizedBox.shrink(),

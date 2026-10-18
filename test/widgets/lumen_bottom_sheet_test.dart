@@ -7,9 +7,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('showLumenBottomSheet abre e devolve o valor ao fechar', (
-    tester,
-  ) async {
+  testWidgets('showLumenBottomSheet abre e devolve o valor ao fechar', (tester) async {
     String? result;
     await pumpBare(
       tester,

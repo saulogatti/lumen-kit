@@ -106,9 +106,7 @@ class LumenIconButton extends StatelessWidget {
       LumenIconButtonShape.rounded => style.radius(12),
     };
 
-    final fg = variant == LumenIconButtonVariant.solid
-        ? palette.backgroundDeep
-        : accent;
+    final fg = variant == LumenIconButtonVariant.solid ? palette.backgroundDeep : accent;
 
     final Widget content = Center(
       child: LumenActionContent(
@@ -131,9 +129,7 @@ class LumenIconButton extends StatelessWidget {
             enabled
                 ? <BoxShadow>[
                     BoxShadow(
-                      color: (accentColor ?? palette.secondary).withValues(
-                        alpha: 0.35,
-                      ),
+                      color: (accentColor ?? palette.secondary).withValues(alpha: 0.35),
                       blurRadius: 16,
                       offset: const Offset(0, 5),
                     ),
@@ -149,10 +145,7 @@ class LumenIconButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: palette.surface.withValues(alpha: style.surfaceAlpha(0.35)),
           borderRadius: radius,
-          border: style.borderAll(
-            color: accent.withValues(alpha: 0.85),
-            width: 1.2,
-          ),
+          border: style.borderAll(color: accent.withValues(alpha: 0.85), width: 1.2),
           boxShadow: style.shadows(
             enabled
                 ? <BoxShadow>[
@@ -167,11 +160,7 @@ class LumenIconButton extends StatelessWidget {
         ),
         child: content,
       ),
-      LumenIconButtonVariant.ghost => SizedBox(
-        width: size,
-        height: size,
-        child: content,
-      ),
+      LumenIconButtonVariant.ghost => SizedBox(width: size, height: size, child: content),
     };
 
     final Widget interactive = LumenPressable(
@@ -183,9 +172,7 @@ class LumenIconButton extends StatelessWidget {
       child: body,
     );
 
-    return tooltip == null
-        ? interactive
-        : Tooltip(message: tooltip, child: interactive);
+    return tooltip == null ? interactive : Tooltip(message: tooltip, child: interactive);
   }
 }
 
