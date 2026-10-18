@@ -54,12 +54,7 @@ class LumenDrawer extends StatelessWidget {
               p.backgroundDeep.withValues(alpha: 0.98),
             ),
           ),
-          border: Border(
-            right: BorderSide(
-              color: accent.withValues(alpha: 0.55),
-              width: 1.2,
-            ),
-          ),
+          border: Border(right: BorderSide(color: accent.withValues(alpha: 0.55), width: 1.2)),
           boxShadow: style.shadows(<BoxShadow>[
             BoxShadow(
               color: accent.withValues(alpha: 0.25),
@@ -74,10 +69,7 @@ class LumenDrawer extends StatelessWidget {
               ?header,
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   children: children,
                 ),
               ),

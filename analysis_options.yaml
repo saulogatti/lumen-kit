@@ -21,7 +21,7 @@ analyzer:
     deprecated_member_use: warning
     null_argument_to_non_null_type: error
     null_check_on_nullable_type_parameter: error
-    public_member_api_docs: ignore
+    public_member_api_docs: error
     lines_longer_than_80_chars: ignore
     avoid_catches_without_on_clauses: ignore
     no_runtimetype_tostring: ignore
@@ -31,14 +31,14 @@ analyzer:
     prefer_constructors_over_static_methods: ignore
     always_put_control_body_on_new_line: ignore
     unnecessary_null_checks: warning
-    avoid_slow_async_io: ignore
-    avoid_catching_errors: ignore
-    discarded_futures: ignore
+    avoid_slow_async_io: warning
+    avoid_catching_errors: warning
+    discarded_futures: warning
     unsafe_variance: ignore
     avoid_classes_with_only_static_members: ignore
-    document_ignores: ignore
+    document_ignores: warning
     matching_super_parameters: warning
-    avoid_futureor_void: ignore
+    avoid_futureor_void: warning
     specify_nonobvious_property_types: warning
     parameter_assignments: error
     todo: info
@@ -51,7 +51,7 @@ analyzer:
     avoid_null_checks_in_equality_operators: error
     new_constructor_dot_name: error
     deprecated_member_use_from_same_package: warning
-    avoid_positional_boolean_parameters: ignore
+    avoid_positional_boolean_parameters: warning
     remove_deprecations_in_breaking_versions: ignore
 linter:
   rules:
@@ -214,8 +214,9 @@ linter:
     - sized_box_for_whitespace
     - sized_box_shrink_expand
     - slash_for_doc_comments
-    - sort_unnamed_constructors_first
     - specify_nonobvious_property_types
+    - sort_unnamed_constructors_first
+    - unnecessary_primary_constructor_body
     - strict_top_level_inference
     - switch_on_type
     - test_types_in_equals

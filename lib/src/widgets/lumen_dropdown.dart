@@ -8,11 +8,7 @@ import 'package:material_ui/material_ui.dart';
 /// Maintains the type of the generic value.
 class LumenDropdownItem<T> {
   /// Creates a dropdown item with [value] and [label].
-  const LumenDropdownItem({
-    required this.value,
-    required this.label,
-    this.icon,
-  });
+  const LumenDropdownItem({required this.value, required this.label, this.icon});
 
   /// Value returned when this item is selected.
   final T value;
@@ -92,9 +88,7 @@ class LumenDropdown<T> extends StatelessWidget {
       style: Theme.of(context).textTheme.titleMedium,
       isExpanded: true,
       borderRadius: style.radius(12),
-      hint: hint == null
-          ? null
-          : Text(hint!, style: TextStyle(color: p.textMuted)),
+      hint: hint == null ? null : Text(hint!, style: TextStyle(color: p.textMuted)),
       items: <DropdownMenuItem<T>>[
         for (final LumenDropdownItem<T> it in items)
           DropdownMenuItem<T>(

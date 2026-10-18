@@ -44,12 +44,7 @@ extension LumenStatusToneColor on LumenStatusTone {
 /// Compact chip that communicates status by color semantics.
 class LumenStatusChip extends StatelessWidget {
   /// Creates a status chip with [label] and [tone].
-  const LumenStatusChip({
-    required this.label,
-    required this.tone,
-    super.key,
-    this.icon,
-  });
+  const LumenStatusChip({required this.label, required this.tone, super.key, this.icon});
 
   /// Text displayed on the chip.
   final String label;
@@ -84,10 +79,7 @@ class LumenStatusChip extends StatelessWidget {
               height: 8,
               decoration: BoxDecoration(color: c, shape: BoxShape.circle),
             ),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(color: c),
-          ),
+          Text(label, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: c)),
         ],
       ),
     );

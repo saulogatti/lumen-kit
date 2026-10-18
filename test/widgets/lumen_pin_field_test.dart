@@ -5,18 +5,12 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenPinField digita, cola e completa', (
-    tester,
-  ) async {
+  testWidgets('LumenPinField digita, cola e completa', (tester) async {
     var value = '';
     String? done;
     await pumpBare(
       tester,
-      LumenPinField(
-        value: value,
-        onChanged: (v) => value = v,
-        onCompleted: (v) => done = v,
-      ),
+      LumenPinField(value: value, onChanged: (v) => value = v, onCompleted: (v) => done = v),
     );
     await tester.enterText(find.byType(TextField), '12');
     await tester.pump();
@@ -28,9 +22,7 @@ void main() {
     expect(done, '123456');
   });
 
-  testWidgets('LumenPinField desabilitado não aceita texto', (
-    tester,
-  ) async {
+  testWidgets('LumenPinField desabilitado não aceita texto', (tester) async {
     await pumpBare(tester, const LumenPinField(value: '1'));
     final field = tester.widget<TextField>(find.byType(TextField));
     expect(field.enabled, isFalse);

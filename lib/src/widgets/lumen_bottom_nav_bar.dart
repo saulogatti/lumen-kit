@@ -56,9 +56,7 @@ class LumenBottomNavBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
-        border: Border(
-          top: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5)),
-        ),
+        border: Border(top: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5))),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: SafeArea(
@@ -74,10 +72,7 @@ class LumenBottomNavBar extends StatelessWidget {
                 borderRadius: style.radius(20),
                 child: AnimatedContainer(
                   duration: LumenMotion.duration(context, kLumenMediumDuration),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 6,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                   decoration: LumenDecorations.selectable(
                     p,
                     style,
@@ -144,17 +139,12 @@ class LumenNavRail extends StatelessWidget {
       width: 84,
       decoration: BoxDecoration(
         color: p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
-        border: Border(
-          right: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5)),
-        ),
+        border: Border(right: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5))),
       ),
       child: SafeArea(
         child: Column(
           children: <Widget>[
-            if (leading case final Widget leading) ...<Widget>[
-              const SizedBox(height: 12),
-              leading,
-            ],
+            if (leading case final Widget leading) ...<Widget>[const SizedBox(height: 12), leading],
             const SizedBox(height: 12),
             Expanded(
               child: ListView.builder(
@@ -170,10 +160,7 @@ class LumenNavRail extends StatelessWidget {
                       selected: selected,
                       borderRadius: style.radius(16),
                       child: AnimatedContainer(
-                        duration: LumenMotion.duration(
-                          context,
-                          kLumenMediumDuration,
-                        ),
+                        duration: LumenMotion.duration(context, kLumenMediumDuration),
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: LumenDecorations.selectable(
                           p,
@@ -183,11 +170,7 @@ class LumenNavRail extends StatelessWidget {
                           radius: 16,
                           glow: false,
                         ),
-                        child: _NavItemContent(
-                          item: it,
-                          selected: selected,
-                          accent: accent,
-                        ),
+                        child: _NavItemContent(item: it, selected: selected, accent: accent),
                       ),
                     ),
                   );
@@ -224,11 +207,7 @@ class _NavItemContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = LumenThemeExt.of(context).palette;
-    final Widget icon = Icon(
-      item.icon,
-      color: selected ? accent : p.textMuted,
-      size: iconSize,
-    );
+    final Widget icon = Icon(item.icon, color: selected ? accent : p.textMuted, size: iconSize);
     return Column(
       mainAxisSize: MainAxisSize.min,
       spacing: 4,

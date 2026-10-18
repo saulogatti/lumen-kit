@@ -11,19 +11,16 @@ const List<LumenChipItem<String>> _sizes = <LumenChipItem<String>>[
 ];
 
 void main() {
-  testWidgets('LumenChoiceChips marca um valor por vez', (
-    tester,
-  ) async {
+  testWidgets('LumenChoiceChips marca um valor por vez', (tester) async {
     String? value = 'p';
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (context, setState) =>
-              LumenChoiceChips<String>(
-                items: _sizes,
-                value: value,
-                onChanged: (v) => setState(() => value = v),
-              ),
+          builder: (context, setState) => LumenChoiceChips<String>(
+            items: _sizes,
+            value: value,
+            onChanged: (v) => setState(() => value = v),
+          ),
         ),
       ),
     );
@@ -43,9 +40,7 @@ void main() {
     expect(value, 'm');
   });
 
-  testWidgets('allowDeselect manda null ao tocar no marcado', (
-    tester,
-  ) async {
+  testWidgets('allowDeselect manda null ao tocar no marcado', (tester) async {
     final calls = <String?>[];
     await pumpBare(
       tester,
@@ -60,20 +55,17 @@ void main() {
     expect(calls, <String?>[null]);
   });
 
-  testWidgets('LumenFilterChips alterna vários valores e mostra o check', (
-    tester,
-  ) async {
+  testWidgets('LumenFilterChips alterna vários valores e mostra o check', (tester) async {
     var values = <String>{'p'};
     final original = values;
     await tester.pumpWidget(
       bareApp(
         StatefulBuilder(
-          builder: (context, setState) =>
-              LumenFilterChips<String>(
-                items: _sizes,
-                values: values,
-                onChanged: (v) => setState(() => values = v),
-              ),
+          builder: (context, setState) => LumenFilterChips<String>(
+            items: _sizes,
+            values: values,
+            onChanged: (v) => setState(() => values = v),
+          ),
         ),
       ),
     );
@@ -90,14 +82,9 @@ void main() {
     expect(original, <String>{'p'}, reason: 'não muta o set recebido');
   });
 
-  testWidgets('LumenChip anuncia seleção e usa o accent quando marcado', (
-    tester,
-  ) async {
+  testWidgets('LumenChip anuncia seleção e usa o accent quando marcado', (tester) async {
     final handle = tester.ensureSemantics();
-    await pumpBare(
-      tester,
-      LumenChip(label: 'Promoção', selected: true, onSelected: (_) {}),
-    );
+    await pumpBare(tester, LumenChip(label: 'Promoção', selected: true, onSelected: (_) {}));
     expect(
       tester.getSemantics(find.byType(LumenChip)),
       isSemantics(
@@ -108,10 +95,7 @@ void main() {
         hasTapAction: true,
       ),
     );
-    expect(
-      tester.widget<Text>(find.text('Promoção')).style?.color,
-      LumenPalette.light().primary,
-    );
+    expect(tester.widget<Text>(find.text('Promoção')).style?.color, LumenPalette.light().primary);
     handle.dispose();
   });
 }

@@ -9,18 +9,6 @@ import 'package:material_ui/material_ui.dart';
 /// You get what to show and what to do when playing — you don't decide anything
 /// for yourself.
 class LumenNavigationCard extends StatefulWidget {
-  /// Creates a navigation card with visual highlighting and hover.
-  const LumenNavigationCard({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.accent,
-    required this.onTap,
-    super.key,
-    this.tag,
-    this.actionLabel = 'ACESSAR MÓDULO',
-  });
-
   /// Title of the module or target.
   final String title;
 
@@ -42,8 +30,38 @@ class LumenNavigationCard extends StatefulWidget {
   /// Call text at the footer of the card.
   final String actionLabel;
 
+  /// Creates a navigation card with visual highlighting and hover.
+  const LumenNavigationCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.accent,
+    required this.onTap,
+    super.key,
+    this.tag,
+    this.actionLabel = 'ACESSAR MÓDULO',
+  });
+
   @override
   State<LumenNavigationCard> createState() => _LumenNavigationCardState();
+}
+
+class _IconBadge extends StatelessWidget {
+  final IconData icon;
+
+  final Color accent;
+  const _IconBadge({required this.icon, required this.accent});
+
+  @override
+  Widget build(BuildContext context) {
+    final style = LumenStyle.of(context);
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: LumenDecorations.iconBox(style, accent: accent, radius: 14),
+      child: Icon(icon, color: accent, size: 28),
+    );
+  }
 }
 
 class _LumenNavigationCardState extends State<LumenNavigationCard> {
@@ -57,7 +75,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
     final style = LumenStyle.of(context);
 
     // Hover e foco de teclado levantam o card do mesmo jeito.
-    void highlight(bool on) {
+    void highlight({required bool on}) {
       if (_hovering != on) {
         setState(() => _hovering = on);
       }
@@ -66,8 +84,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
     return AnimatedContainer(
       duration: LumenMotion.duration(context, kLumenMediumDuration),
       curve: Curves.easeOut,
-      transform: Matrix4.identity()
-        ..translateByDouble(0, _hovering ? -4.0 : 0.0, 0, 1),
+      transform: Matrix4.identity()..translateByDouble(0, _hovering ? -4.0 : 0.0, 0, 1),
       decoration: BoxDecoration(
         borderRadius: style.radius(20),
         boxShadow: style.shadows(<BoxShadow>[
@@ -84,8 +101,8 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
         borderRadius: style.radius(20),
         child: InkWell(
           onTap: widget.onTap,
-          onHover: highlight,
-          onFocusChange: highlight,
+          onHover: (on) => highlight(on: on),
+          onFocusChange: (on) => highlight(on: on),
           borderRadius: style.radius(20),
           child: Container(
             padding: const EdgeInsets.all(24),
@@ -109,8 +126,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
                   children: <Widget>[
                     _IconBadge(icon: widget.icon, accent: accent),
                     const Spacer(),
-                    if (widget.tag case final String tag)
-                      _Tag(label: tag, accent: accent),
+                    if (widget.tag case final String tag) _Tag(label: tag, accent: accent),
                   ],
                 ),
                 const SizedBox(height: 28),
@@ -121,10 +137,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
                 Row(
                   spacing: 8,
                   children: <Widget>[
-                    Text(
-                      widget.actionLabel,
-                      style: text.labelLarge?.copyWith(color: accent),
-                    ),
+                    Text(widget.actionLabel, style: text.labelLarge?.copyWith(color: accent)),
                     Icon(Icons.arrow_forward_rounded, size: 16, color: accent),
                   ],
                 ),
@@ -137,29 +150,11 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
   }
 }
 
-class _IconBadge extends StatelessWidget {
-  const _IconBadge({required this.icon, required this.accent});
-
-  final IconData icon;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = LumenStyle.of(context);
-    return Container(
-      width: 56,
-      height: 56,
-      decoration: LumenDecorations.iconBox(style, accent: accent, radius: 14),
-      child: Icon(icon, color: accent, size: 28),
-    );
-  }
-}
-
 class _Tag extends StatelessWidget {
-  const _Tag({required this.label, required this.accent});
-
   final String label;
+
   final Color accent;
+  const _Tag({required this.label, required this.accent});
 
   @override
   Widget build(BuildContext context) {
@@ -171,10 +166,7 @@ class _Tag extends StatelessWidget {
         borderRadius: style.radius(999),
         border: style.borderAll(color: accent.withValues(alpha: 0.4)),
       ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: accent),
-      ),
+      child: Text(label, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: accent)),
     );
   }
 }

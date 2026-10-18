@@ -22,7 +22,13 @@ class LumenPalette {
     required this.surface,
     required this.surfaceOutline,
     required this.surfaceHighlight,
-    required this.textPrimary, required this.textSecondary, required this.textMuted, required this.success, required this.warning, required this.danger, Color? primary,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.textMuted,
+    required this.success,
+    required this.warning,
+    required this.danger,
+    Color? primary,
     Color? secondary,
     Color? tertiary,
     this._backgroundGradient,
@@ -80,20 +86,13 @@ class LumenPalette {
     Brightness brightness = Brightness.dark,
   }) {
     final p = HSLColor.fromColor(primary);
-    final s = secondary != null
-        ? HSLColor.fromColor(secondary)
-        : p.withHue((p.hue + 150) % 360);
+    final s = secondary != null ? HSLColor.fromColor(secondary) : p.withHue((p.hue + 150) % 360);
     final sec = s.toColor();
     // Meio do caminho pelo arco mais curto do círculo de matiz: laranja +
     // rosa dá vermelho, não ciano.
     final delta = ((s.hue - p.hue + 540) % 360) - 180;
     final ter =
-        tertiary ??
-        HSLColor.lerp(
-          p,
-          s,
-          0.5,
-        )!.withHue((p.hue + delta / 2 + 360) % 360).toColor();
+        tertiary ?? HSLColor.lerp(p, s, 0.5)!.withHue((p.hue + delta / 2 + 360) % 360).toColor();
 
     // Fundos e textos herdam o matiz do accent intermediário, como o default
     // (azul escuro sob cyan + magenta).
@@ -111,12 +110,8 @@ class LumenPalette {
       // Um primary a 25% faria outlineAlpha pedir 0.6–0.9 e pintar uma
       // borda quase opaca. No escuro o cyan a 20% continua o token que os
       // widgets tratam como alpha absoluto.
-      surfaceOutline: dark
-          ? primary.withValues(alpha: 0.2)
-          : const Color(0x15000000),
-      surfaceHighlight: dark
-          ? primary.withValues(alpha: 0.1)
-          : const Color(0x08000000),
+      surfaceOutline: dark ? primary.withValues(alpha: 0.2) : const Color(0x15000000),
+      surfaceHighlight: dark ? primary.withValues(alpha: 0.1) : const Color(0x08000000),
       primary: primary,
       secondary: sec,
       tertiary: ter,
@@ -258,11 +253,8 @@ class LumenPalette {
     secondary ??= accentMagenta;
     tertiary ??= accentBlue;
     final backgroundChanged =
-        backgroundDeep != null ||
-        backgroundMid != null ||
-        backgroundSoft != null;
-    final accentChanged =
-        primary != null || secondary != null || tertiary != null;
+        backgroundDeep != null || backgroundMid != null || backgroundSoft != null;
+    final accentChanged = primary != null || secondary != null || tertiary != null;
     return LumenPalette(
       backgroundDeep: backgroundDeep ?? this.backgroundDeep,
       backgroundMid: backgroundMid ?? this.backgroundMid,
@@ -279,11 +271,8 @@ class LumenPalette {
       success: success ?? this.success,
       warning: warning ?? this.warning,
       danger: danger ?? this.danger,
-      backgroundGradient:
-          backgroundGradient ??
-          (backgroundChanged ? null : _backgroundGradient),
-      accentGradient:
-          accentGradient ?? (accentChanged ? null : _accentGradient),
+      backgroundGradient: backgroundGradient ?? (backgroundChanged ? null : _backgroundGradient),
+      accentGradient: accentGradient ?? (accentChanged ? null : _accentGradient),
     );
   }
 
@@ -306,16 +295,8 @@ class LumenPalette {
       success: c(a.success, b.success),
       warning: c(a.warning, b.warning),
       danger: c(a.danger, b.danger),
-      backgroundGradient: LinearGradient.lerp(
-        a.backgroundGradient,
-        b.backgroundGradient,
-        t,
-      ),
-      accentGradient: LinearGradient.lerp(
-        a.accentGradient,
-        b.accentGradient,
-        t,
-      ),
+      backgroundGradient: LinearGradient.lerp(a.backgroundGradient, b.backgroundGradient, t),
+      accentGradient: LinearGradient.lerp(a.accentGradient, b.accentGradient, t),
     );
   }
 }
@@ -353,15 +334,9 @@ enum LumenPreset {
   /// [LumenPalette.light].
   LumenPalette palette({Brightness brightness = Brightness.dark}) {
     if (this == LumenPreset.neon) {
-      return brightness == Brightness.dark
-          ? LumenPalette.defaultDark()
-          : LumenPalette.light();
+      return brightness == Brightness.dark ? LumenPalette.defaultDark() : LumenPalette.light();
     }
-    return LumenPalette.fromSeed(
-      primary: primary,
-      secondary: secondary,
-      brightness: brightness,
-    );
+    return LumenPalette.fromSeed(primary: primary, secondary: secondary, brightness: brightness);
   }
 }
 
@@ -380,7 +355,8 @@ class LumenScope extends InheritedWidget {
   /// Creates a scope with [palette] and [style] to [child].
   LumenScope({
     required LumenPalette palette,
-    required super.child, LumenStyle style = LumenStyle.neon,
+    required super.child,
+    LumenStyle style = LumenStyle.neon,
     super.key,
   }) : data = LumenThemeExt(palette: palette, style: style);
 
@@ -389,8 +365,7 @@ class LumenScope extends InheritedWidget {
 
   @override
   bool updateShouldNotify(LumenScope oldWidget) =>
-      oldWidget.data.palette != data.palette ||
-      oldWidget.data.style != data.style;
+      oldWidget.data.palette != data.palette || oldWidget.data.style != data.style;
 }
 
 /// ThemeExtension to access the palette via
@@ -400,13 +375,9 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
   /// Creates a theme extension that carries [palette] and [style].
   const LumenThemeExt({required this.palette, this.style = LumenStyle.neon});
 
-  static final LumenThemeExt _fallbackDark = LumenThemeExt(
-    palette: LumenPalette.defaultDark(),
-  );
+  static final LumenThemeExt _fallbackDark = LumenThemeExt(palette: LumenPalette.defaultDark());
 
-  static final LumenThemeExt _fallbackLight = LumenThemeExt(
-    palette: LumenPalette.light(),
-  );
+  static final LumenThemeExt _fallbackLight = LumenThemeExt(palette: LumenPalette.light());
 
   /// Palette available for widgets that read the current [ThemeData].
   final LumenPalette palette;
@@ -416,10 +387,7 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
 
   @override
   LumenThemeExt copyWith({LumenPalette? palette, LumenStyle? style}) =>
-      LumenThemeExt(
-        palette: palette ?? this.palette,
-        style: style ?? this.style,
-      );
+      LumenThemeExt(palette: palette ?? this.palette, style: style ?? this.style);
 
   @override
   LumenThemeExt lerp(ThemeExtension<LumenThemeExt>? other, double t) {
@@ -439,8 +407,7 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
   /// [LumenStyle.neon]. This way widgets work in apps that keep the own
   /// `ThemeData` and never record anything from the kit.
   static LumenThemeExt of(BuildContext context) {
-    final scope = context
-        .dependOnInheritedWidgetOfExactType<LumenScope>();
+    final scope = context.dependOnInheritedWidgetOfExactType<LumenScope>();
     if (scope != null) {
       return scope.data;
     }
@@ -461,8 +428,7 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
 extension LumenOutlineColor on Color {
   /// Applies [alpha] as an outline, preserving the clear token.
   Color outlineAlpha(double alpha) {
-    final faintNeutral =
-        HSLColor.fromColor(this).saturation < 0.15 && a < 0.35;
+    final faintNeutral = HSLColor.fromColor(this).saturation < 0.15 && a < 0.35;
     if (!faintNeutral) {
       return withValues(alpha: alpha);
     }
@@ -474,6 +440,5 @@ extension LumenOutlineColor on Color {
   /// Use on tokens that are already translucent (`textMuted`, `textSecondary`,
   /// `surfaceHighlight`). Opaque accent continues in [Color.withValues]: the
   /// requested there is an absolute alpha, and `1 * factor` would only match it.
-  Color scaleAlpha(double factor) =>
-      withValues(alpha: (a * factor).clamp(0.0, 1.0));
+  Color scaleAlpha(double factor) => withValues(alpha: (a * factor).clamp(0.0, 1.0));
 }

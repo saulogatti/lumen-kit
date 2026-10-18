@@ -5,18 +5,6 @@ import 'package:material_ui/material_ui.dart';
 /// AppBar with neon identity: transparent, with bottom gradient line and
 /// typography consistent with the theme.
 class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
-  /// Create a neon bar app compatible with [Scaffold.appBar].
-  const LumenAppBar({
-    required this.title,
-    super.key,
-    this.subtitle,
-    this.leading,
-    this.actions,
-    this.accentGradient,
-    this.height = 64,
-    this.showDivider = true,
-  });
-
   /// Main title displayed in the app bar.
   final String title;
 
@@ -40,6 +28,18 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Whether to display the bottom decorative line.
   final bool showDivider;
 
+  /// Create a neon bar app compatible with [Scaffold.appBar].
+  const LumenAppBar({
+    required this.title,
+    super.key,
+    this.subtitle,
+    this.leading,
+    this.actions,
+    this.accentGradient,
+    this.height = 64,
+    this.showDivider = true,
+  });
+
   @override
   Size get preferredSize => Size.fromHeight(height + (showDivider ? 2 : 0));
 
@@ -47,8 +47,7 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final style = LumenStyle.of(context);
     final text = Theme.of(context).textTheme;
-    final g =
-        accentGradient ?? LumenThemeExt.of(context).palette.accentGradient;
+    final g = accentGradient ?? LumenThemeExt.of(context).palette.accentGradient;
 
     return Material(
       color: Colors.transparent,
@@ -61,10 +60,7 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: <Widget>[
-                  if (leading != null) ...<Widget>[
-                    leading!,
-                    const SizedBox(width: 12),
-                  ],
+                  if (leading != null) ...<Widget>[leading!, const SizedBox(width: 12)],
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -79,17 +75,12 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ],
                     ),
                   ),
-                  if (actions != null)
-                    Row(mainAxisSize: MainAxisSize.min, children: actions!),
+                  if (actions != null) Row(mainAxisSize: MainAxisSize.min, children: actions!),
                 ],
               ),
             ),
           ),
-          if (showDivider)
-            Container(
-              height: 2,
-              decoration: BoxDecoration(gradient: style.fill(g)),
-            ),
+          if (showDivider) Container(height: 2, decoration: BoxDecoration(gradient: style.fill(g))),
         ],
       ),
     );

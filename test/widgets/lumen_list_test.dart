@@ -5,9 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenList constrói só o visível e toca o item', (
-    tester,
-  ) async {
+  testWidgets('LumenList constrói só o visível e toca o item', (tester) async {
     int? tapped;
     await pumpBare(
       tester,
@@ -16,8 +14,7 @@ void main() {
         width: 320,
         child: LumenList(
           itemCount: 80,
-          itemBuilder: (context, i) =>
-              LumenListTile(title: 'item $i', onTap: () => tapped = i),
+          itemBuilder: (context, i) => LumenListTile(title: 'item $i', onTap: () => tapped = i),
         ),
       ),
     );

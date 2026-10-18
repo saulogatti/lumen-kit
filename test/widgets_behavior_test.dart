@@ -15,16 +15,13 @@ Widget _app(Widget child, {bool reduceMotion = false}) => MaterialApp(
 );
 
 void main() {
-  testWidgets('LumenTabs acompanha selectedIndex vindo de fora', (
-    tester,
-  ) async {
+  testWidgets('LumenTabs acompanha selectedIndex vindo de fora', (tester) async {
     const items = <LumenTabItem>[
       LumenTabItem(label: 'A'),
       LumenTabItem(label: 'B'),
       LumenTabItem(label: 'C'),
     ];
-    Widget tabs(int i) =>
-        _app(LumenTabs(items: items, selectedIndex: i, onChanged: (_) {}));
+    Widget tabs(int i) => _app(LumenTabs(items: items, selectedIndex: i, onChanged: (_) {}));
 
     await tester.pumpWidget(tabs(0));
     await tester.pumpWidget(tabs(2));
@@ -34,9 +31,7 @@ void main() {
     expect(bar.controller!.index, 2);
   });
 
-  testWidgets('showLumenToast completa só quando o toast sai da tela', (
-    tester,
-  ) async {
+  testWidgets('showLumenToast completa só quando o toast sai da tela', (tester) async {
     late BuildContext ctx;
     await tester.pumpWidget(
       _app(
@@ -69,9 +64,7 @@ void main() {
     expect(find.text('salvo'), findsNothing);
   });
 
-  testWidgets('ação do LumenSnackBar executa e fecha o snackbar', (
-    tester,
-  ) async {
+  testWidgets('ação do LumenSnackBar executa e fecha o snackbar', (tester) async {
     late BuildContext ctx;
     await tester.pumpWidget(
       _app(
@@ -98,9 +91,7 @@ void main() {
     expect(find.text('apagado'), findsNothing);
   });
 
-  testWidgets('controles anunciam estado para leitores de tela', (
-    tester,
-  ) async {
+  testWidgets('controles anunciam estado para leitores de tela', (tester) async {
     final handle = tester.ensureSemantics();
     await tester.pumpWidget(
       _app(
@@ -109,17 +100,8 @@ void main() {
           children: <Widget>[
             LumenCheckbox(value: true, label: 'Aceito', onChanged: (_) {}),
             LumenSwitch(value: false, label: 'Wi-Fi', onChanged: (_) {}),
-            LumenRadio<int>(
-              value: 1,
-              groupValue: 1,
-              label: 'Um',
-              onChanged: (_) {},
-            ),
-            LumenIconButton(
-              icon: Icons.delete,
-              semanticLabel: 'Apagar',
-              onPressed: () {},
-            ),
+            LumenRadio<int>(value: 1, groupValue: 1, label: 'Um', onChanged: (_) {}),
+            LumenIconButton(icon: Icons.delete, semanticLabel: 'Apagar', onPressed: () {}),
           ],
         ),
       ),
@@ -137,12 +119,7 @@ void main() {
     );
     expect(
       tester.getSemantics(find.byType(LumenSwitch)),
-      isSemantics(
-        label: 'Wi-Fi',
-        hasToggledState: true,
-        isEnabled: true,
-        hasTapAction: true,
-      ),
+      isSemantics(label: 'Wi-Fi', hasToggledState: true, isEnabled: true, hasTapAction: true),
     );
     expect(
       tester.getSemantics(find.byType(LumenRadio<int>)),
@@ -158,17 +135,12 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets('LumenSwitch alterna pelo teclado (antes era GestureDetector)', (
-    tester,
-  ) async {
+  testWidgets('LumenSwitch alterna pelo teclado (antes era GestureDetector)', (tester) async {
     var value = false;
     await tester.pumpWidget(
       _app(
         StatefulBuilder(
-          builder: (c, set) => LumenSwitch(
-            value: value,
-            onChanged: (v) => set(() => value = v),
-          ),
+          builder: (c, set) => LumenSwitch(value: value, onChanged: (v) => set(() => value = v)),
         ),
       ),
     );
@@ -179,9 +151,7 @@ void main() {
     expect(value, isTrue);
   });
 
-  testWidgets('label de checkbox/switch funciona dentro de Row', (
-    tester,
-  ) async {
+  testWidgets('label de checkbox/switch funciona dentro de Row', (tester) async {
     await tester.pumpWidget(
       _app(
         Row(
@@ -196,9 +166,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('LumenTextField aceita controller e valida dentro de Form', (
-    tester,
-  ) async {
+  testWidgets('LumenTextField aceita controller e valida dentro de Form', (tester) async {
     final form = GlobalKey<FormState>();
     final controller = TextEditingController(text: 'x');
     addTearDown(controller.dispose);
@@ -211,8 +179,7 @@ void main() {
             label: 'Bio',
             controller: controller,
             maxLines: 4,
-            validator: (v) =>
-                (v ?? '').length < 3 ? 'Muito curto' : null,
+            validator: (v) => (v ?? '').length < 3 ? 'Muito curto' : null,
           ),
         ),
       ),
@@ -227,9 +194,7 @@ void main() {
     expect(form.currentState!.validate(), isTrue);
   });
 
-  testWidgets('LumenDatePicker abre mesmo com "hoje" fora do intervalo', (
-    tester,
-  ) async {
+  testWidgets('LumenDatePicker abre mesmo com "hoje" fora do intervalo', (tester) async {
     await tester.pumpWidget(
       _app(
         LumenDatePicker(
@@ -247,9 +212,7 @@ void main() {
     expect(find.byType(DatePickerDialog), findsOneWidget);
   });
 
-  testWidgets('LumenNavRail mostra o badge do item', (
-    tester,
-  ) async {
+  testWidgets('LumenNavRail mostra o badge do item', (tester) async {
     await tester.pumpWidget(
       _app(
         SizedBox(
@@ -268,17 +231,10 @@ void main() {
     expect(find.widgetWithText(LumenBadge, '3'), findsOneWidget);
   });
 
-  testWidgets('LumenExpansionTile fechado esconde o conteúdo do leitor', (
-    tester,
-  ) async {
+  testWidgets('LumenExpansionTile fechado esconde o conteúdo do leitor', (tester) async {
     final handle = tester.ensureSemantics();
     await tester.pumpWidget(
-      _app(
-        const LumenExpansionTile(
-          title: 'Detalhes',
-          children: <Widget>[Text('segredo')],
-        ),
-      ),
+      _app(const LumenExpansionTile(title: 'Detalhes', children: <Widget>[Text('segredo')])),
     );
     expect(find.bySemanticsLabel('segredo'), findsNothing);
 
@@ -288,9 +244,7 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets('animações infinitas param com "reduzir animações"', (
-    tester,
-  ) async {
+  testWidgets('animações infinitas param com "reduzir animações"', (tester) async {
     await tester.pumpWidget(
       _app(
         const Column(
@@ -309,9 +263,7 @@ void main() {
     expect(tester.hasRunningAnimations, isFalse);
   });
 
-  testWidgets('progresso determinado anuncia a porcentagem', (
-    tester,
-  ) async {
+  testWidgets('progresso determinado anuncia a porcentagem', (tester) async {
     final handle = tester.ensureSemantics();
     await tester.pumpWidget(
       _app(

@@ -71,15 +71,9 @@ class LumenLoadingOverlay extends StatelessWidget {
                   ? Stack(
                       key: const ValueKey<bool>(true),
                       children: <Widget>[
-                        ModalBarrier(
-                          dismissible: false,
-                          color: barrierColor ?? _defaultBarrier(p),
-                        ),
+                        ModalBarrier(dismissible: false, color: barrierColor ?? _defaultBarrier(p)),
                         Center(
-                          child: LumenLoadingPanel(
-                            message: message,
-                            accentColor: accentColor,
-                          ),
+                          child: LumenLoadingPanel(message: message, accentColor: accentColor),
                         ),
                       ],
                     )
@@ -92,8 +86,7 @@ class LumenLoadingOverlay extends StatelessWidget {
   }
 }
 
-Color _defaultBarrier(LumenPalette p) =>
-    p.backgroundDeep.withValues(alpha: 0.6);
+Color _defaultBarrier(LumenPalette p) => p.backgroundDeep.withValues(alpha: 0.6);
 
 /// Panel with spinner and message used by [LumenLoadingOverlay] and
 /// [showLumenLoading].
@@ -124,12 +117,7 @@ class LumenLoadingPanel extends StatelessWidget {
         child: Container(
           constraints: const BoxConstraints(minWidth: 120, maxWidth: 280),
           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
-          decoration: LumenDecorations.panel(
-            p,
-            s,
-            accent: accentColor ?? p.primary,
-            radius: 18,
-          ),
+          decoration: LumenDecorations.panel(p, s, accent: accentColor ?? p.primary, radius: 18),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             spacing: 16,
@@ -140,8 +128,7 @@ class LumenLoadingPanel extends StatelessWidget {
                   child: Text(
                     message!,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium
-                        ?.copyWith(color: p.textPrimary),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textPrimary),
                   ),
                 ),
             ],
@@ -188,10 +175,7 @@ Future<T> showLumenLoading<T>({
         child: Center(
           child: Material(
             type: MaterialType.transparency,
-            child: LumenLoadingPanel(
-              message: message,
-              accentColor: accentColor,
-            ),
+            child: LumenLoadingPanel(message: message, accentColor: accentColor),
           ),
         ),
       ),

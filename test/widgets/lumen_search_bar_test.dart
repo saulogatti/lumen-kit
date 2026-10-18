@@ -5,9 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenSearchBar avisa a digitação e limpa o texto', (
-    tester,
-  ) async {
+  testWidgets('LumenSearchBar avisa a digitação e limpa o texto', (tester) async {
     final values = <String>[];
     await pumpBare(tester, LumenSearchBar(onChanged: values.add));
 

@@ -15,20 +15,6 @@ typedef GlowOrbSpec = LumenGlowOrbSpec;
 ///
 /// Fully configurable — defaults reproduce the original look of the theme.
 class LumenAnimatedGridBackground extends StatelessWidget {
-  /// Creates a decorative background to surround [child].
-  /// When it doesn't receive customizations, it uses the kit's default gradient
-  /// and orbs.
-  const LumenAnimatedGridBackground({
-    required this.child,
-    super.key,
-    this.gradient,
-    this.orbs,
-    this.gridSpacing = 56,
-    this.gridColor,
-    this.gridOpacity = 0.05,
-    this.showGrid = true,
-  });
-
   /// Content rendered above the gradient, grid and orbs.
   final Widget child;
 
@@ -60,14 +46,26 @@ class LumenAnimatedGridBackground extends StatelessWidget {
   /// [LumenStyle.background].
   final bool showGrid;
 
+  /// Creates a decorative background to surround [child].
+  /// When it doesn't receive customizations, it uses the kit's default gradient
+  /// and orbs.
+  const LumenAnimatedGridBackground({
+    required this.child,
+    super.key,
+    this.gradient,
+    this.orbs,
+    this.gridSpacing = 56,
+    this.gridColor,
+    this.gridOpacity = 0.05,
+    this.showGrid = true,
+  });
+
   @override
   Widget build(BuildContext context) {
     final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
-    final orbList =
-        orbs ?? (style.orbs ? _defaultOrbs(p) : const <LumenGlowOrbSpec>[]);
-    final drawPattern =
-        showGrid && style.background != LumenBackgroundKind.plain;
+    final orbList = orbs ?? (style.orbs ? _defaultOrbs(p) : const <LumenGlowOrbSpec>[]);
+    final drawPattern = showGrid && style.background != LumenBackgroundKind.plain;
     final effectiveGridColor = gridColor ?? p.primary;
     final effectiveGradient = gradient ?? p.backgroundGradient;
 
@@ -99,13 +97,6 @@ class LumenAnimatedGridBackground extends StatelessWidget {
     );
   }
 
-  static List<LumenGlowOrbSpec> _defaultOrbs(
-    LumenPalette p,
-  ) => <LumenGlowOrbSpec>[
-    LumenGlowOrbSpec(color: p.primary, size: 320, top: -120, right: -80),
-    LumenGlowOrbSpec(color: p.secondary, size: 360, bottom: -160, left: -100),
-  ];
-
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -116,23 +107,16 @@ class LumenAnimatedGridBackground extends StatelessWidget {
     properties.add(DoubleProperty('gridOpacity', gridOpacity));
     properties.add(DiagnosticsProperty<bool>('showGrid', showGrid));
   }
+
+  static List<LumenGlowOrbSpec> _defaultOrbs(LumenPalette p) => <LumenGlowOrbSpec>[
+    LumenGlowOrbSpec(color: p.primary, size: 320, top: -120, right: -80),
+    LumenGlowOrbSpec(color: p.secondary, size: 360, bottom: -160, left: -100),
+  ];
 }
 
 /// Configuration of a glow orb positioned in the background.
 @immutable
 class LumenGlowOrbSpec {
-  /// Creates a glow orb configuration.
-  /// Position fields follow the same semantics as [Positioned].
-  const LumenGlowOrbSpec({
-    required this.color,
-    required this.size,
-    this.top,
-    this.right,
-    this.bottom,
-    this.left,
-    this.opacity = 0.35,
-  });
-
   /// Base color used at the center of the radial gradient.
   final Color color;
 
@@ -153,12 +137,24 @@ class LumenGlowOrbSpec {
 
   /// Opacity applied to the center of the orb.
   final double opacity;
+
+  /// Creates a glow orb configuration.
+  /// Position fields follow the same semantics as [Positioned].
+  const LumenGlowOrbSpec({
+    required this.color,
+    required this.size,
+    this.top,
+    this.right,
+    this.bottom,
+    this.left,
+    this.opacity = 0.35,
+  });
 }
 
 class _GlowOrb extends StatelessWidget {
-  const _GlowOrb({required this.spec});
-
   final LumenGlowOrbSpec spec;
+
+  const _GlowOrb({required this.spec});
 
   @override
   Widget build(BuildContext context) {
@@ -187,15 +183,11 @@ class _GlowOrb extends StatelessWidget {
 }
 
 class _GridPainter extends CustomPainter {
-  _GridPainter({
-    required this.spacing,
-    required this.color,
-    required this.dots,
-  });
-
   final double spacing;
+
   final Color color;
   final bool dots;
+  _GridPainter({required this.spacing, required this.color, required this.dots});
 
   @override
   void paint(Canvas canvas, Size size) {

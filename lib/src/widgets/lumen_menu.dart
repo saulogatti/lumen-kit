@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
@@ -123,7 +125,7 @@ class LumenContextMenu<T> extends StatelessWidget {
     return Semantics(
       onLongPress: () {
         final box = context.findRenderObject()! as RenderBox;
-        _open(context, box.localToGlobal(box.size.center(Offset.zero)));
+        unawaited(_open(context, box.localToGlobal(box.size.center(Offset.zero))));
       },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
