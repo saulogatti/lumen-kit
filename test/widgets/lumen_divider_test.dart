@@ -5,13 +5,8 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenDivider mostra o rótulo e o flat não quebra', (
-    tester,
-  ) async {
-    await pumpBare(
-      tester,
-      const SizedBox(width: 200, child: LumenDivider(label: 'ou')),
-    );
+  testWidgets('LumenDivider mostra o rótulo e o flat não quebra', (tester) async {
+    await pumpBare(tester, const SizedBox(width: 200, child: LumenDivider(label: 'ou')));
     expect(find.text('ou'), findsOneWidget);
 
     await tester.pumpWidget(

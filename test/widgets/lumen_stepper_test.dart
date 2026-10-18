@@ -10,9 +10,7 @@ const List<LumenStep> _steps = <LumenStep>[
 ];
 
 void main() {
-  testWidgets('LumenStepper avisa o passo tocado e só expande o atual', (
-    tester,
-  ) async {
+  testWidgets('LumenStepper avisa o passo tocado e só expande o atual', (tester) async {
     var tapped = -1;
     await pumpBare(
       tester,

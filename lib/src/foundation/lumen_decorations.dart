@@ -14,16 +14,12 @@ import 'package:material_ui/material_ui.dart';
 /// ```
 abstract final class LumenDecorations {
   /// Diagonal gradient (top-left → bottom-right) from [a] to [b].
-  static LinearGradient diagonal(Color a, Color b) => LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: <Color>[a, b],
-  );
+  static LinearGradient diagonal(Color a, Color b) =>
+      LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: <Color>[a, b]);
 
   /// Diagonal accent gradient for `palette.secondary`, used in active markers
   /// (checkbox, radio, switch, avatar, stepper…).
-  static LinearGradient accent(LumenPalette p, Color accent) =>
-      diagonal(accent, p.secondary);
+  static LinearGradient accent(LumenPalette p, Color accent) => diagonal(accent, p.secondary);
 
   /// Floating panel: gradient surface, border and glow in [accent].
   ///
@@ -80,9 +76,7 @@ abstract final class LumenDecorations {
     color: selected ? accent.withValues(alpha: fillAlpha) : Colors.transparent,
     borderRadius: s.radius(radius),
     border: s.borderAll(
-      color: selected
-          ? accent.withValues(alpha: borderAlpha)
-          : Colors.transparent,
+      color: selected ? accent.withValues(alpha: borderAlpha) : Colors.transparent,
       width: borderWidth,
     ),
     boxShadow: s.shadows(
@@ -127,11 +121,10 @@ abstract final class LumenDecorations {
     bool isDense = false,
     double enabledBorderAlpha = 0.35,
   }) {
-    OutlineInputBorder border(Color color, [double width = 1]) =>
-        OutlineInputBorder(
-          borderRadius: s.radius(radius),
-          borderSide: BorderSide(color: color, width: width),
-        );
+    OutlineInputBorder border(Color color, [double width = 1]) => OutlineInputBorder(
+      borderRadius: s.radius(radius),
+      borderSide: BorderSide(color: color, width: width),
+    );
 
     return InputDecoration(
       labelText: label,

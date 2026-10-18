@@ -70,19 +70,14 @@ class LumenListTile extends StatelessWidget {
         borderRadius: style.radius(14),
         child: AnimatedContainer(
           duration: LumenMotion.duration(context, kLumenFastDuration),
-          padding: EdgeInsets.symmetric(
-            horizontal: 14,
-            vertical: dense ? 8 : 12,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 14, vertical: dense ? 8 : 12),
           decoration: BoxDecoration(
             borderRadius: style.radius(14),
             color: selected
                 ? accent.withValues(alpha: 0.14)
                 : p.surface.withValues(alpha: style.surfaceAlpha(0.5)),
             border: style.borderAll(
-              color: selected
-                  ? accent.withValues(alpha: 0.6)
-                  : p.surfaceOutline.outlineAlpha(0.45),
+              color: selected ? accent.withValues(alpha: 0.6) : p.surfaceOutline.outlineAlpha(0.45),
             ),
             boxShadow: style.shadows(
               selected
@@ -108,17 +103,14 @@ class LumenListTile extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: p.textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall
+                          ?.copyWith(color: p.textPrimary, fontWeight: FontWeight.w600),
                     ),
                     if (subtitle case final String subtitle) ...<Widget>[
                       const SizedBox(height: 2),
                       Text(
                         subtitle,
-                        style: Theme.of(context).textTheme.bodySmall
-                            ?.copyWith(color: p.textMuted),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: p.textMuted),
                       ),
                     ],
                   ],

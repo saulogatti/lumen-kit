@@ -57,11 +57,8 @@ class _LumenTabsState extends State<LumenTabs> with TickerProviderStateMixin {
 
   int get _index => widget.selectedIndex.clamp(0, widget.items.length - 1);
 
-  TabController _create() => TabController(
-    length: widget.items.length,
-    initialIndex: _index,
-    vsync: this,
-  );
+  TabController _create() =>
+      TabController(length: widget.items.length, initialIndex: _index, vsync: this);
 
   @override
   void didUpdateWidget(LumenTabs oldWidget) {
@@ -97,9 +94,7 @@ class _LumenTabsState extends State<LumenTabs> with TickerProviderStateMixin {
         borderSide: BorderSide(color: accent, width: 2.5),
         insets: const EdgeInsets.symmetric(horizontal: 4),
       ),
-      overlayColor: WidgetStatePropertyAll<Color>(
-        accent.withValues(alpha: 0.08),
-      ),
+      overlayColor: WidgetStatePropertyAll<Color>(accent.withValues(alpha: 0.08)),
       splashBorderRadius: style.radius(10),
       tabs: <Widget>[
         for (final LumenTabItem it in widget.items)
@@ -168,9 +163,7 @@ class LumenSegmentedControl extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   borderRadius: style.radius(24),
-                  gradient: style.fill(
-                    selected ? LumenDecorations.accent(p, accent) : null,
-                  ),
+                  gradient: style.fill(selected ? LumenDecorations.accent(p, accent) : null),
                   boxShadow: style.shadows(
                     selected
                         ? <BoxShadow>[
@@ -194,9 +187,7 @@ class LumenSegmentedControl extends StatelessWidget {
                       it.label,
                       style: TextStyle(
                         color: fg,
-                        fontWeight: selected
-                            ? FontWeight.w600
-                            : FontWeight.w500,
+                        fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                       ),
                     ),
                   ],

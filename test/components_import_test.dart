@@ -14,9 +14,7 @@ class AppColors {
 }
 
 void main() {
-  testWidgets('widgets funcionam sem LumenThemeExt no ThemeData', (
-    tester,
-  ) async {
+  testWidgets('widgets funcionam sem LumenThemeExt no ThemeData', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light,
@@ -42,9 +40,7 @@ void main() {
     expect(AppColors.brand, const Color(0xFF3F51B5));
   });
 
-  testWidgets('LumenScope aplica paleta e estilo só na subárvore', (
-    tester,
-  ) async {
+  testWidgets('LumenScope aplica paleta e estilo só na subárvore', (tester) async {
     const teal = Color(0xFF00BFA5);
     await tester.pumpWidget(
       MaterialApp(
@@ -56,10 +52,7 @@ void main() {
               LumenScope(
                 palette: LumenPalette.fromSeed(primary: teal),
                 style: LumenStyle.flat,
-                child: const LumenStatusChip(
-                  label: 'dentro',
-                  tone: LumenStatusTone.info,
-                ),
+                child: const LumenStatusChip(label: 'dentro', tone: LumenStatusTone.info),
               ),
             ],
           ),
@@ -68,13 +61,7 @@ void main() {
     );
 
     expect(tester.widget<Text>(find.text('dentro')).style?.color, teal);
-    expect(
-      tester.widget<Text>(find.text('fora')).style?.color,
-      LumenPalette.light().primary,
-    );
-    expect(
-      LumenStyle.of(tester.element(find.text('dentro'))),
-      same(LumenStyle.flat),
-    );
+    expect(tester.widget<Text>(find.text('fora')).style?.color, LumenPalette.light().primary);
+    expect(LumenStyle.of(tester.element(find.text('dentro'))), same(LumenStyle.flat));
   });
 }

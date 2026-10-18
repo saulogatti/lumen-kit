@@ -119,11 +119,7 @@ class LumenStepper extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 28),
-              child: _Connector(
-                accent: accent,
-                palette: p,
-                active: i < currentStep,
-              ),
+              child: _Connector(accent: accent, palette: p, active: i < currentStep),
             ),
           ),
         );
@@ -198,20 +194,14 @@ class LumenStepper extends StatelessWidget {
                           s.title,
                           style: TextStyle(
                             color: active ? p.textPrimary : p.textMuted,
-                            fontWeight: current
-                                ? FontWeight.w600
-                                : FontWeight.w500,
+                            fontWeight: current ? FontWeight.w600 : FontWeight.w500,
                           ),
                         ),
                         if (s.subtitle case final String subtitle) ...<Widget>[
                           const SizedBox(height: 2),
-                          Text(
-                            subtitle,
-                            style: TextStyle(color: p.textMuted, fontSize: 12),
-                          ),
+                          Text(subtitle, style: TextStyle(color: p.textMuted, fontSize: 12)),
                         ],
-                        if (s.content case final Widget content
-                            when current) ...<Widget>[
+                        if (s.content case final Widget content when current) ...<Widget>[
                           const SizedBox(height: 12),
                           content,
                         ],
@@ -255,12 +245,8 @@ class _StepCircle extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: style.fill(
-          active ? LumenDecorations.accent(palette, accent) : null,
-        ),
-        color: active
-            ? null
-            : palette.surface.withValues(alpha: style.surfaceAlpha(0.7)),
+        gradient: style.fill(active ? LumenDecorations.accent(palette, accent) : null),
+        color: active ? null : palette.surface.withValues(alpha: style.surfaceAlpha(0.7)),
         border: style.borderAll(
           color: active ? accent : palette.surfaceOutline.outlineAlpha(0.8),
           width: 1.4,
@@ -292,11 +278,7 @@ class _StepCircle extends StatelessWidget {
 }
 
 class _Connector extends StatelessWidget {
-  const _Connector({
-    required this.accent,
-    required this.palette,
-    required this.active,
-  });
+  const _Connector({required this.accent, required this.palette, required this.active});
 
   final Color accent;
   final LumenPalette palette;
