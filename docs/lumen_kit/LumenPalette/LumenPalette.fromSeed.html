@@ -86,20 +86,13 @@ warning / danger) follow the kit defaults.</p>
   Brightness brightness = Brightness.dark,
 }) {
   final p = HSLColor.fromColor(primary);
-  final s = secondary != null
-      ? HSLColor.fromColor(secondary)
-      : p.withHue((p.hue + 150) % 360);
+  final s = secondary != null ? HSLColor.fromColor(secondary) : p.withHue((p.hue + 150) % 360);
   final sec = s.toColor();
   &#47;&#47; Meio do caminho pelo arco mais curto do círculo de matiz: laranja +
   &#47;&#47; rosa dá vermelho, não ciano.
   final delta = ((s.hue - p.hue + 540) % 360) - 180;
   final ter =
-      tertiary ??
-      HSLColor.lerp(
-        p,
-        s,
-        0.5,
-      )!.withHue((p.hue + delta &#47; 2 + 360) % 360).toColor();
+      tertiary ?? HSLColor.lerp(p, s, 0.5)!.withHue((p.hue + delta &#47; 2 + 360) % 360).toColor();
 
   &#47;&#47; Fundos e textos herdam o matiz do accent intermediário, como o default
   &#47;&#47; (azul escuro sob cyan + magenta).
@@ -117,12 +110,8 @@ warning / danger) follow the kit defaults.</p>
     &#47;&#47; Um primary a 25% faria outlineAlpha pedir 0.6–0.9 e pintar uma
     &#47;&#47; borda quase opaca. No escuro o cyan a 20% continua o token que os
     &#47;&#47; widgets tratam como alpha absoluto.
-    surfaceOutline: dark
-        ? primary.withValues(alpha: 0.2)
-        : const Color(0x15000000),
-    surfaceHighlight: dark
-        ? primary.withValues(alpha: 0.1)
-        : const Color(0x08000000),
+    surfaceOutline: dark ? primary.withValues(alpha: 0.2) : const Color(0x15000000),
+    surfaceHighlight: dark ? primary.withValues(alpha: 0.1) : const Color(0x08000000),
     primary: primary,
     secondary: sec,
     tertiary: ter,

@@ -122,10 +122,7 @@ Widget build(BuildContext context) {
     padding: switch ((dot, dense)) {
       (true, _) =&gt; EdgeInsets.zero,
       (false, true) =&gt; const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-      (false, false) =&gt; const EdgeInsets.symmetric(
-        horizontal: 6,
-        vertical: 2,
-      ),
+      (false, false) =&gt; const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
     },
     constraints: switch ((dot, dense)) {
       (true, _) =&gt; const BoxConstraints(minWidth: 10, minHeight: 10),

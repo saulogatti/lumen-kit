@@ -74,15 +74,9 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">LumenPalette palette({Brightness brightness = Brightness.dark}) {
   if (this == LumenPreset.neon) {
-    return brightness == Brightness.dark
-        ? LumenPalette.defaultDark()
-        : LumenPalette.light();
+    return brightness == Brightness.dark ? LumenPalette.defaultDark() : LumenPalette.light();
   }
-  return LumenPalette.fromSeed(
-    primary: primary,
-    secondary: secondary,
-    brightness: brightness,
-  );
+  return LumenPalette.fromSeed(primary: primary, secondary: secondary, brightness: brightness);
 }</code></pre>
 </section>
 

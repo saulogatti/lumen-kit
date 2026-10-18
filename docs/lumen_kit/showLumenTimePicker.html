@@ -121,9 +121,7 @@ of the system.</p>
             shape: RoundedRectangleBorder(borderRadius: s.radius(24)),
             hourMinuteShape: RoundedRectangleBorder(borderRadius: s.radius(12)),
             dayPeriodShape: RoundedRectangleBorder(borderRadius: s.radius(10)),
-            dayPeriodBorderSide: BorderSide(
-              color: accent.withValues(alpha: 0.45),
-            ),
+            dayPeriodBorderSide: BorderSide(color: accent.withValues(alpha: 0.45)),
           ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(foregroundColor: accent),
@@ -133,8 +131,7 @@ of the system.</p>
       );
       if (use24HourFormat != null) {
         picker = MediaQuery(
-          data: MediaQuery.of(ctx)
-              .copyWith(alwaysUse24HourFormat: use24HourFormat),
+          data: MediaQuery.of(ctx).copyWith(alwaysUse24HourFormat: use24HourFormat),
           child: picker,
         );
       }

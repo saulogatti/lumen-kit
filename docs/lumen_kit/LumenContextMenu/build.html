@@ -115,7 +115,7 @@ Widget build(BuildContext context) {
   return Semantics(
     onLongPress: () {
       final box = context.findRenderObject()! as RenderBox;
-      _open(context, box.localToGlobal(box.size.center(Offset.zero)));
+      unawaited(_open(context, box.localToGlobal(box.size.center(Offset.zero))));
     },
     child: GestureDetector(
       behavior: HitTestBehavior.opaque,

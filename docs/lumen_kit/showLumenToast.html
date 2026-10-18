@@ -96,11 +96,17 @@ and <code>margin</code> controls the horizontal and vertical distance from safe 
   final done = Completer&lt;void&gt;();
 
   late final OverlayEntry entry;
+  var removed = false;
   void finish() {
-    if (entry.mounted) {
-      entry.remove();
+    &#47;&#47; `entry.mounted` fica falso quando o Overlay sai da árvore, mas o entry
+    &#47;&#47; ainda precisa de `remove()` antes do `dispose()`.
+    if (removed) {
+      return;
     }
-    entry.dispose();
+    removed = true;
+    entry
+      ..remove()
+      ..dispose();
     if (!done.isCompleted) {
       done.complete();
     }

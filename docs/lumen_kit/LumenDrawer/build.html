@@ -125,12 +125,7 @@ Widget build(BuildContext context) {
             p.backgroundDeep.withValues(alpha: 0.98),
           ),
         ),
-        border: Border(
-          right: BorderSide(
-            color: accent.withValues(alpha: 0.55),
-            width: 1.2,
-          ),
-        ),
+        border: Border(right: BorderSide(color: accent.withValues(alpha: 0.55), width: 1.2)),
         boxShadow: style.shadows(&lt;BoxShadow&gt;[
           BoxShadow(
             color: accent.withValues(alpha: 0.25),
@@ -145,10 +140,7 @@ Widget build(BuildContext context) {
             ?header,
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 children: children,
               ),
             ),

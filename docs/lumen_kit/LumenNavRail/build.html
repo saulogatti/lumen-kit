@@ -117,17 +117,12 @@ Widget build(BuildContext context) {
     width: 84,
     decoration: BoxDecoration(
       color: p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.95)),
-      border: Border(
-        right: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5)),
-      ),
+      border: Border(right: BorderSide(color: p.surfaceOutline.outlineAlpha(0.5))),
     ),
     child: SafeArea(
       child: Column(
         children: &lt;Widget&gt;[
-          if (leading case final Widget leading) ...&lt;Widget&gt;[
-            const SizedBox(height: 12),
-            leading,
-          ],
+          if (leading case final Widget leading) ...&lt;Widget&gt;[const SizedBox(height: 12), leading],
           const SizedBox(height: 12),
           Expanded(
             child: ListView.builder(
@@ -143,10 +138,7 @@ Widget build(BuildContext context) {
                     selected: selected,
                     borderRadius: style.radius(16),
                     child: AnimatedContainer(
-                      duration: LumenMotion.duration(
-                        context,
-                        kLumenMediumDuration,
-                      ),
+                      duration: LumenMotion.duration(context, kLumenMediumDuration),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       decoration: LumenDecorations.selectable(
                         p,
@@ -156,11 +148,7 @@ Widget build(BuildContext context) {
                         radius: 16,
                         glow: false,
                       ),
-                      child: _NavItemContent(
-                        item: it,
-                        selected: selected,
-                        accent: accent,
-                      ),
+                      child: _NavItemContent(item: it, selected: selected, accent: accent),
                     ),
                   ),
                 );

@@ -117,11 +117,8 @@ not is informed, the gradient is recalculated based on the new colors.</p>
   secondary ??= accentMagenta;
   tertiary ??= accentBlue;
   final backgroundChanged =
-      backgroundDeep != null ||
-      backgroundMid != null ||
-      backgroundSoft != null;
-  final accentChanged =
-      primary != null || secondary != null || tertiary != null;
+      backgroundDeep != null || backgroundMid != null || backgroundSoft != null;
+  final accentChanged = primary != null || secondary != null || tertiary != null;
   return LumenPalette(
     backgroundDeep: backgroundDeep ?? this.backgroundDeep,
     backgroundMid: backgroundMid ?? this.backgroundMid,
@@ -138,11 +135,8 @@ not is informed, the gradient is recalculated based on the new colors.</p>
     success: success ?? this.success,
     warning: warning ?? this.warning,
     danger: danger ?? this.danger,
-    backgroundGradient:
-        backgroundGradient ??
-        (backgroundChanged ? null : _backgroundGradient),
-    accentGradient:
-        accentGradient ?? (accentChanged ? null : _accentGradient),
+    backgroundGradient: backgroundGradient ?? (backgroundChanged ? null : _backgroundGradient),
+    accentGradient: accentGradient ?? (accentChanged ? null : _accentGradient),
   );
 }</code></pre>
 </section>

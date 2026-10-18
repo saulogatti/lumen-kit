@@ -120,12 +120,7 @@ Widget build(BuildContext context) {
       child: Container(
         constraints: const BoxConstraints(minWidth: 120, maxWidth: 280),
         padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
-        decoration: LumenDecorations.panel(
-          p,
-          s,
-          accent: accentColor ?? p.primary,
-          radius: 18,
-        ),
+        decoration: LumenDecorations.panel(p, s, accent: accentColor ?? p.primary, radius: 18),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           spacing: 16,
@@ -136,8 +131,7 @@ Widget build(BuildContext context) {
                 child: Text(
                   message!,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium
-                      ?.copyWith(color: p.textPrimary),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textPrimary),
                 ),
               ),
           ],

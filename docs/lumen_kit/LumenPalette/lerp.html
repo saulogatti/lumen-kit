@@ -90,16 +90,8 @@
     success: c(a.success, b.success),
     warning: c(a.warning, b.warning),
     danger: c(a.danger, b.danger),
-    backgroundGradient: LinearGradient.lerp(
-      a.backgroundGradient,
-      b.backgroundGradient,
-      t,
-    ),
-    accentGradient: LinearGradient.lerp(
-      a.accentGradient,
-      b.accentGradient,
-      t,
-    ),
+    backgroundGradient: LinearGradient.lerp(a.backgroundGradient, b.backgroundGradient, t),
+    accentGradient: LinearGradient.lerp(a.accentGradient, b.accentGradient, t),
   );
 }</code></pre>
 </section>

@@ -91,10 +91,8 @@
 <p>Everything decoupled from domain — receives <code>child</code>, callbacks and tokens; does not know any business rules.</p>
 <h2 id="installation">Installation</h2>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  lumen_kit:
-    git:
-      url: https://github.com/saulogatti/lumen-kit.git
-      ref: main
+  lumen_kit: any
+
 </code></pre>
 <h2 id="only-the-components-without-the-theme">Only the components (without the theme)</h2>
 <p>If your app already has <code>ThemeData</code> itself, just import the widgets:</p>
@@ -500,7 +498,7 @@ flutter pub get
 flutter run
 </code></pre>
 <h2 id="status">Status</h2>
-<p>In active development — API may still change between <code>0.x</code> versions. Use <code>ref: &lt;commit-sha&gt;</code> or tags (<code>ref: v0.1.0</code>) in production to avoid silent breaks coming from <code>main</code>.</p>
+<p>In active development — API may still change between <code>0.x</code> versions. Use <code>ref: &lt;commit-sha&gt;</code> or tags (<code>ref: v1.0.0</code>) in production to avoid silent breaks coming from <code>main</code>.</p>
 </section>
 
 

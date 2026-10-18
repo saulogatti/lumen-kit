@@ -76,8 +76,7 @@ Search order: nearest <a href="../../lumen_kit/LumenScope-class.html">LumenScope
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static LumenThemeExt of(BuildContext context) {
-  final scope = context
-      .dependOnInheritedWidgetOfExactType&lt;LumenScope&gt;();
+  final scope = context.dependOnInheritedWidgetOfExactType&lt;LumenScope&gt;();
   if (scope != null) {
     return scope.data;
   }

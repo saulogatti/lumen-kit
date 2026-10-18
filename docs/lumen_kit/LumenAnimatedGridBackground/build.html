@@ -111,10 +111,8 @@ and</li>
 Widget build(BuildContext context) {
   final p = LumenThemeExt.of(context).palette;
   final style = LumenStyle.of(context);
-  final orbList =
-      orbs ?? (style.orbs ? _defaultOrbs(p) : const &lt;LumenGlowOrbSpec&gt;[]);
-  final drawPattern =
-      showGrid &amp;&amp; style.background != LumenBackgroundKind.plain;
+  final orbList = orbs ?? (style.orbs ? _defaultOrbs(p) : const &lt;LumenGlowOrbSpec&gt;[]);
+  final drawPattern = showGrid &amp;&amp; style.background != LumenBackgroundKind.plain;
   final effectiveGridColor = gridColor ?? p.primary;
   final effectiveGradient = gradient ?? p.backgroundGradient;
 

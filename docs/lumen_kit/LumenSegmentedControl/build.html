@@ -135,9 +135,7 @@ Widget build(BuildContext context) {
               padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: style.radius(24),
-                gradient: style.fill(
-                  selected ? LumenDecorations.accent(p, accent) : null,
-                ),
+                gradient: style.fill(selected ? LumenDecorations.accent(p, accent) : null),
                 boxShadow: style.shadows(
                   selected
                       ? &lt;BoxShadow&gt;[
@@ -161,9 +159,7 @@ Widget build(BuildContext context) {
                     it.label,
                     style: TextStyle(
                       color: fg,
-                      fontWeight: selected
-                          ? FontWeight.w600
-                          : FontWeight.w500,
+                      fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                     ),
                   ),
                 ],

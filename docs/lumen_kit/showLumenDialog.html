@@ -90,13 +90,8 @@ whether tapping outside the dialog closes the modal route.</p>
   return showDialog&lt;T&gt;(
     context: context,
     barrierDismissible: barrierDismissible,
-    builder: (ctx) =&gt; LumenDialog(
-      title: title,
-      content: content,
-      actions: actions,
-      accent: accent,
-      icon: icon,
-    ),
+    builder: (ctx) =&gt;
+        LumenDialog(title: title, content: content, actions: actions, accent: accent, icon: icon),
   );
 }</code></pre>
 </section>

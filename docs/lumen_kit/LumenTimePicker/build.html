@@ -119,8 +119,7 @@ Widget build(BuildContext context) {
             MaterialLocalizations.of(context).formatTimeOfDay(
               value!,
               alwaysUse24HourFormat:
-                  use24HourFormat ??
-                  MediaQuery.alwaysUse24HourFormatOf(context),
+                  use24HourFormat ?? MediaQuery.alwaysUse24HourFormatOf(context),
             ));
 
   return LumenPressable(
@@ -150,8 +149,7 @@ Widget build(BuildContext context) {
       isEmpty: text == null,
       child: Text(
         text ?? &#39;&#39;,
-        style: Theme.of(context).textTheme.titleMedium
-            ?.copyWith(color: p.textPrimary),
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
       ),
     ),
   );

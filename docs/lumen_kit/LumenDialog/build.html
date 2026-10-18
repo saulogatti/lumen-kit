@@ -156,19 +156,11 @@ Widget build(BuildContext context) {
                 ],
               ),
               const SizedBox(height: 18),
-              DefaultTextStyle.merge(
-                style: text.bodyMedium ?? const TextStyle(),
-                child: content,
-              ),
+              DefaultTextStyle.merge(style: text.bodyMedium ?? const TextStyle(), child: content),
               if (actions.isNotEmpty) ...&lt;Widget&gt;[
                 const SizedBox(height: 24),
                 &#47;&#47; Wrap: ações longas quebram linha em vez de estourar.
-                Wrap(
-                  alignment: WrapAlignment.end,
-                  spacing: 12,
-                  runSpacing: 8,
-                  children: actions,
-                ),
+                Wrap(alignment: WrapAlignment.end, spacing: 12, runSpacing: 8, children: actions),
               ],
             ],
           ),

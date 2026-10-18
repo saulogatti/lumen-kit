@@ -120,12 +120,10 @@ Widget build(BuildContext context) {
     autovalidateMode: autovalidateMode,
     dropdownColor: p.surface,
     iconEnabledColor: accent,
-    style: Theme.of(context).textTheme.titleMedium,
+    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
     isExpanded: true,
     borderRadius: style.radius(12),
-    hint: hint == null
-        ? null
-        : Text(hint!, style: TextStyle(color: p.textMuted)),
+    hint: hint == null ? null : Text(hint!, style: TextStyle(color: p.textMuted)),
     items: &lt;DropdownMenuItem&lt;T&gt;&gt;[
       for (final LumenDropdownItem&lt;T&gt; it in items)
         DropdownMenuItem&lt;T&gt;(
