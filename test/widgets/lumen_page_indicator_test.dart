@@ -105,4 +105,49 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(external.hasClients, isFalse);
   });
+
+  testWidgets('LumenCarousel pula direto com "reduzir animações"', (tester) async {
+    final changes = <int>[];
+    await pumpBare(
+      tester,
+      SizedBox(
+        width: 360,
+        child: LumenCarousel(
+          itemCount: 3,
+          onPageChanged: changes.add,
+          itemBuilder: (context, i) => Text('foto $i'),
+        ),
+      ),
+      reduceMotion: true,
+    );
+    await tester.tap(find.byType(AnimatedContainer).at(2));
+    await tester.pump();
+    // Um frame só: animateToPage ainda estaria no meio do caminho.
+    expect(tester.widget<PageView>(find.byType(PageView)).controller!.page, 2);
+    expect(changes, <int>[2]);
+  });
+
+  testWidgets('LumenCarousel mantém a página ao mudar viewportFraction', (tester) async {
+    Widget build(double fraction) => bareApp(
+      SizedBox(
+        width: 360,
+        child: LumenCarousel(
+          itemCount: 3,
+          viewportFraction: fraction,
+          itemBuilder: (context, i) => Text('foto $i'),
+        ),
+      ),
+      reduceMotion: true,
+    );
+    await tester.pumpWidget(build(0.88));
+    await tester.tap(find.byType(AnimatedContainer).at(2));
+    await tester.pump();
+
+    await tester.pumpWidget(build(1));
+    await tester.pump(); // descarta o controller antigo no pós-frame
+    expect(tester.takeException(), isNull);
+    final controller = tester.widget<PageView>(find.byType(PageView)).controller!;
+    expect(controller.viewportFraction, 1);
+    expect(controller.page, 2);
+  });
 }

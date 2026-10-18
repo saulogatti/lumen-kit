@@ -1,0 +1,22 @@
+# https://docs.codecov.com/docs/codecov-yaml
+coverage:
+  precision: 1
+  status:
+    project:
+      default:
+        # Não deixa a cobertura total cair mais que 0,5 ponto em relação à base.
+        target: auto
+        threshold: 0.5%
+    patch:
+      default:
+        # Código novo do PR. Construtores `const` não contam na VM do Dart, por
+        # isso não exigimos 100%.
+        target: 90%
+
+comment:
+  layout: "condensed_header, diff, files"
+  require_changes: true
+
+ignore:
+  - "example/**"
+  - "docs/**"

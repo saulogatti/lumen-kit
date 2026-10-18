@@ -82,6 +82,56 @@ void main() {
 
     expect(picked, <String>['edit', 'del']);
   });
+
+  testWidgets('initialValue marca a ação atual com check', (tester) async {
+    await pumpBare(
+      tester,
+      LumenMenuButton<String>(items: _items, initialValue: 'edit', onSelected: (_) {}),
+    );
+    await tester.tap(find.byType(LumenMenuButton<String>));
+    await tester.pumpAndSettle();
+
+    final check = find.descendant(
+      of: find.widgetWithText(PopupMenuItem<String>, 'Editar'),
+      matching: find.byIcon(Icons.check_rounded),
+    );
+    expect(check, findsOneWidget);
+    expect(find.byIcon(Icons.check_rounded), findsOneWidget);
+  });
+
+  testWidgets('LumenContextMenu sem onSelected é só o child', (tester) async {
+    await pumpBare(
+      tester,
+      const LumenContextMenu<String>(
+        items: _items,
+        onSelected: null,
+        child: SizedBox(width: 200, height: 80, child: Text('alvo')),
+      ),
+    );
+    expect(
+      find.ancestor(of: find.text('alvo'), matching: find.byType(GestureDetector)),
+      findsNothing,
+    );
+    await tester.longPress(find.text('alvo'));
+    await tester.pumpAndSettle();
+    expect(find.text('Editar'), findsNothing);
+  });
+
+  testWidgets('LumenContextMenu abre pela ação de toque longo do leitor de tela', (tester) async {
+    final handle = tester.ensureSemantics();
+    await pumpBare(
+      tester,
+      LumenContextMenu<String>(
+        items: _items,
+        onSelected: (_) {},
+        child: const SizedBox(width: 200, height: 80, child: Text('alvo')),
+      ),
+    );
+    tester.semantics.longPress(find.semantics.byLabel('alvo'));
+    await tester.pumpAndSettle();
+    expect(find.text('Editar'), findsOneWidget);
+    handle.dispose();
+  });
 }
 
 const List<LumenMenuEntry<String>> _items = <LumenMenuEntry<String>>[

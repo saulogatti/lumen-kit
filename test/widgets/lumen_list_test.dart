@@ -37,4 +37,20 @@ void main() {
     expect(find.text('nenhum evento'), findsOneWidget);
     expect(find.text('item 0'), findsNothing);
   });
+
+  testWidgets('LumenList com separatorBuilder põe separador só entre itens', (tester) async {
+    await pumpBare(
+      tester,
+      SizedBox(
+        height: 300,
+        width: 320,
+        child: LumenList(
+          itemCount: 3,
+          itemBuilder: (context, i) => Text('item $i'),
+          separatorBuilder: (context, i) => const LumenDivider(),
+        ),
+      ),
+    );
+    expect(find.byType(LumenDivider), findsNWidgets(2));
+  });
 }

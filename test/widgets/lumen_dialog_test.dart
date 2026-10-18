@@ -43,4 +43,18 @@ void main() {
     expect(chosen, 'ok');
     expect(find.text('Apagar'), findsNothing);
   });
+
+  testWidgets('LumenDialog com icon mostra o ícone na cor do accent', (tester) async {
+    const accent = Color(0xFFFF4081);
+    await pumpBare(
+      tester,
+      const LumenDialog(
+        title: 'Sair?',
+        content: Text('A sessão será encerrada.'),
+        icon: Icons.logout,
+        accent: accent,
+      ),
+    );
+    expect(tester.widget<Icon>(find.byIcon(Icons.logout)).color, accent);
+  });
 }

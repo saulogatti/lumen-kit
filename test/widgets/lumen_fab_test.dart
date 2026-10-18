@@ -19,4 +19,12 @@ void main() {
     expect(find.text('Criar'), findsOneWidget);
     expect(tester.widget<LumenPressable>(find.byType(LumenPressable)).enabled, isFalse);
   });
+
+  testWidgets('LumenFab com heroTag entra num Hero; sem ele, não', (tester) async {
+    await pumpBare(tester, LumenFab(icon: Icons.add, onPressed: () {}));
+    expect(find.byType(Hero), findsNothing);
+
+    await pumpBare(tester, LumenFab(icon: Icons.add, heroTag: 'novo', onPressed: () {}));
+    expect(tester.widget<Hero>(find.byType(Hero)).tag, 'novo');
+  });
 }

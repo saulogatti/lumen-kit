@@ -1,5 +1,8 @@
 # lumen_kit
 
+[![CI](https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/saulogatti/lumen-kit/graph/badge.svg?token=oU4zJUQCy9)](https://codecov.io/gh/saulogatti/lumen-kit)
+
 Flutter widget kit with the same designs and free color. The neon look (glow, gradient, grid and orbs) is the default style; flat, glass, soft and brutal use any palette. Designed to be reused between projects without rewriting tokens and styles for each new app.
 
 ## What's inside
