@@ -30,8 +30,9 @@ cd example && flutter run -d chrome
 ```
 
 The analyzer is intentionally strict. Preserve explicit non-obvious types,
-single quotes, relative imports within `lib/`, 80-column formatting, and the
-other rules in `analysis_options.yaml`.
+single quotes, package imports within `lib/` (`package:lumen_kit/src/...`,
+never relative), 100-column formatting (`page_width: 100`), and the other
+rules in `analysis_options.yaml`.
 
 ## Architecture
 
@@ -86,7 +87,7 @@ other rules in `analysis_options.yaml`.
 - New animations must use `LumenMotion.duration` with `kLumen*Duration`;
   repeating animations must synchronize through `LumenMotion.syncRepeat` and
   respect `MediaQuery.disableAnimations`.
-- Public APIs require Portuguese `///` documentation. `showLumenX` helpers
+- Public APIs require English `///` documentation. `showLumenX` helpers
   take a required `BuildContext`, derive their theme from it, and return a
   `Future`.
 
