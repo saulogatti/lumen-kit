@@ -24,8 +24,7 @@ Future<T?> showLumenBottomSheet<T>({
     enableDrag: enableDrag,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: 0.55),
-    builder: (ctx) =>
-        _LumenBottomSheetShell(accent: accent, child: builder(ctx)),
+    builder: (ctx) => _LumenBottomSheetShell(accent: accent, child: builder(ctx)),
   );
 }
 
@@ -39,9 +38,7 @@ class _LumenBottomSheetShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
-    final sheetRadius = BorderRadius.vertical(
-      top: Radius.circular(24 * style.radiusScale),
-    );
+    final sheetRadius = BorderRadius.vertical(top: Radius.circular(24 * style.radiusScale));
     return style.frost(
       borderRadius: sheetRadius,
       child: DecoratedBox(
@@ -57,9 +54,7 @@ class _LumenBottomSheetShell extends StatelessWidget {
             ),
           ),
           borderRadius: sheetRadius,
-          border: Border(
-            top: BorderSide(color: accent.withValues(alpha: 0.55), width: 1.2),
-          ),
+          border: Border(top: BorderSide(color: accent.withValues(alpha: 0.55), width: 1.2)),
           boxShadow: style.shadows(<BoxShadow>[
             BoxShadow(
               color: accent.withValues(alpha: 0.25),

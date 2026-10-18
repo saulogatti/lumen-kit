@@ -87,19 +87,11 @@ class LumenDialog extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 18),
-                DefaultTextStyle.merge(
-                  style: text.bodyMedium ?? const TextStyle(),
-                  child: content,
-                ),
+                DefaultTextStyle.merge(style: text.bodyMedium ?? const TextStyle(), child: content),
                 if (actions.isNotEmpty) ...<Widget>[
                   const SizedBox(height: 24),
                   // Wrap: ações longas quebram linha em vez de estourar.
-                  Wrap(
-                    alignment: WrapAlignment.end,
-                    spacing: 12,
-                    runSpacing: 8,
-                    children: actions,
-                  ),
+                  Wrap(alignment: WrapAlignment.end, spacing: 12, runSpacing: 8, children: actions),
                 ],
               ],
             ),
@@ -125,12 +117,7 @@ Future<T?> showLumenDialog<T>({
   return showDialog<T>(
     context: context,
     barrierDismissible: barrierDismissible,
-    builder: (ctx) => LumenDialog(
-      title: title,
-      content: content,
-      actions: actions,
-      accent: accent,
-      icon: icon,
-    ),
+    builder: (ctx) =>
+        LumenDialog(title: title, content: content, actions: actions, accent: accent, icon: icon),
   );
 }

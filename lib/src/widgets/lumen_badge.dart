@@ -17,10 +17,7 @@ class LumenBadge extends StatelessWidget {
   });
 
   /// "Dot" mode (no text), useful for indicating activity.
-  const LumenBadge.dot({super.key, this.color, this.child})
-    : label = '',
-      dot = true,
-      dense = false;
+  const LumenBadge.dot({super.key, this.color, this.child}) : label = '', dot = true, dense = false;
 
   /// Text displayed inside the badge when [dot] is `false`.
   final String label;
@@ -54,10 +51,7 @@ class LumenBadge extends StatelessWidget {
       padding: switch ((dot, dense)) {
         (true, _) => EdgeInsets.zero,
         (false, true) => const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-        (false, false) => const EdgeInsets.symmetric(
-          horizontal: 6,
-          vertical: 2,
-        ),
+        (false, false) => const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       },
       constraints: switch ((dot, dense)) {
         (true, _) => const BoxConstraints(minWidth: 10, minHeight: 10),
@@ -104,13 +98,7 @@ class LumenBadge extends StatelessWidget {
 /// Good for metadata in lists.
 class LumenTag extends StatelessWidget {
   /// Creates a compact tag for metadata or filters.
-  const LumenTag({
-    required this.label,
-    super.key,
-    this.color,
-    this.icon,
-    this.onTap,
-  });
+  const LumenTag({required this.label, super.key, this.color, this.icon, this.onTap});
 
   /// Text displayed in the tag.
   final String label;
@@ -147,11 +135,7 @@ class LumenTag extends StatelessWidget {
           if (icon != null) Icon(icon, size: 12, color: c),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: c,
-            ),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: c),
           ),
         ],
       ),
@@ -160,10 +144,6 @@ class LumenTag extends StatelessWidget {
     if (onTap == null) {
       return content;
     }
-    return LumenPressable(
-      onTap: onTap,
-      borderRadius: style.radius(20),
-      child: content,
-    );
+    return LumenPressable(onTap: onTap, borderRadius: style.radius(20), child: content);
   }
 }

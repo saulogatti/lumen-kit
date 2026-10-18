@@ -83,11 +83,7 @@ class LumenLinearProgress extends StatelessWidget {
 /// Announces progress as Material's `ProgressIndicator`: value in % when
 /// determined, only the label when indeterminate.
 class _ProgressSemantics extends StatelessWidget {
-  const _ProgressSemantics({
-    required this.label,
-    required this.value,
-    required this.child,
-  });
+  const _ProgressSemantics({required this.label, required this.value, required this.child});
 
   final String? label;
   final double? value;
@@ -130,8 +126,7 @@ class _IndeterminateBar extends StatefulWidget {
   State<_IndeterminateBar> createState() => _IndeterminateBarState();
 }
 
-class _IndeterminateBarState extends State<_IndeterminateBar>
-    with SingleTickerProviderStateMixin {
+class _IndeterminateBarState extends State<_IndeterminateBar> with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1400),

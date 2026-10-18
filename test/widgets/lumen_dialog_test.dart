@@ -7,9 +7,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('showLumenDialog mostra o título e devolve a ação', (
-    tester,
-  ) async {
+  testWidgets('showLumenDialog mostra o título e devolve a ação', (tester) async {
     String? chosen;
     await pumpBare(
       tester,

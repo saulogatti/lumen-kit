@@ -74,8 +74,7 @@ class LumenActionContent extends StatelessWidget {
         ?leading,
         Text(
           label!,
-          style: (textStyle ?? Theme.of(context).textTheme.labelLarge)
-              ?.copyWith(color: color),
+          style: (textStyle ?? Theme.of(context).textTheme.labelLarge)?.copyWith(color: color),
         ),
       ],
     );

@@ -108,9 +108,7 @@ class LumenPressable extends StatelessWidget {
       label: semanticLabel,
       onTap: active ? onTap : null,
       onLongPress: active ? onLongPress : null,
-      child: dimWhenDisabled && !active
-          ? Opacity(opacity: kLumenDisabledOpacity, child: ink)
-          : ink,
+      child: dimWhenDisabled && !active ? Opacity(opacity: kLumenDisabledOpacity, child: ink) : ink,
     );
     return mergeSemantics ? MergeSemantics(child: semantics) : semantics;
   }

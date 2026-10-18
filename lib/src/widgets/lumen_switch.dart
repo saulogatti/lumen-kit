@@ -38,10 +38,7 @@ class LumenSwitch extends StatelessWidget {
     final style = LumenStyle.of(context);
     final accent = accentColor ?? p.primary;
     final disabled = onChanged == null;
-    final duration = LumenMotion.duration(
-      context,
-      kLumenMediumDuration,
-    );
+    final duration = LumenMotion.duration(context, kLumenMediumDuration);
 
     final Widget track = AnimatedContainer(
       duration: duration,
@@ -55,9 +52,7 @@ class LumenSwitch extends StatelessWidget {
             : p.surface.withValues(alpha: style.surfaceAlpha(0.7)),
         borderRadius: style.radius(30),
         border: style.borderAll(
-          color: value
-              ? accent.withValues(alpha: 0.9)
-              : p.surfaceOutline.outlineAlpha(0.8),
+          color: value ? accent.withValues(alpha: 0.9) : p.surfaceOutline.outlineAlpha(0.8),
           width: 1.2,
         ),
         boxShadow: style.shadows(
@@ -81,18 +76,11 @@ class LumenSwitch extends StatelessWidget {
           height: 22,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: style.fill(
-              value ? LumenDecorations.accent(p, accent) : null,
-            ),
+            gradient: style.fill(value ? LumenDecorations.accent(p, accent) : null),
             color: value ? null : p.textMuted.scaleAlpha(0.85),
             boxShadow: style.shadows(
               value
-                  ? <BoxShadow>[
-                      BoxShadow(
-                        color: accent.withValues(alpha: 0.55),
-                        blurRadius: 8,
-                      ),
-                    ]
+                  ? <BoxShadow>[BoxShadow(color: accent.withValues(alpha: 0.55), blurRadius: 8)]
                   : null,
             ),
           ),
@@ -104,12 +92,7 @@ class LumenSwitch extends StatelessWidget {
       onTap: disabled ? null : () => onChanged!(!value),
       borderRadius: style.radius(30),
       toggled: value,
-      child: LumenLabeled(
-        control: track,
-        label: label,
-        enabled: !disabled,
-        gap: 12,
-      ),
+      child: LumenLabeled(control: track, label: label, enabled: !disabled, gap: 12),
     );
   }
 }

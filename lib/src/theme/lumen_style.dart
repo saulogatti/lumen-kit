@@ -2,7 +2,8 @@ import 'dart:ui' show ImageFilter;
 
 import 'package:lumen_kit/components.dart' show LumenAnimatedGridBackground;
 import 'package:lumen_kit/lumen_kit.dart' show LumenAnimatedGridBackground;
-import 'package:lumen_kit/src/backgrounds/lumen_animated_grid_background.dart' show LumenAnimatedGridBackground;
+import 'package:lumen_kit/src/backgrounds/lumen_animated_grid_background.dart'
+    show LumenAnimatedGridBackground;
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -177,19 +178,13 @@ class LumenStyle {
         );
       case LumenShadowKind.elevation:
         return BoxShadow(
-          color: const Color(0xFF000000)
-              .withValues(alpha: (glow.a * 0.8).clamp(0.08, 0.3)),
+          color: const Color(0xFF000000).withValues(alpha: (glow.a * 0.8).clamp(0.08, 0.3)),
           blurRadius: s.blurRadius,
           spreadRadius: s.spreadRadius < 0 ? 0 : s.spreadRadius,
-          offset: s.offset == Offset.zero
-              ? Offset(0, s.blurRadius / 4)
-              : s.offset,
+          offset: s.offset == Offset.zero ? Offset(0, s.blurRadius / 4) : s.offset,
         );
       case LumenShadowKind.hard:
-        return BoxShadow(
-          color: s.color.withValues(alpha: 1),
-          offset: const Offset(4, 4),
-        );
+        return BoxShadow(color: s.color.withValues(alpha: 1), offset: const Offset(4, 4));
       case LumenShadowKind.none:
         return const BoxShadow(color: Color(0x00000000));
     }
@@ -215,10 +210,7 @@ class LumenStyle {
     if (borderScale == 0) {
       return const Border();
     }
-    return Border.all(
-      color: color.scaleAlpha(borderOpacity),
-      width: width * borderScale,
-    );
+    return Border.all(color: color.scaleAlpha(borderOpacity), width: width * borderScale);
   }
 
   /// Wraps a surface with background blur when [blurSigma] > 0.

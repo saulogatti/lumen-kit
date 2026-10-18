@@ -103,13 +103,7 @@ class LumenButton extends StatelessWidget {
 
     final body = switch (variant) {
       LumenButtonVariant.solid => _solid(context, palette, content, enabled),
-      LumenButtonVariant.outline => _outline(
-        context,
-        palette,
-        accent,
-        content,
-        enabled,
-      ),
+      LumenButtonVariant.outline => _outline(context, palette, accent, content, enabled),
       LumenButtonVariant.ghost => _ghost(content),
     };
 
@@ -127,21 +121,10 @@ class LumenButton extends StatelessWidget {
       LumenButtonVariant.outline || LumenButtonVariant.ghost => accent,
     };
 
-    return LumenActionContent(
-      color: fg,
-      label: label,
-      icon: icon,
-      busy: busy,
-      expand: expand,
-    );
+    return LumenActionContent(color: fg, label: label, icon: icon, busy: busy, expand: expand);
   }
 
-  Widget _solid(
-    BuildContext context,
-    LumenPalette palette,
-    Widget content,
-    bool enabled,
-  ) {
+  Widget _solid(BuildContext context, LumenPalette palette, Widget content, bool enabled) {
     final style = LumenStyle.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
@@ -152,9 +135,7 @@ class LumenButton extends StatelessWidget {
           enabled
               ? <BoxShadow>[
                   BoxShadow(
-                    color: (accentColor ?? palette.secondary).withValues(
-                      alpha: 0.35,
-                    ),
+                    color: (accentColor ?? palette.secondary).withValues(alpha: 0.35),
                     blurRadius: 18,
                     offset: const Offset(0, 6),
                   ),
@@ -179,10 +160,7 @@ class LumenButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: palette.surface.withValues(alpha: style.surfaceAlpha(0.35)),
         borderRadius: style.radius(borderRadius),
-        border: style.borderAll(
-          color: accent.withValues(alpha: 0.85),
-          width: 1.2,
-        ),
+        border: style.borderAll(color: accent.withValues(alpha: 0.85), width: 1.2),
         boxShadow: style.shadows(
           enabled
               ? <BoxShadow>[

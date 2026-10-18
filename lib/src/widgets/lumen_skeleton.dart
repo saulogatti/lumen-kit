@@ -23,14 +23,11 @@ class LumenSkeleton extends StatefulWidget {
   }) : shape = BoxShape.rectangle;
 
   /// Creates a circular skeleton with width and height equal to [size].
-  const LumenSkeleton.circle({
-    required double size, super.key,
-    this.baseColor,
-    this.highlightColor,
-  }) : width = size,
-       height = size,
-       borderRadius = 0,
-       shape = BoxShape.circle;
+  const LumenSkeleton.circle({required double size, super.key, this.baseColor, this.highlightColor})
+    : width = size,
+      height = size,
+      borderRadius = 0,
+      shape = BoxShape.circle;
 
   /// Skeleton width.
   ///
@@ -60,8 +57,7 @@ class LumenSkeleton extends StatefulWidget {
   State<LumenSkeleton> createState() => _LumenSkeletonState();
 }
 
-class _LumenSkeletonState extends State<LumenSkeleton>
-    with SingleTickerProviderStateMixin {
+class _LumenSkeletonState extends State<LumenSkeleton> with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1300),
@@ -84,11 +80,8 @@ class _LumenSkeletonState extends State<LumenSkeleton>
   Widget build(BuildContext context) {
     final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
-    final base =
-        widget.baseColor ??
-        p.surface.withValues(alpha: style.surfaceAlpha(0.55));
-    final highlight =
-        widget.highlightColor ?? p.primary.withValues(alpha: 0.25);
+    final base = widget.baseColor ?? p.surface.withValues(alpha: style.surfaceAlpha(0.55));
+    final highlight = widget.highlightColor ?? p.primary.withValues(alpha: 0.25);
 
     final radius = widget.shape == BoxShape.circle
         ? BorderRadius.zero
@@ -104,11 +97,7 @@ class _LumenSkeletonState extends State<LumenSkeleton>
             return LinearGradient(
               begin: Alignment(-1 + 2 * t - 0.3, 0),
               end: Alignment(-1 + 2 * t + 0.3, 0),
-              colors: <Color>[
-                Colors.transparent,
-                highlight,
-                Colors.transparent,
-              ],
+              colors: <Color>[Colors.transparent, highlight, Colors.transparent],
               stops: const <double>[0, 0.5, 1],
             ).createShader(rect);
           },

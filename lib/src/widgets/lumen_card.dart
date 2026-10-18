@@ -63,10 +63,7 @@ class LumenCard extends StatelessWidget {
               p.backgroundMid.withValues(alpha: style.surfaceAlpha(0.85)),
             ),
           ),
-          border: style.borderAll(
-            color: a.withValues(alpha: borderOpacity),
-            width: 1.2,
-          ),
+          border: style.borderAll(color: a.withValues(alpha: borderOpacity), width: 1.2),
         ),
         child: child,
       ),
@@ -74,12 +71,7 @@ class LumenCard extends StatelessWidget {
 
     final body = onTap == null
         ? content
-        : LumenPressable(
-            onTap: onTap,
-            borderRadius: radius,
-            mergeSemantics: false,
-            child: content,
-          );
+        : LumenPressable(onTap: onTap, borderRadius: radius, mergeSemantics: false, child: content);
 
     if (!glow) {
       return body;
@@ -89,11 +81,7 @@ class LumenCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: radius,
         boxShadow: style.shadows(<BoxShadow>[
-          BoxShadow(
-            color: a.withValues(alpha: 0.18),
-            blurRadius: 24,
-            offset: const Offset(0, 12),
-          ),
+          BoxShadow(color: a.withValues(alpha: 0.18), blurRadius: 24, offset: const Offset(0, 12)),
         ]),
       ),
       child: body,

@@ -7,9 +7,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenTimePicker mostra o horário e devolve o escolhido', (
-    tester,
-  ) async {
+  testWidgets('LumenTimePicker mostra o horário e devolve o escolhido', (tester) async {
     TimeOfDay? picked;
     await pumpBare(
       tester,
@@ -31,9 +29,7 @@ void main() {
     expect(picked, const TimeOfDay(hour: 9, minute: 5));
   });
 
-  testWidgets('LumenTimePicker usa o format customizado e o hint', (
-    tester,
-  ) async {
+  testWidgets('LumenTimePicker usa o format customizado e o hint', (tester) async {
     await pumpBare(
       tester,
       Column(
@@ -44,11 +40,7 @@ void main() {
             format: (t) => '${t.hour}h${t.minute}',
             onChanged: (_) {},
           ),
-          const LumenTimePicker(
-            value: null,
-            hint: 'Escolha a hora',
-            onChanged: null,
-          ),
+          const LumenTimePicker(value: null, hint: 'Escolha a hora', onChanged: null),
         ],
       ),
     );
@@ -61,9 +53,7 @@ void main() {
     expect(find.byType(TimePickerDialog), findsNothing);
   });
 
-  testWidgets('showLumenTimePicker aplica o accent no ponteiro', (
-    tester,
-  ) async {
+  testWidgets('showLumenTimePicker aplica o accent no ponteiro', (tester) async {
     const accent = Color(0xFFFF2E88);
     late BuildContext ctx;
     await pumpBare(

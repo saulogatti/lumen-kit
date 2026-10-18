@@ -8,9 +8,7 @@ double _width(WidgetTester tester, int i) =>
     tester.getSize(find.byType(AnimatedContainer).at(i)).width;
 
 void main() {
-  testWidgets('LumenPageIndicator alarga o ponto do index e anuncia a página', (
-    tester,
-  ) async {
+  testWidgets('LumenPageIndicator alarga o ponto do index e anuncia a página', (tester) async {
     final handle = tester.ensureSemantics();
     await pumpBare(tester, const LumenPageIndicator(count: 4, index: 2));
     await tester.pumpAndSettle();
@@ -22,51 +20,42 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets(
-    'LumenPageIndicator segue o PageController e toque troca página',
-    (tester) async {
-      final pages = PageController();
-      addTearDown(pages.dispose);
-      await pumpBare(
-        tester,
-        SizedBox(
-          width: 300,
-          height: 300,
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: PageView(
-                  controller: pages,
-                  children: const <Widget>[Text('A'), Text('B'), Text('C')],
-                ),
-              ),
-              LumenPageIndicator(
-                count: 3,
+  testWidgets('LumenPageIndicator segue o PageController e toque troca página', (tester) async {
+    final pages = PageController();
+    addTearDown(pages.dispose);
+    await pumpBare(
+      tester,
+      SizedBox(
+        width: 300,
+        height: 300,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: PageView(
                 controller: pages,
-                onDotTapped: pages.jumpToPage,
+                children: const <Widget>[Text('A'), Text('B'), Text('C')],
               ),
-            ],
-          ),
+            ),
+            LumenPageIndicator(count: 3, controller: pages, onDotTapped: pages.jumpToPage),
+          ],
         ),
-      );
-      expect(_width(tester, 0), 24);
+      ),
+    );
+    expect(_width(tester, 0), 24);
 
-      await tester.drag(find.byType(PageView), const Offset(-300, 0));
-      await tester.pumpAndSettle();
-      expect(find.text('B'), findsOneWidget);
-      expect(_width(tester, 1), 24);
-      expect(_width(tester, 0), 8);
+    await tester.drag(find.byType(PageView), const Offset(-300, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('B'), findsOneWidget);
+    expect(_width(tester, 1), 24);
+    expect(_width(tester, 0), 8);
 
-      await tester.tap(find.byType(AnimatedContainer).at(2));
-      await tester.pumpAndSettle();
-      expect(find.text('C'), findsOneWidget);
-      expect(_width(tester, 2), 24);
-    },
-  );
+    await tester.tap(find.byType(AnimatedContainer).at(2));
+    await tester.pumpAndSettle();
+    expect(find.text('C'), findsOneWidget);
+    expect(_width(tester, 2), 24);
+  });
 
-  testWidgets('LumenCarousel troca de página pelos pontos e avisa', (
-    tester,
-  ) async {
+  testWidgets('LumenCarousel troca de página pelos pontos e avisa', (tester) async {
     final changes = <int>[];
     await pumpBare(
       tester,
@@ -91,9 +80,7 @@ void main() {
     expect(changes.last, 1);
   });
 
-  testWidgets('LumenCarousel troca de controller sem quebrar', (
-    tester,
-  ) async {
+  testWidgets('LumenCarousel troca de controller sem quebrar', (tester) async {
     final external = PageController();
     addTearDown(external.dispose);
     Widget build(PageController? c) => bareApp(

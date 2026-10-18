@@ -7,9 +7,7 @@ import 'package:material_ui/material_ui.dart';
 import '_harness.dart';
 
 void main() {
-  testWidgets('LumenLoadingOverlay bloqueia toques só enquanto carrega', (
-    tester,
-  ) async {
+  testWidgets('LumenLoadingOverlay bloqueia toques só enquanto carrega', (tester) async {
     var taps = 0;
     Widget build(bool loading) => bareApp(
       LumenLoadingOverlay(
@@ -38,9 +36,7 @@ void main() {
     expect(taps, 1);
   });
 
-  testWidgets('showLumenLoading cobre a tela e devolve o resultado', (
-    tester,
-  ) async {
+  testWidgets('showLumenLoading cobre a tela e devolve o resultado', (tester) async {
     late BuildContext ctx;
     await pumpBare(
       tester,
@@ -77,9 +73,7 @@ void main() {
     expect(find.text('tela'), findsOneWidget);
   });
 
-  testWidgets('showLumenLoading fecha a camada e repassa o erro', (
-    tester,
-  ) async {
+  testWidgets('showLumenLoading fecha a camada e repassa o erro', (tester) async {
     late BuildContext ctx;
     await pumpBare(
       tester,
