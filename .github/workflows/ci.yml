@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.x
+          cache: true
+
+      - name: Dependências
+        run: flutter pub get
+
+      - name: Formatação
+        run: dart format --output=none --set-exit-if-changed lib test example/lib
+
+      - name: Análise
+        run: flutter analyze
+
+      - name: Testes com cobertura
+        run: flutter test --coverage
+
+      - name: Smoke test da galeria
+        working-directory: example
+        run: flutter test
+
+      - name: Envia cobertura ao Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/lcov.info
+          disable_search: true
+          fail_ci_if_error: true

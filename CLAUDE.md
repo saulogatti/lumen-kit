@@ -12,6 +12,7 @@ new-widget checklist. This file only adds what AGENTS.md does not say.
 flutter pub get                       # root; resolves the example/ workspace too
 flutter analyze                       # must report "No issues found!"
 flutter test                          # whole suite
+flutter test --coverage               # writes coverage/lcov.info (what CI sends to Codecov)
 flutter test test/widgets/lumen_button_test.dart                          # one file
 flutter test test/widgets/lumen_button_test.dart --plain-name "renders"  # one test
 dart format lib test example/lib      # never `dart format .` at the root
