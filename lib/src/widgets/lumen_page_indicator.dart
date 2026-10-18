@@ -98,7 +98,7 @@ class LumenPageIndicator extends StatelessWidget {
         height: dotSize,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(dotSize / 2),
+          borderRadius: s.radius(dotSize / 2),
           boxShadow: s.shadows(
             t > 0
                 ? <BoxShadow>[
@@ -116,7 +116,7 @@ class LumenPageIndicator extends StatelessWidget {
       }
       return LumenPressable(
         onTap: () => onDotTapped!(i),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: s.radius(12),
         selected: i == current,
         semanticLabel: label(i, count),
         child: Padding(
