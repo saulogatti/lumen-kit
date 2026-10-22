@@ -50,28 +50,28 @@ class LumenDivider extends StatelessWidget {
       accent.withValues(alpha: 0),
     ];
 
+    // Sem gradientes, style.fill ficaria só com a primeira parada, que é
+    // transparente, e a linha sumiria: vira o acento sólido a 65%.
+    BoxDecoration decoration({
+      Alignment begin = Alignment.centerLeft,
+      Alignment end = Alignment.centerRight,
+    }) => style.gradients
+        ? BoxDecoration(
+            gradient: LinearGradient(begin: begin, end: end, colors: colors),
+          )
+        : BoxDecoration(color: accent.withValues(alpha: 0.65));
+
     if (vertical) {
       return Padding(
         padding: EdgeInsets.only(top: indent, bottom: endIndent),
         child: Container(
           width: thickness,
-          decoration: BoxDecoration(
-            gradient: style.fill(
-              LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: colors,
-              ),
-            ),
-          ),
+          decoration: decoration(begin: Alignment.topCenter, end: Alignment.bottomCenter),
         ),
       );
     }
 
-    final Widget line = Container(
-      height: thickness,
-      decoration: BoxDecoration(gradient: style.fill(LinearGradient(colors: colors))),
-    );
+    final Widget line = Container(height: thickness, decoration: decoration());
 
     if (label == null) {
       return Padding(
