@@ -1,6 +1,6 @@
 name: lumen_kit
 description: Kit de widgets Flutter com paleta livre e estilos trocáveis (neon, flat, glass, soft, brutal).
-version: 1.0.0
+version: 1.0.1
 homepage: "https://github.com/saulogatti/lumen-kit"
 
 environment:
@@ -11,13 +11,13 @@ workspace:
 dependencies:
   flutter:
     sdk: flutter
-
-  material_ui: ^1.7.0
+ 
+  material_ui: ^1.8.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  analyzer: ^14.5.0
+  analyzer: ^14.6.0
 
 flutter:
   uses-material-design: true

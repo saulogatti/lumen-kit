@@ -32,10 +32,8 @@ classes named `AppTheme` or `AppColors` (name clash with the kit).
 ```yaml
 dependencies:
   material_ui: ^1.6.0
-  lumen_kit:
-    git:
-      url: https://github.com/saulogatti/lumen-kit.git
-      ref: main   # pin a commit SHA for reproducible builds
+  lumen_kit: ^1.0.0
+  
 ```
 
 Run `flutter pub get`. The package is not on pub.dev.
@@ -77,7 +75,7 @@ the app's theme remains invisible to them.
 ## 4. Pick the import
 
 | Situation | Import |
-|---|---|
+| --- | --- |
 | New app, or the user wants the kit's look across the whole app | `package:lumen_kit/lumen_kit.dart` (includes `AppTheme`, `AppColors`) |
 | App already has its own `ThemeData`, or has `AppTheme`/`AppColors` classes | `package:lumen_kit/components.dart` (widgets, `LumenPalette`, `LumenStyle`, `LumenScope`, `LumenThemeExt` only) |
 

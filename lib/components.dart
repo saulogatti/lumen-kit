@@ -7,7 +7,7 @@
 /// ```
 library;
 
-import 'package:lumen_kit/components.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
 
 export 'src/backgrounds/lumen_animated_grid_background.dart';
 export 'src/foundation/lumen_action_content.dart';
