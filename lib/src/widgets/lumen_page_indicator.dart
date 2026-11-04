@@ -39,9 +39,9 @@ class LumenPageIndicator extends StatelessWidget {
   /// Current page when there is no [controller].
   final int index;
 
-  /// Called with the page of the touched point.
+  /// Called with the zero-based index of the tapped dot.
   ///
-  /// `null` = non-touchable points.
+  /// Use this callback to navigate. Omit it for a display-only indicator.
   final ValueChanged<int>? onDotTapped;
 
   /// Accent override.
@@ -52,15 +52,15 @@ class LumenPageIndicator extends StatelessWidget {
   /// Dot diameter.
   final double dotSize;
 
-  /// Hotspot width.
+  /// Visual width of the fully active dot in logical pixels.
   final double activeWidth;
 
   /// Space between points.
   final double spacing;
 
-  /// Text read by screen readers for the current page (base 0) and total.
+  /// Formats the accessibility label from a zero-based page index and count.
   ///
-  /// Default: "2/5".
+  /// The default uses a one-based label, such as `2/5` for index 1.
   final String Function(int index, int count)? semanticsLabel;
 
   @override
@@ -181,7 +181,7 @@ class LumenCarousel extends StatefulWidget {
   /// Called when the current page changes.
   final ValueChanged<int>? onPageChanged;
 
-  /// Shows [LumenPageIndicator] below.
+  /// Whether to show [LumenPageIndicator] below a carousel with multiple pages.
   final bool showIndicator;
 
   /// Accent override.

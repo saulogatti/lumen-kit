@@ -3,13 +3,13 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Themed wrapper about [DataTable].
+/// A horizontally scrollable [DataTable] styled with the active Lumen theme.
 ///
-/// Apply the theme colors, glow in the header and a subtle alternating line.
-/// Accepts `columns`/`rows` directly from the API Material; Anyone who needs
-/// something simpler can assemble it with [LumenTableRow] inside a [Column].
+/// Tints the header and selected rows with the accent color. Accepts Material
+/// [columns] and [rows]. For a lightweight alternative, compose
+/// [LumenTableRow] widgets inside a [Column].
 class LumenDataTable extends StatelessWidget {
-  /// Create a [DataTable] with a neon visual theme.
+  /// Creates a [DataTable] styled with the active Lumen theme.
   const LumenDataTable({
     required this.columns,
     required this.rows,

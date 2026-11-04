@@ -13,7 +13,7 @@ class LumenStep {
   /// Title displayed on the step.
   final String title;
 
-  /// Auxiliary text displayed below [title].
+  /// Supporting text below [title] in vertical mode.
   final String? subtitle;
 
   /// Content displayed below the title when the step is active (only in vertical
@@ -30,10 +30,10 @@ enum LumenStepperDirection {
   vertical,
 }
 
-/// Themed stepper with balls connected by gradient lines.
+/// Themed step progress indicator for horizontal or vertical layouts.
 ///
-/// Mode `horizontal` is purely indicator; `vertical` expands the content of
-/// active step.
+/// Vertical mode shows subtitles and expands the active step's content.
+/// Both modes accept taps when [onStepTapped] is provided.
 class LumenStepper extends StatelessWidget {
   /// Creates a neon stepper controlled by [currentStep].
   const LumenStepper({
@@ -54,7 +54,7 @@ class LumenStepper extends StatelessWidget {
   /// Visual direction of the stepper.
   final LumenStepperDirection direction;
 
-  /// Callback called with the index of the played step.
+  /// Called with the index of the tapped step.
   final ValueChanged<int>? onStepTapped;
 
   /// Highlight color override.

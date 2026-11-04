@@ -13,7 +13,7 @@ dependency).
 | `AppBar(title: Text(t))` | `LumenAppBar(title: t, subtitle:, leading:, actions:)` | `title` is a `String`. Implements `PreferredSizeWidget`, goes straight into `Scaffold.appBar`. |
 | `Card(child:)` | `LumenCard(child:, onTap:, glow: false, padding:)` | Default padding is 20; pass `EdgeInsets.zero` if the child already has its own. |
 | `Scaffold` background | `LumenAnimatedGridBackground(child: body)` | Grid/dots/plain depending on `LumenStyle`. |
-| `Divider()` / `VerticalDivider()` | `LumenDivider()` / `LumenDivider(vertical: true)` | `label:` draws text in the middle. |
+| `Divider()` / `VerticalDivider()` | `LumenDivider()` / `LumenDivider(vertical: true)` | `label:` centers text on a horizontal divider. |
 
 ## Actions
 
@@ -22,9 +22,9 @@ dependency).
 | `ElevatedButton`/`FilledButton` | `LumenButton(label:, onPressed:, icon:, busy:, expand:)` | `label` is a `String`. |
 | `OutlinedButton` | `LumenButton.outline(...)` | |
 | `TextButton` | `LumenButton.ghost(...)` | |
-| main call to action of a screen | `LumenCta(label:, onPressed:, icon:, busy:)` | Full gradient; one per screen. |
+| main call to action of a screen | `LumenCta(label:, onPressed:, icon:, busy:)` | Uses the style's gradient or solid fill. |
 | `IconButton` | `LumenIconButton(icon:, onPressed:, tooltip:)` | Variants `.solid`, `.ghost`; `shape: LumenIconButtonShape.rounded`. |
-| `FloatingActionButton` / `.extended` | `LumenFab(icon:, onPressed:)` / `LumenFab.extended(icon:, label:, onPressed:)` | Several FABs in the tree → distinct `heroTag`s. |
+| `FloatingActionButton` / `.extended` | `LumenFab(icon:, onPressed:)` / `LumenFab.extended(icon:, label:, onPressed:)` | `heroTag` is optional. Use a distinct tag for each Hero-enabled FAB on the same route. |
 | `PopupMenuButton` | `LumenMenuButton<T>(items:, onSelected:)` | Items: `LumenMenuItem(value:, label:, icon:, destructive:)`, `LumenMenuDivider()`. |
 | `showMenu` | `showLumenMenu<T>(context:, items:, position:)` | |
 | right-click menu | `LumenContextMenu<T>(items:, onSelected:, child:)` | Right click on desktop/web, long press on mobile. |
@@ -59,11 +59,11 @@ dependency).
 | toast without a scaffold | `showLumenToast(context:, message:, tone:, position:)` | Overlay; the `Future` completes when it's gone. |
 | `LinearProgressIndicator` | `LumenLinearProgress(value:)` | `value: null` = indeterminate. |
 | `CircularProgressIndicator` | `LumenCircularProgress(value:, size:)` | |
-| blocking the screen during submit | `showLumenLoading<T>(context:, task: () => ..., message:)` | Returns `task`'s result; closes by itself, including on error. Per area: `LumenLoadingOverlay(loading:, child:)`. |
+| blocking the screen during submit | `showLumenLoading<T>(context:, task: () => ..., message:)` | Returns the task result and closes even on error. Use `LumenLoadingOverlay(loading:, child:)` for one area or `LumenLoadingPanel(message:)` to compose a loading screen. |
 | shimmer/placeholder | `LumenSkeleton(width:, height:)`, `LumenSkeleton.circle(size:)` | |
 | `Tooltip` | `LumenTooltip(message:, child:)` | |
 | chip status | `LumenStatusChip(label:, tone:)` | |
-| inline alert that stays | `LumenBanner(message:, tone:, actionLabel:, onAction:, onDismiss:)` | Not a toast. No `onDismiss` means no close button. |
+| persistent inline alert | `LumenBanner(message:, tone:, actionLabel:, onAction:, onDismiss:)` | The parent controls visibility. Supply `onDismiss` to show a close button and update the parent state from the callback. |
 | `Badge` | `LumenBadge(label:, child:)`, `LumenBadge.dot(child:)` | Small tag: `LumenTag(label:)`. |
 
 ## Navigation
@@ -76,7 +76,7 @@ dependency).
 | `NavigationRail` | `LumenNavRail(items:, selectedIndex:, onChanged:, leading:, trailing:)` | Same `LumenNavItem`s. |
 | `Drawer` + `ListTile`s | `LumenDrawer(children:, header:, footer:)` + `LumenDrawerItem(icon:, label:, onTap:, selected:)` | |
 | `showModalBottomSheet` | `showLumenBottomSheet<T>(context:, builder:)` | `isScrollControlled` defaults to `true`. |
-| `Stepper` | `LumenStepper(steps:, currentStep:, onStepTapped:, direction:)` | Steps: `LumenStep(title:, subtitle:, content:)`. No continue/cancel buttons: add your own. `content` only shows in vertical mode. |
+| `Stepper` | `LumenStepper(steps:, currentStep:, onStepTapped:, direction:)` | Both directions support `onStepTapped`. Vertical mode shows subtitles and the active step's content. Add any continue or cancel buttons separately. |
 | `PageView` with indicator | `LumenCarousel(itemCount:, itemBuilder:, height:)` | Dots only: `LumenPageIndicator(count:, controller:)`. |
 | menu/module card | `LumenNavigationCard(title:, subtitle:, icon:, accent:, onTap:)` | `accent` is required. |
 

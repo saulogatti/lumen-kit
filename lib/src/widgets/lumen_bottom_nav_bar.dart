@@ -21,7 +21,7 @@ class LumenNavItem {
   final String? badge;
 }
 
-/// Bottom bar with 3-5 items, selected item highlighted with glow pill.
+/// Bottom navigation bar with a themed highlight on the selected item.
 class LumenBottomNavBar extends StatelessWidget {
   /// Creates a bottom navigation bar.
   /// Use between 3 and 5 [items] to keep reading and touching comfortable.

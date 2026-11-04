@@ -4,8 +4,9 @@ import 'package:material_ui/material_ui.dart';
 
 /// Decorations shared by kit widgets.
 ///
-/// They all go through [LumenStyle], so they change along with the style (neon,
-/// flat, glass…).
+/// Decoration helpers apply the supplied [LumenStyle]. The [diagonal] and
+/// [accent] gradient helpers return gradients that callers can pass to
+/// [LumenStyle.fill].
 /// Useful for building your own components with the same look as the kit:
 /// ```dart
 /// final LumenPalette p = LumenThemeExt.of(context).palette;

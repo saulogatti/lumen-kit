@@ -43,7 +43,7 @@ class LumenActionContent extends StatelessWidget {
   /// Space between icon and text.
   final double gap;
 
-  /// It occupies the entire width, centralizing the content.
+  /// Whether to expand the row and center its content when [label] is present.
   final bool expand;
 
   /// Text style.

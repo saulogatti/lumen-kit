@@ -22,8 +22,11 @@ enum LumenToastPosition {
 /// Useful for quick feedback on screens without `Scaffold` (e.g. splash,
 /// onboarding).
 /// Returns a [Future] that completes when the toast leaves the screen.
-/// [tone] sets default color and icon, [position] chooses vertical alignment
-/// and [margin] controls the horizontal and vertical distance from safe edges.
+///
+/// [tone] uses the caller's palette for the accent. The panel resolves its
+/// palette, style, and typography from the root overlay's context.
+/// [position] chooses the vertical edge. [margin] is measured from that
+/// edge's safe area and from the left and right overlay edges.
 Future<void> showLumenToast({
   required BuildContext context,
   required String message,

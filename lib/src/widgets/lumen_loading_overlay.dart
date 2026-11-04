@@ -29,6 +29,9 @@ class LumenLoadingOverlay extends StatelessWidget {
   });
 
   /// Whether to show the layer and block [child].
+  ///
+  /// When loading ends, focus and semantics are restored immediately.
+  /// The outgoing layer can block pointer input until its transition ends.
   final bool loading;
 
   /// Content covered.
@@ -139,11 +142,14 @@ class LumenLoadingPanel extends StatelessWidget {
   }
 }
 
-/// Lock the entire screen with [LumenLoadingPanel] while [task] runs and
-/// returns its result.
+/// Blocks the screen with a [LumenLoadingPanel] while [task] runs.
 ///
-/// The layer disappears even if [task] throws an error (the error is passed),
-/// and the back button is blocked in the meantime.
+/// The panel uses the palette and style resolved from [context], including
+/// a local [LumenScope]. The helper returns the task result or propagates its
+/// error and removes the loading route in either case.
+///
+/// The back button is blocked while the loading route is open.
+///
 /// ```dart
 /// final bool ok = await showLumenLoading(
 ///   context: context,

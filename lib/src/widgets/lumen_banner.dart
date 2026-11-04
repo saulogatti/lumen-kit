@@ -6,9 +6,11 @@ import 'package:lumen_kit/src/widgets/lumen_icon_button.dart';
 import 'package:lumen_kit/src/widgets/lumen_status_chip.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Inline alert that remains on the screen until someone closes.
-/// Unlike toast and snack bars, it doesn't disappear on its own. No [onDismiss]
-/// there is close button.
+/// Displays a persistent inline alert with optional action and close buttons.
+///
+/// The caller controls visibility. The close button calls [onDismiss] when
+/// provided.
+///
 /// ```dart
 /// LumenBanner(
 ///   message: 'Sincronização pausada',
@@ -43,7 +45,7 @@ class LumenBanner extends StatelessWidget {
   /// Default: the [tone] icon.
   final IconData? icon;
 
-  /// Optional action label, next to close.
+  /// Label shown on the action button when [onAction] is provided.
   final String? actionLabel;
 
   /// Action callback.
@@ -51,9 +53,10 @@ class LumenBanner extends StatelessWidget {
   /// Without it, [actionLabel] does not appear.
   final VoidCallback? onAction;
 
-  /// Close the alert.
+  /// Callback invoked when the close button is pressed.
   ///
-  /// Without it, there is no close button.
+  /// Omit this callback to hide the button. Remove the banner in the callback
+  /// to dismiss it.
   final VoidCallback? onDismiss;
 
   @override

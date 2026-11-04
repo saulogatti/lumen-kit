@@ -15,7 +15,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Structure | `LumenAppBar`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
 | Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
-| Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
+| Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
 | Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
 
@@ -115,6 +115,10 @@ according to the app's theme brightness, with the neon style.
 
 `LumenScope` applies a palette and style to its subtree. Widgets read the
 nearest scope first, then the theme extension, then the default palette and style.
+Routes and overlays can sit above a scope that wraps only the caller.
+`showLumenDialog` resolves its appearance from the dialog route, while
+`showLumenBottomSheet` carries the caller's accent to the sheet.
+`showLumenLoading` carries both the caller's palette and style.
 
 ```dart
 Widget saveAction(BuildContext context, VoidCallback onSave) => LumenScope(
@@ -129,8 +133,8 @@ Widget saveAction(BuildContext context, VoidCallback onSave) => LumenScope(
 
 ## Changing colors
 
-All widgets read the theme palette, so changing the theme changes the entire kit.
-From the simplest to the most detailed:
+Widgets that use Lumen color tokens resolve the active palette. Explicit color
+overrides and typography supplied by the Material theme keep their own values.
 
 ```dart
 // 1. Preset ready: neon (default), matrix, synthwave, ultraviolet, ember.
@@ -172,7 +176,7 @@ shadow, fill, surface, border and background, and matches any palette:
 | Style | Visual |
 | ---------- | --------------------------------------------------------------- |
 | `neon` | Colorful glow, gradients, grid + orbs (default) |
-| `flat` | No glow or gradient, neutral shadow, plain background |
+| `flat` | Neutral shadows and solid fills where the style is applied. The decorative background keeps its gradient and omits the grid and default orbs. |
 | `glass` | Translucent surfaces with blur, soft glow |
 | `soft` | Very round corners, diffuse shadows, and a dotted background. Removes borders drawn through `LumenStyle.borderAll`. |
 | `brutal` | Straight corners, thick edge, offset hard shadow |
@@ -189,9 +193,6 @@ final style = LumenStyle.soft.copyWith(
   radiusScale: 1.2,
 );
 ```
-
-Widget animations (hover, transitions, toasts) remain the same in all
-the styles.
 
 ## Assembling own components
 
@@ -222,8 +223,9 @@ LumenPressable(                       // ripple, focus, disabled 0.55, semantics
 | `LumenLabeled` | Control + label (checkbox, radio, switch) |
 | `LumenMotion` / `kLumen*` | Durations, disabled opacity and respect to "reduce animations" |
 
-Loop animations (skeleton, indeterminate progress) and transitions stop or
-become instantaneous when the system asks to reduce animations.
+Skeleton and Lumen indeterminate progress animations hold a static state
+when the system requests reduced motion. Transitions using
+`LumenMotion.duration` become instantaneous.
 
 ## Configurable background
 
@@ -265,8 +267,10 @@ LumenList(
 )
 ```
 
-`LumenPinField` is controlled (`value` + `onChanged`). `onChanged == null`
-disables. `onCompleted` fires when the last square fills.
+`LumenPinField` is controlled by `value` and `onChanged`. Set
+`onChanged` to `null` to disable input. `onCompleted` fires when typing
+or pasting takes the code from incomplete to complete. Assigning a complete
+`value` programmatically only updates the displayed code.
 
 ```dart
 LumenPinField(
@@ -276,8 +280,8 @@ LumenPinField(
 )
 ```
 
-`LumenBanner` stays on the screen until `onDismiss`. Without this callback there is no button
-to close.
+`LumenBanner` stays visible until its parent removes it. To add a close
+button, pass an `onDismiss` callback that updates the parent's state.
 
 ## Button variants
 
@@ -293,7 +297,8 @@ Row(
 );
 ```
 
-- `solid` — full neon gradient (same identity as `LumenCta`).
+- `solid` uses the accent gradient in gradient styles and a solid fill in
+  flat and brutal, as does `LumenCta`.
 - `outline` — glow edge + translucent background. Secondary action.
 - `ghost` — only text/icon in accent color. Tertiary action.
 
@@ -469,9 +474,10 @@ await showLumenDialog<void>(
 
 ## Example app
 
-The [example gallery](example/README.md) lets you toggle Lumen colors and
-component styles independently. Choose **Material padrão** to compare with
-equivalent Material widgets using their default colors and shapes.
+The [example gallery](https://github.com/saulogatti/lumen-kit/blob/main/example/README.md)
+lets you toggle Lumen colors and component styles independently. Choose
+**Material padrão** to compare with equivalent Material widgets using their
+default colors and shapes.
 
 ```bash
 cd example

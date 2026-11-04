@@ -2,11 +2,11 @@ import 'package:lumen_kit/src/theme/app_colors.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Neon theme instantiable palette.
+/// Color tokens for a Lumen theme.
 ///
 /// Allows you to create variants (e.g. white, with other accents) without
 /// changing the default tokens of [AppColors].
-/// To change colors without configuring token by token, use
+/// To derive a palette instead of setting each token, use
 /// [LumenPalette.fromSeed] or a [LumenPreset].
 @immutable
 class LumenPalette {
@@ -67,12 +67,13 @@ class LumenPalette {
     accentGradient: AppColors.accentGradient,
   );
 
-  /// Generates a complete palette from one or two colors.
-  /// Backgrounds, surfaces, outlines and texts are given a light shade of
-  /// [primary]/[tertiary], so that the look remains cohesive with the color
-  /// chosen. When omitted, [secondary] is the complement of [primary] and
-  /// [tertiary] is halfway between the two. The semantic colors (success /
-  /// warning / danger) follow the kit defaults.
+  /// Generates a palette from [primary] and optional [secondary] and [tertiary].
+  ///
+  /// When omitted, [secondary] uses a hue 150 degrees from [primary], and
+  /// [tertiary] blends the two along the shorter hue arc. Background and text
+  /// tones use the tertiary hue and the requested [brightness]. Success,
+  /// warning, and danger use the kit defaults.
+  ///
   /// ```dart
   /// AppTheme.fromPalette(
   ///   LumenPalette.fromSeed(primary: Colors.greenAccent),
@@ -225,8 +226,9 @@ class LumenPalette {
       );
 
   /// Returns a new palette preserving unspecified tokens.
-  /// If any background tone or accent changes and the corresponding gradient does
-  /// not is informed, the gradient is recalculated based on the new colors.
+  ///
+  /// Supplying a background tone or accent recalculates its corresponding
+  /// gradient unless a replacement gradient is also provided.
   LumenPalette copyWith({
     Color? backgroundDeep,
     Color? backgroundMid,
@@ -340,9 +342,11 @@ enum LumenPreset {
   }
 }
 
-/// Sets palette and neon style for a subtree without touching `ThemeData`.
-/// Useful when the app has its own theme and only wants to use some components
-/// of the kit with other colors:
+/// Overrides the Lumen palette and style for a widget subtree.
+///
+/// The nearest scope takes priority over the theme extension. A route or
+/// overlay inserted above the scope needs to carry the override explicitly.
+///
 /// ```dart
 /// LumenScope(
 ///   palette: LumenPalette.fromSeed(primary: Colors.teal),
@@ -350,9 +354,10 @@ enum LumenPreset {
 ///   child: LumenButton(label: 'Salvar', onPressed: salvar),
 /// )
 /// ```
-/// It has priority over [LumenThemeExt] registered in the theme.
 class LumenScope extends InheritedWidget {
-  /// Creates a scope with [palette] and [style] to [child].
+  /// Applies [palette] and [style] to [child].
+  ///
+  /// The default [style] is [LumenStyle.neon].
   LumenScope({
     required LumenPalette palette,
     required super.child,
@@ -368,8 +373,9 @@ class LumenScope extends InheritedWidget {
       oldWidget.data.palette != data.palette || oldWidget.data.style != data.style;
 }
 
-/// ThemeExtension to access the palette via
-/// `Theme.of(context).extension<LumenThemeExt>()`.
+/// Stores the Lumen palette and style in [ThemeData].
+///
+/// Use [of] to resolve local scopes and defaults as well.
 @immutable
 class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
   /// Creates a theme extension that carries [palette] and [style].
@@ -400,12 +406,11 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
     );
   }
 
-  /// Gets the active neon palette and style for [context].
-  /// Search order: nearest [LumenScope], then registered extension in
-  /// [ThemeData], and finally the default palette ([LumenPalette.defaultDark] or
-  /// [LumenPalette.light], depending on the brightness of the app theme) with
-  /// [LumenStyle.neon]. This way widgets work in apps that keep the own
-  /// `ThemeData` and never record anything from the kit.
+  /// Resolves the active Lumen palette and style for [context].
+  ///
+  /// Uses the nearest [LumenScope] or the extension registered in [ThemeData].
+  /// Otherwise, uses [LumenPalette.defaultDark] or [LumenPalette.light] based
+  /// on the theme brightness, paired with [LumenStyle.neon].
   static LumenThemeExt of(BuildContext context) {
     final scope = context.dependOnInheritedWidgetOfExactType<LumenScope>();
     if (scope != null) {
@@ -417,16 +422,16 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
   }
 }
 
-/// Alpha that does not erase what the color in the palette already carries.
-/// [Color.withValues] replaces alpha. [scaleAlpha] multiplies (`a * factor`).
-/// [outlineAlpha] is the contour case: in the dark,
-/// [LumenPalette.surfaceOutline] is a translucent cyan and the widgets ask for
-/// `0.4`–`0.9` for the border to appear, so this value comes directly. In light
-/// the token is black at ~8% (`0x15000000`). Replacing with `0.9` turns a black
-/// border. In this case the order is scaled based on the token's alpha, with a
-/// ceiling of `0.28`.
+/// Adjusts opacity for Lumen palette colors.
+///
+/// Use [scaleAlpha] to multiply the current alpha and [outlineAlpha] to
+/// preserve faint neutral outlines.
 extension LumenOutlineColor on Color {
-  /// Applies [alpha] as an outline, preserving the clear token.
+  /// Applies [alpha] while preserving faint neutral outlines.
+  ///
+  /// For saturation below `0.15` and existing alpha below `0.35`, multiplies
+  /// the existing alpha by `alpha / 0.2` and caps it at `0.28`. Other colors
+  /// use the requested alpha directly.
   Color outlineAlpha(double alpha) {
     final faintNeutral = HSLColor.fromColor(this).saturation < 0.15 && a < 0.35;
     if (!faintNeutral) {

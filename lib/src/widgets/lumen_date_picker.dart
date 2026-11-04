@@ -4,10 +4,13 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Opens the default [showDatePicker] applying the neon theme.
-/// Uses [initialDate] as the start date and limits the selection to the range
-/// between [firstDate] and [lastDate]. [accentColor] replaces the default
-/// accent and [helpText] is passed to the Material picker.
+/// Opens the Material date picker with colors from the active Lumen palette.
+///
+/// The colors come from [context] and apply to the route's Material theme.
+/// Provide an [initialDate] between [firstDate] and [lastDate], inclusive.
+/// [accentColor] overrides the primary palette color and [helpText] is
+/// forwarded to [showDatePicker]. Returns the selected date or `null` on
+/// dismissal.
 Future<DateTime?> showLumenDatePicker({
   required BuildContext context,
   required DateTime initialDate,
@@ -46,7 +49,9 @@ Future<DateTime?> showLumenDatePicker({
   );
 }
 
-/// Read-only field that opens [showLumenDatePicker] when touched.
+/// Displays a date in a read-only field that opens [showLumenDatePicker].
+///
+/// The picker opens on [value] or today's date, adjusted to the allowed range.
 class LumenDatePicker extends StatelessWidget {
   /// Creates a read-only field that opens a date picker on touch.
   const LumenDatePicker({
@@ -86,6 +91,8 @@ class LumenDatePicker extends StatelessWidget {
   final Color? accentColor;
 
   /// Formatter used to display [value].
+  ///
+  /// The default uses a two-digit day and month, followed by the year.
   final String Function(DateTime)? format;
 
   String _defaultFormat(DateTime d) =>
