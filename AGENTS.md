@@ -41,6 +41,9 @@ tools. Use them when useful in an active debug session or when requested.
 
 `docs/` contains generated Dart API documentation. Change the source Dartdoc
 or `dartdoc_options.yaml` when updating it.
+Generate into a temporary directory with Dartdoc's `--validate-links` option,
+then sync the output to `docs/`. For CRLF checkouts, use Dartdoc 9.0.8 or later
+to pick up the fix for processing `@docImport` comments.
 
 `analysis_options.yaml` is very strict (`always_use_package_imports`,
 `directives_ordering`, `strict_top_level_inference`, `specify_nonobvious_*`,
@@ -116,15 +119,13 @@ nearest `LumenScope` → `LumenThemeExt` in `ThemeData` → default palette
 `LumenStyle.neon`. Every widget has to work in the third case, without anything
 registered; This is what `bareApp` tests.
 
-**Alpha in palette colors.** `Color.withValues(alpha: x)` **replaces** the
-alpha, does not multiply. `surfaceOutline` in the clear default is already translucent
-(`0x15000000`), then `p.surfaceOutline.withValues(alpha: 0.5)` turns black
-almost opaque. For contouring use `p.surfaceOutline.outlineAlpha(0.5)`: no
-in dark the requested alpha goes straight in (the cyan remains visible) and in light the
-weak black is just scaled. Token that is born translucent (`textMuted`,
-`textSecondary`, `surfaceHighlight`) uses `c.scaleAlpha(x)`, which makes `c.a * x`.
-Opaque Accent can use `withValues(alpha:)` at will. Don't multiply one
-opaque accent thinking that it is softening a token that already had alpha.
+**Alpha in palette colors.** `Color.withValues(alpha: 0.5)` sets the color
+to 50% opacity. Use `p.surfaceOutline.outlineAlpha(x)` for outlines. For faint
+neutral colors, it multiplies the original alpha by `x / 0.2` and caps the
+result at `0.28`. Other outline colors use the requested alpha directly.
+Use `c.scaleAlpha(x)` to multiply the alpha of translucent tokens such as
+`textMuted`, `textSecondary`, and `surfaceHighlight`. Use `withValues` when
+setting an absolute alpha on an opaque accent.
 
 **Material 3 and typography.** Text uses `Theme.of(context).textTheme` with
 `copyWith(color: p.textX)`. Do not set `fontFamily`.
@@ -145,8 +146,10 @@ label: `LumenLabeled`.
 `LumenMotion.duration(context, d)`; loops via `LumenMotion.syncRepeat` on
 `didChangeDependencies`/`didUpdateWidget`. Everything needs to stop
 "reduce animations" (`MediaQuery.disableAnimations`).
-- `showLumenX` functions take a required `BuildContext` and resolve palette
-  and style from it. Route and overlay helpers return a `Future`.
+- `showLumenX` functions take a required `BuildContext`. When opening a route
+  or overlay, document which theme values are resolved from the caller and
+  which are resolved from the new build context. Route and overlay helpers
+  return a `Future`.
   `showLumenSnackBar` returns a `ScaffoldFeatureController`.
 - Docs (`///`) in English, on every public member. Block examples
 ` ```dart `.

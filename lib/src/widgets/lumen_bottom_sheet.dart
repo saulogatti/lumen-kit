@@ -2,10 +2,14 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Opens a bottom sheet modal with the neon theme aesthetic (background
-/// gradient, accent border on top and handle).
-/// [builder] creates the internal content. The [isScrollControlled] flags,
-/// [isDismissible] and [enableDrag] are passed to [showModalBottomSheet].
+/// Opens a themed modal bottom sheet and returns its result.
+///
+/// The top border and glow use [accentColor] or the primary color resolved
+/// from [context]. The sheet's palette and style come from the route's build
+/// context, which may be outside the caller's [LumenScope].
+///
+/// [builder] supplies the sheet content. [isScrollControlled],
+/// [isDismissible], and [enableDrag] are passed to [showModalBottomSheet].
 Future<T?> showLumenBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,

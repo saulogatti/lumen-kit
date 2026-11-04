@@ -204,9 +204,10 @@ class LumenCircularProgress extends StatefulWidget {
   /// Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Active arc glow color.
+  /// Optional glow color parameter for the circular indicator.
   ///
-  /// Default: `palette.secondary`.
+  /// The current painter uses the active arc [gradient] for the glow.
+  /// Setting this value has no visual effect.
   final Color? glowColor;
 
   /// Background circular trail color.

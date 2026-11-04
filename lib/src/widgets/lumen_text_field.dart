@@ -44,9 +44,7 @@ class LumenTextField extends StatefulWidget {
   /// Label displayed by the field.
   final String label;
 
-  /// Initial text of the internal controller.
-  ///
-  /// Ignored when there is [controller].
+  /// Initial text when the field starts without an external [controller].
   final String initialValue;
 
   /// Callback called when text changes.
@@ -54,13 +52,17 @@ class LumenTextField extends StatefulWidget {
 
   /// External controller.
   ///
-  /// The one who creates is the one who discards.
+  /// The caller owns and disposes this controller. Removing it restores the
+  /// previous internal controller if there is one. Otherwise, the field
+  /// initializes its internal controller with the last external value.
   final TextEditingController? controller;
 
   /// External focus, to chain fields or focus via code.
   final FocusNode? focusNode;
 
-  /// Error message displayed below the field (overlaps [validator]).
+  /// Error message displayed below the field.
+  ///
+  /// A non-null message returned by [validator] takes precedence.
   final String? errorText;
 
   /// Tip text displayed with empty field.
@@ -96,7 +98,7 @@ class LumenTextField extends StatefulWidget {
   /// If `false`, the field is disabled.
   final bool enabled;
 
-  /// Whether the text can be be edited (but can be selected).
+  /// Whether to prevent editing while allowing text selection.
   final bool readOnly;
 
   /// Whether to request focus when appearing.
@@ -107,7 +109,8 @@ class LumenTextField extends StatefulWidget {
 
   /// Maximum lines.
   ///
-  /// `null` grows without limit.
+  /// A `null` value allows the field to grow as its layout permits.
+  /// [obscure] limits the field to one line.
   final int? maxLines;
 
   /// Character limit, with counter.

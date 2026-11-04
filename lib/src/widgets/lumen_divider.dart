@@ -2,10 +2,10 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Gradient accent divider that fades at the ends.
+/// Draws a themed horizontal or vertical divider.
 ///
-/// Supports guidance horizontal (default) or vertical, and an optional
-/// centralized [label].
+/// The line fades at the ends when the style uses gradients and uses a solid
+/// accent when gradients are disabled. A horizontal divider can show [label].
 class LumenDivider extends StatelessWidget {
   /// Creates a horizontal or vertical neon divider.
   const LumenDivider({
@@ -30,7 +30,7 @@ class LumenDivider extends StatelessWidget {
   /// Whether to draw the divider vertically.
   final bool vertical;
 
-  /// Center text displayed in landscape mode only.
+  /// Text centered on the line when [vertical] is `false`.
   final String? label;
 
   /// Highlight color override.

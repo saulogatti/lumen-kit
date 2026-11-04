@@ -36,7 +36,7 @@ class LumenListTile extends StatelessWidget {
   /// Whether to reduce vertical spacing.
   final bool dense;
 
-  /// Padding for the content of the list tile.
+  /// Padding around the tile's surface and interactive area.
   ///
   /// Default: `EdgeInsets.zero`.
   final EdgeInsets contentPadding;

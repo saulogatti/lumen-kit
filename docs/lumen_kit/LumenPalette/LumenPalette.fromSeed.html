@@ -62,12 +62,11 @@
     </section>
     
 <section class="desc markdown">
-  <p>Generates a complete palette from one or two colors.
-Backgrounds, surfaces, outlines and texts are given a light shade of
-<code>primary</code>/<code>tertiary</code>, so that the look remains cohesive with the color
-chosen. When omitted, <code>secondary</code> is the complement of <code>primary</code> and
-<code>tertiary</code> is halfway between the two. The semantic colors (success /
-warning / danger) follow the kit defaults.</p>
+  <p>Generates a palette from <code>primary</code> and optional <code>secondary</code> and <code>tertiary</code>.</p>
+<p>When omitted, <code>secondary</code> uses a hue 150 degrees from <code>primary</code>, and
+<code>tertiary</code> blends the two along the shorter hue arc. Background and text
+tones use the tertiary hue and the requested <code>brightness</code>. Success,
+warning, and danger use the kit defaults.</p>
 <pre class="language-dart"><code class="language-dart">AppTheme.fromPalette(
   LumenPalette.fromSeed(primary: Colors.greenAccent),
   brightness: Brightness.dark,
@@ -150,7 +149,7 @@ warning / danger) follow the kit defaults.</p>
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

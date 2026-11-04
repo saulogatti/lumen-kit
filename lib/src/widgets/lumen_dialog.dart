@@ -102,9 +102,13 @@ class LumenDialog extends StatelessWidget {
   }
 }
 
-/// Helper to display a [LumenDialog] with `showDialog`.
-/// Returns the same result as [showDialog]. [barrierDismissible] controls
-/// whether tapping outside the dialog closes the modal route.
+/// Displays a [LumenDialog] and returns the result of [showDialog].
+///
+/// The dialog resolves its palette and style from the route's build context.
+/// A [LumenScope] that only wraps the caller is outside that context when
+/// the navigator is above the scope. Use [accent] to override the dialog accent.
+///
+/// [barrierDismissible] controls whether tapping outside closes the dialog.
 Future<T?> showLumenDialog<T>({
   required BuildContext context,
   required String title,

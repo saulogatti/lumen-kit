@@ -74,12 +74,14 @@ class LumenIconButton extends StatelessWidget {
   /// Optional message displayed on a [Tooltip].
   final String? tooltip;
 
-  /// Whether to display progress indicator and blocks ringing.
+  /// Whether to show a progress indicator and disable the button.
   final bool busy;
 
-  /// Accent override.
+  /// Accent override for the outline, ghost icon, or solid shadow.
   ///
-  /// Default: `palette.primary`.
+  /// Outline and ghost buttons default to the primary palette color. Solid
+  /// buttons default to the secondary shadow color and take their fill from
+  /// the palette's accent gradient and the active style.
   final Color? accentColor;
 
   /// Size of the total area (width = height).
@@ -178,7 +180,7 @@ class LumenIconButton extends StatelessWidget {
 
 /// [LumenIconButton] format.
 enum LumenIconButtonShape {
-  /// Circular button.
+  /// Uses half the button size as the base radius before style scaling.
   circle,
 
   /// Square button with rounded corners.

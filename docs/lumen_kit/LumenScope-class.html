@@ -54,16 +54,15 @@
 
     
 <section class="desc markdown">
-  <p>Sets palette and neon style for a subtree without touching <code>ThemeData</code>.
-Useful when the app has its own theme and only wants to use some components
-of the kit with other colors:</p>
+  <p>Overrides the Lumen palette and style for a widget subtree.</p>
+<p>The nearest scope takes priority over the theme extension. A route or
+overlay inserted above the scope needs to carry the override explicitly.</p>
 <pre class="language-dart"><code class="language-dart">LumenScope(
   palette: LumenPalette.fromSeed(primary: Colors.teal),
   style: LumenStyle.flat,
   child: LumenButton(label: 'Salvar', onPressed: salvar),
 )
 </code></pre>
-<p>It has priority over <a href="../lumen_kit/LumenThemeExt-class.html">LumenThemeExt</a> registered in the theme.</p>
 </section>
 
 
@@ -101,7 +100,7 @@ of the kit with other colors:</p>
           <span class="name"><a href="../lumen_kit/LumenScope/LumenScope.html">LumenScope</a></span><span class="signature">({<span class="parameter" id="param-palette"><span>required</span> <span class="type-annotation"><a href="../lumen_kit/LumenPalette-class.html">LumenPalette</a></span> <span class="parameter-name">palette</span>, </span><span class="parameter" id="param-child"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">child</span>, </span><span class="parameter" id="param-style"><span class="type-annotation"><a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span> <span class="parameter-name">style</span> = <span class="default-value">LumenStyle.neon</span>, </span><span class="parameter" id="param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span></span>})</span>
         </dt>
         <dd>
-          Creates a scope with <code>palette</code> and <code>style</code> to <code>child</code>.
+          Applies <code>palette</code> and <code>style</code> to <code>child</code>.
         </dd>
     </dl>
   </section>
@@ -362,7 +361,7 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

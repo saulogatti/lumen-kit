@@ -4,9 +4,10 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Code field (OTP): a sequence of places controlled by [value].
-/// `onChanged == null` disables. [onCompleted] fires when the last house is
-/// filled. Pasting a code completes the sequence all at once.
+/// A one-time code field controlled by [value].
+///
+/// A null [onChanged] disables input. Typing or pasting a full code can
+/// trigger [onCompleted].
 /// ```dart
 /// LumenPinField(
 ///   length: 6,
@@ -42,7 +43,10 @@ class LumenPinField extends StatefulWidget {
   /// `null` disables the field.
   final ValueChanged<String>? onChanged;
 
-  /// Called once when [value] reaches [length] digits.
+  /// The callback when user input fills all [length] digits.
+  ///
+  /// It fires when the input goes from incomplete to complete. Setting [value]
+  /// programmatically updates the field without invoking the callback.
   final ValueChanged<String>? onCompleted;
 
   /// Whether each place shows a dot instead of the digit.
@@ -50,7 +54,7 @@ class LumenPinField extends StatefulWidget {
 
   /// Label for screen readers.
   ///
-  /// Default: "N-digit code".
+  /// The default is `Código de N dígitos`, with [length] in place of `N`.
   final String? semanticLabel;
 
   @override

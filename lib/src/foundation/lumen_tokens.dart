@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-/// Opacity applied to any disabled widgets in the kit.
+/// Default opacity for controls that use Lumen's disabled dimming effect.
 const double kLumenDisabledOpacity = 0.55;
 
 /// Duration of short transitions (hover, selection, toggle).

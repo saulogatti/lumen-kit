@@ -63,7 +63,10 @@
     </section>
     
 <section class="desc markdown">
-  <p>Applies <code>alpha</code> as an outline, preserving the clear token.</p>
+  <p>Applies <code>alpha</code> while preserving faint neutral outlines.</p>
+<p>For saturation below <code>0.15</code> and existing alpha below <code>0.35</code>, multiplies
+the existing alpha by <code>alpha / 0.2</code> and caps it at <code>0.28</code>. Other colors
+use the requested alpha directly.</p>
 </section>
 
 
@@ -105,7 +108,7 @@
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

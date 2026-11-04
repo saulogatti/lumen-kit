@@ -3,8 +3,9 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Small stamp (usually for accountants) that can be left free or anchored to
-/// [child] in the upper right corner.
+/// Displays a small label or dot as a standalone badge or over [child].
+///
+/// An anchored badge appears at the child's upper-right corner.
 class LumenBadge extends StatelessWidget {
   /// Creates a badge with text or anchored to [child].
   const LumenBadge({

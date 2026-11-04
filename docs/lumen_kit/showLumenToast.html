@@ -73,9 +73,11 @@
 <code>ScaffoldMessenger</code>.</p>
 <p>Useful for quick feedback on screens without <code>Scaffold</code> (e.g. splash,
 onboarding).
-Returns a <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a> that completes when the toast leaves the screen.
-<code>tone</code> sets default color and icon, <code>position</code> chooses vertical alignment
-and <code>margin</code> controls the horizontal and vertical distance from safe edges.</p>
+Returns a <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a> that completes when the toast leaves the screen.</p>
+<p><code>tone</code> uses the caller's palette for the accent. The panel resolves its
+palette, style, and typography from the root overlay's context.
+<code>position</code> chooses the vertical edge. <code>margin</code> is measured from that
+edge's safe area and from the left and right overlay edges.</p>
 </section>
 
 
@@ -153,7 +155,7 @@ and <code>margin</code> controls the horizontal and vertical distance from safe 
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

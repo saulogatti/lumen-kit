@@ -48,10 +48,12 @@ class LumenAvatarGroup extends StatelessWidget {
   /// Radius of each avatar.
   final double radius;
 
-  /// Fraction of the diameter that each avatar covers the previous one (0 to 1).
+  /// Fraction of the outer diameter that overlaps the previous avatar.
+  ///
+  /// The value must be at least 0 and less than 1.
   final double overlap;
 
-  /// Accent of rings and "+N".
+  /// Accent for the overflow badge and fallback for each avatar's own ring.
   ///
   /// Default: `palette.primary`.
   final Color? accentColor;

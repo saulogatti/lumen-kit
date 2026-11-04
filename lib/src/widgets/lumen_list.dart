@@ -1,12 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Lazy list for many items.
+/// A scrollable list that builds items on demand.
 ///
-/// The body is a [ListView.builder]: only what is on the screen is constructed.
-/// With [itemCount] `0`, it shows [empty] (or nothing, if [empty] is `null`).
-/// The height comes from the father. Do not use `shrinkWrap` here: in a long
-/// list this builds all children and cancels the builder.
+/// Uses [ListView.separated] when [separatorBuilder] is set and
+/// [ListView.builder] otherwise. When [itemCount] is zero, it displays [empty]
+/// if provided.
+///
+/// For long lists, prefer a bounded viewport along [scrollDirection] with
+/// [shrinkWrap] disabled.
+///
 /// ```dart
 /// LumenList(
 ///   itemCount: eventos.length,
@@ -23,9 +26,7 @@ class LumenList extends StatelessWidget {
   /// `0` shows [empty].
   final int itemCount;
 
-  /// Builds the item in ´index`.
-  ///
-  /// In general a `LumenListTile`.
+  /// The callback that builds the item at the requested index.
   final Widget Function(BuildContext context, int index) itemBuilder;
 
   /// Widget between two items.
@@ -42,7 +43,11 @@ class LumenList extends StatelessWidget {
   /// Internal list space.
   final EdgeInsetsGeometry? padding;
 
-  /// If true, the list will be shrinked to the size of the items.
+  /// Whether the list sizes itself to its contents along [scrollDirection].
+  ///
+  /// Unbounded constraints along that axis require shrink wrapping, which can
+  /// be more expensive because the scroll view may have to recompute its size
+  /// during scrolling.
   final bool shrinkWrap;
 
   /// The physics of the list.
@@ -72,9 +77,7 @@ class LumenList extends StatelessWidget {
   /// The scroll direction of the list.
   final Axis scrollDirection;
 
-  /// Create the list.
-  ///
-  /// [itemBuilder] is only called for visible indexes.
+  /// Creates a scrollable list that builds items on demand.
   const LumenList({
     required this.itemCount,
     required this.itemBuilder,

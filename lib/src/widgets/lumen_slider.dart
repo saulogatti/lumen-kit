@@ -3,7 +3,7 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Slider with accent gradient track and glow thumb.
+/// Slider with a solid accent track and a thumb that follows the shadow style.
 class LumenSlider extends StatelessWidget {
   /// Creates a neon slider.
   const LumenSlider({

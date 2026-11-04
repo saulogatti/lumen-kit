@@ -67,10 +67,11 @@
     </section>
     
 <section class="desc markdown">
-  <p>Lock the entire screen with <a href="../lumen_kit/LumenLoadingPanel-class.html">LumenLoadingPanel</a> while <code>task</code> runs and
-returns its result.</p>
-<p>The layer disappears even if <code>task</code> throws an error (the error is passed),
-and the back button is blocked in the meantime.</p>
+  <p>Blocks the screen with a <a href="../lumen_kit/LumenLoadingPanel-class.html">LumenLoadingPanel</a> while <code>task</code> runs.</p>
+<p>The panel uses the palette and style resolved from <code>context</code>, including
+a local <a href="../lumen_kit/LumenScope-class.html">LumenScope</a>. The helper returns the task result or propagates its
+error and removes the loading route in either case.</p>
+<p>The back button is blocked while the loading route is open.</p>
 <pre class="language-dart"><code class="language-dart">final bool ok = await showLumenLoading(
   context: context,
   message: 'Enviando…',
@@ -150,7 +151,7 @@ and the back button is blocked in the meantime.</p>
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

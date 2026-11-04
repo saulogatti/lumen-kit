@@ -77,13 +77,14 @@ class LumenButton extends StatelessWidget {
   /// Optional icon displayed before [label].
   final IconData? icon;
 
-  /// Whether to display progress indicator and blocks ringing.
+  /// Whether to show a progress indicator and disable the button.
   final bool busy;
 
-  /// Accent override.
+  /// Accent override for the outline, ghost content, or solid shadow.
   ///
-  /// Default: `palette.primary` for outline/ghost, `palette.accentGradient` for
-  /// solid.
+  /// Outline and ghost buttons default to the primary palette color. Solid
+  /// buttons default to the secondary shadow color and always take their
+  /// fill from the palette's accent gradient and the active style.
   final Color? accentColor;
 
   /// Radius of button corners in logical pixels.
