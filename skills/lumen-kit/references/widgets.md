@@ -37,7 +37,7 @@ dependency).
 | `SearchBar` / search field | `LumenSearchBar(onChanged:, hint:, onSubmitted:)` | Built-in clear button. |
 | `Switch` / `SwitchListTile` | `LumenSwitch(value:, onChanged:, label:)` | `label` becomes the tappable label (replaces the `ListTile`). |
 | `Checkbox` / `CheckboxListTile` | `LumenCheckbox(value:, onChanged:, label:, tristate:)` | |
-| `Radio` / `RadioListTile` | `LumenRadio<T>(value:, groupValue:, onChanged:, label:)` | In `RadioGroup`: each radio gets `groupValue`. |
+| `Radio` / `RadioListTile` | `LumenRadio<T>(value:, groupValue:, onChanged:, label:)` | Pass the same selected value as `groupValue` to every option. |
 | `Slider` | `LumenSlider(value:, onChanged:, min:, max:, divisions:, label:)` | |
 | `RangeSlider` | `LumenRangeSlider(values:, onChanged:, min:, max:, divisions:, labels:, onChangeEnd:)` | |
 | `DropdownButton(FormField)` | `LumenDropdown<T>(value:, items:, onChanged:, label:, validator:)` | Items: `LumenDropdownItem(value:, label:, icon:)` instead of `DropdownMenuItem`. |
@@ -55,7 +55,7 @@ dependency).
 | Material | Lumen | Notes |
 | --- | --- | --- |
 | `showDialog` + `AlertDialog` | `showLumenDialog<T>(context:, title:, content:, actions:, icon:)` | `title` is a `String`, `content` is a `Widget`. Widget: `LumenDialog`. |
-| `ScaffoldMessenger.showSnackBar` | `showLumenSnackBar(context:, message:, tone:, action:)` | `tone`: `LumenStatusTone.neutral/info/success/warning/danger`. Use the `ScaffoldMessenger`. |
+| `ScaffoldMessenger.showSnackBar` | `showLumenSnackBar(context:, message:, tone:, action:)` | Returns a `ScaffoldFeatureController` and requires a `ScaffoldMessenger`. |
 | toast without a scaffold | `showLumenToast(context:, message:, tone:, position:)` | Overlay; the `Future` completes when it's gone. |
 | `LinearProgressIndicator` | `LumenLinearProgress(value:)` | `value: null` = indeterminate. |
 | `CircularProgressIndicator` | `LumenCircularProgress(value:, size:)` | |
@@ -70,9 +70,9 @@ dependency).
 
 | Material | Lumen | Notes |
 | --- | --- | --- |
-| `TabBar` + `TabController` | `LumenTabs(items:, selectedIndex:, onChanged:)` | Driven by index, in `TabController`; you switch the content (e.g. `IndexedStack` or a `PageView` on the same index). Items: `LumenTabItem(label:, icon:)`. |
+| `TabBar` + `TabController` | `LumenTabs(items:, selectedIndex:, onChanged:)` | The caller controls the index and switches the content, for example with `IndexedStack`. Items use `LumenTabItem(label:, icon:)`. |
 | `SegmentedButton` | `LumenSegmentedControl(items:, selectedIndex:, onChanged:)` | Single selection. |
-| `BottomNavigationBar` / `NavigationBar` | `LumenBottomNavBar(items:, selectedIndex:, onChanged:)` | Items: `LumenNavItem(icon:, label:, badge:)`. 3 to 5 items. |
+| `BottomNavigationBar` / `NavigationBar` | `LumenBottomNavBar(items:, selectedIndex:, onChanged:)` | Items use `LumenNavItem(icon:, label:, badge:)`. |
 | `NavigationRail` | `LumenNavRail(items:, selectedIndex:, onChanged:, leading:, trailing:)` | Same `LumenNavItem`s. |
 | `Drawer` + `ListTile`s | `LumenDrawer(children:, header:, footer:)` + `LumenDrawerItem(icon:, label:, onTap:, selected:)` | |
 | `showModalBottomSheet` | `showLumenBottomSheet<T>(context:, builder:)` | `isScrollControlled` defaults to `true`. |
@@ -84,9 +84,9 @@ dependency).
 
 | Material | Lumen | Notes |
 | --- | --- | --- |
-| `ListTile` | `LumenListTile(title:, subtitle:, leading:, trailing:, onTap:, selected:)` | `title`/`subtitle` are `String`s. |
-| long `ListView.builder` | `LumenList(itemCount:, itemBuilder:, separatorBuilder:, empty:)` | Only visible rows are built. `itemCount: 0` shows `empty`. Give it a bounded height. |
-| empty placeholder | `LumenEmptyState(title:, message:, icon:, actionLabel:, onPressed:)` | No `onPressed` means no button. |
+| `ListTile` | `LumenListTile(title:, subtitle:, leading:, trailing:, onTap:, selected:)` | `title` and `subtitle` are strings. The Git version adds `contentPadding` outside the tile. |
+| long `ListView.builder` | `LumenList(itemCount:, itemBuilder:, separatorBuilder:, empty:)` | Builds rows on demand. `itemCount: 0` shows `empty`. Use a bounded viewport for long lists. The Git version adds scroll configuration. |
+| empty placeholder | `LumenEmptyState(title:, message:, icon:, actionLabel:, onPressed:)` | The button appears when both `actionLabel` and `onPressed` are provided. |
 | `ExpansionTile` | `LumenExpansionTile(title:, children:, subtitle:, leading:)` | `title` is a `String`. |
 | `CircleAvatar` | `LumenAvatar(image:, initials:, radius:, statusColor:)` | `image` is a `ImageProvider`. Stack: `LumenAvatarGroup(avatars:, maxVisible:, total:)`. |
 | `DataTable` | `LumenDataTable(columns:, rows:)` | Takes regular `DataColumn`/`DataRow`. Standalone row: `LumenTableRow(cells:, isHeader:)`. |
