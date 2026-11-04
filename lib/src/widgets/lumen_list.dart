@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// Lazy list for many items.
@@ -17,19 +18,6 @@ import 'package:material_ui/material_ui.dart';
 /// )
 /// ```
 class LumenList extends StatelessWidget {
-  /// Create the list.
-  ///
-  /// [itemBuilder] is only called for visible indexes.
-  const LumenList({
-    required this.itemCount,
-    required this.itemBuilder,
-    super.key,
-    this.separatorBuilder,
-    this.controller,
-    this.empty,
-    this.padding,
-  });
-
   /// Quantity of items.
   ///
   /// `0` shows [empty].
@@ -54,6 +42,59 @@ class LumenList extends StatelessWidget {
   /// Internal list space.
   final EdgeInsetsGeometry? padding;
 
+  /// If true, the list will be shrinked to the size of the items.
+  final bool shrinkWrap;
+
+  /// The physics of the list.
+  final ScrollPhysics? physics;
+
+  /// If true, the list will add automatic keep alive.
+  final bool addAutomaticKeepAlives;
+
+  /// If true, the list will add repaint boundaries.
+  final bool addRepaintBoundaries;
+
+  /// If true, the list will add semantic indexes.
+  final bool addSemanticIndexes;
+
+  /// The clip behavior of the list.
+  final Clip clipBehavior;
+
+  /// The drag start behavior of the list.
+  final DragStartBehavior dragStartBehavior;
+
+  /// The keyboard dismiss behavior of the list.
+  final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
+
+  /// If true, the list will be reversed.
+  final bool reverse;
+
+  /// The scroll direction of the list.
+  final Axis scrollDirection;
+
+  /// Create the list.
+  ///
+  /// [itemBuilder] is only called for visible indexes.
+  const LumenList({
+    required this.itemCount,
+    required this.itemBuilder,
+    super.key,
+    this.separatorBuilder,
+    this.controller,
+    this.empty,
+    this.padding,
+    this.shrinkWrap = false,
+    this.physics,
+    this.addAutomaticKeepAlives = true,
+    this.addRepaintBoundaries = true,
+    this.addSemanticIndexes = true,
+    this.clipBehavior = Clip.hardEdge,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    this.reverse = false,
+    this.scrollDirection = Axis.vertical,
+  });
+
   @override
   Widget build(BuildContext context) {
     if (itemCount == 0) {
@@ -61,14 +102,34 @@ class LumenList extends StatelessWidget {
     }
     if (separatorBuilder != null) {
       return ListView.separated(
+        itemBuilder: itemBuilder,
+        itemCount: itemCount,
+        separatorBuilder: separatorBuilder!,
+        shrinkWrap: shrinkWrap,
+        physics: physics,
+        addAutomaticKeepAlives: addAutomaticKeepAlives,
+        addRepaintBoundaries: addRepaintBoundaries,
+        addSemanticIndexes: addSemanticIndexes,
+        clipBehavior: clipBehavior,
+        dragStartBehavior: dragStartBehavior,
+        keyboardDismissBehavior: keyboardDismissBehavior,
+        reverse: reverse,
+        scrollDirection: scrollDirection,
         controller: controller,
         padding: padding,
-        itemCount: itemCount,
-        itemBuilder: itemBuilder,
-        separatorBuilder: separatorBuilder!,
       );
     }
     return ListView.builder(
+      shrinkWrap: shrinkWrap,
+      physics: physics,
+      addAutomaticKeepAlives: addAutomaticKeepAlives,
+      addRepaintBoundaries: addRepaintBoundaries,
+      addSemanticIndexes: addSemanticIndexes,
+      clipBehavior: clipBehavior,
+      dragStartBehavior: dragStartBehavior,
+      keyboardDismissBehavior: keyboardDismissBehavior,
+      reverse: reverse,
+      scrollDirection: scrollDirection,
       controller: controller,
       padding: padding,
       itemCount: itemCount,
