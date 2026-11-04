@@ -7,38 +7,40 @@ To apply the kit in another app, see the skill in
 
 ## What is it
 
-`lumen_kit` is a Flutter package (not published on pub.dev, `publish_to: none`)
-with futuristic theme and ~45 widgets. Consumed via git dependency. Everything is
-domain decoupled: widgets receive data, callbacks and tokens, never
-business rules.
+`lumen_kit` is a Flutter widget package with configurable palettes and visual
+styles. Widgets receive data, callbacks, and tokens. The app owns its
+business rules. See the [installation guide](README.md#installation) for
+the published package and pinned Git checkouts.
 
-##Toolchain
+## Toolchain
 
 - Dart `^3.13.0`, Flutter `>=3.47.0` (current stable channel will do).
-- **Material comes from package `material_ui`, not `flutter/material.dart`.**
-Every file in `lib/` imports `package:material_ui/material_ui.dart` (which
-already re-exports `package:flutter/widgets.dart`). Do not mix with
-`package:flutter/material.dart`: they are different libraries with types
-different types (`ThemeData`, `Theme`, `Material`…), and the result compiles only at
-times and fails at runtime other times.
-- Code uses recent Dart 3.13 syntax (private named parameters
-as `this._backgroundGradient`, dot shorthands as `.vibrant`). No
-"fix" this.
+- Use `package:material_ui/material_ui.dart` for Material types. It re-exports
+  `package:flutter/widgets.dart`. Mixing it with `package:flutter/material.dart`
+  can produce incompatible `ThemeData`, `Theme`, and `Material` types.
+- Preserve Dart 3.13 syntax, including private named parameters such as
+  `this._backgroundGradient` and dot shorthands such as `.vibrant`.
 
 ## Commands
 
 ```bash
-flutter pub get                 # na raiz; o flutter tool resolve example/ junto
-flutter analyze                 # precisa sair "No issues found!"
-flutter test                    # testes do pacote (test/)
-cd example && flutter run -d chrome   # galeria com seletor de preset/estilo/brilho
+flutter pub get
+dart format lib test example/lib example/test
+flutter analyze
+flutter test
 ```
 
-There is no `flutter` in the container? `git clone --depth 1 -b stable
-https://github.com/flutter/flutter.git` and use `flutter/bin/flutter`. To
-gallery screenshots: `flutter build web --no-web-resources-cdn` on
-`example/` and Playwright with `locale: 'en-US'` (without locale the app breaks with
-"Incorrect locale information").
+Run these commands from the repository root. Dependency resolution includes
+the `example/` workspace. The analyzer should report `No issues found!`.
+Run `flutter test --coverage` to generate `coverage/lcov.info` as CI does.
+
+Run `flutter test` from `example/` for the gallery smoke tests. See the
+[example README](example/README.md) for running the Windows gallery and
+using its Material comparison. Hot reload and hot restart are debugging
+tools. Use them when useful in an active debug session or when requested.
+
+`docs/` contains generated Dart API documentation. Change the source Dartdoc
+or `dartdoc_options.yaml` when updating it.
 
 `analysis_options.yaml` is very strict (`always_use_package_imports`,
 `directives_ordering`, `strict_top_level_inference`, `specify_nonobvious_*`,
@@ -46,9 +48,8 @@ several inference/null-safety checks promoted to `error`…). Imports inside
 `lib/` are package imports (`package:lumen_kit/src/...`), never relative.
 `flutter analyze` with zero issues is the default repo.
 
-Formatting: `dart format` at 100 columns (`formatter: page_width: 100` in
-`analysis_options.yaml`). The entire repo is already formatted, so
-`dart format lib test example/lib` should not generate diff other than yours.
+Use `dart format` with the analysis options for each package. The root
+package sets `formatter.page_width` to 100.
 
 ## Structure
 
@@ -67,7 +68,9 @@ test/
   widgets/_harness.dart # bareApp/pumpBare: app SEM LumenThemeExt registrado
   widgets/*_test.dart   # um teste por widget novo
   components_import_test.dart  # garante que components.dart funciona sem o tema do kit
-example/lib/main.dart   # galeria; todo widget novo aparece aqui
+example/lib/main.dart              # galeria de componentes Lumen
+example/lib/material_gallery.dart  # comparação com o Material padrão
+example/test/smoke_test.dart       # testes da galeria
 ```
 
 ### The two public imports
@@ -137,13 +140,14 @@ as `Color? accentColor` (default `p.primary`).
 - Touchable area: `LumenPressable` (ripple, keyboard focus, semantics
 `selected`/`checked`/`toggled`), not raw `GestureDetector`. Control +
 label: `LumenLabeled`.
+- Use `spacing:` for uniform spacing between children of a `Row` or `Column`.
 - Animations: `kLumenFastDuration`/`kLumenMediumDuration` durations passed by
 `LumenMotion.duration(context, d)`; loops via `LumenMotion.syncRepeat` on
 `didChangeDependencies`/`didUpdateWidget`. Everything needs to stop
 "reduce animations" (`MediaQuery.disableAnimations`).
-- `showLumenX` functions (dialog, bottom sheet, menu, toast, loading…) follow the
-same pattern: `required BuildContext context`, read palette/style
-`context` and return `Future`.
+- `showLumenX` functions take a required `BuildContext` and resolve palette
+  and style from it. Route and overlay helpers return a `Future`.
+  `showLumenSnackBar` returns a `ScaffoldFeatureController`.
 - Docs (`///`) in English, on every public member. Block examples
 ` ```dart `.
 
@@ -154,15 +158,14 @@ same pattern: `required BuildContext context`, read palette/style
 3. `test/widgets/lumen_x_test.dart` using `pumpBare` (works without theme),
 covering interaction, disabled state, semantics and reduce motion when
 there is animation.
-In testing, **never give `await` directly to `showLumenX`** (dialog, picker,
-toast, loading): `Future` only completes when the route closes, and the test
-hangs forever waiting. Use `unawaited(showLumenX(...).then(...))`
-(from `dart:async`), which is what the `unawaited_futures` lint accepts, and
-pump with `tester.pump`.
+   Start route or overlay helpers with
+   `unawaited(showLumenX(...).then(...))` from `dart:async`, then pump and
+   complete the interaction. Awaiting their futures before pumping can
+   hang a widget test.
 4. Section in the gallery (`example/lib/main.dart`).
-5. Row in the `README.md` "What's inside" table + short example if the API
-is not obvious; score on `ROADMAP.md`.
-6. Clean `dart format lib test example/lib`, `flutter analyze` and `flutter test`.
+5. Update the README catalog and add a short example when the API needs one.
+   Remove the corresponding item from `ROADMAP.md` if it was planned there.
+6. Run formatting, analysis, and the package and gallery tests as appropriate.
 
 ## Git
 

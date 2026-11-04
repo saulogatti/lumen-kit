@@ -3,99 +3,128 @@
 [![CI](https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/saulogatti/lumen-kit/graph/badge.svg?token=oU4zJUQCy9)](https://codecov.io/gh/saulogatti/lumen-kit)
 
-Flutter widget kit with the same designs and free color. The neon look (glow, gradient, grid and orbs) is the default style; flat, glass, soft and brutal use any palette. Designed to be reused between projects without rewriting tokens and styles for each new app.
+A Flutter widget kit with independently configurable colors and visual styles.
+Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 
 ## What's inside
 
 | Category | Components |
 | ------------- | -------------------------------------------------------------------- |
-| Theme | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `AppTheme` |
+| Theme | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `LumenScope`, `AppTheme` |
 | Background | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec` |
 | Structure | `LumenAppBar`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
 | Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
-| Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `LumenSnackBar`, `LumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
-| Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
+| Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
+| Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
 | Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
 
-Everything decoupled from domain — receives `child`, callbacks and tokens; does not know any business rules.
+The widgets take data, callbacks, and theme tokens so the app owns its business rules.
+
+## Requirements
+
+- Dart `^3.13.0` and Flutter `>=3.47.0`.
+- Use `package:material_ui/material_ui.dart` for the Material app and its
+  widgets. `flutter/material.dart` and `material_ui` have distinct
+  `ThemeData` and `Material` types. See the
+  [integration guide](skills/lumen-kit/SKILL.md#3-material-the-app-must-use-material_ui)
+  when adding Lumen to an existing Flutter app.
 
 ## Installation
 
+### Published package
+
+Use the [pub.dev release](https://pub.dev/packages/lumen_kit) for the published
+version. This example uses the `1.0.0` release constraints.
+
 ```yaml
 dependencies:
-  lumen_kit: any
-
+  lumen_kit: ^1.0.0
+  material_ui: ^1.7.0
 ```
 
-## Only the components (without the theme)
+### Git checkout
 
-If your app already has `ThemeData` itself, just import the widgets:
+To try the `1.0.1` code before it is released, pin a commit on the repository.
+The commit below includes the updates documented here and requires
+`material_ui ^1.10.0`.
 
-```dart
-import 'package:lumen_kit/components.dart';
+```yaml
+dependencies:
+  lumen_kit:
+    git:
+      url: https://github.com/saulogatti/lumen-kit.git
+      ref: 43c30821d4b1f2460033a3dae1b290859cad3e69
+  material_ui: ^1.10.0
 ```
 
-This import does not contain `AppTheme` or `AppColors` (no name conflict) and
-does not require registering anything in the theme: widgets use the default palette, clear or
-dark depending on the brightness of your subject. For other colors or other style in
-a part of the screen, without touching `ThemeData`, use `LumenScope`:
-
-```dart
-LumenScope(
-  palette: LumenPalette.fromSeed(primary: Colors.teal),
-  style: LumenStyle.flat,
-  child: LumenButton(label: 'Save', onPressed: salvar),
-)
-```
-
-Typography comes from your app's `textTheme`. The complete import
-(`package:lumen_kit/lumen_kit.dart`) remains the same, with everything.
+Run `flutter pub get` from your app after choosing an installation method.
 
 ## Minimum usage
+
+### Use the Lumen theme for the whole app
+
+Use the full import to get `AppTheme`, which configures Material theme defaults
+and registers the Lumen palette and style.
 
 ```dart
 import 'package:lumen_kit/lumen_kit.dart';
 import 'package:material_ui/material_ui.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+  MaterialApp(
+    theme: AppTheme.light,
+    darkTheme: AppTheme.dark,
+    home: const Scaffold(
+      appBar: LumenAppBar(title: 'Dashboard'),
+      body: Center(child: LumenCard(child: Text('Online service'))),
+    ),
+  ),
+);
+```
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+### Only the components (without the theme)
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: AppTheme.dark,
-      home: Scaffold(
-        appBar: const LumenAppBar(title: 'Dashboard', subtitle: 'in real time'),
-        body: LumenAnimatedGridBackground(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: LumenCard(
-              glow: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const Text('Online service'),
-                  const SizedBox(height: 12),
-                  const LumenStatusChip(label: 'OK', tone: LumenStatusTone.success),
-                  const SizedBox(height: 20),
-                  LumenCta(
-                    label: 'EXECUTE ',
-                    icon: Icons.play_arrow_rounded,
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+Use `components.dart` to keep your Material theme and avoid name collisions
+with your own `AppTheme` or `AppColors`. Register a `LumenThemeExt` on each
+theme that should supply a specific palette and style. The extension preserves
+the app's typography and Material settings.
+
+```dart
+import 'package:lumen_kit/components.dart';
+import 'package:material_ui/material_ui.dart';
+
+ThemeData withLumen(ThemeData base) => base.copyWith(
+  extensions: <ThemeExtension<dynamic>>[
+    ...base.extensions.values.where((extension) => extension is! LumenThemeExt),
+    LumenThemeExt(
+      palette: LumenPalette.fromSeed(
+        primary: base.colorScheme.primary,
+        brightness: base.brightness,
       ),
-    );
-  }
-}
+      style: LumenStyle.flat,
+    ),
+  ],
+);
+```
+
+Without a Lumen extension, the widgets use the kit's light or dark palette
+according to the app's theme brightness, with the neon style.
+
+### Style one part of a screen
+
+`LumenScope` applies a palette and style to its subtree. Widgets read the
+nearest scope first, then the theme extension, then the default palette and style.
+
+```dart
+Widget saveAction(BuildContext context, VoidCallback onSave) => LumenScope(
+  palette: LumenPalette.fromSeed(
+    primary: Colors.teal,
+    brightness: Theme.of(context).brightness,
+  ),
+  style: LumenStyle.flat,
+  child: LumenButton(label: 'Save', onPressed: onSave),
+);
 ```
 
 ## Changing colors
@@ -123,8 +152,7 @@ final palette = LumenPalette.defaultDark().copyWith(primary: Colors.greenAccent)
 MaterialApp(theme: AppTheme.fromPalette(palette), home: ...);
 ```
 
-Theme changes at runtime are animated (`LumenThemeExt.lerp` interpolates the
-palette). The `example/` app has a preset selector and light/dark mode.
+`LumenThemeExt.lerp` interpolates palette changes during theme transitions.
 
 > `accentCyan`, `accentMagenta` and `accentBlue` became `primary`, `secondary`
 > and `tertiary`. The old names continue to function as `@Deprecated`.
@@ -146,7 +174,7 @@ shadow, fill, surface, border and background, and matches any palette:
 | `neon` | Colorful glow, gradients, grid + orbs (default) |
 | `flat` | No glow or gradient, neutral shadow, plain background |
 | `glass` | Translucent surfaces with blur, soft glow |
-| `soft` | Very round corners, diffuse shadows, no border, dotted background |
+| `soft` | Very round corners, diffuse shadows, and a dotted background. Removes borders drawn through `LumenStyle.borderAll`. |
 | `brutal` | Straight corners, thick edge, offset hard shadow |
 
 ```dart
@@ -218,8 +246,10 @@ LumenAnimatedGridBackground(
 
 ## Large list and code
 
-`LumenList` uses `ListView.builder`: only what is on the screen is built. With
-`itemCount: 0` it shows `empty`.
+`LumenList` builds rows on demand. Supply a `separatorBuilder` to add
+separators and an `empty` widget for zero items. Give the list a bounded
+viewport for large data sets. The Git version also exposes scroll options such
+as `physics`, `scrollDirection`, and `reverse`.
 
 ```dart
 LumenList(
@@ -439,14 +469,12 @@ await showLumenDialog<void>(
 
 ## Example app
 
-There is a demo app in [`example/`](example/) with a single screen that exercises all the components of the kit — cards, status, buttons, icon buttons, FAB, inputs (text, search, switch, checkbox, radio, slider, range slider, dropdown, date and time picker), choice and filter chips, quantity stepper, rating, action and context menu, loading overlay, carousel, linear/circular progress, skeleton, snackbar, toast, dialog, bottom sheet, tabs, segmented, bottom nav, drawer, stepper, avatar, avatar group, badge, tag, list tile, divider, expansion tile, data table and navigation cards.
+The [example gallery](example/README.md) lets you toggle Lumen colors and
+component styles independently. Choose **Material padrão** to compare with
+equivalent Material widgets using their default colors and shapes.
 
 ```bash
 cd example
 flutter pub get
-flutter run
+flutter run -d windows
 ```
-
-## Status
-
-In active development — API may still change between `0.x` versions. Use `ref: <commit-sha>` or tags (`ref: v1.0.0`) in production to avoid silent breaks coming from `main`.

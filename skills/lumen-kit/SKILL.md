@@ -1,6 +1,6 @@
 ---
 name: lumen-kit
-description: Apply the lumen_kit package (saulogatti/lumen-kit) to an existing Flutter app — install it from git, pick the import, set up theme/preset/LumenScope, and swap Material widgets for their Lumen equivalents.
+description: Apply the lumen_kit package (saulogatti/lumen-kit) to an existing Flutter app. Install the published package or a pinned Git revision, choose a theme integration, and swap Material widgets for Lumen equivalents.
 ---
 
 # Applying lumen_kit to a Flutter app
@@ -18,25 +18,21 @@ any widget: the APIs are **not** copies of Material's.
 
 Find out, from `pubspec.yaml` and the code:
 
-- Versions: the kit needs Dart `^3.13.0` and Flutter `>=3.47.0`. If the app
-is pinned below that, stop and tell the user; there is no workaround.
-- **Which Material library the app imports.** `grep -rn
-"package:flutter/material.dart\|package:material_ui/material_ui.dart" lib`.
-This decides step 3 and is the most expensive thing to skip.
+- Check the Dart, Flutter, and `material_ui` constraints in the
+  [requirements and installation guide](../../README.md#requirements).
+  If the app is below the minimum, explain the toolchain upgrade first.
+- Find which Material library the app imports.
+  `rg -n 'package:(flutter/material|material_ui/material_ui)\.dart' lib test`.
 - Whether it already has its own `ThemeData`, `ThemeExtension`s, or
 classes named `AppTheme` or `AppColors` (name clash with the kit).
 - Whether it has light and dark modes (`theme` + `darkTheme`/`themeMode`).
 
 ## 2. Install
 
-```yaml
-dependencies:
-  material_ui: ^1.6.0
-  lumen_kit: ^1.0.0
-  
-```
-
-Run `flutter pub get`. The package is not on pub.dev.
+Follow the [installation examples](../../README.md#installation). Use the
+published package unless the app needs a change available only in Git. For
+Git, pin a commit and use the matching `material_ui` constraint. Run
+`flutter pub get` in the app.
 
 ## 3. Material: the app must use `material_ui`
 
@@ -53,19 +49,13 @@ types. In an app that uses `flutter/material.dart` (verified on Flutter
 without a material_ui `Material` above it) throws "No Material widget
 found".
 
-So the default path is to migrate the app:
-
-```bash
-grep -rl "package:flutter/material.dart" lib test \
-  | xargs sed -i "s#package:flutter/material.dart#package:material_ui/material_ui.dart#"
-flutter analyze
-```
+Migrate the app's Material imports in `lib/` and `test/`. Review uses of
+Material types at third-party package boundaries, then run `flutter analyze`.
 
 `material_ui` re-exports `package:flutter/widgets.dart`, so existing
 `widgets.dart` imports may become unnecessary-import warnings; remove them.
-Third-party packages that ship `flutter/material` widgets (e.g. another
-package's date picker) keep working but won't inherit the theme; tell the
-user.
+Third-party widgets built with `flutter/material.dart` use a different theme
+and Material ancestors. Check those widgets separately during migration.
 
 If the user **refuses** the migration, stop and explain: there is no
 supported way to mix them. Wrapping neon widgets in a material_ui
@@ -83,60 +73,18 @@ When in doubt, `components.dart`: it never clashes and needs no theme.
 
 ## 5. Set up the theme
 
-Widgets resolve palette and style in this order: nearest `LumenScope` →
-`LumenThemeExt` registered on `ThemeData` → default palette (dark or light,
-following the theme's brightness) with the `neon` style. Pick one path:
+Use the [README theme examples](../../README.md#minimum-usage) to select the
+integration that matches the app.
 
-**THE. The kit's theme for the entire app** (import `lumen_kit.dart`):
+- For an app-wide Lumen theme, configure `AppTheme` for each supported
+  brightness. Pair a preset or brand palette with the desired style.
+- To keep the app's `ThemeData`, add `LumenThemeExt` to its light and dark
+  themes as applicable. Preserve any other extensions.
+- For a local variation, wrap the relevant subtree in `LumenScope`.
 
-```dart
-MaterialApp(
-  theme: AppTheme.fromPreset(LumenPreset.neon, brightness: Brightness.light),
-  darkTheme: AppTheme.fromPreset(LumenPreset.neon),
-  themeMode: ThemeMode.system,
-  home: ...,
-);
-```
-
-- Presets (`LumenPreset`): `neon` (cyan/magenta, default), `matrix`,
-`synthwave`, `ultraviolet`, `ember`.
-- The user's brand color: `AppTheme.fromSeed(primary: brand, secondary:
-optional, brightness: ...)`. Backgrounds, text and gradients are derived.
-- Token by token: `AppTheme.fromPalette(LumenPalette.defaultDark().copyWith(primary: ...))`.
-- Style beyond color, on any of the three: `style: LumenStyle.flat`
-(`neon`, `flat`, `glass`, `soft`, `brutal`, or `LumenStyle.soft.copyWith(...)`).
-Corporate/sober app → `flat` or `soft`; the `neon` glow is very
-opinionated, so confirm with the user before imposing it.
-
-**B. Keep the app's `ThemeData` and just register the kit** (import
-`components.dart`): add the extension to the existing theme without
-dropping the others.
-
-```dart
-ThemeData withLumen(ThemeData base) => base.copyWith(
-  extensions: [
-    ...base.extensions.values,
-    LumenThemeExt(
-      palette: LumenPalette.fromSeed(
-        primary: base.colorScheme.primary,
-        brightness: base.brightness,
-      ),
-      style: LumenStyle.flat,
-    ),
-  ],
-);
-
-MaterialApp(theme: withLumen(lightTheme), darkTheme: withLumen(darkTheme), ...);
-```
-
-This leaves the app's `ColorScheme`, typography and Material widgets
-untouched; the neon widgets follow the app's color.
-
-**W. Only part of a screen looks different**: `LumenScope(palette: ...,
-style: ..., child: ...)`. It takes precedence over the theme.
-
-**D. Nothing**: with `components.dart` and nothing registered, it works with
-the default palette. Fine for a prototype, not for shipping.
+The nearest scope takes precedence over the registered theme extension.
+Without either, the widgets use the kit's light or dark palette according to
+the app theme's brightness, with the neon style.
 
 ## 6. Swap the widgets
 
@@ -144,10 +92,9 @@ Follow [`references/widgets.md`](references/widgets.md). Rules:
 
 - Go screen by screen, not the entire app at once; run `flutter analyze`
 after each screen.
-- Lumen widgets are **controlled**: they take `value`/`selectedIndex` and
-`onChanged`, with no internal controller (except `LumenTextField`, which
-accepts a `controller`). When replacing `TabBar` + `TabController`, move
-the index into the screen's state.
+- Keep selection in the screen's state for controls that take
+  `value`/`selectedIndex` and `onChanged`. When replacing `TabBar` plus
+  `TabController`, pass the selected index to `LumenTabs`.
 - Disabled = `onPressed`/`onChanged: null`. Loading = `busy: true` on
 buttons, instead of swapping the child for a `CircularProgressIndicator`.
 - Many widgets take a `String` where Material takes a `Widget` (`title` on
@@ -174,13 +121,12 @@ colors or `AppColors` (they ignore presets, seed and light mode).
 them to the kit type (`find.byType(LumenButton)`) or to
 `find.text`/`find.bySemanticsLabel`. Tests using `MaterialApp`/`ThemeData`
 from `flutter/material.dart` need the same `material_ui` import as step 3.
-Never `await` a `showLumenX(...)` call directly in a test: the `Future`
-only completes when the route closes, so the test hangs. Use
-`unawaited(...)` and pump.
+   For a route or overlay helper, start the future with `unawaited(...)`,
+   pump, and complete the interaction before awaiting the result.
 3. Run the app in both brightnesses if it has a light mode. Outline colors
 in the kit go through `Color.outlineAlpha`, which keeps the light
 `surfaceOutline` from turning into a near-opaque black border. Tokens that
 already carry alpha (`textMuted`, `surfaceHighlight`) use `scaleAlpha`,
 which multiplies instead of replacing it.
-4. Summarize for the user: import chosen, theme path (A/B/C), widgets
-swapped, what stayed Material and why.
+4. Summarize the import, theme integration, and widgets migrated. Identify
+   Material widgets that require separate handling.
