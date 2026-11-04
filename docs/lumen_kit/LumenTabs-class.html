@@ -54,9 +54,9 @@
 
     
 <section class="desc markdown">
-  <p>Horizontal tabs with accent gradient indicator.
-Controlled: indicator tracks <a href="../lumen_kit/LumenTabs/selectedIndex.html">selectedIndex</a> even when it changes from the
-outside (e.g. swipe on a <code>PageView</code> or programmatic navigation).</p>
+  <p>Horizontal tabs with a solid accent underline.</p>
+<p>The bar follows updates to <a href="../lumen_kit/LumenTabs/selectedIndex.html">selectedIndex</a>. Taps report their index
+through <a href="../lumen_kit/LumenTabs/onChanged.html">onChanged</a>.</p>
 </section>
 
 
@@ -147,7 +147,7 @@ outside (e.g. swipe on a <code>PageView</code> or programmatic navigation).</p>
 
 </dt>
 <dd>
-  Items displayed in the bar.
+  Items displayed in the bar, with at least one item required.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -171,7 +171,7 @@ outside (e.g. swipe on a <code>PageView</code> or programmatic navigation).</p>
 
 </dt>
 <dd>
-  Callback called with the index of the tab played.
+  Called with the index of the tapped tab.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -391,7 +391,7 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

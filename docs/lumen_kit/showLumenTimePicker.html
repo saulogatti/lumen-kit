@@ -54,13 +54,13 @@
 
     <section class="multi-line-signature">
         
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimeOfDay-class.html">TimeOfDay</a>?</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/TimeOfDay-class.html">TimeOfDay</a>?</span>&gt;</span></span>
 <span class="name ">showLumenTimePicker</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="showLumenTimePicker-param-context"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
-<li><span class="parameter" id="showLumenTimePicker-param-initialTime"><span>required</span> <span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimeOfDay-class.html">TimeOfDay</a></span> <span class="parameter-name">initialTime</span>, </span></li>
+<li><span class="parameter" id="showLumenTimePicker-param-initialTime"><span>required</span> <span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/TimeOfDay-class.html">TimeOfDay</a></span> <span class="parameter-name">initialTime</span>, </span></li>
 <li><span class="parameter" id="showLumenTimePicker-param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span></li>
 <li><span class="parameter" id="showLumenTimePicker-param-helpText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">helpText</span>, </span></li>
 <li><span class="parameter" id="showLumenTimePicker-param-use24HourFormat"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">use24HourFormat</span>, </span></li>
-<li><span class="parameter" id="showLumenTimePicker-param-initialEntryMode"><span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/TimePickerEntryMode.html">TimePickerEntryMode</a></span> <span class="parameter-name">initialEntryMode</span> = <span class="default-value">TimePickerEntryMode.dial</span>, </span></li>
+<li><span class="parameter" id="showLumenTimePicker-param-initialEntryMode"><span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/TimePickerEntryMode.html">TimePickerEntryMode</a></span> <span class="parameter-name">initialEntryMode</span> = <span class="default-value">TimePickerEntryMode.dial</span>, </span></li>
 </ol>})
 
         
@@ -68,11 +68,15 @@
     </section>
     
 <section class="desc markdown">
-  <p>Opens the default <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showTimePicker.html">showTimePicker</a> applying the neon theme.
-<code>initialTime</code> is the start time, <code>accentColor</code> replaces the default accent
-and <code>helpText</code> is passed to the Material picker. <code>use24HourFormat</code> strength
-(or turns off) the 24-hour clock; when <code>null</code>, it follows the configuration
-of the system.</p>
+  <p>Opens the Material time picker with Lumen colors and corner radii.</p>
+<p>The palette and radii come from <code>context</code>. The picker uses the Material
+theme and media settings resolved inside the route as its base.</p>
+<p><code>initialTime</code> and <code>initialEntryMode</code> set the starting time and input mode.
+<code>accentColor</code> overrides the primary palette color and <code>helpText</code> is
+forwarded to <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/showTimePicker.html">showTimePicker</a>. Returns the selected time or <code>null</code> on
+dismissal.</p>
+<p><code>use24HourFormat</code> forces 24-hour formatting when <code>true</code> and uses the
+locale's format when <code>false</code>. A <code>null</code> value preserves the inherited setting.</p>
 </section>
 
 
@@ -165,7 +169,7 @@ of the system.</p>
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

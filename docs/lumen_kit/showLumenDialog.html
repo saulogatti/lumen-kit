@@ -69,9 +69,11 @@
     </section>
     
 <section class="desc markdown">
-  <p>Helper to display a <a href="../lumen_kit/LumenDialog-class.html">LumenDialog</a> with <code>showDialog</code>.
-Returns the same result as <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showDialog.html">showDialog</a>. <code>barrierDismissible</code> controls
-whether tapping outside the dialog closes the modal route.</p>
+  <p>Displays a <a href="../lumen_kit/LumenDialog-class.html">LumenDialog</a> and returns the result of <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/showDialog.html">showDialog</a>.</p>
+<p>The dialog resolves its palette and style from the route's build context.
+A <a href="../lumen_kit/LumenScope-class.html">LumenScope</a> that only wraps the caller is outside that context when
+the navigator is above the scope. Use <code>accent</code> to override the dialog accent.</p>
+<p><code>barrierDismissible</code> controls whether tapping outside closes the dialog.</p>
 </section>
 
 
@@ -120,7 +122,7 @@ whether tapping outside the dialog closes the modal route.</p>
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

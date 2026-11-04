@@ -57,8 +57,9 @@
     
 <section class="desc markdown">
   <p>Decorations shared by kit widgets.</p>
-<p>They all go through <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a>, so they change along with the style (neon,
-flat, glass…).
+<p>Decoration helpers apply the supplied <a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a>. The <a href="../lumen_kit/LumenDecorations/diagonal.html">diagonal</a> and
+<a href="../lumen_kit/LumenDecorations/accent.html">accent</a> gradient helpers return gradients that callers can pass to
+<a href="../lumen_kit/LumenStyle/fill.html">LumenStyle.fill</a>.
 Useful for building your own components with the same look as the kit:</p>
 <pre class="language-dart"><code class="language-dart">final LumenPalette p = LumenThemeExt.of(context).palette;
 final LumenStyle s = LumenStyle.of(context);
@@ -204,7 +205,7 @@ Container(decoration: LumenDecorations.panel(p, s, accent: p.secondary));
 
         <dt id="input" class="callable">
   <span class="name"><a href="../lumen_kit/LumenDecorations/input.html">input</a></span><span class="signature">(<wbr><span class="parameter" id="input-param-p"><span class="type-annotation"><a href="../lumen_kit/LumenPalette-class.html">LumenPalette</a></span> <span class="parameter-name">p</span>, </span><span class="parameter" id="input-param-s"><span class="type-annotation"><a href="../lumen_kit/LumenStyle-class.html">LumenStyle</a></span> <span class="parameter-name">s</span>, {</span><span class="parameter" id="input-param-accent"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a></span> <span class="parameter-name">accent</span>, </span><span class="parameter" id="input-param-radius"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">radius</span> = <span class="default-value">12</span>, </span><span class="parameter" id="input-param-label"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">label</span>, </span><span class="parameter" id="input-param-hint"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">hint</span>, </span><span class="parameter" id="input-param-helper"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">helper</span>, </span><span class="parameter" id="input-param-error"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">error</span>, </span><span class="parameter" id="input-param-prefixIcon"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">prefixIcon</span>, </span><span class="parameter" id="input-param-suffixIcon"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">suffixIcon</span>, </span><span class="parameter" id="input-param-contentPadding"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/EdgeInsetsGeometry-class.html">EdgeInsetsGeometry</a>?</span> <span class="parameter-name">contentPadding</span>, </span><span class="parameter" id="input-param-isDense"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isDense</span> = <span class="default-value">false</span>, </span><span class="parameter" id="input-param-enabledBorderAlpha"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">enabledBorderAlpha</span> = <span class="default-value">0.35</span></span>})
-    <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/InputDecoration-class.html">InputDecoration</a></span>
+    <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/InputDecoration-class.html">InputDecoration</a></span>
   </span>
   
 
@@ -269,7 +270,7 @@ Container(decoration: LumenDecorations.panel(p, s, accent: p.secondary));
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

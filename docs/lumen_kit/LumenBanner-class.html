@@ -54,9 +54,9 @@
 
     
 <section class="desc markdown">
-  <p>Inline alert that remains on the screen until someone closes.
-Unlike toast and snack bars, it doesn't disappear on its own. No <a href="../lumen_kit/LumenBanner/onDismiss.html">onDismiss</a>
-there is close button.</p>
+  <p>Displays a persistent inline alert with optional action and close buttons.</p>
+<p>The caller controls visibility. The close button calls <a href="../lumen_kit/LumenBanner/onDismiss.html">onDismiss</a> when
+provided.</p>
 <pre class="language-dart"><code class="language-dart">LumenBanner(
   message: 'Sincronização pausada',
   tone: LumenStatusTone.warning,
@@ -119,7 +119,7 @@ there is close button.</p>
 
 </dt>
 <dd>
-  Optional action label, next to close.
+  Label shown on the action button when <a href="../lumen_kit/LumenBanner/onAction.html">onAction</a> is provided.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -191,7 +191,7 @@ there is close button.</p>
 
 </dt>
 <dd>
-  Close the alert.
+  Callback invoked when the close button is pressed.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -411,7 +411,7 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

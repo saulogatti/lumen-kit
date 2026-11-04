@@ -54,10 +54,10 @@
 
     
 <section class="desc markdown">
-  <p>Themed wrapper about <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataTable-class.html">DataTable</a>.</p>
-<p>Apply the theme colors, glow in the header and a subtle alternating line.
-Accepts <code>columns</code>/<code>rows</code> directly from the API Material; Anyone who needs
-something simpler can assemble it with <a href="../lumen_kit/LumenTableRow-class.html">LumenTableRow</a> inside a <a href="https://api.flutter.dev/flutter/widgets/Column-class.html">Column</a>.</p>
+  <p>A horizontally scrollable <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/DataTable-class.html">DataTable</a> styled with the active Lumen theme.</p>
+<p>Tints the header and selected rows with the accent color. Accepts Material
+<a href="../lumen_kit/LumenDataTable/columns.html">columns</a> and <a href="../lumen_kit/LumenDataTable/rows.html">rows</a>. For a lightweight alternative, compose
+<a href="../lumen_kit/LumenTableRow-class.html">LumenTableRow</a> widgets inside a <a href="https://api.flutter.dev/flutter/widgets/Column-class.html">Column</a>.</p>
 </section>
 
 
@@ -91,10 +91,10 @@ something simpler can assemble it with <a href="../lumen_kit/LumenTableRow-class
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="LumenDataTable.new" class="callable">
-          <span class="name"><a href="../lumen_kit/LumenDataTable/LumenDataTable.html">LumenDataTable</a></span><span class="signature">({<span class="parameter" id="param-columns"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataColumn-class.html">DataColumn</a></span>&gt;</span></span> <span class="parameter-name">columns</span>, </span><span class="parameter" id="param-rows"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataRow-class.html">DataRow</a></span>&gt;</span></span> <span class="parameter-name">rows</span>, </span><span class="parameter" id="param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span><span class="parameter" id="param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span><span class="parameter" id="param-sortColumnIndex"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">sortColumnIndex</span>, </span><span class="parameter" id="param-sortAscending"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">sortAscending</span> = <span class="default-value">true</span></span>})</span>
+          <span class="name"><a href="../lumen_kit/LumenDataTable/LumenDataTable.html">LumenDataTable</a></span><span class="signature">({<span class="parameter" id="param-columns"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/DataColumn-class.html">DataColumn</a></span>&gt;</span></span> <span class="parameter-name">columns</span>, </span><span class="parameter" id="param-rows"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/DataRow-class.html">DataRow</a></span>&gt;</span></span> <span class="parameter-name">rows</span>, </span><span class="parameter" id="param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span><span class="parameter" id="param-accentColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">accentColor</span>, </span><span class="parameter" id="param-sortColumnIndex"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">sortColumnIndex</span>, </span><span class="parameter" id="param-sortAscending"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">sortAscending</span> = <span class="default-value">true</span></span>})</span>
         </dt>
         <dd>
-          Create a <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataTable-class.html">DataTable</a> with a neon visual theme.
+          Creates a <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/DataTable-class.html">DataTable</a> styled with the active Lumen theme.
             <div class="constructor-modifier features">const</div>
         </dd>
     </dl>
@@ -119,12 +119,12 @@ something simpler can assemble it with <a href="../lumen_kit/LumenTableRow-class
 
         <dt id="columns" class="property">
   <span class="name"><a href="../lumen_kit/LumenDataTable/columns.html">columns</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataColumn-class.html">DataColumn</a></span>&gt;</span></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/DataColumn-class.html">DataColumn</a></span>&gt;</span></span>
   
 
 </dt>
 <dd>
-  Columns passed to <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataTable/columns.html">DataTable.columns</a>.
+  Columns passed to <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/DataTable/columns.html">DataTable.columns</a>.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -155,12 +155,12 @@ something simpler can assemble it with <a href="../lumen_kit/LumenTableRow-class
 
         <dt id="rows" class="property">
   <span class="name"><a href="../lumen_kit/LumenDataTable/rows.html">rows</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataRow-class.html">DataRow</a></span>&gt;</span></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/DataRow-class.html">DataRow</a></span>&gt;</span></span>
   
 
 </dt>
 <dd>
-  Lines forwarded to <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/DataTable/rows.html">DataTable.rows</a>.
+  Lines forwarded to <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/DataTable/rows.html">DataTable.rows</a>.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -392,7 +392,7 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

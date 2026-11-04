@@ -114,14 +114,34 @@ Widget build(BuildContext context) {
   }
   if (separatorBuilder != null) {
     return ListView.separated(
+      itemBuilder: itemBuilder,
+      itemCount: itemCount,
+      separatorBuilder: separatorBuilder!,
+      shrinkWrap: shrinkWrap,
+      physics: physics,
+      addAutomaticKeepAlives: addAutomaticKeepAlives,
+      addRepaintBoundaries: addRepaintBoundaries,
+      addSemanticIndexes: addSemanticIndexes,
+      clipBehavior: clipBehavior,
+      dragStartBehavior: dragStartBehavior,
+      keyboardDismissBehavior: keyboardDismissBehavior,
+      reverse: reverse,
+      scrollDirection: scrollDirection,
       controller: controller,
       padding: padding,
-      itemCount: itemCount,
-      itemBuilder: itemBuilder,
-      separatorBuilder: separatorBuilder!,
     );
   }
   return ListView.builder(
+    shrinkWrap: shrinkWrap,
+    physics: physics,
+    addAutomaticKeepAlives: addAutomaticKeepAlives,
+    addRepaintBoundaries: addRepaintBoundaries,
+    addSemanticIndexes: addSemanticIndexes,
+    clipBehavior: clipBehavior,
+    dragStartBehavior: dragStartBehavior,
+    keyboardDismissBehavior: keyboardDismissBehavior,
+    reverse: reverse,
+    scrollDirection: scrollDirection,
     controller: controller,
     padding: padding,
     itemCount: itemCount,
@@ -155,7 +175,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>
