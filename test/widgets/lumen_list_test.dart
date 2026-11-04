@@ -13,11 +13,18 @@ void main() {
         height: 180,
         width: 320,
         child: LumenList(
+          controller: ScrollController(),
+          physics: const BouncingScrollPhysics(),
+          addAutomaticKeepAlives: false,
+          addRepaintBoundaries: false,
+          addSemanticIndexes: false,
+          clipBehavior: Clip.antiAlias,
           itemCount: 80,
           itemBuilder: (context, i) => LumenListTile(title: 'item $i', onTap: () => tapped = i),
         ),
       ),
     );
+    await tester.pumpAndSettle();
     expect(find.text('item 0'), findsOneWidget);
     expect(find.text('item 79'), findsNothing);
     await tester.tap(find.text('item 0'));

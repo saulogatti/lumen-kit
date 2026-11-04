@@ -22,11 +22,11 @@ void main() {
         ),
       ),
     );
-
     await tester.tap(find.byType(LumenDropdown<String>));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Magenta').last);
     await tester.pumpAndSettle();
+
     expect(value, 'magenta');
 
     await pumpBare(
