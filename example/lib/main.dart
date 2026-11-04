@@ -1,5 +1,6 @@
 import 'package:flutter/widget_previews.dart';
-import 'package:lumen_kit/lumen_kit.dart';
+import 'package:lumen_kit/components.dart';
+import 'package:lumen_kit_example/material_gallery.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const LumenExampleApp());
@@ -26,37 +27,137 @@ const List<LumenMenuEntry<String>> _menuItems = <LumenMenuEntry<String>>[
   ),
 ];
 
-final ValueNotifier<Brightness> _brightness = ValueNotifier<Brightness>(
-  Brightness.light,
+const LumenStyle _baseStyle = LumenStyle(
+  shadow: LumenShadowKind.none,
+  gradients: false,
+  background: LumenBackgroundKind.plain,
+  orbs: false,
 );
 
-/// Preset, estilo e brilho atuais da galeria. Trocar qualquer um re-tematiza
-/// o app inteiro (cores com transição animada via [LumenThemeExt.lerp]).
-final ValueNotifier<LumenPreset> _preset = ValueNotifier<LumenPreset>(
-  LumenPreset.neon,
-);
+const List<LumenNavItem> _navItems = <LumenNavItem>[
+  LumenNavItem(icon: Icons.dashboard_outlined, label: 'Home'),
+  LumenNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
+  LumenNavItem(icon: Icons.person_outline, label: 'Conta'),
+];
 
-final ValueNotifier<String> _style = ValueNotifier<String>('neon');
+class LumenExampleApp extends StatefulWidget {
+  const LumenExampleApp({super.key, this.initialBrightness = Brightness.light});
 
-class LumenExampleApp extends StatelessWidget {
-  const LumenExampleApp({super.key});
+  /// The brightness used when the gallery opens.
+  final Brightness initialBrightness;
+
+  @override
+  State<LumenExampleApp> createState() => _LumenExampleAppState();
+}
+
+class _LumenExampleAppState extends State<LumenExampleApp> {
+  late Brightness _brightness = widget.initialBrightness;
+  LumenPreset _preset = LumenPreset.neon;
+  String _style = 'neon';
+  bool _useLumenColors = true;
+  bool _useLumenStyle = true;
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: Listenable.merge(<Listenable>[_preset, _style, _brightness]),
-      builder: (BuildContext context, _) => MaterialApp(
-        title: 'lumen_kit example',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.fromPreset(
-          _preset.value,
-          brightness: _brightness.value,
-          style: LumenStyle.presets[_style.value]!,
+    final materialTheme = ThemeData(brightness: _brightness);
+    final palette = _useLumenColors
+        ? _preset.palette(brightness: _brightness)
+        : _materialPalette(materialTheme.colorScheme);
+    final style = _useLumenStyle ? LumenStyle.presets[_style]! : _baseStyle;
+
+    return MaterialApp(
+      title: 'lumen_kit example',
+      debugShowCheckedModeBanner: false,
+      theme: materialTheme.copyWith(
+        extensions: <ThemeExtension<dynamic>>[
+          LumenThemeExt(palette: palette, style: style),
+        ],
+      ),
+      home: _GalleryScreen(
+        settings: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 12,
+          children: <Widget>[
+            Builder(
+              builder: (context) => LumenButton.outline(
+                label: 'Material padrão',
+                icon: Icons.compare_arrows_rounded,
+                onPressed: () => showMaterialGallery(context),
+              ),
+            ),
+            LumenSwitch(
+              label: 'Cores do Lumen',
+              value: _useLumenColors,
+              onChanged: (bool value) =>
+                  setState(() => _useLumenColors = value),
+            ),
+            if (_useLumenColors)
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: <Widget>[
+                  for (final LumenPreset preset in LumenPreset.values)
+                    LumenTag(
+                      label: preset.name,
+                      color: preset.primary,
+                      icon: _preset == preset ? Icons.check_rounded : null,
+                      onTap: () => setState(() => _preset = preset),
+                    ),
+                ],
+              ),
+            LumenSwitch(
+              label: 'Estilo dos componentes',
+              value: _useLumenStyle,
+              onChanged: (bool value) => setState(() => _useLumenStyle = value),
+            ),
+            if (_useLumenStyle)
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: <Widget>[
+                  for (final String name in LumenStyle.presets.keys)
+                    LumenTag(
+                      label: name,
+                      icon: _style == name
+                          ? Icons.check_rounded
+                          : Icons.auto_awesome_outlined,
+                      onTap: () => setState(() => _style = name),
+                    ),
+                ],
+              ),
+            LumenSwitch(
+              label: 'Modo escuro',
+              value: _brightness == Brightness.dark,
+              onChanged: (bool dark) => setState(
+                () => _brightness = dark ? Brightness.dark : Brightness.light,
+              ),
+            ),
+          ],
         ),
-        home: const _GalleryScreen(),
       ),
     );
   }
+}
+
+LumenPalette _materialPalette(ColorScheme scheme) {
+  final isDark = scheme.brightness == Brightness.dark;
+  return LumenPalette(
+    backgroundDeep: scheme.surface,
+    backgroundMid: scheme.surfaceContainerLow,
+    backgroundSoft: scheme.surfaceContainer,
+    surface: scheme.surfaceContainerHigh,
+    surfaceOutline: scheme.outlineVariant,
+    surfaceHighlight: scheme.onSurface.withValues(alpha: 0.08),
+    primary: scheme.primary,
+    secondary: scheme.secondary,
+    tertiary: scheme.tertiary,
+    textPrimary: scheme.onSurface,
+    textSecondary: scheme.onSurfaceVariant,
+    textMuted: scheme.onSurfaceVariant.withValues(alpha: 0.8),
+    success: isDark ? Colors.green.shade300 : Colors.green.shade800,
+    warning: isDark ? Colors.amber.shade300 : Colors.amber.shade900,
+    danger: scheme.error,
+  );
 }
 
 class MyWidget extends StatelessWidget {
@@ -64,18 +165,14 @@ class MyWidget extends StatelessWidget {
   const MyWidget.preview({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'lumen_kit example',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
-      home: const _GalleryScreen(),
-    );
-  }
+  Widget build(BuildContext context) =>
+      const LumenExampleApp(initialBrightness: Brightness.dark);
 }
 
 class _GalleryScreen extends StatefulWidget {
-  const _GalleryScreen();
+  const _GalleryScreen({required this.settings});
+
+  final Widget settings;
 
   @override
   State<_GalleryScreen> createState() => _GalleryScreenState();
@@ -84,14 +181,14 @@ class _GalleryScreen extends StatefulWidget {
 class _GalleryScreenState extends State<_GalleryScreen> {
   double _progress = 0.35;
   bool _busy = false;
-  String _slug = 'meu-app-neon';
+  String _slug = 'meu-app';
 
   // Inputs
   bool _switchOn = true;
   bool? _checkbox = true;
   String _radio = 'a';
   double _slider = 0.4;
-  String _dropdown = 'cyan';
+  String _dropdown = 'primary';
   String _search = '';
   DateTime? _date;
   TimeOfDay? _time;
@@ -102,6 +199,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   double _rating = 4;
   bool _overlay = false;
   bool _bannerVisible = true;
+  bool _chipSelected = false;
   String _pin = '';
 
   // Navegação
@@ -178,11 +276,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
       bottomNavigationBar: LumenBottomNavBar(
         selectedIndex: _bottomNav,
         onChanged: (int i) => setState(() => _bottomNav = i),
-        items: const <LumenNavItem>[
-          LumenNavItem(icon: Icons.dashboard_outlined, label: 'Home'),
-          LumenNavItem(icon: Icons.bolt_outlined, label: 'Eventos', badge: '3'),
-          LumenNavItem(icon: Icons.person_outline, label: 'Conta'),
-        ],
+        items: _navItems,
       ),
       floatingActionButton: LumenFab.extended(
         icon: Icons.bolt_rounded,
@@ -195,63 +289,11 @@ class _GalleryScreenState extends State<_GalleryScreen> {
         ),
       ),
       body: LumenAnimatedGridBackground(
+        gradient: LumenStyle.of(context).fill(p.backgroundGradient),
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
           children: <Widget>[
-            _section(
-              'Paleta e estilo',
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: <Widget>[
-                      for (final LumenPreset preset in LumenPreset.values)
-                        LumenTag(
-                          label: preset.name,
-                          color: preset.primary,
-                          icon: _preset.value == preset
-                              ? Icons.check_rounded
-                              : null,
-                          onTap: () => _preset.value = preset,
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: <Widget>[
-                      for (final String name in LumenStyle.presets.keys)
-                        LumenTag(
-                          label: name,
-                          icon: _style.value == name
-                              ? Icons.check_rounded
-                              : Icons.auto_awesome_outlined,
-                          onTap: () => _style.value = name,
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: <Widget>[
-                      LumenSwitch(
-                        value: _brightness.value == Brightness.dark,
-                        onChanged: (bool dark) => _brightness.value = dark
-                            ? Brightness.dark
-                            : Brightness.light,
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'modo escuro',
-                        style: TextStyle(color: p.textSecondary),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            _section('Cores e estilo', widget.settings),
             _section(
               'Cards & status',
               LumenCard(
@@ -327,6 +369,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     onPressed: () {},
                   ),
                   LumenButton.ghost(label: 'cancelar', onPressed: () {}),
+                  LumenCta(
+                    label: 'Continuar',
+                    icon: Icons.arrow_forward_rounded,
+                    onPressed: () => showLumenToast(
+                      context: context,
+                      message: 'Ação principal selecionada',
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -359,7 +409,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   ),
                   const Spacer(),
                   LumenTooltip(
-                    message: 'Quadrado, com tooltip neon',
+                    message: 'Botão quadrado com dica',
                     child: LumenIconButton(
                       icon: Icons.info_outline,
                       shape: LumenIconButtonShape.rounded,
@@ -412,14 +462,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       LumenRadio<String>(
                         value: 'a',
                         groupValue: _radio,
-                        label: 'Cyan',
+                        label: 'Primária',
                         onChanged: (String? v) =>
                             setState(() => _radio = v ?? _radio),
                       ),
                       LumenRadio<String>(
                         value: 'b',
                         groupValue: _radio,
-                        label: 'Magenta',
+                        label: 'Secundária',
                         accentColor: p.secondary,
                         onChanged: (String? v) =>
                             setState(() => _radio = v ?? _radio),
@@ -427,7 +477,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       LumenRadio<String>(
                         value: 'c',
                         groupValue: _radio,
-                        label: 'Blue',
+                        label: 'Terciária',
                         accentColor: p.tertiary,
                         onChanged: (String? v) =>
                             setState(() => _radio = v ?? _radio),
@@ -460,22 +510,22 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   ),
                   const SizedBox(height: 4),
                   LumenDropdown<String>(
-                    label: 'Accent padrão',
+                    label: 'Cor de destaque',
                     value: _dropdown,
                     items: const <LumenDropdownItem<String>>[
                       LumenDropdownItem<String>(
-                        value: 'cyan',
-                        label: 'Cyan',
+                        value: 'primary',
+                        label: 'Primária',
                         icon: Icons.circle_outlined,
                       ),
                       LumenDropdownItem<String>(
-                        value: 'magenta',
-                        label: 'Magenta',
+                        value: 'secondary',
+                        label: 'Secundária',
                         icon: Icons.circle_outlined,
                       ),
                       LumenDropdownItem<String>(
-                        value: 'blue',
-                        label: 'Blue',
+                        value: 'tertiary',
+                        label: 'Terciária',
                         icon: Icons.circle_outlined,
                       ),
                     ],
@@ -517,6 +567,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 16,
                 children: <Widget>[
+                  LumenChip(
+                    label: 'Favorito',
+                    selected: _chipSelected,
+                    showCheckmark: true,
+                    onSelected: (bool selected) =>
+                        setState(() => _chipSelected = selected),
+                  ),
                   LumenChoiceChips<String>(
                     value: _size,
                     onChanged: (String? v) => setState(() => _size = v),
@@ -825,9 +882,9 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         'Esta operação não pode ser desfeita. Deseja prosseguir?',
                       ),
                       actions: <Widget>[
-                        TextButton(
+                        LumenButton.ghost(
+                          label: 'Cancelar',
                           onPressed: () => Navigator.pop(context),
-                          child: const Text('Cancelar'),
                         ),
                         LumenButton(
                           label: 'CONFIRMAR',
@@ -1065,11 +1122,35 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 ],
               ),
             ),
+            _section(
+              'Linhas de tabela',
+              const Column(
+                children: <Widget>[
+                  LumenTableRow(
+                    isHeader: true,
+                    cells: <Widget>[Text('Serviço'), Text('Estado')],
+                  ),
+                  LumenTableRow(
+                    cells: <Widget>[Text('API'), Text('Disponível')],
+                  ),
+                ],
+              ),
+            ),
 
             _section(
-              'Navegação (cards)',
+              'Navegação (cards e barra lateral)',
               Column(
                 children: <Widget>[
+                  SizedBox(
+                    height: 250,
+                    child: LumenNavRail(
+                      items: _navItems,
+                      selectedIndex: _bottomNav,
+                      onChanged: (int index) =>
+                          setState(() => _bottomNav = index),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   LumenNavigationCard(
                     title: 'Dashboard',
                     subtitle: 'visão geral em tempo real',
