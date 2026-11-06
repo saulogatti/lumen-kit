@@ -45,7 +45,7 @@ dependencies:
 
 ### Git checkout
 
-To try the `1.0.1` code before it is released, pin a commit on the repository.
+To try the `1.1.0` code before it is released, pin a commit on the repository.
 The commit below includes the updates documented here and requires
 `material_ui ^1.10.0`.
 
