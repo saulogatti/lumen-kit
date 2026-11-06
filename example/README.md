@@ -1,36 +1,63 @@
-# Galeria do Lumen Kit
+# Lumen Kit gallery
 
-Execute o comando abaixo na pasta `example` para abrir a galeria.
+Run the following command from the `example` directory to open the gallery.
 
 ```powershell
 flutter run -d windows
 ```
 
-## Como comparar
+## Comparing themes
 
-Use a seção **Cores e estilo** para alternar a paleta e o estilo de forma
-independente. A galeria abre com os dois controles ligados.
+Use the **Colors and style** section to toggle the palette and component style
+independently. Both controls are enabled when the gallery opens.
 
-| Cores do Lumen | Estilo dos componentes | Resultado na galeria Lumen |
+| Lumen colors | Component style | Result in the Lumen gallery |
 | --- | --- | --- |
-| Ligadas | Ligado | Paleta e estilo selecionados. |
-| Desligadas | Ligado | Cores do Material com o estilo selecionado. |
-| Ligadas | Desligado | Paleta selecionada com os cantos e as bordas base do kit. |
-| Desligadas | Desligado | Cores do Material com os cantos e as bordas base do kit. |
+| On | On | Selected palette and style. |
+| Off | On | Material colors with the selected style. |
+| On | Off | Selected palette with the kit's base corners and borders. |
+| Off | Off | Material colors with the kit's base corners and borders. |
 
-Com o estilo desligado, a galeria usa preenchimentos sólidos e dispensa
-sombras e ornamentos de fundo. O modo claro ou escuro e a tipografia do
-Material valem para todas as combinações.
+With component styling disabled, the gallery uses solid fills without shadows
+or background decorations. Light or dark mode and Material typography apply
+to every combination.
 
-**Material padrão** abre uma tela separada com as cores e as formas nativas
-do Material. Ela reúne equivalentes para cards, botões, campos, seleção,
-navegação, feedback e tabelas. A seta de voltar recupera a configuração
-anterior da galeria Lumen.
+**Default Material** opens a separate screen with native Material colors and
+shapes. It includes equivalents for cards, buttons, fields, selection,
+navigation, feedback, and tables. The back arrow restores the previous Lumen
+gallery configuration.
 
-## Como o exemplo aplica o tema
+## How the example applies the theme
 
-A [galeria Lumen](lib/main.dart) combina a paleta e o estilo escolhidos via
-`LumenThemeExt`. Quando as cores do Lumen estão desligadas, ela mapeia o
-`ColorScheme` do Material para uma `LumenPalette` e usa verde e âmbar para
-sucesso e alerta. A [tela de comparação](lib/material_gallery.dart) usa o
-`ThemeData` padrão e widgets do `material_ui`.
+The [Lumen gallery](lib/main.dart) combines the selected palette and style
+through `LumenThemeExt`. When Lumen colors are disabled, it maps the Material
+`ColorScheme` to a `LumenPalette` and uses green and amber for success and
+warning. The [comparison screen](lib/material_gallery.dart) uses the default
+`ThemeData` and widgets from `material_ui`.
+
+## Exploring component states
+
+The **Foundation** section demonstrates `LumenPressable`, `LumenActionContent`,
+and `LumenLabeled` directly. Try the interactive and selected states, use Tab
+and Enter to explore keyboard focus, and compare disabled controls. A custom
+action combines the foundation widgets with `LumenDecorations`.
+
+The **Control states** section compares enabled, disabled, loading, and
+indeterminate controls. Text fields demonstrate help text, read-only values,
+and form validation. Dropdowns show selection and errors; PIN fields and
+sliders demonstrate disabled input. Use the form controls to compare invalid
+and valid submissions.
+
+The **Stepper** section presents horizontal and vertical layouts with separate
+selection and reset controls. Only the active vertical step expands its content.
+
+All demonstrations follow the selected palette, style, and brightness. The new
+sections live in [`lib/sections/`](lib/sections/) and own their demonstration
+state; the main gallery composes them and supplies the theme.
+
+## Running checks
+
+From the repository root, run `flutter analyze` and `flutter test`. Run
+`flutter test` from `example/` for gallery interaction and smoke tests. The
+section layout tests cover all five styles in light and dark modes at a narrow
+viewport with enlarged text and reduced motion.

@@ -51,7 +51,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showLumenSnackBar({
             ),
             if (action != null)
               TextButton(
-                // Igual ao SnackBarAction: a ação também fecha o snackbar.
+                // Like SnackBarAction, the action also dismisses the snackbar.
                 onPressed: () {
                   messenger.hideCurrentSnackBar(reason: SnackBarClosedReason.action);
                   action.onPressed();

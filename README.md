@@ -210,7 +210,7 @@ LumenPressable(                       // ripple, focus, disabled 0.55, semantics
   child: Container(
     padding: const EdgeInsets.all(16),
     decoration: LumenDecorations.panel(p, s, accent: p.secondary),
-    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Salvar', busy: saving),
+    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Save', busy: saving),
   ),
 );
 ```
@@ -255,14 +255,14 @@ as `physics`, `scrollDirection`, and `reverse`.
 
 ```dart
 LumenList(
-  itemCount: eventos.length,
+  itemCount: events.length,
   empty: const LumenEmptyState(
     icon: Icons.inbox_outlined,
     title: 'No events',
   ),
   itemBuilder: (context, i) => LumenListTile(
-    title: eventos[i].titulo,
-    onTap: () => abrir(eventos[i]),
+    title: events[i].title,
+    onTap: () => open(events[i]),
   ),
 )
 ```
@@ -274,9 +274,9 @@ or pasting takes the code from incomplete to complete. Assigning a complete
 
 ```dart
 LumenPinField(
-  value: _codigo,
-  onChanged: (String v) => setState(() => _codigo = v),
-  onCompleted: enviar,
+  value: _code,
+  onChanged: (String v) => setState(() => _code = v),
+  onCompleted: submit,
 )
 ```
 
@@ -341,47 +341,47 @@ LumenTimePicker(
 );
 
 LumenRangeSlider(
-  values: preco,
+  values: price,
   max: 500,
   divisions: 50,
-  onChanged: (v) => setState(() => preco = v),
-  onChangeEnd: (v) => buscar(v), // dispara a busca só ao soltar
+  onChanged: (v) => setState(() => price = v),
+  onChangeEnd: (v) => search(v), // search only when released
 );
 ```
 
 ## Chips, quantity and evaluation
 
 ```dart
-// Escolha única.
+// Single selection.
 LumenChoiceChips<String>(
-  value: tamanho,
-  onChanged: (v) => setState(() => tamanho = v),
+  value: size,
+  onChanged: (v) => setState(() => size = v),
   items: const [
-    LumenChipItem(value: 'p', label: 'P'),
+    LumenChipItem(value: 's', label: 'S'),
     LumenChipItem(value: 'm', label: 'M'),
   ],
 );
 
-// Filtros (vários marcados). Recebe e devolve um Set novo.
+// Filters (multiple selections). Accepts and returns a new Set.
 LumenFilterChips<String>(
-  values: filtros,
-  onChanged: (v) => setState(() => filtros = v),
+  values: filters,
+  onChanged: (v) => setState(() => filters = v),
   items: const [
     LumenChipItem(value: 'promo', label: 'Promotion'),
-    LumenChipItem(value: 'frete', label: 'Free shipping'),
+    LumenChipItem(value: 'shipping', label: 'Free shipping'),
   ],
 );
 
-LumenQuantityStepper(value: qtd, min: 1, max: 10, onChanged: (v) => setState(() => qtd = v));
+LumenQuantityStepper(value: quantity, min: 1, max: 10, onChanged: (v) => setState(() => quantity = v));
 
-LumenRating(value: nota, allowHalf: true, onChanged: (v) => setState(() => nota = v));
+LumenRating(value: rating, allowHalf: true, onChanged: (v) => setState(() => rating = v));
 LumenRating(value: 4.3, size: 16); // read-only, with fraction
 ```
 
 ## Menu, loading and carousel
 
 ```dart
-// O "⋮" de card / app bar.
+// The card / app bar overflow menu.
 LumenMenuButton<String>(
   items: const [
     LumenMenuItem(value: 'edit', label: 'Edit', icon: Icons.edit),
@@ -392,31 +392,31 @@ LumenMenuButton<String>(
 );
 
 // Right-click (desktop/web) or long press (mobile).
-LumenContextMenu<String>(items: itens, onSelected: …, child: linha);
+LumenContextMenu<String>(items: items, onSelected: …, child: row);
 
 // Locks the screen during submit and returns the result of the task.
 final ok = await showLumenLoading(
   context: context,
-  message: 'Enviando…',
-  task: () => api.enviar(form),
+  message: 'Submitting…',
+  task: () => api.submit(form),
 );
 
 // Or just an area, controlled by state.
-LumenLoadingOverlay(loading: salvando, message: 'Salvando…', child: form);
+LumenLoadingOverlay(loading: saving, message: 'Saving…', child: form);
 
 // Gallery / onboarding with page dots.
 LumenCarousel(
-  itemCount: fotos.length,
-  itemBuilder: (context, i) => Image.network(fotos[i], fit: BoxFit.cover),
+  itemCount: photos.length,
+  itemBuilder: (context, i) => Image.network(photos[i], fit: BoxFit.cover),
 );
 // Or just the dots, linked to your PageView.
 LumenPageIndicator(count: 4, controller: pageController);
 
 // Stacked avatars with "+N".
 LumenAvatarGroup(
-  avatars: [for (final u in membros) LumenAvatar(initials: u.iniciais)],
+  avatars: [for (final u in members) LumenAvatar(initials: u.initials)],
   maxVisible: 3,
-  total: totalDeMembros,
+  total: totalMembers,
 );
 ```
 
@@ -428,9 +428,9 @@ LumenSegmentedControl(
   selectedIndex: i,
   onChanged: (v) => setState(() => i = v),
   items: const [
-    LumenTabItem(label: 'Dia'),
-    LumenTabItem(label: 'Semana'),
-    LumenTabItem(label: 'Mês'),
+    LumenTabItem(label: 'Day'),
+    LumenTabItem(label: 'Week'),
+    LumenTabItem(label: 'Month'),
   ],
 );
 
@@ -476,8 +476,11 @@ await showLumenDialog<void>(
 
 The [example gallery](https://github.com/saulogatti/lumen-kit/blob/main/example/README.md)
 lets you toggle Lumen colors and component styles independently. Choose
-**Material padrão** to compare with equivalent Material widgets using their
+**Default Material** to compare with equivalent Material widgets using their
 default colors and shapes.
+
+The gallery also demonstrates foundation building blocks, enabled and disabled
+controls, loading and validation states, and horizontal and vertical steppers.
 
 ```bash
 cd example

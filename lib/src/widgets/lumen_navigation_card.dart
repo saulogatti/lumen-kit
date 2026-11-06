@@ -6,8 +6,7 @@ import 'package:material_ui/material_ui.dart';
 
 /// Reusable main screen navigation card.
 ///
-/// You get what to show and what to do when playing — you don't decide anything
-/// for yourself.
+/// The app supplies the content and tap callback; the card handles presentation.
 class LumenNavigationCard extends StatefulWidget {
   /// Title of the module or target.
   final String title;
@@ -39,7 +38,7 @@ class LumenNavigationCard extends StatefulWidget {
     required this.onTap,
     super.key,
     this.tag,
-    this.actionLabel = 'ACESSAR MÓDULO',
+    this.actionLabel = 'OPEN MODULE',
   });
 
   @override
@@ -74,7 +73,7 @@ class _LumenNavigationCardState extends State<LumenNavigationCard> {
     final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
 
-    // Hover e foco de teclado levantam o card do mesmo jeito.
+    // Hover and keyboard focus raise the card in the same way.
     void highlight({required bool on}) {
       if (_hovering != on) {
         setState(() => _hovering = on);

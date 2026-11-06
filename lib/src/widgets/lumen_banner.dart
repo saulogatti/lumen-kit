@@ -13,11 +13,11 @@ import 'package:material_ui/material_ui.dart';
 ///
 /// ```dart
 /// LumenBanner(
-///   message: 'Sincronização pausada',
+///   message: 'Sync paused',
 ///   tone: LumenStatusTone.warning,
-///   actionLabel: 'Retomar',
-///   onAction: retomar,
-///   onDismiss: () => setState(() => _aviso = false),
+///   actionLabel: 'Resume',
+///   onAction: resume,
+///   onDismiss: () => setState(() => _showBanner = false),
 /// )
 /// ```
 class LumenBanner extends StatelessWidget {

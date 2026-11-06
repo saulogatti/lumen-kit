@@ -125,7 +125,7 @@ class LumenAvatarGroup extends StatelessWidget {
         ),
       );
       overflow = onOverflowTap == null
-          // O rótulo do grupo já diz quantos são; "+3" solto seria ruído.
+          // The group label already announces the count; a separate "+3" would add noise.
           ? ExcludeSemantics(excluding: semanticLabel != null, child: chip)
           : LumenPressable(onTap: onOverflowTap, customBorder: const CircleBorder(), child: chip);
     }

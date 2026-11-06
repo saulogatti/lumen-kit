@@ -53,7 +53,7 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
     duration: kLumenMediumDuration,
     value: _expanded ? 1 : 0,
   );
-  // Criadas uma vez: criar no build vazava um listener por frame.
+  // Create once: creating these during build leaked a listener per frame.
   late final CurvedAnimation _size = CurvedAnimation(parent: _ctrl, curve: Curves.easeOut);
   late final Animation<double> _turns = _ctrl.drive(Tween<double>(begin: 0, end: 0.5));
 
@@ -147,7 +147,7 @@ class _LumenExpansionTileState extends State<LumenExpansionTile>
           ),
           SizeTransition(
             sizeFactor: _size,
-            // Fechado, o conteúdo some também do foco e do leitor de tela.
+            // When collapsed, hide content from focus traversal and screen readers too.
             child: ExcludeFocus(
               excluding: !_expanded,
               child: ExcludeSemantics(

@@ -11,9 +11,9 @@ import 'package:material_ui/material_ui.dart';
 /// ```dart
 /// LumenPinField(
 ///   length: 6,
-///   value: _codigo,
-///   onChanged: (String v) => setState(() => _codigo = v),
-///   onCompleted: enviar,
+///   value: _code,
+///   onChanged: (String v) => setState(() => _code = v),
+///   onCompleted: submit,
 /// )
 /// ```
 class LumenPinField extends StatefulWidget {
@@ -28,7 +28,7 @@ class LumenPinField extends StatefulWidget {
     this.onCompleted,
     this.obscure = false,
     this.semanticLabel,
-  }) : assert(length > 0, 'length precisa ser positivo.');
+  }) : assert(length > 0, 'length must be positive.');
 
   /// Number of houses.
   final int length;
@@ -54,7 +54,7 @@ class LumenPinField extends StatefulWidget {
 
   /// Label for screen readers.
   ///
-  /// The default is `Código de N dígitos`, with [length] in place of `N`.
+  /// The default is `N-digit code`, with [length] in place of `N`.
   final String? semanticLabel;
 
   @override
@@ -78,7 +78,7 @@ class _LumenPinFieldState extends State<LumenPinField> {
     return Opacity(
       opacity: _enabled ? 1 : kLumenDisabledOpacity,
       child: Semantics(
-        label: widget.semanticLabel ?? 'Código de ${widget.length} dígitos',
+        label: widget.semanticLabel ?? '${widget.length}-digit code',
         value: widget.obscure ? null : text,
         textField: true,
         enabled: _enabled,

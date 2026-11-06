@@ -1,12 +1,10 @@
-// code
+// coverage:ignore-file
 import 'package:material_ui/material_ui.dart';
 
 /// Application color palette (futuristic theme).
 ///
 /// Centralizes visual tokens for reuse and easy maintenance.
 class AppColors {
-  const AppColors._();
-
   /// Deeper tone of the application background.
   static const Color backgroundDeep = Color(0xFF05060F);
 
@@ -66,4 +64,6 @@ class AppColors {
     end: Alignment.bottomRight,
     colors: [accentCyan, accentBlue, accentMagenta],
   );
+
+  const AppColors._();
 }

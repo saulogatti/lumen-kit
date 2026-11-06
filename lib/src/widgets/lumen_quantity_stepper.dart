@@ -6,13 +6,13 @@ import 'package:material_ui/material_ui.dart';
 
 /// Numeric input "− 1 +" for cart and settings.
 ///
-/// Not to be confused with o `LumenStepper`, which shows steps in a flow.
+/// Not to be confused with `LumenStepper`, which shows steps in a flow.
 /// ```dart
 /// LumenQuantityStepper(
-///   value: _qtd,
+///   value: _quantity,
 ///   min: 1,
 ///   max: 10,
-///   onChanged: (int v) => setState(() => _qtd = v),
+///   onChanged: (int v) => setState(() => _quantity = v),
 /// )
 /// ```
 class LumenQuantityStepper extends StatelessWidget {
@@ -48,7 +48,7 @@ class LumenQuantityStepper extends StatelessWidget {
   /// "Quantity").
   final String? semanticLabel;
 
-  /// Formats the displayed value (e.g.: `(v) => '$v un.'`).
+  /// Formats the displayed value (e.g.: `(v) => '$v units'`).
   final String Function(int value)? format;
 
   /// Creates the stepper.

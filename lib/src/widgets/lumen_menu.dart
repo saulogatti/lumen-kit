@@ -34,7 +34,7 @@ Future<T?> showLumenMenu<T>({
   Color? accentColor,
   T? initialValue,
 }) {
-  assert(items.isNotEmpty, 'O menu precisa de ao menos uma entrada.');
+  assert(items.isNotEmpty, 'The menu requires at least one entry.');
   final p = LumenThemeExt.of(context).palette;
   final s = LumenStyle.of(context);
   final accent = accentColor ?? p.primary;
@@ -158,9 +158,9 @@ class LumenContextMenu<T> extends StatelessWidget {
 /// ```dart
 /// LumenMenuButton<String>(
 ///   items: const <LumenMenuEntry<String>>[
-///     LumenMenuItem(value: 'edit', label: 'Editar', icon: Icons.edit),
+///     LumenMenuItem(value: 'edit', label: 'Edit', icon: Icons.edit),
 ///     LumenMenuDivider(),
-///     LumenMenuItem(value: 'del', label: 'Excluir', destructive: true),
+///     LumenMenuItem(value: 'del', label: 'Delete', destructive: true),
 ///   ],
 ///   onSelected: handle,
 /// )

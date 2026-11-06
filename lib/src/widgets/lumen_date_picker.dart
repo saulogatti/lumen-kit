@@ -142,8 +142,8 @@ class LumenDatePicker extends StatelessWidget {
     );
   }
 
-  // showDatePicker exige initialDate dentro de [firstDate, lastDate]; "hoje"
-  // fora do intervalo derrubava o app com assert.
+  // showDatePicker requires initialDate within [firstDate, lastDate]; today
+  // outside that range would trigger an assertion.
   DateTime _clamp(DateTime d) => d.isBefore(firstDate)
       ? firstDate
       : d.isAfter(lastDate)

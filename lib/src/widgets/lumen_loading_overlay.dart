@@ -12,7 +12,7 @@ import 'package:material_ui/material_ui.dart';
 /// ```dart
 /// LumenLoadingOverlay(
 ///   loading: _saving,
-///   message: 'Salvando…',
+///   message: 'Saving…',
 ///   child: myForm,
 /// )
 /// ```
@@ -153,7 +153,7 @@ class LumenLoadingPanel extends StatelessWidget {
 /// ```dart
 /// final bool ok = await showLumenLoading(
 ///   context: context,
-///   message: 'Enviando…',
+///   message: 'Submitting…',
 ///   task: () => api.submit(form),
 /// );
 /// ```
@@ -171,8 +171,8 @@ Future<T> showLumenLoading<T>({
     barrierDismissible: false,
     barrierColor: barrierColor ?? _defaultBarrier(ext.palette),
     themes: InheritedTheme.capture(from: context, to: navigator.context),
-    // O LumenScope não é um InheritedTheme: repassa paleta e estilo à mão
-    // para a rota herdar o mesmo visual do chamador.
+    // LumenScope is not an InheritedTheme: forward palette and style explicitly
+    // so the route inherits the caller's appearance.
     builder: (_) => LumenScope(
       palette: ext.palette,
       style: ext.style,
@@ -191,8 +191,8 @@ Future<T> showLumenLoading<T>({
   try {
     return await task();
   } finally {
-    // removeRoute em vez de pop: não fecha por engano outra rota que tenha
-    // sido aberta por cima durante a tarefa.
+    // Use removeRoute instead of pop to avoid dismissing another route
+    // opened above this one while the task was running.
     if (route.isActive) {
       navigator.removeRoute(route);
     }

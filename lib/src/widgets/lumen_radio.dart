@@ -8,7 +8,7 @@ import 'package:material_ui/material_ui.dart';
 
 /// Circular radio with glow in the selected state.
 ///
-/// Generic in [T] to get married with the caller's `groupValue`.
+/// Generic in [T] to match the caller's `groupValue`.
 class LumenRadio<T> extends StatelessWidget {
   /// Creates a radio option for values ​​of type [T].
   const LumenRadio({

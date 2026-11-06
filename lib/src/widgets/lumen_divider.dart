@@ -50,8 +50,8 @@ class LumenDivider extends StatelessWidget {
       accent.withValues(alpha: 0),
     ];
 
-    // Sem gradientes, style.fill ficaria só com a primeira parada, que é
-    // transparente, e a linha sumiria: vira o acento sólido a 65%.
+    // Without gradients, style.fill would keep only the first, transparent stop
+    // and hide the line: use the solid accent at 65% opacity instead.
     BoxDecoration decoration({
       Alignment begin = Alignment.centerLeft,
       Alignment end = Alignment.centerRight,

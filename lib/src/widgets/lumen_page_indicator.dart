@@ -139,9 +139,9 @@ class LumenPageIndicator extends StatelessWidget {
 /// For galleries and onboarding.
 /// ```dart
 /// LumenCarousel(
-///   itemCount: fotos.length,
+///   itemCount: photos.length,
 ///   itemBuilder: (BuildContext context, int i) =>
-///       Image.network(fotos[i], fit: BoxFit.cover),
+///       Image.network(photos[i], fit: BoxFit.cover),
 /// )
 /// ```
 class LumenCarousel extends StatefulWidget {
@@ -168,7 +168,7 @@ class LumenCarousel extends StatefulWidget {
 
   /// External controller.
   ///
-  /// Without it, the carousel creates a com [viewportFraction].
+  /// Without it, the carousel creates a controller with [viewportFraction].
   final PageController? controller;
 
   /// Page height (the indicator is below).
@@ -224,8 +224,8 @@ class _LumenCarouselState extends State<LumenCarousel> {
     } else {
       return;
     }
-    // O PageView só solta o controller antigo no próprio didUpdateWidget,
-    // depois deste; descartar agora quebraria o detach.
+    // PageView releases the old controller in its own didUpdateWidget,
+    // after this one; disposing it now would break detach.
     WidgetsBinding.instance.addPostFrameCallback((_) => own.dispose());
   }
 
