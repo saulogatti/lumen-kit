@@ -2,15 +2,17 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/widgets/lumen_button.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Block for when there is no data: icon, title, text and a CTA.
-/// Without [onPressed], the button does not appear.
+/// Displays an empty state with a title, optional message, icon, and action.
+///
+/// The action button appears when both [actionLabel] and [onPressed] are set.
+///
 /// ```dart
 /// LumenEmptyState(
 ///   icon: Icons.inbox_outlined,
-///   title: 'Nada por aqui',
-///   message: 'Quando chegar um evento, ele aparece nesta lista.',
-///   actionLabel: 'Atualizar',
-///   onPressed: atualizar,
+///   title: 'Nothing here yet',
+///   message: 'New events will appear in this list.',
+///   actionLabel: 'Refresh',
+///   onPressed: refresh,
 /// )
 /// ```
 class LumenEmptyState extends StatelessWidget {

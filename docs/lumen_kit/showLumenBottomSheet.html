@@ -68,10 +68,12 @@
     </section>
     
 <section class="desc markdown">
-  <p>Opens a bottom sheet modal with the neon theme aesthetic (background
-gradient, accent border on top and handle).
-<code>builder</code> creates the internal content. The <code>isScrollControlled</code> flags,
-<code>isDismissible</code> and <code>enableDrag</code> are passed to <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showModalBottomSheet.html">showModalBottomSheet</a>.</p>
+  <p>Opens a themed modal bottom sheet and returns its result.</p>
+<p>The top border and glow use <code>accentColor</code> or the primary color resolved
+from <code>context</code>. The sheet's palette and style come from the route's build
+context, which may be outside the caller's <a href="../lumen_kit/LumenScope-class.html">LumenScope</a>.</p>
+<p><code>builder</code> supplies the sheet content. <code>isScrollControlled</code>,
+<code>isDismissible</code>, and <code>enableDrag</code> are passed to <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/showModalBottomSheet.html">showModalBottomSheet</a>.</p>
 </section>
 
 
@@ -125,7 +127,7 @@ gradient, accent border on top and handle).
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

@@ -7,38 +7,43 @@ To apply the kit in another app, see the skill in
 
 ## What is it
 
-`lumen_kit` is a Flutter package (not published on pub.dev, `publish_to: none`)
-with futuristic theme and ~45 widgets. Consumed via git dependency. Everything is
-domain decoupled: widgets receive data, callbacks and tokens, never
-business rules.
+`lumen_kit` is a Flutter widget package with configurable palettes and visual
+styles. Widgets receive data, callbacks, and tokens. The app owns its
+business rules. See the [installation guide](README.md#installation) for
+the published package and pinned Git checkouts.
 
-##Toolchain
+## Toolchain
 
 - Dart `^3.13.0`, Flutter `>=3.47.0` (current stable channel will do).
-- **Material comes from package `material_ui`, not `flutter/material.dart`.**
-Every file in `lib/` imports `package:material_ui/material_ui.dart` (which
-already re-exports `package:flutter/widgets.dart`). Do not mix with
-`package:flutter/material.dart`: they are different libraries with types
-different types (`ThemeData`, `Theme`, `Material`…), and the result compiles only at
-times and fails at runtime other times.
-- Code uses recent Dart 3.13 syntax (private named parameters
-as `this._backgroundGradient`, dot shorthands as `.vibrant`). No
-"fix" this.
+- Use `package:material_ui/material_ui.dart` for Material types. It re-exports
+  `package:flutter/widgets.dart`. Mixing it with `package:flutter/material.dart`
+  can produce incompatible `ThemeData`, `Theme`, and `Material` types.
+- Preserve Dart 3.13 syntax, including private named parameters such as
+  `this._backgroundGradient` and dot shorthands such as `.vibrant`.
 
 ## Commands
 
 ```bash
-flutter pub get                 # na raiz; o flutter tool resolve example/ junto
-flutter analyze                 # precisa sair "No issues found!"
-flutter test                    # testes do pacote (test/)
-cd example && flutter run -d chrome   # galeria com seletor de preset/estilo/brilho
+flutter pub get
+dart format lib test example/lib example/test
+flutter analyze
+flutter test
 ```
 
-There is no `flutter` in the container? `git clone --depth 1 -b stable
-https://github.com/flutter/flutter.git` and use `flutter/bin/flutter`. To
-gallery screenshots: `flutter build web --no-web-resources-cdn` on
-`example/` and Playwright with `locale: 'en-US'` (without locale the app breaks with
-"Incorrect locale information").
+Run these commands from the repository root. Dependency resolution includes
+the `example/` workspace. The analyzer should report `No issues found!`.
+Run `flutter test --coverage` to generate `coverage/lcov.info` as CI does.
+
+Run `flutter test` from `example/` for the gallery smoke tests. See the
+[example README](example/README.md) for running the Windows gallery and
+using its Material comparison. Hot reload and hot restart are debugging
+tools. Use them when useful in an active debug session or when requested.
+
+`docs/` contains generated Dart API documentation. Change the source Dartdoc
+or `dartdoc_options.yaml` when updating it.
+Generate into a temporary directory with Dartdoc's `--validate-links` option,
+then sync the output to `docs/`. For CRLF checkouts, use Dartdoc 9.0.8 or later
+to pick up the fix for processing `@docImport` comments.
 
 `analysis_options.yaml` is very strict (`always_use_package_imports`,
 `directives_ordering`, `strict_top_level_inference`, `specify_nonobvious_*`,
@@ -46,28 +51,29 @@ several inference/null-safety checks promoted to `error`…). Imports inside
 `lib/` are package imports (`package:lumen_kit/src/...`), never relative.
 `flutter analyze` with zero issues is the default repo.
 
-Formatting: `dart format` at 100 columns (`formatter: page_width: 100` in
-`analysis_options.yaml`). The entire repo is already formatted, so
-`dart format lib test example/lib` should not generate diff other than yours.
+Use `dart format` with the analysis options for each package. The root
+package sets `formatter.page_width` to 100.
 
 ## Structure
 
 ```
 lib/
-  lumen_kit.dart          # import completo: components.dart + AppTheme + AppColors
-  components.dart       # só widgets + paleta/estilo, sem AppTheme/AppColors
+  lumen_kit.dart          # full import: components.dart + AppTheme + AppColors
+  components.dart       # widgets + palette/style only, without AppTheme/AppColors
   src/
     theme/              # lumen_palette.dart (LumenPalette, LumenPreset, LumenScope, LumenThemeExt),
                         #   lumen_style.dart, app_theme.dart, app_colors.dart
-    foundation/         # peças reaproveitáveis: LumenPressable, LumenDecorations,
+    foundation/         # reusable building blocks: LumenPressable, LumenDecorations,
                         #   LumenActionContent, LumenLabeled; lumen_tokens.dart (LumenMotion + kLumen* tokens)
     backgrounds/        # LumenAnimatedGridBackground, LumenGlowOrbSpec
-    widgets/            # um arquivo por widget (ou família: lumen_tabs.dart tem LumenTabs + LumenSegmentedControl)
+    widgets/            # one file per widget (or family: lumen_tabs.dart has LumenTabs + LumenSegmentedControl)
 test/
-  widgets/_harness.dart # bareApp/pumpBare: app SEM LumenThemeExt registrado
-  widgets/*_test.dart   # um teste por widget novo
-  components_import_test.dart  # garante que components.dart funciona sem o tema do kit
-example/lib/main.dart   # galeria; todo widget novo aparece aqui
+  widgets/_harness.dart # bareApp/pumpBare: app WITHOUT a registered LumenThemeExt
+  widgets/*_test.dart   # one test per new widget
+  components_import_test.dart  # ensures components.dart works without the kit theme
+example/lib/main.dart              # Lumen component gallery
+example/lib/material_gallery.dart  # comparison with default Material
+example/test/smoke_test.dart       # gallery tests
 ```
 
 ### The two public imports
@@ -113,22 +119,20 @@ nearest `LumenScope` → `LumenThemeExt` in `ThemeData` → default palette
 `LumenStyle.neon`. Every widget has to work in the third case, without anything
 registered; This is what `bareApp` tests.
 
-**Alpha in palette colors.** `Color.withValues(alpha: x)` **replaces** the
-alpha, does not multiply. `surfaceOutline` in the clear default is already translucent
-(`0x15000000`), then `p.surfaceOutline.withValues(alpha: 0.5)` turns black
-almost opaque. For contouring use `p.surfaceOutline.outlineAlpha(0.5)`: no
-in dark the requested alpha goes straight in (the cyan remains visible) and in light the
-weak black is just scaled. Token that is born translucent (`textMuted`,
-`textSecondary`, `surfaceHighlight`) uses `c.scaleAlpha(x)`, which makes `c.a * x`.
-Opaque Accent can use `withValues(alpha:)` at will. Don't multiply one
-opaque accent thinking that it is softening a token that already had alpha.
+**Alpha in palette colors.** `Color.withValues(alpha: 0.5)` sets the color
+to 50% opacity. Use `p.surfaceOutline.outlineAlpha(x)` for outlines. For faint
+neutral colors, it multiplies the original alpha by `x / 0.2` and caps the
+result at `0.28`. Other outline colors use the requested alpha directly.
+Use `c.scaleAlpha(x)` to multiply the alpha of translucent tokens such as
+`textMuted`, `textSecondary`, and `surfaceHighlight`. Use `withValues` when
+setting an absolute alpha on an opaque accent.
 
 **Material 3 and typography.** Text uses `Theme.of(context).textTheme` with
 `copyWith(color: p.textX)`. Do not set `fontFamily`.
 
 ## Widget conventions
 
-- One file per widget in `lib/src/widgets/`, name `lumen_<coisa>.dart`.
+- One file per widget in `lib/src/widgets/`, name `lumen_<name>.dart`.
 - Constructor `const`, `super.key` right after `required`, color overrides
 as `Color? accentColor` (default `p.primary`).
 - Controlled from outside: `value` + `onChanged`. `onChanged == null` (or
@@ -137,14 +141,18 @@ as `Color? accentColor` (default `p.primary`).
 - Touchable area: `LumenPressable` (ripple, keyboard focus, semantics
 `selected`/`checked`/`toggled`), not raw `GestureDetector`. Control +
 label: `LumenLabeled`.
+- Use `spacing:` for uniform spacing between children of a `Row` or `Column`.
 - Animations: `kLumenFastDuration`/`kLumenMediumDuration` durations passed by
 `LumenMotion.duration(context, d)`; loops via `LumenMotion.syncRepeat` on
 `didChangeDependencies`/`didUpdateWidget`. Everything needs to stop
 "reduce animations" (`MediaQuery.disableAnimations`).
-- `showLumenX` functions (dialog, bottom sheet, menu, toast, loading…) follow the
-same pattern: `required BuildContext context`, read palette/style
-`context` and return `Future`.
-- Docs (`///`) in English, on every public member. Block examples
+- `showLumenX` functions take a required `BuildContext`. When opening a route
+  or overlay, document which theme values are resolved from the caller and
+  which are resolved from the new build context. Route and overlay helpers
+  return a `Future`.
+  `showLumenSnackBar` returns a `ScaffoldFeatureController`.
+- All documentation, Dartdoc examples, and example gallery text must be in English.
+- Dartdoc (`///`) is required on every public member. Block examples
 ` ```dart `.
 
 ## Checklist for new widget
@@ -154,15 +162,14 @@ same pattern: `required BuildContext context`, read palette/style
 3. `test/widgets/lumen_x_test.dart` using `pumpBare` (works without theme),
 covering interaction, disabled state, semantics and reduce motion when
 there is animation.
-In testing, **never give `await` directly to `showLumenX`** (dialog, picker,
-toast, loading): `Future` only completes when the route closes, and the test
-hangs forever waiting. Use `unawaited(showLumenX(...).then(...))`
-(from `dart:async`), which is what the `unawaited_futures` lint accepts, and
-pump with `tester.pump`.
+   Start route or overlay helpers with
+   `unawaited(showLumenX(...).then(...))` from `dart:async`, then pump and
+   complete the interaction. Awaiting their futures before pumping can
+   hang a widget test.
 4. Section in the gallery (`example/lib/main.dart`).
-5. Row in the `README.md` "What's inside" table + short example if the API
-is not obvious; score on `ROADMAP.md`.
-6. Clean `dart format lib test example/lib`, `flutter analyze` and `flutter test`.
+5. Update the README catalog and add a short example when the API needs one.
+   Remove the corresponding item from `ROADMAP.md` if it was planned there.
+6. Run formatting, analysis, and the package and gallery tests as appropriate.
 
 ## Git
 

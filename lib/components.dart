@@ -1,13 +1,15 @@
 /// Only the kit components, without `AppTheme` or `AppColors`.
-/// Use this import in apps that already have `ThemeData` itself: widgets do not
-/// require no theme configuration and use the default palette until you provide
-/// another via [LumenScope] or [LumenThemeExt].
+///
+/// Use this import to keep the app's Material theme. Widgets fall back to
+/// the kit's palette and style until you provide a [LumenScope] or register
+/// a [LumenThemeExt].
+///
 /// ```dart
 /// import 'package:lumen_kit/components.dart';
 /// ```
 library;
 
-import 'package:lumen_kit/components.dart';
+import 'package:lumen_kit/src/theme/lumen_palette.dart';
 
 export 'src/backgrounds/lumen_animated_grid_background.dart';
 export 'src/foundation/lumen_action_content.dart';

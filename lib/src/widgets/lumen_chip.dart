@@ -4,11 +4,10 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Selectable chip: base of filters and choices.
+/// Displays a chip with selection controlled by the caller.
 ///
-/// Different from `LumenStatusChip` and `LumenTag`, which only display.
-/// For ready-made groups, use [LumenChoiceChips] (one value) or
-/// [LumenFilterChips] (various).
+/// Use [LumenChoiceChips] for a single choice or [LumenFilterChips] for
+/// multiple selections.
 class LumenChip extends StatelessWidget {
   /// Create a chip.
   ///
@@ -29,12 +28,13 @@ class LumenChip extends StatelessWidget {
   /// If the chip is marked.
   final bool selected;
 
-  /// Called with the new state (`!selected`) when ringing.
+  /// Called with the requested selection state (`!selected`) on tap.
   final ValueChanged<bool>? onSelected;
 
-  /// Icon before [label].
+  /// Icon displayed before [label].
   ///
-  /// Add when the check appears.
+  /// The checkmark replaces this icon when [selected] and [showCheckmark]
+  /// are both true.
   final IconData? icon;
 
   /// Accent override.
@@ -241,8 +241,8 @@ class LumenFilterChips<T> extends StatelessWidget {
             onSelected: onChanged == null || !item.enabled
                 ? null
                 : (on) {
-                    // Cascata dentro de ternário pega a expressão inteira;
-                    // por isso o if explícito.
+                    // A cascade inside a ternary applies to the entire expression;
+                    // use an explicit if instead.
                     final next = <T>{...values};
                     if (on) {
                       next.add(item.value);

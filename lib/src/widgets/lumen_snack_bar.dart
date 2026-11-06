@@ -10,8 +10,10 @@ typedef LumenSnackTone = LumenStatusTone;
 /// Displays a styled snackbar on the nearest `ScaffoldMessenger`.
 /// Reuses the `SnackBar` from the Material but exchanges the content for a
 /// surface with accent + glow border, in the style of the rest of the kit.
-/// [tone] sets default color and icon, [duration] controls display time and
-/// [action] adds a textual action at the end of the snackbar.
+/// [tone] sets the default color and icon, and [duration] controls display
+/// time. The button built from [action] uses its label and callback. Pressing
+/// it dismisses the snackbar with [SnackBarClosedReason.action] before
+/// invoking the callback.
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showLumenSnackBar({
   required BuildContext context,
   required String message,
@@ -49,7 +51,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showLumenSnackBar({
             ),
             if (action != null)
               TextButton(
-                // Igual ao SnackBarAction: a ação também fecha o snackbar.
+                // Like SnackBarAction, the action also dismisses the snackbar.
                 onPressed: () {
                   messenger.hideCurrentSnackBar(reason: SnackBarClosedReason.action);
                   action.onPressed();

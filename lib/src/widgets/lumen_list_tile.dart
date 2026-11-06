@@ -36,6 +36,11 @@ class LumenListTile extends StatelessWidget {
   /// Whether to reduce vertical spacing.
   final bool dense;
 
+  /// Padding around the tile's surface and interactive area.
+  ///
+  /// Default: `EdgeInsets.zero`.
+  final EdgeInsets contentPadding;
+
   /// Creates a neon list item.
   const LumenListTile({
     required this.title,
@@ -48,6 +53,7 @@ class LumenListTile extends StatelessWidget {
     this.selected = false,
     this.accentColor,
     this.dense = false,
+    this.contentPadding = .zero,
   });
 
   @override
@@ -57,70 +63,76 @@ class LumenListTile extends StatelessWidget {
     final accent = accentColor ?? p.primary;
     final disabled = onTap == null && onLongPress == null;
 
-    // Tile sem ação é só informativo: apaga menos que um controle
-    // desabilitado (0.7 em vez de kLumenDisabledOpacity).
-    return Opacity(
-      opacity: disabled && !selected ? 0.7 : 1,
-      child: LumenPressable(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        selected: selected,
-        button: !disabled,
-        dimWhenDisabled: false,
-        borderRadius: style.radius(14),
-        child: AnimatedContainer(
-          duration: LumenMotion.duration(context, kLumenFastDuration),
-          padding: EdgeInsets.symmetric(horizontal: 14, vertical: dense ? 8 : 12),
-          decoration: BoxDecoration(
-            borderRadius: style.radius(14),
-            color: selected
-                ? accent.withValues(alpha: 0.14)
-                : p.surface.withValues(alpha: style.surfaceAlpha(0.5)),
-            border: style.borderAll(
-              color: selected ? accent.withValues(alpha: 0.6) : p.surfaceOutline.outlineAlpha(0.45),
-            ),
-            boxShadow: style.shadows(
-              selected
-                  ? <BoxShadow>[
-                      BoxShadow(
-                        color: accent.withValues(alpha: 0.28),
-                        blurRadius: 14,
-                        spreadRadius: -3,
-                      ),
-                    ]
-                  : null,
-            ),
-          ),
-          child: Row(
-            children: <Widget>[
-              if (leading case final Widget leading) ...<Widget>[
-                leading,
-                const SizedBox(width: 12),
-              ],
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      title,
-                      style: Theme.of(context).textTheme.titleSmall
-                          ?.copyWith(color: p.textPrimary, fontWeight: FontWeight.w600),
-                    ),
-                    if (subtitle case final String subtitle) ...<Widget>[
-                      const SizedBox(height: 2),
-                      Text(
-                        subtitle,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: p.textMuted),
-                      ),
-                    ],
-                  ],
-                ),
+    // A tile without an action is informational: dim it less than a disabled
+    // control (0.7 instead of kLumenDisabledOpacity).
+    return Padding(
+      padding: contentPadding,
+      child: Opacity(
+        opacity: disabled && !selected ? 0.7 : 1,
+        child: LumenPressable(
+          onTap: onTap,
+          onLongPress: onLongPress,
+          selected: selected,
+          button: !disabled,
+          dimWhenDisabled: false,
+          borderRadius: style.radius(14),
+          child: AnimatedContainer(
+            duration: LumenMotion.duration(context, kLumenFastDuration),
+            padding: EdgeInsets.symmetric(horizontal: 14, vertical: dense ? 8 : 12),
+            decoration: BoxDecoration(
+              borderRadius: style.radius(14),
+              color: selected
+                  ? accent.withValues(alpha: 0.14)
+                  : p.surface.withValues(alpha: style.surfaceAlpha(0.5)),
+              border: style.borderAll(
+                color: selected
+                    ? accent.withValues(alpha: 0.6)
+                    : p.surfaceOutline.outlineAlpha(0.45),
               ),
-              if (trailing case final Widget trailing) ...<Widget>[
-                const SizedBox(width: 8),
-                trailing,
+              boxShadow: style.shadows(
+                selected
+                    ? <BoxShadow>[
+                        BoxShadow(
+                          color: accent.withValues(alpha: 0.28),
+                          blurRadius: 14,
+                          spreadRadius: -3,
+                        ),
+                      ]
+                    : null,
+              ),
+            ),
+            child: Row(
+              children: <Widget>[
+                if (leading case final Widget leading) ...<Widget>[
+                  leading,
+                  const SizedBox(width: 12),
+                ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleSmall
+                            ?.copyWith(color: p.textPrimary, fontWeight: FontWeight.w600),
+                      ),
+                      if (subtitle case final String subtitle) ...<Widget>[
+                        const SizedBox(height: 2),
+                        Text(
+                          subtitle,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: p.textMuted),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                if (trailing case final Widget trailing) ...<Widget>[
+                  const SizedBox(width: 8),
+                  trailing,
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

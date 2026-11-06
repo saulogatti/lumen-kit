@@ -2,10 +2,10 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Central theme of the application.
+/// Builds Material themes that include the Lumen palette and style.
 ///
-/// Keeps ThemeData isolated from the UI layer so that screens do not know
-/// global style details.
+/// Register a [LumenThemeExt] on an existing [ThemeData] to keep the app's own
+/// typography and Material settings.
 class AppTheme {
   const AppTheme._();
 
@@ -15,9 +15,10 @@ class AppTheme {
   /// Light theme using the default light palette.
   static ThemeData get light => fromPalette(LumenPalette.light(), brightness: Brightness.light);
 
-  /// Shortcut to change the colors of the entire kit from one or two colors.
+  /// Builds a theme from [primary] and optional [secondary] and [tertiary] colors.
   ///
-  /// Equivalent to `fromPalette(LumenPalette.fromSeed(...))`.
+  /// Uses [LumenPalette.fromSeed] with [brightness], then passes the
+  /// resulting palette, [brightness], and [style] to [fromPalette].
   static ThemeData fromSeed({
     required Color primary,
     Color? secondary,
@@ -46,9 +47,11 @@ class AppTheme {
     style: style,
   );
 
-  /// Builds a [ThemeData] from the [p] palette.
-  /// Registers [LumenThemeExt] to [ThemeData.extensions] so that the widgets kit
-  /// access the same tokens via [LumenThemeExt.of].
+  /// Builds a Material 3 theme from the [p] palette.
+  ///
+  /// Sets the color scheme, scaffold background, text styles, app bar,
+  /// icon colors, and divider color. Registers [p] and [style] in a
+  /// [LumenThemeExt] for the kit's widgets.
   static ThemeData fromPalette(
     LumenPalette p, {
     Brightness brightness = Brightness.dark,

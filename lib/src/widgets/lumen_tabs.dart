@@ -17,9 +17,10 @@ class LumenTabItem {
   final IconData? icon;
 }
 
-/// Horizontal tabs with accent gradient indicator.
-/// Controlled: indicator tracks [selectedIndex] even when it changes from the
-/// outside (e.g. swipe on a `PageView` or programmatic navigation).
+/// Horizontal tabs with a solid accent underline.
+///
+/// The bar follows updates to [selectedIndex]. Taps report their index
+/// through [onChanged].
 class LumenTabs extends StatefulWidget {
   /// Creates a tab bar controlled by [selectedIndex].
   const LumenTabs({
@@ -31,13 +32,13 @@ class LumenTabs extends StatefulWidget {
     this.isScrollable = false,
   });
 
-  /// Items displayed in the bar.
+  /// Items displayed in the bar, with at least one item required.
   final List<LumenTabItem> items;
 
   /// Index of the selected tab, limited to the valid range.
   final int selectedIndex;
 
-  /// Callback called with the index of the tab played.
+  /// Called with the index of the tapped tab.
   final ValueChanged<int> onChanged;
 
   /// Highlight color override.

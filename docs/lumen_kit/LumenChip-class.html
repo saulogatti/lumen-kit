@@ -54,10 +54,9 @@
 
     
 <section class="desc markdown">
-  <p>Selectable chip: base of filters and choices.</p>
-<p>Different from <code>LumenStatusChip</code> and <code>LumenTag</code>, which only display.
-For ready-made groups, use <a href="../lumen_kit/LumenChoiceChips-class.html">LumenChoiceChips</a> (one value) or
-<a href="../lumen_kit/LumenFilterChips-class.html">LumenFilterChips</a> (various).</p>
+  <p>Displays a chip with selection controlled by the caller.</p>
+<p>Use <a href="../lumen_kit/LumenChoiceChips-class.html">LumenChoiceChips</a> for a single choice or <a href="../lumen_kit/LumenFilterChips-class.html">LumenFilterChips</a> for
+multiple selections.</p>
 </section>
 
 
@@ -136,7 +135,7 @@ For ready-made groups, use <a href="../lumen_kit/LumenChoiceChips-class.html">Lu
 
 </dt>
 <dd>
-  Icon before <a href="../lumen_kit/LumenChip/label.html">label</a>.
+  Icon displayed before <a href="../lumen_kit/LumenChip/label.html">label</a>.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -172,7 +171,7 @@ For ready-made groups, use <a href="../lumen_kit/LumenChoiceChips-class.html">Lu
 
 </dt>
 <dd>
-  Called with the new state (<code>!selected</code>) when ringing.
+  Called with the requested selection state (<code>!selected</code>) on tap.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -404,7 +403,7 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

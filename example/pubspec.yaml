@@ -1,5 +1,5 @@
 name: lumen_kit_example
-description: App de exemplo demonstrando os componentes do lumen_kit.
+description: Example app showcasing lumen_kit components.
 publish_to: 'none'
 version: 0.1.0
 
@@ -13,7 +13,7 @@ dependencies:
   lumen_kit:
     path: ../
 
-  material_ui: ^1.7.0
+  material_ui: ^1.10.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

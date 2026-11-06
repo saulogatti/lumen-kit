@@ -48,10 +48,12 @@ class LumenAvatarGroup extends StatelessWidget {
   /// Radius of each avatar.
   final double radius;
 
-  /// Fraction of the diameter that each avatar covers the previous one (0 to 1).
+  /// Fraction of the outer diameter that overlaps the previous avatar.
+  ///
+  /// The value must be at least 0 and less than 1.
   final double overlap;
 
-  /// Accent of rings and "+N".
+  /// Accent for the overflow badge and fallback for each avatar's own ring.
   ///
   /// Default: `palette.primary`.
   final Color? accentColor;
@@ -123,7 +125,7 @@ class LumenAvatarGroup extends StatelessWidget {
         ),
       );
       overflow = onOverflowTap == null
-          // O rótulo do grupo já diz quantos são; "+3" solto seria ruído.
+          // The group label already announces the count; a separate "+3" would add noise.
           ? ExcludeSemantics(excluding: semanticLabel != null, child: chip)
           : LumenPressable(onTap: onOverflowTap, customBorder: const CircleBorder(), child: chip);
     }

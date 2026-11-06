@@ -24,6 +24,9 @@ RelativeRect neonMenuPositionAt(BuildContext context, Offset globalPosition) =>
 /// Without [position], the menu opens anchored just below the widget owner of
 /// [context] (like the "⋮" on a card). To open at a point on the screen (e.g.:
 /// right click), use [lumenMenuPositionAt].
+///
+/// The palette, style, item typography, and reduced-motion preference are
+/// resolved from [context] before opening the menu.
 Future<T?> showLumenMenu<T>({
   required BuildContext context,
   required List<LumenMenuEntry<T>> items,
@@ -31,7 +34,7 @@ Future<T?> showLumenMenu<T>({
   Color? accentColor,
   T? initialValue,
 }) {
-  assert(items.isNotEmpty, 'O menu precisa de ao menos uma entrada.');
+  assert(items.isNotEmpty, 'The menu requires at least one entry.');
   final p = LumenThemeExt.of(context).palette;
   final s = LumenStyle.of(context);
   final accent = accentColor ?? p.primary;
@@ -86,11 +89,10 @@ RelativeRect _anchorBelow(BuildContext context) {
   return RelativeRect.fromRect(Rect.fromPoints(topLeft, bottomRight), Offset.zero & overlay.size);
 }
 
-/// Open a context menu with right click (desktop/web) or long press (mobile) on
-/// [child], in the pointer position.
-/// It uses `GestureDetector` because it needs the position of the pointer,
-/// which the `LumenPressable` does not expose; Screen readers open the menu by
-/// swiping long press.
+/// Opens a context menu at the pointer position on right-click or long press.
+///
+/// Assistive technologies can invoke the long-press action to open the menu
+/// at the center of [child].
 class LumenContextMenu<T> extends StatelessWidget {
   /// Menu actions.
   final List<LumenMenuEntry<T>> items;
@@ -156,9 +158,9 @@ class LumenContextMenu<T> extends StatelessWidget {
 /// ```dart
 /// LumenMenuButton<String>(
 ///   items: const <LumenMenuEntry<String>>[
-///     LumenMenuItem(value: 'edit', label: 'Editar', icon: Icons.edit),
+///     LumenMenuItem(value: 'edit', label: 'Edit', icon: Icons.edit),
 ///     LumenMenuDivider(),
-///     LumenMenuItem(value: 'del', label: 'Excluir', destructive: true),
+///     LumenMenuItem(value: 'del', label: 'Delete', destructive: true),
 ///   ],
 ///   onSelected: handle,
 /// )
@@ -266,7 +268,9 @@ class LumenMenuItem<T> extends LumenMenuEntry<T> {
   /// If `false`, the action appears dimmed and cannot be chosen.
   final bool enabled;
 
-  /// Color the action with `palette.danger` (e.g.: "Delete").
+  /// Whether to use the danger color for the icon and unselected label.
+  ///
+  /// A selected item uses the selection accent for its label and checkmark.
   final bool destructive;
 
   /// Creates an action with [value] returned when chosen.

@@ -1,104 +1,140 @@
 # lumen_kit
 
-Flutter widget kit with the same designs and free color. The neon look (glow, gradient, grid and orbs) is the default style; flat, glass, soft and brutal use any palette. Designed to be reused between projects without rewriting tokens and styles for each new app.
+[![CI](https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/saulogatti/lumen-kit/graph/badge.svg?token=oU4zJUQCy9)](https://codecov.io/gh/saulogatti/lumen-kit)
+
+A Flutter widget kit with independently configurable colors and visual styles.
+Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 
 ## What's inside
 
 | Category | Components |
 | ------------- | -------------------------------------------------------------------- |
-| Theme | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `AppTheme` |
+| Theme | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `LumenScope`, `AppTheme` |
 | Background | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec` |
 | Structure | `LumenAppBar`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
 | Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
-| Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `LumenSnackBar`, `LumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
-| Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `LumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
+| Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
+| Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
 | Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
 
-Everything decoupled from domain — receives `child`, callbacks and tokens; does not know any business rules.
+The widgets take data, callbacks, and theme tokens so the app owns its business rules.
+
+## Requirements
+
+- Dart `^3.13.0` and Flutter `>=3.47.0`.
+- Use `package:material_ui/material_ui.dart` for the Material app and its
+  widgets. `flutter/material.dart` and `material_ui` have distinct
+  `ThemeData` and `Material` types. See the
+  [integration guide](skills/lumen-kit/SKILL.md#3-material-the-app-must-use-material_ui)
+  when adding Lumen to an existing Flutter app.
 
 ## Installation
 
+### Published package
+
+Use the [pub.dev release](https://pub.dev/packages/lumen_kit) for the published
+version. This example uses the `1.0.0` release constraints.
+
 ```yaml
 dependencies:
-  lumen_kit: any
-
+  lumen_kit: ^1.0.0
+  material_ui: ^1.7.0
 ```
 
-## Only the components (without the theme)
+### Git checkout
 
-If your app already has `ThemeData` itself, just import the widgets:
+To try the `1.1.0` code before it is released, pin a commit on the repository.
+The commit below includes the updates documented here and requires
+`material_ui ^1.10.0`.
 
-```dart
-import 'package:lumen_kit/components.dart';
+```yaml
+dependencies:
+  lumen_kit:
+    git:
+      url: https://github.com/saulogatti/lumen-kit.git
+      ref: 43c30821d4b1f2460033a3dae1b290859cad3e69
+  material_ui: ^1.10.0
 ```
 
-This import does not contain `AppTheme` or `AppColors` (no name conflict) and
-does not require registering anything in the theme: widgets use the default palette, clear or
-dark depending on the brightness of your subject. For other colors or other style in
-a part of the screen, without touching `ThemeData`, use `LumenScope`:
-
-```dart
-LumenScope(
-  palette: LumenPalette.fromSeed(primary: Colors.teal),
-  style: LumenStyle.flat,
-  child: LumenButton(label: 'Save', onPressed: salvar),
-)
-```
-
-Typography comes from your app's `textTheme`. The complete import
-(`package:lumen_kit/lumen_kit.dart`) remains the same, with everything.
+Run `flutter pub get` from your app after choosing an installation method.
 
 ## Minimum usage
+
+### Use the Lumen theme for the whole app
+
+Use the full import to get `AppTheme`, which configures Material theme defaults
+and registers the Lumen palette and style.
 
 ```dart
 import 'package:lumen_kit/lumen_kit.dart';
 import 'package:material_ui/material_ui.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+  MaterialApp(
+    theme: AppTheme.light,
+    darkTheme: AppTheme.dark,
+    home: const Scaffold(
+      appBar: LumenAppBar(title: 'Dashboard'),
+      body: Center(child: LumenCard(child: Text('Online service'))),
+    ),
+  ),
+);
+```
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+### Only the components (without the theme)
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: AppTheme.dark,
-      home: Scaffold(
-        appBar: const LumenAppBar(title: 'Dashboard', subtitle: 'in real time'),
-        body: LumenAnimatedGridBackground(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: LumenCard(
-              glow: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const Text('Online service'),
-                  const SizedBox(height: 12),
-                  const LumenStatusChip(label: 'OK', tone: LumenStatusTone.success),
-                  const SizedBox(height: 20),
-                  LumenCta(
-                    label: 'EXECUTE ',
-                    icon: Icons.play_arrow_rounded,
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+Use `components.dart` to keep your Material theme and avoid name collisions
+with your own `AppTheme` or `AppColors`. Register a `LumenThemeExt` on each
+theme that should supply a specific palette and style. The extension preserves
+the app's typography and Material settings.
+
+```dart
+import 'package:lumen_kit/components.dart';
+import 'package:material_ui/material_ui.dart';
+
+ThemeData withLumen(ThemeData base) => base.copyWith(
+  extensions: <ThemeExtension<dynamic>>[
+    ...base.extensions.values.where((extension) => extension is! LumenThemeExt),
+    LumenThemeExt(
+      palette: LumenPalette.fromSeed(
+        primary: base.colorScheme.primary,
+        brightness: base.brightness,
       ),
-    );
-  }
-}
+      style: LumenStyle.flat,
+    ),
+  ],
+);
+```
+
+Without a Lumen extension, the widgets use the kit's light or dark palette
+according to the app's theme brightness, with the neon style.
+
+### Style one part of a screen
+
+`LumenScope` applies a palette and style to its subtree. Widgets read the
+nearest scope first, then the theme extension, then the default palette and style.
+Routes and overlays can sit above a scope that wraps only the caller.
+`showLumenDialog` resolves its appearance from the dialog route, while
+`showLumenBottomSheet` carries the caller's accent to the sheet.
+`showLumenLoading` carries both the caller's palette and style.
+
+```dart
+Widget saveAction(BuildContext context, VoidCallback onSave) => LumenScope(
+  palette: LumenPalette.fromSeed(
+    primary: Colors.teal,
+    brightness: Theme.of(context).brightness,
+  ),
+  style: LumenStyle.flat,
+  child: LumenButton(label: 'Save', onPressed: onSave),
+);
 ```
 
 ## Changing colors
 
-All widgets read the theme palette, so changing the theme changes the entire kit.
-From the simplest to the most detailed:
+Widgets that use Lumen color tokens resolve the active palette. Explicit color
+overrides and typography supplied by the Material theme keep their own values.
 
 ```dart
 // 1. Preset ready: neon (default), matrix, synthwave, ultraviolet, ember.
@@ -120,8 +156,7 @@ final palette = LumenPalette.defaultDark().copyWith(primary: Colors.greenAccent)
 MaterialApp(theme: AppTheme.fromPalette(palette), home: ...);
 ```
 
-Theme changes at runtime are animated (`LumenThemeExt.lerp` interpolates the
-palette). The `example/` app has a preset selector and light/dark mode.
+`LumenThemeExt.lerp` interpolates palette changes during theme transitions.
 
 > `accentCyan`, `accentMagenta` and `accentBlue` became `primary`, `secondary`
 > and `tertiary`. The old names continue to function as `@Deprecated`.
@@ -141,9 +176,9 @@ shadow, fill, surface, border and background, and matches any palette:
 | Style | Visual |
 | ---------- | --------------------------------------------------------------- |
 | `neon` | Colorful glow, gradients, grid + orbs (default) |
-| `flat` | No glow or gradient, neutral shadow, plain background |
+| `flat` | Neutral shadows and solid fills where the style is applied. The decorative background keeps its gradient and omits the grid and default orbs. |
 | `glass` | Translucent surfaces with blur, soft glow |
-| `soft` | Very round corners, diffuse shadows, no border, dotted background |
+| `soft` | Very round corners, diffuse shadows, and a dotted background. Removes borders drawn through `LumenStyle.borderAll`. |
 | `brutal` | Straight corners, thick edge, offset hard shadow |
 
 ```dart
@@ -158,9 +193,6 @@ final style = LumenStyle.soft.copyWith(
   radiusScale: 1.2,
 );
 ```
-
-Widget animations (hover, transitions, toasts) remain the same in all
-the styles.
 
 ## Assembling own components
 
@@ -178,7 +210,7 @@ LumenPressable(                       // ripple, focus, disabled 0.55, semantics
   child: Container(
     padding: const EdgeInsets.all(16),
     decoration: LumenDecorations.panel(p, s, accent: p.secondary),
-    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Salvar', busy: saving),
+    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Save', busy: saving),
   ),
 );
 ```
@@ -191,8 +223,9 @@ LumenPressable(                       // ripple, focus, disabled 0.55, semantics
 | `LumenLabeled` | Control + label (checkbox, radio, switch) |
 | `LumenMotion` / `kLumen*` | Durations, disabled opacity and respect to "reduce animations" |
 
-Loop animations (skeleton, indeterminate progress) and transitions stop or
-become instantaneous when the system asks to reduce animations.
+Skeleton and Lumen indeterminate progress animations hold a static state
+when the system requests reduced motion. Transitions using
+`LumenMotion.duration` become instantaneous.
 
 ## Configurable background
 
@@ -215,36 +248,40 @@ LumenAnimatedGridBackground(
 
 ## Large list and code
 
-`LumenList` uses `ListView.builder`: only what is on the screen is built. With
-`itemCount: 0` it shows `empty`.
+`LumenList` builds rows on demand. Supply a `separatorBuilder` to add
+separators and an `empty` widget for zero items. Give the list a bounded
+viewport for large data sets. The Git version also exposes scroll options such
+as `physics`, `scrollDirection`, and `reverse`.
 
 ```dart
 LumenList(
-  itemCount: eventos.length,
+  itemCount: events.length,
   empty: const LumenEmptyState(
     icon: Icons.inbox_outlined,
     title: 'No events',
   ),
   itemBuilder: (context, i) => LumenListTile(
-    title: eventos[i].titulo,
-    onTap: () => abrir(eventos[i]),
+    title: events[i].title,
+    onTap: () => open(events[i]),
   ),
 )
 ```
 
-`LumenPinField` is controlled (`value` + `onChanged`). `onChanged == null`
-disables. `onCompleted` fires when the last square fills.
+`LumenPinField` is controlled by `value` and `onChanged`. Set
+`onChanged` to `null` to disable input. `onCompleted` fires when typing
+or pasting takes the code from incomplete to complete. Assigning a complete
+`value` programmatically only updates the displayed code.
 
 ```dart
 LumenPinField(
-  value: _codigo,
-  onChanged: (String v) => setState(() => _codigo = v),
-  onCompleted: enviar,
+  value: _code,
+  onChanged: (String v) => setState(() => _code = v),
+  onCompleted: submit,
 )
 ```
 
-`LumenBanner` stays on the screen until `onDismiss`. Without this callback there is no button
-to close.
+`LumenBanner` stays visible until its parent removes it. To add a close
+button, pass an `onDismiss` callback that updates the parent's state.
 
 ## Button variants
 
@@ -260,7 +297,8 @@ Row(
 );
 ```
 
-- `solid` — full neon gradient (same identity as `LumenCta`).
+- `solid` uses the accent gradient in gradient styles and a solid fill in
+  flat and brutal, as does `LumenCta`.
 - `outline` — glow edge + translucent background. Secondary action.
 - `ghost` — only text/icon in accent color. Tertiary action.
 
@@ -303,47 +341,47 @@ LumenTimePicker(
 );
 
 LumenRangeSlider(
-  values: preco,
+  values: price,
   max: 500,
   divisions: 50,
-  onChanged: (v) => setState(() => preco = v),
-  onChangeEnd: (v) => buscar(v), // dispara a busca só ao soltar
+  onChanged: (v) => setState(() => price = v),
+  onChangeEnd: (v) => search(v), // search only when released
 );
 ```
 
 ## Chips, quantity and evaluation
 
 ```dart
-// Escolha única.
+// Single selection.
 LumenChoiceChips<String>(
-  value: tamanho,
-  onChanged: (v) => setState(() => tamanho = v),
+  value: size,
+  onChanged: (v) => setState(() => size = v),
   items: const [
-    LumenChipItem(value: 'p', label: 'P'),
+    LumenChipItem(value: 's', label: 'S'),
     LumenChipItem(value: 'm', label: 'M'),
   ],
 );
 
-// Filtros (vários marcados). Recebe e devolve um Set novo.
+// Filters (multiple selections). Accepts and returns a new Set.
 LumenFilterChips<String>(
-  values: filtros,
-  onChanged: (v) => setState(() => filtros = v),
+  values: filters,
+  onChanged: (v) => setState(() => filters = v),
   items: const [
     LumenChipItem(value: 'promo', label: 'Promotion'),
-    LumenChipItem(value: 'frete', label: 'Free shipping'),
+    LumenChipItem(value: 'shipping', label: 'Free shipping'),
   ],
 );
 
-LumenQuantityStepper(value: qtd, min: 1, max: 10, onChanged: (v) => setState(() => qtd = v));
+LumenQuantityStepper(value: quantity, min: 1, max: 10, onChanged: (v) => setState(() => quantity = v));
 
-LumenRating(value: nota, allowHalf: true, onChanged: (v) => setState(() => nota = v));
+LumenRating(value: rating, allowHalf: true, onChanged: (v) => setState(() => rating = v));
 LumenRating(value: 4.3, size: 16); // read-only, with fraction
 ```
 
 ## Menu, loading and carousel
 
 ```dart
-// O "⋮" de card / app bar.
+// The card / app bar overflow menu.
 LumenMenuButton<String>(
   items: const [
     LumenMenuItem(value: 'edit', label: 'Edit', icon: Icons.edit),
@@ -354,31 +392,31 @@ LumenMenuButton<String>(
 );
 
 // Right-click (desktop/web) or long press (mobile).
-LumenContextMenu<String>(items: itens, onSelected: …, child: linha);
+LumenContextMenu<String>(items: items, onSelected: …, child: row);
 
 // Locks the screen during submit and returns the result of the task.
 final ok = await showLumenLoading(
   context: context,
-  message: 'Enviando…',
-  task: () => api.enviar(form),
+  message: 'Submitting…',
+  task: () => api.submit(form),
 );
 
 // Or just an area, controlled by state.
-LumenLoadingOverlay(loading: salvando, message: 'Salvando…', child: form);
+LumenLoadingOverlay(loading: saving, message: 'Saving…', child: form);
 
 // Gallery / onboarding with page dots.
 LumenCarousel(
-  itemCount: fotos.length,
-  itemBuilder: (context, i) => Image.network(fotos[i], fit: BoxFit.cover),
+  itemCount: photos.length,
+  itemBuilder: (context, i) => Image.network(photos[i], fit: BoxFit.cover),
 );
 // Or just the dots, linked to your PageView.
 LumenPageIndicator(count: 4, controller: pageController);
 
 // Stacked avatars with "+N".
 LumenAvatarGroup(
-  avatars: [for (final u in membros) LumenAvatar(initials: u.iniciais)],
+  avatars: [for (final u in members) LumenAvatar(initials: u.initials)],
   maxVisible: 3,
-  total: totalDeMembros,
+  total: totalMembers,
 );
 ```
 
@@ -390,9 +428,9 @@ LumenSegmentedControl(
   selectedIndex: i,
   onChanged: (v) => setState(() => i = v),
   items: const [
-    LumenTabItem(label: 'Dia'),
-    LumenTabItem(label: 'Semana'),
-    LumenTabItem(label: 'Mês'),
+    LumenTabItem(label: 'Day'),
+    LumenTabItem(label: 'Week'),
+    LumenTabItem(label: 'Month'),
   ],
 );
 
@@ -436,14 +474,16 @@ await showLumenDialog<void>(
 
 ## Example app
 
-There is a demo app in [`example/`](example/) with a single screen that exercises all the components of the kit — cards, status, buttons, icon buttons, FAB, inputs (text, search, switch, checkbox, radio, slider, range slider, dropdown, date and time picker), choice and filter chips, quantity stepper, rating, action and context menu, loading overlay, carousel, linear/circular progress, skeleton, snackbar, toast, dialog, bottom sheet, tabs, segmented, bottom nav, drawer, stepper, avatar, avatar group, badge, tag, list tile, divider, expansion tile, data table and navigation cards.
+The [example gallery](https://github.com/saulogatti/lumen-kit/blob/main/example/README.md)
+lets you toggle Lumen colors and component styles independently. Choose
+**Default Material** to compare with equivalent Material widgets using their
+default colors and shapes.
+
+The gallery also demonstrates foundation building blocks, enabled and disabled
+controls, loading and validation states, and horizontal and vertical steppers.
 
 ```bash
 cd example
 flutter pub get
-flutter run
+flutter run -d windows
 ```
-
-## Status
-
-In active development — API may still change between `0.x` versions. Use `ref: <commit-sha>` or tags (`ref: v1.0.0`) in production to avoid silent breaks coming from `main`.

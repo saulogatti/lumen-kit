@@ -63,7 +63,9 @@
       
 <section class="desc markdown">
   <p>External controller.</p>
-<p>The one who creates is the one who discards.</p>
+<p>The caller owns and disposes this controller. Removing it restores the
+previous internal controller if there is one. Otherwise, the field
+initializes its internal controller with the last external value.</p>
 </section>
 
       
@@ -98,7 +100,7 @@
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

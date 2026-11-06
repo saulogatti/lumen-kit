@@ -39,9 +39,9 @@ class LumenPageIndicator extends StatelessWidget {
   /// Current page when there is no [controller].
   final int index;
 
-  /// Called with the page of the touched point.
+  /// Called with the zero-based index of the tapped dot.
   ///
-  /// `null` = non-touchable points.
+  /// Use this callback to navigate. Omit it for a display-only indicator.
   final ValueChanged<int>? onDotTapped;
 
   /// Accent override.
@@ -52,15 +52,15 @@ class LumenPageIndicator extends StatelessWidget {
   /// Dot diameter.
   final double dotSize;
 
-  /// Hotspot width.
+  /// Visual width of the fully active dot in logical pixels.
   final double activeWidth;
 
   /// Space between points.
   final double spacing;
 
-  /// Text read by screen readers for the current page (base 0) and total.
+  /// Formats the accessibility label from a zero-based page index and count.
   ///
-  /// Default: "2/5".
+  /// The default uses a one-based label, such as `2/5` for index 1.
   final String Function(int index, int count)? semanticsLabel;
 
   @override
@@ -139,9 +139,9 @@ class LumenPageIndicator extends StatelessWidget {
 /// For galleries and onboarding.
 /// ```dart
 /// LumenCarousel(
-///   itemCount: fotos.length,
+///   itemCount: photos.length,
 ///   itemBuilder: (BuildContext context, int i) =>
-///       Image.network(fotos[i], fit: BoxFit.cover),
+///       Image.network(photos[i], fit: BoxFit.cover),
 /// )
 /// ```
 class LumenCarousel extends StatefulWidget {
@@ -168,7 +168,7 @@ class LumenCarousel extends StatefulWidget {
 
   /// External controller.
   ///
-  /// Without it, the carousel creates a com [viewportFraction].
+  /// Without it, the carousel creates a controller with [viewportFraction].
   final PageController? controller;
 
   /// Page height (the indicator is below).
@@ -181,7 +181,7 @@ class LumenCarousel extends StatefulWidget {
   /// Called when the current page changes.
   final ValueChanged<int>? onPageChanged;
 
-  /// Shows [LumenPageIndicator] below.
+  /// Whether to show [LumenPageIndicator] below a carousel with multiple pages.
   final bool showIndicator;
 
   /// Accent override.
@@ -224,8 +224,8 @@ class _LumenCarouselState extends State<LumenCarousel> {
     } else {
       return;
     }
-    // O PageView só solta o controller antigo no próprio didUpdateWidget,
-    // depois deste; descartar agora quebraria o detach.
+    // PageView releases the old controller in its own didUpdateWidget,
+    // after this one; disposing it now would break detach.
     WidgetsBinding.instance.addPostFrameCallback((_) => own.dispose());
   }
 

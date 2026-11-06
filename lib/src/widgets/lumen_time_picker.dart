@@ -4,11 +4,18 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Opens the default [showTimePicker] applying the neon theme.
-/// [initialTime] is the start time, [accentColor] replaces the default accent
-/// and [helpText] is passed to the Material picker. [use24HourFormat] strength
-/// (or turns off) the 24-hour clock; when `null`, it follows the configuration
-/// of the system.
+/// Opens the Material time picker with Lumen colors and corner radii.
+///
+/// The palette and radii come from [context]. The picker uses the Material
+/// theme and media settings resolved inside the route as its base.
+///
+/// [initialTime] and [initialEntryMode] set the starting time and input mode.
+/// [accentColor] overrides the primary palette color and [helpText] is
+/// forwarded to [showTimePicker]. Returns the selected time or `null` on
+/// dismissal.
+///
+/// [use24HourFormat] forces 24-hour formatting when `true` and uses the
+/// locale's format when `false`. A `null` value preserves the inherited setting.
 Future<TimeOfDay?> showLumenTimePicker({
   required BuildContext context,
   required TimeOfDay initialTime,
@@ -106,13 +113,14 @@ class LumenTimePicker extends StatelessWidget {
 
   /// Formatter used to display [value].
   ///
-  /// Default: locale format, in 12h or 24h depending on [use24HourFormat] /
-  /// system.
+  /// The default uses Material localizations and [use24HourFormat].
   final String Function(TimeOfDay)? format;
 
-  /// Forces a 24-hour clock (in the field and at the picker).
+  /// Controls the 24-hour override in the field and picker.
   ///
-  /// `null` follows the system.
+  /// `true` forces 24-hour formatting, `false` uses the locale's format, and
+  /// `null` preserves the inherited setting. [format] takes precedence for
+  /// the field text.
   final bool? use24HourFormat;
 
   @override

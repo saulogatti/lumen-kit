@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// App sem `LumenThemeExt` registrado: os widgets novos precisam funcionar só
-/// com o import de `components.dart`.
+/// App without a registered `LumenThemeExt`: new widgets must work with only
+/// the `components.dart` import.
 Widget bareApp(Widget child, {bool reduceMotion = false}) => MaterialApp(
   theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo)),
   home: MediaQuery(

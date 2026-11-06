@@ -12,7 +12,7 @@ import 'package:material_ui/material_ui.dart';
 /// ```dart
 /// LumenLoadingOverlay(
 ///   loading: _saving,
-///   message: 'Salvando…',
+///   message: 'Saving…',
 ///   child: myForm,
 /// )
 /// ```
@@ -29,6 +29,9 @@ class LumenLoadingOverlay extends StatelessWidget {
   });
 
   /// Whether to show the layer and block [child].
+  ///
+  /// When loading ends, focus and semantics are restored immediately.
+  /// The outgoing layer can block pointer input until its transition ends.
   final bool loading;
 
   /// Content covered.
@@ -139,15 +142,18 @@ class LumenLoadingPanel extends StatelessWidget {
   }
 }
 
-/// Lock the entire screen with [LumenLoadingPanel] while [task] runs and
-/// returns its result.
+/// Blocks the screen with a [LumenLoadingPanel] while [task] runs.
 ///
-/// The layer disappears even if [task] throws an error (the error is passed),
-/// and the back button is blocked in the meantime.
+/// The panel uses the palette and style resolved from [context], including
+/// a local [LumenScope]. The helper returns the task result or propagates its
+/// error and removes the loading route in either case.
+///
+/// The back button is blocked while the loading route is open.
+///
 /// ```dart
 /// final bool ok = await showLumenLoading(
 ///   context: context,
-///   message: 'Enviando…',
+///   message: 'Submitting…',
 ///   task: () => api.submit(form),
 /// );
 /// ```
@@ -165,8 +171,8 @@ Future<T> showLumenLoading<T>({
     barrierDismissible: false,
     barrierColor: barrierColor ?? _defaultBarrier(ext.palette),
     themes: InheritedTheme.capture(from: context, to: navigator.context),
-    // O LumenScope não é um InheritedTheme: repassa paleta e estilo à mão
-    // para a rota herdar o mesmo visual do chamador.
+    // LumenScope is not an InheritedTheme: forward palette and style explicitly
+    // so the route inherits the caller's appearance.
     builder: (_) => LumenScope(
       palette: ext.palette,
       style: ext.style,
@@ -185,8 +191,8 @@ Future<T> showLumenLoading<T>({
   try {
     return await task();
   } finally {
-    // removeRoute em vez de pop: não fecha por engano outra rota que tenha
-    // sido aberta por cima durante a tarefa.
+    // Use removeRoute instead of pop to avoid dismissing another route
+    // opened above this one while the task was running.
     if (route.isActive) {
       navigator.removeRoute(route);
     }

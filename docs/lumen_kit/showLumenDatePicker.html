@@ -68,10 +68,12 @@
     </section>
     
 <section class="desc markdown">
-  <p>Opens the default <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/showDatePicker.html">showDatePicker</a> applying the neon theme.
-Uses <code>initialDate</code> as the start date and limits the selection to the range
-between <code>firstDate</code> and <code>lastDate</code>. <code>accentColor</code> replaces the default
-accent and <code>helpText</code> is passed to the Material picker.</p>
+  <p>Opens the Material date picker with colors from the active Lumen palette.</p>
+<p>The colors come from <code>context</code> and apply to the route's Material theme.
+Provide an <code>initialDate</code> between <code>firstDate</code> and <code>lastDate</code>, inclusive.
+<code>accentColor</code> overrides the primary palette color and <code>helpText</code> is
+forwarded to <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/showDatePicker.html">showDatePicker</a>. Returns the selected date or <code>null</code> on
+dismissal.</p>
 </section>
 
 
@@ -141,7 +143,7 @@ accent and <code>helpText</code> is passed to the Material picker.</p>
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

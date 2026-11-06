@@ -54,14 +54,9 @@
 
     
 <section class="desc markdown">
-  <p>Alpha that does not erase what the color in the palette already carries.
-<a href="https://api.flutter.dev/flutter/dart-ui/Color/withValues.html">Color.withValues</a> replaces alpha. <a href="../lumen_kit/LumenOutlineColor/scaleAlpha.html">scaleAlpha</a> multiplies (<code>a * factor</code>).
-<a href="../lumen_kit/LumenOutlineColor/outlineAlpha.html">outlineAlpha</a> is the contour case: in the dark,
-<a href="../lumen_kit/LumenPalette/surfaceOutline.html">LumenPalette.surfaceOutline</a> is a translucent cyan and the widgets ask for
-<code>0.4</code>–<code>0.9</code> for the border to appear, so this value comes directly. In light
-the token is black at ~8% (<code>0x15000000</code>). Replacing with <code>0.9</code> turns a black
-border. In this case the order is scaled based on the token's alpha, with a
-ceiling of <code>0.28</code>.</p>
+  <p>Adjusts opacity for Lumen palette colors.</p>
+<p>Use <a href="../lumen_kit/LumenOutlineColor/scaleAlpha.html">scaleAlpha</a> to multiply the current alpha and <a href="../lumen_kit/LumenOutlineColor/outlineAlpha.html">outlineAlpha</a> to
+preserve faint neutral outlines.</p>
 </section>
 
     <section>
@@ -97,7 +92,7 @@ ceiling of <code>0.28</code>.</p>
         <span>Available on <a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>,
         provided by the <a href="../lumen_kit/LumenOutlineColor.html">LumenOutlineColor</a> extension</span>
       </p>
-  Applies <code>alpha</code> as an outline, preserving the clear token.
+  Applies <code>alpha</code> while preserving faint neutral outlines.
   
 
 </dd>
@@ -152,7 +147,7 @@ requested there is an absolute alpha, and <code>1 * factor</code> would only mat
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

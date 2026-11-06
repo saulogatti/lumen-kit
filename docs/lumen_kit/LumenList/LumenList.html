@@ -65,12 +65,21 @@
 <li><span class="parameter" id="param-controller"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/ScrollController-class.html">ScrollController</a>?</span> <span class="parameter-name">controller</span>, </span></li>
 <li><span class="parameter" id="param-empty"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">empty</span>, </span></li>
 <li><span class="parameter" id="param-padding"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/EdgeInsetsGeometry-class.html">EdgeInsetsGeometry</a>?</span> <span class="parameter-name">padding</span>, </span></li>
+<li><span class="parameter" id="param-shrinkWrap"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">shrinkWrap</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="param-physics"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/ScrollPhysics-class.html">ScrollPhysics</a>?</span> <span class="parameter-name">physics</span>, </span></li>
+<li><span class="parameter" id="param-addAutomaticKeepAlives"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">addAutomaticKeepAlives</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="param-addRepaintBoundaries"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">addRepaintBoundaries</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="param-addSemanticIndexes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">addSemanticIndexes</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="param-clipBehavior"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Clip.html">Clip</a></span> <span class="parameter-name">clipBehavior</span> = <span class="default-value">Clip.hardEdge</span>, </span></li>
+<li><span class="parameter" id="param-dragStartBehavior"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/gestures/DragStartBehavior.html">DragStartBehavior</a></span> <span class="parameter-name">dragStartBehavior</span> = <span class="default-value">DragStartBehavior.start</span>, </span></li>
+<li><span class="parameter" id="param-keyboardDismissBehavior"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/ScrollViewKeyboardDismissBehavior.html">ScrollViewKeyboardDismissBehavior</a></span> <span class="parameter-name">keyboardDismissBehavior</span> = <span class="default-value">ScrollViewKeyboardDismissBehavior.manual</span>, </span></li>
+<li><span class="parameter" id="param-reverse"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">reverse</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="param-scrollDirection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/Axis.html">Axis</a></span> <span class="parameter-name">scrollDirection</span> = <span class="default-value">Axis.vertical</span>, </span></li>
 </ol>})
     </section>
     
 <section class="desc markdown">
-  <p>Create the list.</p>
-<p><code>itemBuilder</code> is only called for visible indexes.</p>
+  <p>Creates a scrollable list that builds items on demand.</p>
 </section>
 
 
@@ -85,6 +94,16 @@
   this.controller,
   this.empty,
   this.padding,
+  this.shrinkWrap = false,
+  this.physics,
+  this.addAutomaticKeepAlives = true,
+  this.addRepaintBoundaries = true,
+  this.addSemanticIndexes = true,
+  this.clipBehavior = Clip.hardEdge,
+  this.dragStartBehavior = DragStartBehavior.start,
+  this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+  this.reverse = false,
+  this.scrollDirection = Axis.vertical,
 });</code></pre>
 </section>
 
@@ -113,7 +132,7 @@
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

@@ -27,4 +27,41 @@ void main() {
     final field = tester.widget<TextField>(find.byType(TextField));
     expect(field.enabled, isFalse);
   });
+
+  testWidgets('LumenPinField segue o value vindo de fora (limpar após erro)', (tester) async {
+    Widget pin(String v) => bareApp(LumenPinField(value: v, onChanged: (_) {}));
+    String typed() => tester.widget<TextField>(find.byType(TextField)).controller!.text;
+
+    await tester.pumpWidget(pin('1234'));
+    expect(typed(), '1234');
+
+    await tester.pumpWidget(pin(''));
+    expect(typed(), isEmpty);
+
+    // Só dígitos e no máximo `length` (6), mesmo vindo de fora.
+    await tester.pumpWidget(pin('ab12-345678'));
+    expect(typed(), '123456');
+  });
+
+  testWidgets('LumenPinField não chama onCompleted de novo sem esvaziar', (tester) async {
+    final done = <String>[];
+    var value = '';
+    await pumpBare(
+      tester,
+      StatefulBuilder(
+        builder: (context, setState) => LumenPinField(
+          value: value,
+          length: 4,
+          onChanged: (v) => setState(() => value = v),
+          onCompleted: done.add,
+        ),
+      ),
+    );
+    await tester.tap(find.byType(TextField));
+    await tester.enterText(find.byType(TextField), '1234');
+    await tester.pump();
+    await tester.enterText(find.byType(TextField), '1235');
+    await tester.pump();
+    expect(done, <String>['1234']);
+  });
 }

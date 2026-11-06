@@ -3,7 +3,7 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Slider with accent gradient track and glow thumb.
+/// Slider with a solid accent track and a thumb that follows the shadow style.
 class LumenSlider extends StatelessWidget {
   /// Creates a neon slider.
   const LumenSlider({
@@ -110,8 +110,8 @@ SliderThemeData _lumenSliderTheme(BuildContext context, LumenPalette p, Color ac
     rangeThumbShape: _GlowRangeThumbShape(glow: accent, showGlow: glow),
     rangeTrackShape: const RoundedRectRangeSliderTrackShape(),
     rangeValueIndicatorShape: const PaddleRangeSliderValueIndicatorShape(),
-    // Com divisions, os ticks do Material viram um pontilhado sobre o
-    // trilho; o thumb já mostra onde o valor encaixa.
+    // With divisions, Material ticks form a dotted line on the
+    // track; the thumb already shows where the value snaps.
     rangeTickMarkShape: const RoundRangeSliderTickMarkShape(tickMarkRadius: 0),
   );
 }

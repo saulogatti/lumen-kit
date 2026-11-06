@@ -54,8 +54,8 @@
 
     
 <section class="desc markdown">
-  <p>ThemeExtension to access the palette via
-<code>Theme.of(context).extension&lt;LumenThemeExt&gt;()</code>.</p>
+  <p>Stores the Lumen palette and style in <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/ThemeData-class.html">ThemeData</a>.</p>
+<p>Use <a href="../lumen_kit/LumenThemeExt/of.html">of</a> to resolve local scopes and defaults as well.</p>
 </section>
 
 
@@ -66,7 +66,7 @@
   <dd>
     <ul class="gt-separated dark clazz-relationships">
       <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
-        <li><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/ThemeExtension-class.html">ThemeExtension</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../lumen_kit/LumenThemeExt-class.html">LumenThemeExt</a></span>&gt;</span></li>
+        <li><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/ThemeExtension-class.html">ThemeExtension</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../lumen_kit/LumenThemeExt-class.html">LumenThemeExt</a></span>&gt;</span></li>
       <li>LumenThemeExt</li>
     </ul>
   </dd>
@@ -126,7 +126,7 @@
 
 </dt>
 <dd>
-  Palette available for widgets that read the current <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/ThemeData-class.html">ThemeData</a>.
+  Palette available for widgets that read the current <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/ThemeData-class.html">ThemeData</a>.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -156,7 +156,7 @@
 </dd>
 
         <dt id="type" class="property inherited">
-  <span class="name"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/ThemeExtension/type.html">type</a></span>
+  <span class="name"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/ThemeExtension/type.html">type</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span>
   
 
@@ -191,14 +191,14 @@ replaced by the non-null parameter values.
 </dd>
 
         <dt id="lerp" class="callable">
-  <span class="name"><a href="../lumen_kit/LumenThemeExt/lerp.html">lerp</a></span><span class="signature">(<wbr><span class="parameter" id="lerp-param-other"><span>covariant</span> <span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/ThemeExtension-class.html">ThemeExtension</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../lumen_kit/LumenThemeExt-class.html">LumenThemeExt</a></span>&gt;</span>?</span> <span class="parameter-name">other</span>, </span><span class="parameter" id="lerp-param-t"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">t</span></span>)
+  <span class="name"><a href="../lumen_kit/LumenThemeExt/lerp.html">lerp</a></span><span class="signature">(<wbr><span class="parameter" id="lerp-param-other"><span>covariant</span> <span class="type-annotation"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/ThemeExtension-class.html">ThemeExtension</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../lumen_kit/LumenThemeExt-class.html">LumenThemeExt</a></span>&gt;</span>?</span> <span class="parameter-name">other</span>, </span><span class="parameter" id="lerp-param-t"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">t</span></span>)
     <span class="returntype parameter">&#8594; <a href="../lumen_kit/LumenThemeExt-class.html">LumenThemeExt</a></span>
   </span>
   
 
 </dt>
 <dd>
-  Linearly interpolate with another <a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/ThemeExtension-class.html">ThemeExtension</a> object.
+  Linearly interpolate with another <a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/ThemeExtension-class.html">ThemeExtension</a> object.
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -265,12 +265,7 @@ replaced by the non-null parameter values.
 
 </dt>
 <dd>
-  Gets the active neon palette and style for <code>context</code>.
-Search order: nearest <a href="../lumen_kit/LumenScope-class.html">LumenScope</a>, then registered extension in
-<a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/ThemeData-class.html">ThemeData</a>, and finally the default palette (<a href="../lumen_kit/LumenPalette/LumenPalette.defaultDark.html">LumenPalette.defaultDark</a> or
-<a href="../lumen_kit/LumenPalette/LumenPalette.light.html">LumenPalette.light</a>, depending on the brightness of the app theme) with
-<a href="../lumen_kit/LumenStyle/neon-constant.html">LumenStyle.neon</a>. This way widgets work in apps that keep the own
-<code>ThemeData</code> and never record anything from the kit.
+  Resolves the active Lumen palette and style for <code>context</code>.
   
 
 </dd>
@@ -302,7 +297,7 @@ Search order: nearest <a href="../lumen_kit/LumenScope-class.html">LumenScope</a
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

@@ -4,15 +4,16 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Code field (OTP): a sequence of places controlled by [value].
-/// `onChanged == null` disables. [onCompleted] fires when the last house is
-/// filled. Pasting a code completes the sequence all at once.
+/// A one-time code field controlled by [value].
+///
+/// A null [onChanged] disables input. Typing or pasting a full code can
+/// trigger [onCompleted].
 /// ```dart
 /// LumenPinField(
 ///   length: 6,
-///   value: _codigo,
-///   onChanged: (String v) => setState(() => _codigo = v),
-///   onCompleted: enviar,
+///   value: _code,
+///   onChanged: (String v) => setState(() => _code = v),
+///   onCompleted: submit,
 /// )
 /// ```
 class LumenPinField extends StatefulWidget {
@@ -27,7 +28,7 @@ class LumenPinField extends StatefulWidget {
     this.onCompleted,
     this.obscure = false,
     this.semanticLabel,
-  }) : assert(length > 0, 'length precisa ser positivo.');
+  }) : assert(length > 0, 'length must be positive.');
 
   /// Number of houses.
   final int length;
@@ -42,7 +43,10 @@ class LumenPinField extends StatefulWidget {
   /// `null` disables the field.
   final ValueChanged<String>? onChanged;
 
-  /// Called once when [value] reaches [length] digits.
+  /// The callback when user input fills all [length] digits.
+  ///
+  /// It fires when the input goes from incomplete to complete. Setting [value]
+  /// programmatically updates the field without invoking the callback.
   final ValueChanged<String>? onCompleted;
 
   /// Whether each place shows a dot instead of the digit.
@@ -50,7 +54,7 @@ class LumenPinField extends StatefulWidget {
 
   /// Label for screen readers.
   ///
-  /// Default: "N-digit code".
+  /// The default is `N-digit code`, with [length] in place of `N`.
   final String? semanticLabel;
 
   @override
@@ -74,7 +78,7 @@ class _LumenPinFieldState extends State<LumenPinField> {
     return Opacity(
       opacity: _enabled ? 1 : kLumenDisabledOpacity,
       child: Semantics(
-        label: widget.semanticLabel ?? 'Código de ${widget.length} dígitos',
+        label: widget.semanticLabel ?? '${widget.length}-digit code',
         value: widget.obscure ? null : text,
         textField: true,
         enabled: _enabled,

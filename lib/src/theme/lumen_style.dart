@@ -60,46 +60,49 @@ class LumenStyle {
     this.orbs = true,
   });
 
-  /// Shadow type applied to all widgets.
+  /// Shadow treatment for effects that follow this style.
   final LumenShadowKind shadow;
 
-  /// Shadow opacity multiplier.
+  /// Opacity multiplier used by glow and elevation shadows.
   final double shadowStrength;
 
-  /// If `false`, gradients become solid color (the first color of the gradient).
+  /// Whether [fill] preserves gradients instead of using their first color.
+  ///
+  /// Gradients drawn directly, such as the default background gradient, are
+  /// independent of this setting.
   final bool gradients;
 
-  /// Surface opacity multiplier (cards, dialogs, sheets…).
+  /// Opacity multiplier for surfaces that use [surfaceAlpha].
   final double surfaceOpacity;
 
-  /// Blur applied behind surfaces (glass effect).
+  /// Background blur used by [frost].
   ///
   /// `0` turns off.
   final double blurSigma;
 
-  /// Corner radius multiplier.
+  /// Corner radius multiplier for components that scale their radius.
   ///
-  /// `0` makes everything square.
+  /// `0` squares those corners. Circular shapes such as avatars stay circular.
   final double radiusScale;
 
-  /// Edge thickness multiplier.
+  /// Border width multiplier used by [borderAll].
   ///
-  /// `0` removes borders.
+  /// `0` omits those borders. Input outlines have their own widths.
   final double borderScale;
 
-  /// Edge opacity multiplier.
+  /// Border opacity multiplier used by [borderAll].
   final double borderOpacity;
 
   /// Background decoration.
   final LumenBackgroundKind background;
 
-  /// Whether to draw the glow orbs in the bottom corners.
+  /// Whether the animated background draws its default glow orbs.
   final bool orbs;
 
   /// Original look: colorful glow, gradients, grid and orbs.
   static const LumenStyle neon = LumenStyle();
 
-  /// No glow or gradient, neutral shade, smooth background.
+  /// Neutral shadows, solid fills, and a plain background pattern.
   static const LumenStyle flat = LumenStyle(
     shadow: LumenShadowKind.elevation,
     gradients: false,
@@ -119,7 +122,7 @@ class LumenStyle {
     background: LumenBackgroundKind.plain,
   );
 
-  /// Well-rounded corners, diffuse shadows and no edges.
+  /// Rounded corners, diffuse shadows, and no borders drawn by [borderAll].
   static const LumenStyle soft = LumenStyle(
     shadow: LumenShadowKind.elevation,
     shadowStrength: 0.8,
@@ -149,7 +152,7 @@ class LumenStyle {
     'brutal': brutal,
   };
 
-  /// Style registered with the nearest [Theme].
+  /// Resolves the active style through [LumenThemeExt.of].
   static LumenStyle of(BuildContext context) => LumenThemeExt.of(context).style;
 
   /// Adapts shadows written in a neon (glow) look to the current style.

@@ -54,7 +54,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://pub.dev/documentation/material_ui/1.7.0/material_ui/ThemeData-class.html">ThemeData</a></span>
+<span class="returntype"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/ThemeData-class.html">ThemeData</a></span>
 <span class="name ">fromSeed</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fromSeed-param-primary"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a></span> <span class="parameter-name">primary</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-secondary"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">secondary</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-tertiary"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">tertiary</span>, </span></li>
@@ -67,8 +67,9 @@
     </section>
     
 <section class="desc markdown">
-  <p>Shortcut to change the colors of the entire kit from one or two colors.</p>
-<p>Equivalent to <code>fromPalette(LumenPalette.fromSeed(...))</code>.</p>
+  <p>Builds a theme from <code>primary</code> and optional <code>secondary</code> and <code>tertiary</code> colors.</p>
+<p>Uses <a href="../../lumen_kit/LumenPalette/LumenPalette.fromSeed.html">LumenPalette.fromSeed</a> with <code>brightness</code>, then passes the
+resulting palette, <code>brightness</code>, and <code>style</code> to <a href="../../lumen_kit/AppTheme/fromPalette.html">fromPalette</a>.</p>
 </section>
 
 
@@ -118,7 +119,7 @@
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

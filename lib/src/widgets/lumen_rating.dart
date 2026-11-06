@@ -25,7 +25,7 @@ class LumenRating extends StatelessWidget {
   /// Number of stars.
   final int max;
 
-  /// Allows you to choose half a star (tap on the left half).
+  /// Whether tapping the leading half of a star selects a half-star value.
   final bool allowHalf;
 
   /// Size of each star.

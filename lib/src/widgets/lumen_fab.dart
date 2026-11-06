@@ -4,11 +4,10 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Floating Action Button in neon style.
+/// Themed floating action button with compact and extended layouts.
 ///
-/// It works in two modes:
-/// - **Compact** (default, only [icon]) — circle with gradient and glow. -
-/// **Extended** (with [label]) — pill with icon + text.
+/// The compact layout shows an icon and has equal width and height. The
+/// extended layout also shows [label]. Both use the active style's radius.
 class LumenFab extends StatelessWidget {
   /// Creates a compact or extended FAB when [label] is entered.
   const LumenFab({
@@ -72,9 +71,7 @@ class LumenFab extends StatelessWidget {
   /// In extended mode it only defines the height.
   final double size;
 
-  /// Tag for Hero animation.
-  ///
-  /// Passed on to internal [Material] via [Hero].
+  /// Tag used to wrap the button in a [Hero] when provided.
   final Object? heroTag;
 
   /// Label for screen readers in compact mode (icon only).

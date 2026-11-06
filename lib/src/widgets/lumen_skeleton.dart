@@ -3,10 +3,10 @@ import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Skeleton/shimmer in neon style.
+/// Displays a placeholder with a shimmer while content loads.
 ///
-/// Use while the actual content is loading.
-/// Examples:
+/// The highlight stays still when the system requests reduced motion.
+///
 /// ```dart
 /// LumenSkeleton(width: 200, height: 14);
 /// LumenSkeleton.circle(size: 48);
@@ -50,7 +50,7 @@ class LumenSkeleton extends StatefulWidget {
 
   /// Animated glow color.
   ///
-  /// Default: translucent cyan accent from the palette.
+  /// Defaults to the primary palette color at 25% opacity.
   final Color? highlightColor;
 
   @override
@@ -66,7 +66,7 @@ class _LumenSkeletonState extends State<LumenSkeleton> with SingleTickerProvider
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Com "reduzir animações", o brilho fica parado no meio.
+    // With reduced motion, keep the shimmer stationary in the middle.
     LumenMotion.syncRepeat(_ctrl, context);
   }
 
