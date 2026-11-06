@@ -15,7 +15,7 @@ Widget _card({String? tag, VoidCallback? onTap}) => LumenNavigationCard(
   onTap: onTap ?? () {},
 );
 
-/// Deslocamento vertical do card (negativo = levantado).
+/// Vertical card offset (negative = raised).
 double _lift(WidgetTester tester) => tester
     .widget<AnimatedContainer>(
       find

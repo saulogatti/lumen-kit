@@ -8,15 +8,15 @@
   <title>lumen_kit - Dart API docs</title>
 
 
-  
+
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="static-assets/github.css?v1">
   <link rel="stylesheet" href="static-assets/styles.css?v1">
   <link rel="icon" href="static-assets/favicon.png?v1">
-  
+
 </head>
 
 <body data-base-href="" data-using-base-href="false" class="light-theme">
@@ -41,7 +41,7 @@
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
-      
+
 <section class="desc markdown">
   <h1 id="lumen_kit">lumen_kit</h1>
 <p><a href="https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml"><img src="https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
@@ -265,7 +265,7 @@ LumenPressable(                       // ripple, focus, disabled 0.55, semantics
   child: Container(
     padding: const EdgeInsets.all(16),
     decoration: LumenDecorations.panel(p, s, accent: p.secondary),
-    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Salvar', busy: saving),
+    child: LumenActionContent(color: p.textPrimary, icon: Icons.save, label: 'Save', busy: saving),
   ),
 );
 </code></pre>
@@ -324,14 +324,14 @@ separators and an <code>empty</code> widget for zero items. Give the list a boun
 viewport for large data sets. The Git version also exposes scroll options such
 as <code>physics</code>, <code>scrollDirection</code>, and <code>reverse</code>.</p>
 <pre class="language-dart"><code class="language-dart">LumenList(
-  itemCount: eventos.length,
+  itemCount: events.length,
   empty: const LumenEmptyState(
     icon: Icons.inbox_outlined,
     title: 'No events',
   ),
   itemBuilder: (context, i) =&gt; LumenListTile(
-    title: eventos[i].titulo,
-    onTap: () =&gt; abrir(eventos[i]),
+    title: events[i].title,
+    onTap: () =&gt; open(events[i]),
   ),
 )
 </code></pre>
@@ -340,9 +340,9 @@ as <code>physics</code>, <code>scrollDirection</code>, and <code>reverse</code>.
 or pasting takes the code from incomplete to complete. Assigning a complete
 <code>value</code> programmatically only updates the displayed code.</p>
 <pre class="language-dart"><code class="language-dart">LumenPinField(
-  value: _codigo,
-  onChanged: (String v) =&gt; setState(() =&gt; _codigo = v),
-  onCompleted: enviar,
+  value: _code,
+  onChanged: (String v) =&gt; setState(() =&gt; _code = v),
+  onCompleted: submit,
 )
 </code></pre>
 <p><code>LumenBanner</code> stays visible until its parent removes it. To add a close
@@ -401,41 +401,41 @@ LumenTimePicker(
 );
 
 LumenRangeSlider(
-  values: preco,
+  values: price,
   max: 500,
   divisions: 50,
-  onChanged: (v) =&gt; setState(() =&gt; preco = v),
-  onChangeEnd: (v) =&gt; buscar(v), // dispara a busca só ao soltar
+  onChanged: (v) =&gt; setState(() =&gt; price = v),
+  onChangeEnd: (v) =&gt; search(v), // search only when released
 );
 </code></pre>
 <h2 id="chips-quantity-and-evaluation">Chips, quantity and evaluation</h2>
-<pre class="language-dart"><code class="language-dart">// Escolha única.
+<pre class="language-dart"><code class="language-dart">// Single selection.
 LumenChoiceChips&lt;String&gt;(
-  value: tamanho,
-  onChanged: (v) =&gt; setState(() =&gt; tamanho = v),
+  value: size,
+  onChanged: (v) =&gt; setState(() =&gt; size = v),
   items: const [
-    LumenChipItem(value: 'p', label: 'P'),
+    LumenChipItem(value: 's', label: 'S'),
     LumenChipItem(value: 'm', label: 'M'),
   ],
 );
 
-// Filtros (vários marcados). Recebe e devolve um Set novo.
+// Filters (multiple selections). Accepts and returns a new Set.
 LumenFilterChips&lt;String&gt;(
-  values: filtros,
-  onChanged: (v) =&gt; setState(() =&gt; filtros = v),
+  values: filters,
+  onChanged: (v) =&gt; setState(() =&gt; filters = v),
   items: const [
     LumenChipItem(value: 'promo', label: 'Promotion'),
-    LumenChipItem(value: 'frete', label: 'Free shipping'),
+    LumenChipItem(value: 'shipping', label: 'Free shipping'),
   ],
 );
 
-LumenQuantityStepper(value: qtd, min: 1, max: 10, onChanged: (v) =&gt; setState(() =&gt; qtd = v));
+LumenQuantityStepper(value: quantity, min: 1, max: 10, onChanged: (v) =&gt; setState(() =&gt; quantity = v));
 
-LumenRating(value: nota, allowHalf: true, onChanged: (v) =&gt; setState(() =&gt; nota = v));
+LumenRating(value: rating, allowHalf: true, onChanged: (v) =&gt; setState(() =&gt; rating = v));
 LumenRating(value: 4.3, size: 16); // read-only, with fraction
 </code></pre>
 <h2 id="menu-loading-and-carousel">Menu, loading and carousel</h2>
-<pre class="language-dart"><code class="language-dart">// O "⋮" de card / app bar.
+<pre class="language-dart"><code class="language-dart">// The card / app bar overflow menu.
 LumenMenuButton&lt;String&gt;(
   items: const [
     LumenMenuItem(value: 'edit', label: 'Edit', icon: Icons.edit),
@@ -446,31 +446,31 @@ LumenMenuButton&lt;String&gt;(
 );
 
 // Right-click (desktop/web) or long press (mobile).
-LumenContextMenu&lt;String&gt;(items: itens, onSelected: …, child: linha);
+LumenContextMenu&lt;String&gt;(items: items, onSelected: …, child: row);
 
 // Locks the screen during submit and returns the result of the task.
 final ok = await showLumenLoading(
   context: context,
-  message: 'Enviando…',
-  task: () =&gt; api.enviar(form),
+  message: 'Submitting…',
+  task: () =&gt; api.submit(form),
 );
 
 // Or just an area, controlled by state.
-LumenLoadingOverlay(loading: salvando, message: 'Salvando…', child: form);
+LumenLoadingOverlay(loading: saving, message: 'Saving…', child: form);
 
 // Gallery / onboarding with page dots.
 LumenCarousel(
-  itemCount: fotos.length,
-  itemBuilder: (context, i) =&gt; Image.network(fotos[i], fit: BoxFit.cover),
+  itemCount: photos.length,
+  itemBuilder: (context, i) =&gt; Image.network(photos[i], fit: BoxFit.cover),
 );
 // Or just the dots, linked to your PageView.
 LumenPageIndicator(count: 4, controller: pageController);
 
 // Stacked avatars with "+N".
 LumenAvatarGroup(
-  avatars: [for (final u in membros) LumenAvatar(initials: u.iniciais)],
+  avatars: [for (final u in members) LumenAvatar(initials: u.initials)],
   maxVisible: 3,
-  total: totalDeMembros,
+  total: totalMembers,
 );
 </code></pre>
 <h2 id="navigation">Navigation</h2>
@@ -479,9 +479,9 @@ LumenSegmentedControl(
   selectedIndex: i,
   onChanged: (v) =&gt; setState(() =&gt; i = v),
   items: const [
-    LumenTabItem(label: 'Dia'),
-    LumenTabItem(label: 'Semana'),
-    LumenTabItem(label: 'Mês'),
+    LumenTabItem(label: 'Day'),
+    LumenTabItem(label: 'Week'),
+    LumenTabItem(label: 'Month'),
   ],
 );
 
@@ -522,8 +522,10 @@ showLumenBottomSheet&lt;void&gt;(
 <h2 id="example-app">Example app</h2>
 <p>The <a href="https://github.com/saulogatti/lumen-kit/blob/main/example/README.md">example gallery</a>
 lets you toggle Lumen colors and component styles independently. Choose
-<strong>Material padrão</strong> to compare with equivalent Material widgets using their
+<strong>Default Material</strong> to compare with equivalent Material widgets using their
 default colors and shapes.</p>
+<p>The gallery also demonstrates foundation building blocks, enabled and disabled
+controls, loading and validation states, and horizontal and vertical steppers.</p>
 <pre class="language-bash"><code class="language-bash">cd example
 flutter pub get
 flutter run -d windows
@@ -535,14 +537,14 @@ flutter run -d windows
           <h2>Libraries</h2>
         <dl>
           <dt id="components">
-  <span class="name"><a href="components/">components</a></span> 
+  <span class="name"><a href="components/">components</a></span>
 
 </dt>
 <dd>Only the kit components, without <code>AppTheme</code> or <code>AppColors</code>.
 </dd>
 
           <dt id="lumen_kit">
-  <span class="name"><a href="lumen_kit/">lumen_kit</a></span> 
+  <span class="name"><a href="lumen_kit/">lumen_kit</a></span>
 
 </dt>
 <dd>Complete kit: components + theme (<code>AppTheme</code>, <code>AppColors</code>).
@@ -580,7 +582,7 @@ To use just the widgets, without any themes, import
     lumen_kit
       1.0.1
   </span>
-  
+
 </footer>
 
 
@@ -589,4 +591,3 @@ To use just the widgets, without any themes, import
 
 </body>
 </html>
-

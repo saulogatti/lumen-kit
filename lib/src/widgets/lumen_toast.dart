@@ -43,8 +43,8 @@ Future<void> showLumenToast({
   late final OverlayEntry entry;
   var removed = false;
   void finish() {
-    // `entry.mounted` fica falso quando o Overlay sai da árvore, mas o entry
-    // ainda precisa de `remove()` antes do `dispose()`.
+    // `entry.mounted` becomes false when the Overlay leaves the tree, but the entry
+    // still needs `remove()` before `dispose()`.
     if (removed) {
       return;
     }
@@ -136,15 +136,15 @@ class _LumenToastWidgetState extends State<_LumenToastWidget> with SingleTickerP
       return;
     }
     await _ctrl.reverse();
-    // O OverlayEntry é removido fora do frame de build.
+    // Remove the OverlayEntry outside the build frame.
     _notifyDone();
   }
 
   @override
   void dispose() {
     _timer?.cancel();
-    // Descartado antes de terminar a saída (o Overlay saiu da árvore): o
-    // `reverse()` nunca completa, então a Future do toast fecha aqui, fora do
+    // Disposed before the exit animation ends (the Overlay left the tree):
+    // `reverse()` never completes, so complete the toast Future here, outside
     // finalizeTree.
     if (!_notified) {
       scheduleMicrotask(_notifyDone);
@@ -172,7 +172,7 @@ class _LumenToastWidgetState extends State<_LumenToastWidget> with SingleTickerP
           child: SlideTransition(
             position: _slide,
             child: Center(
-              // liveRegion: leitores de tela anunciam o toast ao aparecer.
+              // liveRegion: screen readers announce the toast when it appears.
               child: Semantics(
                 liveRegion: true,
                 container: true,

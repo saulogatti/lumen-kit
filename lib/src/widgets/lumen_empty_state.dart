@@ -9,10 +9,10 @@ import 'package:material_ui/material_ui.dart';
 /// ```dart
 /// LumenEmptyState(
 ///   icon: Icons.inbox_outlined,
-///   title: 'Nada por aqui',
-///   message: 'Quando chegar um evento, ele aparece nesta lista.',
-///   actionLabel: 'Atualizar',
-///   onPressed: atualizar,
+///   title: 'Nothing here yet',
+///   message: 'New events will appear in this list.',
+///   actionLabel: 'Refresh',
+///   onPressed: refresh,
 /// )
 /// ```
 class LumenEmptyState extends StatelessWidget {

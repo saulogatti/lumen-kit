@@ -198,7 +198,7 @@ class _GridPainter extends CustomPainter {
       ..strokeWidth = 1;
 
     if (dots) {
-      // Pontos ficam mais discretos que linhas; compensa na opacidade.
+      // Dots are subtler than lines; compensate with opacity.
       paint.color = color.scaleAlpha(3);
       for (double x = 0; x <= size.width; x += spacing / 2) {
         for (double y = 0; y <= size.height; y += spacing / 2) {

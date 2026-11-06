@@ -66,7 +66,7 @@ class _LumenSkeletonState extends State<LumenSkeleton> with SingleTickerProvider
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Com "reduzir animações", o brilho fica parado no meio.
+    // With reduced motion, keep the shimmer stationary in the middle.
     LumenMotion.syncRepeat(_ctrl, context);
   }
 

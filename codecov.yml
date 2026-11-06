@@ -4,13 +4,13 @@ coverage:
   status:
     project:
       default:
-        # Não deixa a cobertura total cair mais que 0,5 ponto em relação à base.
+        # Keep overall coverage from dropping more than 0.5 points from the base.
         target: auto
         threshold: 0.5%
     patch:
       default:
-        # Código novo do PR. Construtores `const` não contam na VM do Dart, por
-        # isso não exigimos 100%.
+        # New code in the PR. The Dart VM does not count `const` constructors,
+        # so 100% coverage is not required.
         target: 90%
 
 comment:

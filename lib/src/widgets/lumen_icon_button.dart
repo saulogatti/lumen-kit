@@ -169,7 +169,7 @@ class LumenIconButton extends StatelessWidget {
       onTap: onPressed,
       enabled: !busy,
       borderRadius: radius,
-      // Com tooltip o Tooltip já anuncia a mensagem.
+      // When a tooltip is present, Tooltip already announces the message.
       semanticLabel: tooltip == null ? semanticLabel : null,
       child: body,
     );

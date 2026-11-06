@@ -149,7 +149,7 @@ void _ignore(String _) {}
 /// Cores que [_Probe] leu a cada build.
 final List<Color> _seen = <Color>[];
 
-/// Lê a paleta do contexto; `const` para só reconstruir por dependência.
+/// Reads the context palette; `const` limits rebuilds to dependency changes.
 class _Probe extends StatelessWidget {
   const _Probe();
 

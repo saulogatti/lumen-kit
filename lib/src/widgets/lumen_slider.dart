@@ -110,8 +110,8 @@ SliderThemeData _lumenSliderTheme(BuildContext context, LumenPalette p, Color ac
     rangeThumbShape: _GlowRangeThumbShape(glow: accent, showGlow: glow),
     rangeTrackShape: const RoundedRectRangeSliderTrackShape(),
     rangeValueIndicatorShape: const PaddleRangeSliderValueIndicatorShape(),
-    // Com divisions, os ticks do Material viram um pontilhado sobre o
-    // trilho; o thumb já mostra onde o valor encaixa.
+    // With divisions, Material ticks form a dotted line on the
+    // track; the thumb already shows where the value snaps.
     rangeTickMarkShape: const RoundRangeSliderTickMarkShape(tickMarkRadius: 0),
   );
 }

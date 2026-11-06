@@ -40,7 +40,7 @@ class LumenPalette {
          (primary ?? accentCyan) != null &&
              (secondary ?? accentMagenta) != null &&
              (tertiary ?? accentBlue) != null,
-         'primary, secondary e tertiary são obrigatórios.',
+         'primary, secondary and tertiary are required.',
        ),
        primary = primary ?? accentCyan ?? const Color(0x00000000),
        secondary = secondary ?? accentMagenta ?? const Color(0x00000000),
@@ -89,14 +89,14 @@ class LumenPalette {
     final p = HSLColor.fromColor(primary);
     final s = secondary != null ? HSLColor.fromColor(secondary) : p.withHue((p.hue + 150) % 360);
     final sec = s.toColor();
-    // Meio do caminho pelo arco mais curto do círculo de matiz: laranja +
-    // rosa dá vermelho, não ciano.
+    // Halfway along the shorter hue arc: orange +
+    // pink produces red rather than cyan.
     final delta = ((s.hue - p.hue + 540) % 360) - 180;
     final ter =
         tertiary ?? HSLColor.lerp(p, s, 0.5)!.withHue((p.hue + delta / 2 + 360) % 360).toColor();
 
-    // Fundos e textos herdam o matiz do accent intermediário, como o default
-    // (azul escuro sob cyan + magenta).
+    // Backgrounds and text inherit the intermediate accent hue, like the default
+    // (dark blue under cyan + magenta).
     final hue = HSLColor.fromColor(ter).hue;
     Color tone(double saturation, double lightness, [double alpha = 1]) =>
         HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
@@ -107,10 +107,10 @@ class LumenPalette {
       backgroundMid: dark ? tone(0.5, 0.09) : tone(0.3, 1),
       backgroundSoft: dark ? tone(0.5, 0.15) : tone(0.3, 0.98),
       surface: dark ? tone(0.5, 0.15) : tone(0.3, 0.995),
-      // No claro o contorno é preto fraco, como em LumenPalette.light.
-      // Um primary a 25% faria outlineAlpha pedir 0.6–0.9 e pintar uma
-      // borda quase opaca. No escuro o cyan a 20% continua o token que os
-      // widgets tratam como alpha absoluto.
+      // Light outlines use faint black, as in LumenPalette.light.
+      // A primary at 25% would make outlineAlpha apply 0.6–0.9 and draw an
+      // almost opaque border. In dark mode, cyan at 20% remains the token
+      // that widgets treat as absolute alpha.
       surfaceOutline: dark ? primary.withValues(alpha: 0.2) : const Color(0x15000000),
       surfaceHighlight: dark ? primary.withValues(alpha: 0.1) : const Color(0x08000000),
       primary: primary,
@@ -351,7 +351,7 @@ enum LumenPreset {
 /// LumenScope(
 ///   palette: LumenPalette.fromSeed(primary: Colors.teal),
 ///   style: LumenStyle.flat,
-///   child: LumenButton(label: 'Salvar', onPressed: salvar),
+///   child: LumenButton(label: 'Save', onPressed: save),
 /// )
 /// ```
 class LumenScope extends InheritedWidget {
@@ -437,7 +437,7 @@ extension LumenOutlineColor on Color {
     if (!faintNeutral) {
       return withValues(alpha: alpha);
     }
-    // Teto abaixo de 1: no claro, `0.9` não pode virar um preto de 36%.
+    // Cap below 1: in light mode, `0.9` must not become black at 36% opacity.
     return withValues(alpha: (a * (alpha / 0.2)).clamp(0.0, 0.28));
   }
 

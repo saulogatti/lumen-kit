@@ -58,22 +58,22 @@ package sets `formatter.page_width` to 100.
 
 ```
 lib/
-  lumen_kit.dart          # import completo: components.dart + AppTheme + AppColors
-  components.dart       # só widgets + paleta/estilo, sem AppTheme/AppColors
+  lumen_kit.dart          # full import: components.dart + AppTheme + AppColors
+  components.dart       # widgets + palette/style only, without AppTheme/AppColors
   src/
     theme/              # lumen_palette.dart (LumenPalette, LumenPreset, LumenScope, LumenThemeExt),
                         #   lumen_style.dart, app_theme.dart, app_colors.dart
-    foundation/         # peças reaproveitáveis: LumenPressable, LumenDecorations,
+    foundation/         # reusable building blocks: LumenPressable, LumenDecorations,
                         #   LumenActionContent, LumenLabeled; lumen_tokens.dart (LumenMotion + kLumen* tokens)
     backgrounds/        # LumenAnimatedGridBackground, LumenGlowOrbSpec
-    widgets/            # um arquivo por widget (ou família: lumen_tabs.dart tem LumenTabs + LumenSegmentedControl)
+    widgets/            # one file per widget (or family: lumen_tabs.dart has LumenTabs + LumenSegmentedControl)
 test/
-  widgets/_harness.dart # bareApp/pumpBare: app SEM LumenThemeExt registrado
-  widgets/*_test.dart   # um teste por widget novo
-  components_import_test.dart  # garante que components.dart funciona sem o tema do kit
-example/lib/main.dart              # galeria de componentes Lumen
-example/lib/material_gallery.dart  # comparação com o Material padrão
-example/test/smoke_test.dart       # testes da galeria
+  widgets/_harness.dart # bareApp/pumpBare: app WITHOUT a registered LumenThemeExt
+  widgets/*_test.dart   # one test per new widget
+  components_import_test.dart  # ensures components.dart works without the kit theme
+example/lib/main.dart              # Lumen component gallery
+example/lib/material_gallery.dart  # comparison with default Material
+example/test/smoke_test.dart       # gallery tests
 ```
 
 ### The two public imports
@@ -132,7 +132,7 @@ setting an absolute alpha on an opaque accent.
 
 ## Widget conventions
 
-- One file per widget in `lib/src/widgets/`, name `lumen_<coisa>.dart`.
+- One file per widget in `lib/src/widgets/`, name `lumen_<name>.dart`.
 - Constructor `const`, `super.key` right after `required`, color overrides
 as `Color? accentColor` (default `p.primary`).
 - Controlled from outside: `value` + `onChanged`. `onChanged == null` (or
@@ -151,7 +151,8 @@ label: `LumenLabeled`.
   which are resolved from the new build context. Route and overlay helpers
   return a `Future`.
   `showLumenSnackBar` returns a `ScaffoldFeatureController`.
-- Docs (`///`) in English, on every public member. Block examples
+- All documentation, Dartdoc examples, and example gallery text must be in English.
+- Dartdoc (`///`) is required on every public member. Block examples
 ` ```dart `.
 
 ## Checklist for new widget

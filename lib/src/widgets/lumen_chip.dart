@@ -241,8 +241,8 @@ class LumenFilterChips<T> extends StatelessWidget {
             onSelected: onChanged == null || !item.enabled
                 ? null
                 : (on) {
-                    // Cascata dentro de ternário pega a expressão inteira;
-                    // por isso o if explícito.
+                    // A cascade inside a ternary applies to the entire expression;
+                    // use an explicit if instead.
                     final next = <T>{...values};
                     if (on) {
                       next.add(item.value);

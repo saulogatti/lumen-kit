@@ -179,7 +179,7 @@ class _LumenTextFieldState extends State<LumenTextField> {
   @override
   void didUpdateWidget(LumenTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Passou a usar controller interno: herda o texto do externo antigo.
+    // Switching to an internal controller: preserve the previous external text.
     if (oldWidget.controller != null && widget.controller == null) {
       _internal ??= TextEditingController.fromValue(oldWidget.controller!.value);
     }

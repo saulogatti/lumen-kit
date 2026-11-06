@@ -63,8 +63,8 @@ class LumenListTile extends StatelessWidget {
     final accent = accentColor ?? p.primary;
     final disabled = onTap == null && onLongPress == null;
 
-    // Tile sem ação é só informativo: apaga menos que um controle
-    // desabilitado (0.7 em vez de kLumenDisabledOpacity).
+    // A tile without an action is informational: dim it less than a disabled
+    // control (0.7 instead of kLumenDisabledOpacity).
     return Padding(
       padding: contentPadding,
       child: Opacity(

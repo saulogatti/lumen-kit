@@ -92,7 +92,7 @@ class LumenPressable extends StatelessWidget {
         onLongPress: active ? onLongPress : null,
         borderRadius: borderRadius,
         customBorder: customBorder,
-        // A semântica vem do Semantics abaixo; evita nó duplicado.
+        // Semantics come from the Semantics widget below; avoid a duplicate node.
         excludeFromSemantics: true,
         child: child,
       ),

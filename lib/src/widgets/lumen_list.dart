@@ -12,11 +12,11 @@ import 'package:material_ui/material_ui.dart';
 ///
 /// ```dart
 /// LumenList(
-///   itemCount: eventos.length,
-///   empty: const LumenEmptyState(title: 'Nenhum evento'),
+///   itemCount: events.length,
+///   empty: const LumenEmptyState(title: 'No events'),
 ///   itemBuilder: (BuildContext context, int i) => LumenListTile(
-///     title: eventos[i].titulo,
-///     onTap: () => abrir(eventos[i]),
+///     title: events[i].title,
+///     onTap: () => open(events[i]),
 ///   ),
 /// )
 /// ```

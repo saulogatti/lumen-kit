@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '_harness.dart';
 
-/// Checkbox controlado de fora, como o app usa.
+/// Externally controlled checkbox, as used by an app.
 Widget _controlled({required bool? initial, required List<bool?> log, bool tristate = false}) {
   var value = initial;
   return StatefulBuilder(

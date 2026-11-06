@@ -90,7 +90,7 @@ class LumenDialog extends StatelessWidget {
                 DefaultTextStyle.merge(style: text.bodyMedium ?? const TextStyle(), child: content),
                 if (actions.isNotEmpty) ...<Widget>[
                   const SizedBox(height: 24),
-                  // Wrap: ações longas quebram linha em vez de estourar.
+                  // Wrap: long actions flow onto another line instead of overflowing.
                   Wrap(alignment: WrapAlignment.end, spacing: 12, runSpacing: 8, children: actions),
                 ],
               ],

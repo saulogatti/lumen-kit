@@ -43,7 +43,7 @@ class LumenBadge extends StatelessWidget {
     final style = LumenStyle.of(context);
     final c = color ?? p.danger;
 
-    // Texto legível sobre qualquer cor de fundo, não só sobre vermelho.
+    // Keep text readable on any background color, including red.
     final fg = ThemeData.estimateBrightnessForColor(c) == Brightness.dark
         ? Colors.white
         : Colors.black;

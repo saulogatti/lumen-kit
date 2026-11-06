@@ -24,15 +24,15 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
     NavigationDestination(icon: Icon(Icons.dashboard_outlined), label: 'Home'),
     NavigationDestination(
       icon: Badge(label: Text('3'), child: Icon(Icons.bolt_outlined)),
-      label: 'Eventos',
+      label: 'Events',
     ),
-    NavigationDestination(icon: Icon(Icons.person_outline), label: 'Conta'),
+    NavigationDestination(icon: Icon(Icons.person_outline), label: 'Account'),
   ];
 
   bool _notifications = true;
   bool? _acceptedTerms = true;
   bool _favorite = false;
-  String? _accent = 'Primária';
+  String? _accent = 'Primary';
   String _size = 'M';
   double _volume = 0.4;
   RangeValues _price = const RangeValues(80, 320);
@@ -44,7 +44,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
   Widget build(BuildContext context) {
     final localizations = MaterialLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Material padrão')),
+      appBar: AppBar(title: const Text('Default Material')),
       bottomNavigationBar: NavigationBar(
         destinations: _destinations,
         selectedIndex: _destination,
@@ -52,14 +52,14 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.bolt_rounded),
-        label: const Text('AÇÃO'),
-        onPressed: () => _showMessage(context, 'FAB tocado!'),
+        label: const Text('ACTION'),
+        onPressed: () => _showMessage(context, 'FAB tapped!'),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 96),
         children: <Widget>[
           _section(
-            'Cards e status',
+            'Cards and status',
             const Align(
               alignment: AlignmentDirectional.centerStart,
               child: Card(
@@ -69,17 +69,17 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8,
                     children: <Widget>[
-                      Text('Serviço de telemetria'),
+                      Text('Telemetry service'),
                       Text(
-                        'Streaming de eventos em tempo real, 124 conexões ativas.',
+                        'Real-time event streaming, 124 active connections.',
                       ),
                       Wrap(
                         spacing: 8,
                         children: <Widget>[
                           Chip(label: Text('OK')),
                           Chip(label: Text('INFO')),
-                          Chip(label: Text('ALERTA')),
-                          Chip(label: Text('FALHA')),
+                          Chip(label: Text('WARNING')),
+                          Chip(label: Text('FAILURE')),
                           Chip(label: Text('OFFLINE')),
                         ],
                       ),
@@ -90,7 +90,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
             ),
           ),
           _section(
-            'Botões',
+            'Buttons',
             Wrap(
               spacing: 12,
               runSpacing: 8,
@@ -98,39 +98,36 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
               children: <Widget>[
                 FilledButton.icon(
                   onPressed: () =>
-                      _showMessage(context, 'Pipeline executado com sucesso'),
+                      _showMessage(context, 'Pipeline completed successfully'),
                   icon: const Icon(Icons.play_arrow_rounded),
-                  label: const Text('EXECUTAR'),
+                  label: const Text('RUN'),
                 ),
                 OutlinedButton.icon(
-                  onPressed: () => _showMessage(context, 'Editar'),
+                  onPressed: () => _showMessage(context, 'Edit'),
                   icon: const Icon(Icons.edit),
-                  label: const Text('EDITAR'),
+                  label: const Text('EDIT'),
                 ),
                 TextButton(
-                  onPressed: () => _showMessage(context, 'Cancelado'),
-                  child: const Text('cancelar'),
+                  onPressed: () => _showMessage(context, 'Canceled'),
+                  child: const Text('cancel'),
                 ),
                 ElevatedButton(
                   onPressed: () =>
-                      _showMessage(context, 'Ação principal selecionada'),
-                  child: const Text('Continuar'),
+                      _showMessage(context, 'Primary action selected'),
+                  child: const Text('Continue'),
                 ),
                 IconButton(
-                  onPressed: () => _showMessage(context, 'Curtir'),
+                  onPressed: () => _showMessage(context, 'Like'),
                   icon: const Icon(Icons.favorite),
-                  tooltip: 'Curtir',
+                  tooltip: 'Like',
                 ),
                 PopupMenuButton<String>(
                   onSelected: (value) => _showMessage(context, value),
                   itemBuilder: (_) => const <PopupMenuEntry<String>>[
+                    PopupMenuItem<String>(value: 'Edit', child: Text('Edit')),
                     PopupMenuItem<String>(
-                      value: 'Editar',
-                      child: Text('Editar'),
-                    ),
-                    PopupMenuItem<String>(
-                      value: 'Duplicar',
-                      child: Text('Duplicar'),
+                      value: 'Duplicate',
+                      child: Text('Duplicate'),
                     ),
                   ],
                 ),
@@ -138,25 +135,25 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
             ),
           ),
           _section(
-            'Campos e seleções',
+            'Fields and selection',
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 12,
               children: <Widget>[
                 const TextField(
-                  decoration: InputDecoration(labelText: 'Nome do projeto'),
+                  decoration: InputDecoration(labelText: 'Project name'),
                 ),
                 const SearchBar(
-                  hintText: 'Buscar eventos',
+                  hintText: 'Search events',
                   leading: Icon(Icons.search),
                 ),
                 SwitchListTile(
-                  title: const Text('Notificações em tempo real'),
+                  title: const Text('Real-time notifications'),
                   value: _notifications,
                   onChanged: (value) => setState(() => _notifications = value),
                 ),
                 CheckboxListTile(
-                  title: const Text('Aceito os termos (tristate)'),
+                  title: const Text('I accept the terms (tristate)'),
                   value: _acceptedTerms,
                   tristate: true,
                   onChanged: (value) => setState(() => _acceptedTerms = value),
@@ -167,35 +164,35 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   child: const Column(
                     children: <Widget>[
                       RadioListTile<String>(
-                        value: 'Primária',
-                        title: Text('Primária'),
+                        value: 'Primary',
+                        title: Text('Primary'),
                       ),
                       RadioListTile<String>(
-                        value: 'Secundária',
-                        title: Text('Secundária'),
+                        value: 'Secondary',
+                        title: Text('Secondary'),
                       ),
                       RadioListTile<String>(
-                        value: 'Terciária',
-                        title: Text('Terciária'),
+                        value: 'Tertiary',
+                        title: Text('Tertiary'),
                       ),
                     ],
                   ),
                 ),
                 DropdownMenu<String>(
-                  label: const Text('Cor de destaque'),
+                  label: const Text('Accent color'),
                   initialSelection: 'primary',
                   dropdownMenuEntries: const <DropdownMenuEntry<String>>[
                     DropdownMenuEntry<String>(
                       value: 'primary',
-                      label: 'Primária',
+                      label: 'Primary',
                     ),
                     DropdownMenuEntry<String>(
                       value: 'secondary',
-                      label: 'Secundária',
+                      label: 'Secondary',
                     ),
                     DropdownMenuEntry<String>(
                       value: 'tertiary',
-                      label: 'Terciária',
+                      label: 'Tertiary',
                     ),
                   ],
                 ),
@@ -204,7 +201,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   value: _volume,
                   onChanged: (value) => setState(() => _volume = value),
                 ),
-                const Text('Faixa de preço'),
+                const Text('Price range'),
                 RangeSlider(
                   values: _price,
                   max: 500,
@@ -219,11 +216,11 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   spacing: 8,
                   children: <Widget>[
                     FilterChip(
-                      label: const Text('Favorito'),
+                      label: const Text('Favorite'),
                       selected: _favorite,
                       onSelected: (value) => setState(() => _favorite = value),
                     ),
-                    for (final size in <String>['P', 'M', 'G'])
+                    for (final size in <String>['S', 'M', 'L'])
                       ChoiceChip(
                         label: Text(size),
                         selected: _size == size,
@@ -240,7 +237,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                       icon: const Icon(Icons.calendar_today_outlined),
                       label: Text(
                         _date == null
-                            ? 'Data de início'
+                            ? 'Start date'
                             : localizations.formatCompactDate(_date!),
                       ),
                     ),
@@ -249,7 +246,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                       icon: const Icon(Icons.schedule),
                       label: Text(
                         _time == null
-                            ? 'Horário'
+                            ? 'Time'
                             : localizations.formatTimeOfDay(_time!),
                       ),
                     ),
@@ -259,7 +256,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
             ),
           ),
           _section(
-            'Feedback e progresso',
+            'Feedback and progress',
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 16,
@@ -270,19 +267,19 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   children: <Widget>[
                     OutlinedButton(
                       onPressed: () =>
-                          _showMessage(context, 'Snackbar do Material'),
+                          _showMessage(context, 'Material snackbar'),
                       child: const Text('SNACKBAR'),
                     ),
                     OutlinedButton(
                       onPressed: () => showDialog<void>(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: const Text('Confirmar ação'),
-                          content: const Text('Deseja prosseguir?'),
+                          title: const Text('Confirm action'),
+                          content: const Text('Do you want to continue?'),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () => Navigator.pop(context),
-                              child: const Text('Fechar'),
+                              child: const Text('Close'),
                             ),
                           ],
                         ),
@@ -295,7 +292,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                         builder: (context) => const SafeArea(
                           child: ListTile(
                             leading: Icon(Icons.bolt_outlined),
-                            title: Text('Ações rápidas'),
+                            title: Text('Quick actions'),
                           ),
                         ),
                       ),
@@ -309,31 +306,29 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
             ),
           ),
           _section(
-            'Lista e tabela',
+            'List and table',
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ListTile(
                   leading: const Icon(Icons.dashboard_outlined),
                   title: const Text('Dashboard'),
-                  subtitle: const Text('Visão geral em tempo real'),
+                  subtitle: const Text('Real-time overview'),
                   onTap: () => _showMessage(context, 'Dashboard'),
                 ),
                 const Divider(),
                 const ExpansionTile(
                   leading: Icon(Icons.hub_outlined),
-                  title: Text('Integrações'),
-                  children: <Widget>[
-                    ListTile(title: Text('Webhook de eventos')),
-                  ],
+                  title: Text('Integrations'),
+                  children: <Widget>[ListTile(title: Text('Event webhook'))],
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
                     columns: const <DataColumn>[
-                      DataColumn(label: Text('Serviço')),
+                      DataColumn(label: Text('Service')),
                       DataColumn(label: Text('Status')),
-                      DataColumn(label: Text('Latência'), numeric: true),
+                      DataColumn(label: Text('Latency'), numeric: true),
                     ],
                     rows: const <DataRow>[
                       DataRow(
@@ -346,7 +341,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                       DataRow(
                         cells: <DataCell>[
                           DataCell(Text('worker')),
-                          DataCell(Text('ALERTA')),
+                          DataCell(Text('WARNING')),
                           DataCell(Text('118ms')),
                         ],
                       ),
