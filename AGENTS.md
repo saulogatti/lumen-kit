@@ -171,6 +171,30 @@ there is animation.
    Remove the corresponding item from `ROADMAP.md` if it was planned there.
 6. Run formatting, analysis, and the package and gallery tests as appropriate.
 
+## Code Review Rules
+
+Apply the project rules above when reviewing changes. During a review, report
+findings without modifying files unless fixes are explicitly requested.
+
+- Prioritize actionable bugs, behavioral regressions, and unintended breaking
+  changes to public constructors, callbacks, exports, and theme contracts.
+  Review the changed code and relevant callers to establish the impact.
+- For changes affecting theme resolution or rendering, check behavior without
+  a registered theme, with a local `LumenScope`, in light and dark modes, and
+  across the five visual styles. Use the Theme rules above as the reference.
+- For interactive or animated widgets, check controlled state, disabled and
+  busy behavior, keyboard interaction, accessibility semantics, and respect
+  for reduced motion. Check that relevant tests cover the changed behavior.
+- Explain each finding with a file and a narrow line range, the triggering
+  scenario, and the concrete impact. State assumptions or missing evidence;
+  do not present speculative risks as confirmed bugs.
+- Avoid findings based only on personal preferences or formatting and lint
+  issues already covered by the formatter or analyzer. Report missing tests
+  when they leave a concrete behavioral risk uncovered.
+- Keep optional improvements separate from defects and clearly label them.
+  If no actionable defects are found, say so. Report which checks were run
+  and any material validation gaps; never claim unexecuted checks passed.
+
 ## Git
 
 Use Portuguese conventional commits (`feat:`, `fix:`,
