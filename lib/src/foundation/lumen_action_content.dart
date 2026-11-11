@@ -4,6 +4,10 @@ import 'package:material_ui/material_ui.dart';
 /// Default action content: spinner (when [busy]) or [icon], followed by the
 /// [label].
 ///
+/// The label stays on one line. When the row gets less width than it needs,
+/// the label is truncated with an ellipsis while the icon or spinner keeps its
+/// size.
+///
 /// Shared by buttons, CTA and FAB.
 class LumenActionContent extends StatelessWidget {
   /// Creates the content of an action.
@@ -72,9 +76,13 @@ class LumenActionContent extends StatelessWidget {
       spacing: gap,
       children: <Widget>[
         ?leading,
-        Text(
-          label!,
-          style: (textStyle ?? Theme.of(context).textTheme.labelLarge)?.copyWith(color: color),
+        Flexible(
+          child: Text(
+            label!,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: (textStyle ?? Theme.of(context).textTheme.labelLarge)?.copyWith(color: color),
+          ),
         ),
       ],
     );
