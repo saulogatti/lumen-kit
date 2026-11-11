@@ -302,6 +302,30 @@ Row(
 - `outline` — glow edge + translucent background. Secondary action.
 - `ghost` — only text/icon in accent color. Tertiary action.
 
+Pass a `LumenStatusTone` as `tone` to give any variant a semantic color from
+the palette. A solid button with a tone fills with that color instead of the
+accent gradient, and `LumenButton.danger` is the shortcut for destructive
+actions:
+
+```dart
+showLumenDialog<void>(
+  context: context,
+  title: 'Delete category?',
+  accent: LumenThemeExt.of(context).palette.danger,
+  content: const Text('This cannot be undone.'),
+  actions: <Widget>[
+    LumenButton.ghost(label: 'Cancel', onPressed: () => Navigator.pop(context)),
+    LumenButton.danger(label: 'Delete', icon: Icons.delete_outline, onPressed: onDelete),
+  ],
+);
+```
+
+`accentColor` still overrides the shadow of a solid button and the color of
+outline and ghost buttons, but never the solid fill.
+
+Labels stay on one line. In a narrow space, the label is truncated with an
+ellipsis instead of overflowing.
+
 ## Selection inputs
 
 ```dart

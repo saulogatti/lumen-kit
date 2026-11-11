@@ -279,6 +279,17 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     onPressed: () {},
                   ),
                   LumenButton.ghost(label: 'cancel', onPressed: () {}),
+                  LumenButton.danger(
+                    label: 'DELETE',
+                    icon: Icons.delete_outline,
+                    onPressed: () {},
+                  ),
+                  LumenButton.outline(
+                    label: 'RETRY',
+                    icon: Icons.refresh_rounded,
+                    tone: LumenStatusTone.warning,
+                    onPressed: () {},
+                  ),
                   LumenCta(
                     label: 'Continue',
                     icon: Icons.arrow_forward_rounded,
