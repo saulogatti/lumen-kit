@@ -111,6 +111,20 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   onPressed: () => _showMessage(context, 'Canceled'),
                   child: const Text('cancel'),
                 ),
+                FilledButton.icon(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    foregroundColor: Theme.of(context).colorScheme.onError,
+                  ),
+                  onPressed: () => _showMessage(context, 'Deleted'),
+                  icon: const Icon(Icons.delete_outline),
+                  label: const Text('DELETE'),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => _showMessage(context, 'Retry'),
+                  icon: const Icon(Icons.refresh_rounded),
+                  label: const Text('RETRY'),
+                ),
                 ElevatedButton(
                   onPressed: () =>
                       _showMessage(context, 'Primary action selected'),

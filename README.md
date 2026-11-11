@@ -35,26 +35,24 @@ The widgets take data, callbacks, and theme tokens so the app owns its business 
 ### Published package
 
 Use the [pub.dev release](https://pub.dev/packages/lumen_kit) for the published
-version. This example uses the `1.0.0` release constraints.
+version. This example uses the `1.2.0` release constraints.
 
 ```yaml
 dependencies:
-  lumen_kit: ^1.0.0
-  material_ui: ^1.7.0
+  lumen_kit: ^1.2.0
+  material_ui: ^1.10.0
 ```
 
 ### Git checkout
 
-To try the `1.1.0` code before it is released, pin a commit on the repository.
-The commit below includes the updates documented here and requires
-`material_ui ^1.10.0`.
+To try unreleased code from `main`, pin a commit on the repository instead.
 
 ```yaml
 dependencies:
   lumen_kit:
     git:
       url: https://github.com/saulogatti/lumen-kit.git
-      ref: 43c30821d4b1f2460033a3dae1b290859cad3e69
+      ref: <commit-sha>
   material_ui: ^1.10.0
 ```
 
@@ -301,6 +299,30 @@ Row(
   flat and brutal, as does `LumenCta`.
 - `outline` — glow edge + translucent background. Secondary action.
 - `ghost` — only text/icon in accent color. Tertiary action.
+
+Pass a `LumenStatusTone` as `tone` to give any variant a semantic color from
+the palette. A solid button with a tone fills with that color instead of the
+accent gradient, and `LumenButton.danger` is the shortcut for destructive
+actions:
+
+```dart
+showLumenDialog<void>(
+  context: context,
+  title: 'Delete category?',
+  accent: LumenThemeExt.of(context).palette.danger,
+  content: const Text('This cannot be undone.'),
+  actions: <Widget>[
+    LumenButton.ghost(label: 'Cancel', onPressed: () => Navigator.pop(context)),
+    LumenButton.danger(label: 'Delete', icon: Icons.delete_outline, onPressed: onDelete),
+  ],
+);
+```
+
+`accentColor` still overrides the shadow of a solid button and the color of
+outline and ghost buttons, but never the solid fill.
+
+Labels stay on one line. In a narrow space, the label is truncated with an
+ellipsis instead of overflowing.
 
 ## Selection inputs
 

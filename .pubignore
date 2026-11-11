@@ -1,1 +1,15 @@
+# .pubignore replaces .gitignore in this directory, so repeat its build entries.
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+.idea/
+.vscode/
+*.iml
+.DS_Store
+doc/
+
+# Generated API docs live on pub.dev's own dartdoc.
 docs/

@@ -19,9 +19,10 @@ dependency).
 
 | Material | Lumen | Notes |
 | --- | --- | --- |
-| `ElevatedButton`/`FilledButton` | `LumenButton(label:, onPressed:, icon:, busy:, expand:)` | `label` is a `String`. |
-| `OutlinedButton` | `LumenButton.outline(...)` | |
-| `TextButton` | `LumenButton.ghost(...)` | |
+| `ElevatedButton`/`FilledButton` | `LumenButton(label:, onPressed:, icon:, busy:, expand:, tone:)` | `label` is a `String`, kept on one line with an ellipsis when narrow. `tone: LumenStatusTone.x` fills a solid button with that palette color; `accentColor` only changes its shadow. |
+| destructive `FilledButton` (red, `colorScheme.error`) | `LumenButton.danger(...)` | Solid with `tone: LumenStatusTone.danger`. Don't fake it with `LumenButton.outline(accentColor: palette.danger)`. |
+| `OutlinedButton` | `LumenButton.outline(...)` | `tone:` colors border, text and icon. |
+| `TextButton` | `LumenButton.ghost(...)` | `tone:` colors text and icon. |
 | main call to action of a screen | `LumenCta(label:, onPressed:, icon:, busy:)` | Uses the style's gradient or solid fill. |
 | `IconButton` | `LumenIconButton(icon:, onPressed:, tooltip:)` | Variants `.solid`, `.ghost`; `shape: LumenIconButtonShape.rounded`. |
 | `FloatingActionButton` / `.extended` | `LumenFab(icon:, onPressed:)` / `LumenFab.extended(icon:, label:, onPressed:)` | `heroTag` is optional. Use a distinct tag for each Hero-enabled FAB on the same route. |
