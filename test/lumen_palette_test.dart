@@ -77,7 +77,44 @@ void main() {
     final fieldIcon = tester.widget<Icon>(find.byIcon(Icons.person));
     expect(fieldIcon.color, orange);
   });
-
+  group('LumenPalette.fromSeed with danger color', () {
+    test('LumenPalette.fromSeed with danger, success and warning colors default', () {
+      final p = LumenPalette.fromSeed(primary: const Color(0xFF000000));
+      expect(p.danger, AppColors.danger);
+      expect(p.success, AppColors.success);
+      expect(p.warning, AppColors.warning);
+      final p2 = LumenPalette.fromSeed(
+        primary: const Color(0xFF000000),
+        brightness: Brightness.light,
+      );
+      expect(p2.danger, AppColors.danger);
+      expect(p2.success, AppColors.success);
+      expect(p2.warning, AppColors.warning);
+    });
+    test('LumenPalette.fromSeed with danger color within 30 degrees of primary color and less than 50% saturated', () {
+      final p = LumenPalette.fromSeed(
+        primary: const Color(0xFF000000),
+        danger: const Color(0xFFFF0000).withValues(alpha: 0.6),
+        success: const Color(0xFF00FF00).withValues(alpha: 0.6),
+        warning: const Color(0xFFFFA500).withValues(alpha: 0.6),
+      );
+      expect(p.danger, const Color(0xFFFF0000).withValues(alpha: 0.6));
+      expect(p.success, const Color(0xFF00FF00).withValues(alpha: 0.6));
+      expect(p.warning, const Color(0xFFFFA500).withValues(alpha: 0.6));
+    });
+    test('LumenPalette.fromSeed with danger color within 30 degrees of primary color and more than 50% saturated', () {
+      final p = LumenPalette.fromSeed(
+        primary: const Color(0xFF000000),
+        danger: const Color(0xFFFF0000).withValues(alpha: 0.6),
+        success: const Color(0xFF00FF00).withValues(alpha: 0.6),
+        warning: const Color(0xFFFFA500).withValues(alpha: 0.6),
+        brightness: Brightness.light,
+      );
+      expect(p.danger, const Color(0xFFFF0000).withValues(alpha: 0.6));
+      expect(p.success, const Color(0xFF00FF00).withValues(alpha: 0.6));
+      expect(p.warning, const Color(0xFFFFA500).withValues(alpha: 0.6));
+    });
+  });
   group('resolução do tema', () {
     setUp(_seen.clear);
 
@@ -144,10 +181,10 @@ void main() {
   });
 }
 
-void _ignore(String _) {}
-
 /// Cores que [_Probe] leu a cada build.
 final List<Color> _seen = <Color>[];
+
+void _ignore(String _) {}
 
 /// Reads the context palette; `const` limits rebuilds to dependency changes.
 class _Probe extends StatelessWidget {
