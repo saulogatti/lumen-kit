@@ -130,15 +130,15 @@ class LumenPalette {
   ///   brightness: Brightness.dark,
   /// );
   /// ```
-  /// 
-  /// [success], [warning] and [danger] are optional parameters that can be used to override the default semantic colors.
-  /// If not provided, the default semantic colors will be used.
-  /// The default semantic colors are:
-  /// - success: AppColors.success
-  /// - warning: AppColors.warning
-  /// - danger: AppColors.danger
-  /// 
-  /// when [danger] is provided, it will be used to override the default danger color. If the danger color is within 30 degrees of the primary color and the danger color is less than 50% saturated, it will be made more saturated by 20%.
+  ///
+  /// [success], [warning], and [danger] override the kit's semantic colors when
+  /// set. Omitted values stay [AppColors.success], [AppColors.warning], and
+  /// [AppColors.danger].
+  ///
+  /// A custom [danger] becomes 20% more saturated only when both of these
+  /// hold: its hue is within 30 degrees of [primary] on the shorter arc, and
+  /// its saturation is below 50%. Colors at or above 50% saturation, and colors
+  /// farther than 30 degrees, are kept as given.
   factory LumenPalette.fromSeed({
     required Color primary,
     Color? secondary,
@@ -154,9 +154,16 @@ class LumenPalette {
     final successResult = success ?? AppColors.success;
     final warningResult = warning ?? AppColors.warning;
     final dangerResult = danger ?? AppColors.danger;
-    var dangerHSL = HSLColor.fromColor(dangerResult);
-    if (danger != null && p.hue - dangerHSL.hue.abs() < 30 && dangerHSL.saturation < 0.5) {
-      dangerHSL = dangerHSL.withSaturation(dangerHSL.saturation * 1.2);
+    // Dull danger sitting on the primary hue is hard to tell apart from it.
+    // Measure the shorter arc so hues across 0° still count as nearby, and
+    // leave vivid colors (50% saturation or more) untouched.
+    var dangerColor = dangerResult;
+    if (danger != null) {
+      final dangerHSL = HSLColor.fromColor(danger);
+      final hueDistance = ((dangerHSL.hue - p.hue + 540) % 360) - 180;
+      if (hueDistance.abs() < 30 && dangerHSL.saturation < 0.5) {
+        dangerColor = dangerHSL.withSaturation(dangerHSL.saturation * 1.2).toColor();
+      }
     }
     final successHSL = HSLColor.fromColor(successResult);
     final warningHSL = HSLColor.fromColor(warningResult);
@@ -193,7 +200,7 @@ class LumenPalette {
       textMuted: dark ? tone(1, 0.96, 0.5) : tone(0.1, 0.52),
       success: successHSL.toColor(),
       warning: warningHSL.toColor(),
-      danger: dangerHSL.toColor(),
+      danger: dangerColor,
     );
   }
 

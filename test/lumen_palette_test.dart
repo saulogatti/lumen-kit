@@ -78,7 +78,15 @@ void main() {
     expect(fieldIcon.color, orange);
   });
   group('LumenPalette.fromSeed with danger color', () {
-    test('LumenPalette.fromSeed with danger, success and warning colors default', () {
+    Color hsl(double hue, double saturation, double lightness, [double alpha = 1]) =>
+        HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
+
+    Color boosted(Color danger) {
+      final parsed = HSLColor.fromColor(danger);
+      return parsed.withSaturation(parsed.saturation * 1.2).toColor();
+    }
+
+    test('keeps the default semantic colors when none are provided', () {
       final p = LumenPalette.fromSeed(primary: const Color(0xFF000000));
       expect(p.danger, AppColors.danger);
       expect(p.success, AppColors.success);
@@ -91,28 +99,52 @@ void main() {
       expect(p2.success, AppColors.success);
       expect(p2.warning, AppColors.warning);
     });
-    test('LumenPalette.fromSeed with danger color within 30 degrees of primary color and less than 50% saturated', () {
-      final p = LumenPalette.fromSeed(
-        primary: const Color(0xFF000000),
-        danger: const Color(0xFFFF0000).withValues(alpha: 0.6),
-        success: const Color(0xFF00FF00).withValues(alpha: 0.6),
-        warning: const Color(0xFFFFA500).withValues(alpha: 0.6),
-      );
-      expect(p.danger, const Color(0xFFFF0000).withValues(alpha: 0.6));
-      expect(p.success, const Color(0xFF00FF00).withValues(alpha: 0.6));
-      expect(p.warning, const Color(0xFFFFA500).withValues(alpha: 0.6));
+
+    test('does not boost the default danger when primary sits on the same hue', () {
+      final primary = hsl(HSLColor.fromColor(AppColors.danger).hue, 0.8, 0.5);
+      expect(LumenPalette.fromSeed(primary: primary).danger, AppColors.danger);
     });
-    test('LumenPalette.fromSeed with danger color within 30 degrees of primary color and more than 50% saturated', () {
+
+    test('boosts a dull danger within 30 degrees of primary by 20%', () {
+      final primary = hsl(200, 0.8, 0.5);
+      final danger = hsl(220, 0.4, 0.45, 0.9);
+      final success = hsl(120, 0.7, 0.5, 0.6);
+      final warning = hsl(40, 0.7, 0.5, 0.6);
       final p = LumenPalette.fromSeed(
-        primary: const Color(0xFF000000),
-        danger: const Color(0xFFFF0000).withValues(alpha: 0.6),
-        success: const Color(0xFF00FF00).withValues(alpha: 0.6),
-        warning: const Color(0xFFFFA500).withValues(alpha: 0.6),
-        brightness: Brightness.light,
+        primary: primary,
+        danger: danger,
+        success: success,
+        warning: warning,
       );
-      expect(p.danger, const Color(0xFFFF0000).withValues(alpha: 0.6));
-      expect(p.success, const Color(0xFF00FF00).withValues(alpha: 0.6));
-      expect(p.warning, const Color(0xFFFFA500).withValues(alpha: 0.6));
+      expect(p.danger, boosted(danger));
+      expect(p.success, success);
+      expect(p.warning, warning);
+    });
+
+    test('leaves danger at or above 50% saturation unchanged', () {
+      final primary = hsl(200, 0.8, 0.5);
+      final atHalf = hsl(210, 0.5, 0.45);
+      final vivid = hsl(210, 0.8, 0.45, 0.6);
+      expect(LumenPalette.fromSeed(primary: primary, danger: atHalf).danger, atHalf);
+      expect(LumenPalette.fromSeed(primary: primary, danger: vivid).danger, vivid);
+    });
+
+    test('leaves a dull danger outside the 30 degree arc unchanged', () {
+      final primary = hsl(0, 0.8, 0.5);
+      final opposite = hsl(240, 0.2, 0.45);
+      final justOutside = hsl(30, 0.2, 0.45);
+      expect(LumenPalette.fromSeed(primary: primary, danger: opposite).danger, opposite);
+      expect(LumenPalette.fromSeed(primary: primary, danger: justOutside).danger, justOutside);
+    });
+
+    test('measures the shorter hue arc across the 0 degree boundary', () {
+      final primary = hsl(350, 0.8, 0.5);
+      final across = hsl(10, 0.25, 0.4);
+      final otherWay = hsl(330, 0.25, 0.4);
+      final far = hsl(200, 0.25, 0.4);
+      expect(LumenPalette.fromSeed(primary: primary, danger: across).danger, boosted(across));
+      expect(LumenPalette.fromSeed(primary: primary, danger: otherWay).danger, boosted(otherWay));
+      expect(LumenPalette.fromSeed(primary: primary, danger: far).danger, far);
     });
   });
   group('resolução do tema', () {
