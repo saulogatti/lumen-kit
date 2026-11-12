@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- Fixed `LumenPalette.fromSeed` with danger color within 30 degrees of primary color and less than 50% saturated.
+
 ## 1.2.0
 
 - Added `LumenButton.tone`, a `LumenStatusTone` that gives any variant a

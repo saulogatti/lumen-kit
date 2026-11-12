@@ -1,6 +1,6 @@
 name: lumen_kit
 description: Flutter widget kit with configurable palettes and interchangeable styles (neon, flat, glass, soft, brutal).
-version: 1.2.0
+version: 1.2.1
 homepage: "https://github.com/saulogatti/lumen-kit"
 
 environment:
