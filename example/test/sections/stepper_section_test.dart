@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lumen_kit/components.dart';
 import 'package:lumen_kit_example/sections/stepper_section.dart';

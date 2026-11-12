@@ -10,6 +10,56 @@ import 'package:material_ui/material_ui.dart';
 /// [LumenPalette.fromSeed] or a [LumenPreset].
 @immutable
 class LumenPalette {
+  /// Deeper tone of the application background.
+  final Color backgroundDeep;
+
+  /// Intermediate tone used in background gradients.
+  final Color backgroundMid;
+
+  /// Lighter tone of the background, used to soften the gradient.
+  final Color backgroundSoft;
+
+  /// Base color for cards, overlays and raised surfaces.
+  final Color surface;
+
+  /// Translucent outline used on surface edges.
+  final Color surfaceOutline;
+
+  /// Subtle highlighting applied within translucent surfaces.
+  final Color surfaceHighlight;
+
+  /// Primary accent used on borders, icons, and active states.
+  final Color primary;
+
+  /// Secondary accent used in glows and gradient compositions.
+  final Color secondary;
+
+  /// Intermediate accent that connects [primary] and [secondary] in the
+  /// gradients.
+  final Color tertiary;
+
+  /// Higher contrast color for titles and main content.
+  final Color textPrimary;
+
+  /// Medium contrast color for supporting texts.
+  final Color textSecondary;
+
+  /// Lower contrast color for subtitles, hints and auxiliary content.
+  final Color textMuted;
+
+  /// Semantic color for success states.
+  final Color success;
+
+  /// Semantic color for alert states.
+  final Color warning;
+
+  /// Semantic color for error or danger states.
+  final Color danger;
+
+  final LinearGradient? _backgroundGradient;
+
+  final LinearGradient? _accentGradient;
+
   /// Creates a complete palette for the neon theme.
   /// Gradients are optional: when omitted, they are derived from the background
   /// and accents, and monitor any changes made via [copyWith].
@@ -80,15 +130,44 @@ class LumenPalette {
   ///   brightness: Brightness.dark,
   /// );
   /// ```
+  ///
+  /// [success], [warning], and [danger] override the kit's semantic colors when
+  /// set. Omitted values stay [AppColors.success], [AppColors.warning], and
+  /// [AppColors.danger].
+  ///
+  /// A custom [danger] becomes 20% more saturated only when both of these
+  /// hold: its hue is within 30 degrees of [primary] on the shorter arc, and
+  /// its saturation is below 50%. Colors at or above 50% saturation, and colors
+  /// farther than 30 degrees, are kept as given.
   factory LumenPalette.fromSeed({
     required Color primary,
     Color? secondary,
     Color? tertiary,
     Brightness brightness = Brightness.dark,
+    Color? success,
+    Color? warning,
+    Color? danger,
   }) {
     final p = HSLColor.fromColor(primary);
     final s = secondary != null ? HSLColor.fromColor(secondary) : p.withHue((p.hue + 150) % 360);
     final sec = s.toColor();
+    final successResult = success ?? AppColors.success;
+    final warningResult = warning ?? AppColors.warning;
+    final dangerResult = danger ?? AppColors.danger;
+    // Dull danger sitting on the primary hue is hard to tell apart from it.
+    // Measure the shorter arc so hues across 0° still count as nearby, and
+    // leave vivid colors (50% saturation or more) untouched.
+    var dangerColor = dangerResult;
+    if (danger != null) {
+      final dangerHSL = HSLColor.fromColor(danger);
+      final hueDistance = ((dangerHSL.hue - p.hue + 540) % 360) - 180;
+      if (hueDistance.abs() < 30 && dangerHSL.saturation < 0.5) {
+        dangerColor = dangerHSL.withSaturation(dangerHSL.saturation * 1.2).toColor();
+      }
+    }
+    final successHSL = HSLColor.fromColor(successResult);
+    final warningHSL = HSLColor.fromColor(warningResult);
+
     // Halfway along the shorter hue arc: orange +
     // pink produces red rather than cyan.
     final delta = ((s.hue - p.hue + 540) % 360) - 180;
@@ -119,9 +198,9 @@ class LumenPalette {
       textPrimary: dark ? tone(1, 0.96) : tone(0.3, 0.06),
       textSecondary: dark ? tone(1, 0.96, 0.7) : tone(0.15, 0.27),
       textMuted: dark ? tone(1, 0.96, 0.5) : tone(0.1, 0.52),
-      success: AppColors.success,
-      warning: AppColors.warning,
-      danger: AppColors.danger,
+      success: successHSL.toColor(),
+      warning: warningHSL.toColor(),
+      danger: dangerColor,
     );
   }
 
@@ -144,55 +223,6 @@ class LumenPalette {
     danger: AppColors.danger,
     accentGradient: AppColors.accentGradient,
   );
-
-  /// Deeper tone of the application background.
-  final Color backgroundDeep;
-
-  /// Intermediate tone used in background gradients.
-  final Color backgroundMid;
-
-  /// Lighter tone of the background, used to soften the gradient.
-  final Color backgroundSoft;
-
-  /// Base color for cards, overlays and raised surfaces.
-  final Color surface;
-
-  /// Translucent outline used on surface edges.
-  final Color surfaceOutline;
-
-  /// Subtle highlighting applied within translucent surfaces.
-  final Color surfaceHighlight;
-
-  /// Primary accent used on borders, icons, and active states.
-  final Color primary;
-
-  /// Secondary accent used in glows and gradient compositions.
-  final Color secondary;
-
-  /// Intermediate accent that connects [primary] and [secondary] in the
-  /// gradients.
-  final Color tertiary;
-
-  /// Higher contrast color for titles and main content.
-  final Color textPrimary;
-
-  /// Medium contrast color for supporting texts.
-  final Color textSecondary;
-
-  /// Lower contrast color for subtitles, hints and auxiliary content.
-  final Color textMuted;
-
-  /// Semantic color for success states.
-  final Color success;
-
-  /// Semantic color for alert states.
-  final Color warning;
-
-  /// Semantic color for error or danger states.
-  final Color danger;
-
-  final LinearGradient? _backgroundGradient;
-  final LinearGradient? _accentGradient;
 
   /// Old alias of [tertiary].
   @Deprecated('Use tertiary')
@@ -322,13 +352,13 @@ enum LumenPreset {
   /// Red and amber.
   ember(Color(0xFFFF3B3B), Color(0xFFFFB020));
 
-  LumenPreset(this.primary, this.secondary);
-
   /// Preset's primary accent.
   final Color primary;
 
   /// Secondary accent of the preset.
   final Color secondary;
+
+  LumenPreset(this.primary, this.secondary);
 
   /// Generates the preset palette.
   ///
@@ -355,6 +385,9 @@ enum LumenPreset {
 /// )
 /// ```
 class LumenScope extends InheritedWidget {
+  /// Palette and style provided to the subtree.
+  final LumenThemeExt data;
+
   /// Applies [palette] and [style] to [child].
   ///
   /// The default [style] is [LumenStyle.neon].
@@ -364,9 +397,6 @@ class LumenScope extends InheritedWidget {
     LumenStyle style = LumenStyle.neon,
     super.key,
   }) : data = LumenThemeExt(palette: palette, style: style);
-
-  /// Palette and style provided to the subtree.
-  final LumenThemeExt data;
 
   @override
   bool updateShouldNotify(LumenScope oldWidget) =>
@@ -378,9 +408,6 @@ class LumenScope extends InheritedWidget {
 /// Use [of] to resolve local scopes and defaults as well.
 @immutable
 class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
-  /// Creates a theme extension that carries [palette] and [style].
-  const LumenThemeExt({required this.palette, this.style = LumenStyle.neon});
-
   static final LumenThemeExt _fallbackDark = LumenThemeExt(palette: LumenPalette.defaultDark());
 
   static final LumenThemeExt _fallbackLight = LumenThemeExt(palette: LumenPalette.light());
@@ -390,6 +417,9 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
 
   /// Effects style (shadow, border, background…) used by widgets.
   final LumenStyle style;
+
+  /// Creates a theme extension that carries [palette] and [style].
+  const LumenThemeExt({required this.palette, this.style = LumenStyle.neon});
 
   @override
   LumenThemeExt copyWith({LumenPalette? palette, LumenStyle? style}) =>
