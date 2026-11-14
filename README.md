@@ -23,7 +23,7 @@ The widgets take data, callbacks, and theme tokens so the app owns its business 
 
 ## Requirements
 
-- Dart `^3.13.0` and Flutter `>=3.47.0`.
+- Dart `^3.14.0` and Flutter `>=3.50.0`.
 - Use `package:material_ui/material_ui.dart` for the Material app and its
   widgets. `flutter/material.dart` and `material_ui` have distinct
   `ThemeData` and `Material` types. See the
@@ -35,12 +35,12 @@ The widgets take data, callbacks, and theme tokens so the app owns its business 
 ### Published package
 
 Use the [pub.dev release](https://pub.dev/packages/lumen_kit) for the published
-version. This example uses the `1.2.0` release constraints.
+version. This example uses the `1.3.0` release constraints.
 
 ```yaml
 dependencies:
-  lumen_kit: ^1.2.0
-  material_ui: ^1.10.0
+  lumen_kit: ^1.3.0
+  material_ui: ^1.11.0
 ```
 
 ### Git checkout
@@ -53,7 +53,7 @@ dependencies:
     git:
       url: https://github.com/saulogatti/lumen-kit.git
       ref: <commit-sha>
-  material_ui: ^1.10.0
+  material_ui: ^1.11.0
 ```
 
 Run `flutter pub get` from your app after choosing an installation method.
@@ -154,6 +154,30 @@ final palette = LumenPalette.defaultDark().copyWith(primary: Colors.greenAccent)
 MaterialApp(theme: AppTheme.fromPalette(palette), home: ...);
 ```
 
+### Semantic colors
+
+`success` and `warning` use the `AppColors` defaults. `danger` uses
+`AppColors.danger` in dark palettes and the darker `AppColors.dangerLight` in
+light ones, which keeps AA contrast (4.5:1) on light surfaces. Pass your own
+colors to `AppTheme.fromSeed` or `LumenPalette.fromSeed`, for example the
+Material error color, which already follows brightness:
+
+```dart
+MaterialApp(
+  theme: AppTheme.fromSeed(
+    primary: Colors.red,
+    brightness: Brightness.light,
+    danger: scheme.error,
+  ),
+  home: ...,
+);
+```
+
+A custom `danger` whose hue is within 30 degrees of `primary` and whose
+saturation is below 50% becomes 20% more saturated, so it does not read as an
+off-tone primary. Other colors are kept as given. Any palette also accepts
+semantic colors through `copyWith`.
+
 `LumenThemeExt.lerp` interpolates palette changes during theme transitions.
 
 > `accentCyan`, `accentMagenta` and `accentBlue` became `primary`, `secondary`
@@ -248,8 +272,8 @@ LumenAnimatedGridBackground(
 
 `LumenList` builds rows on demand. Supply a `separatorBuilder` to add
 separators and an `empty` widget for zero items. Give the list a bounded
-viewport for large data sets. The Git version also exposes scroll options such
-as `physics`, `scrollDirection`, and `reverse`.
+viewport for large data sets. Scroll options such as `shrinkWrap`, `physics`,
+`scrollDirection`, and `reverse` work as in `ListView`.
 
 ```dart
 LumenList(

@@ -132,8 +132,9 @@ class LumenPalette {
   /// ```
   ///
   /// [success], [warning], and [danger] override the kit's semantic colors when
-  /// set. Omitted values stay [AppColors.success], [AppColors.warning], and
-  /// [AppColors.danger].
+  /// set. Omitted values stay [AppColors.success] and [AppColors.warning], and
+  /// [danger] defaults to [AppColors.danger] in dark mode and
+  /// [AppColors.dangerLight] in light mode.
   ///
   /// A custom [danger] becomes 20% more saturated only when both of these
   /// hold: its hue is within 30 degrees of [primary] on the shorter arc, and
@@ -153,7 +154,8 @@ class LumenPalette {
     final sec = s.toColor();
     final successResult = success ?? AppColors.success;
     final warningResult = warning ?? AppColors.warning;
-    final dangerResult = danger ?? AppColors.danger;
+    final dark = brightness == Brightness.dark;
+    final dangerResult = danger ?? (dark ? AppColors.danger : AppColors.dangerLight);
     // Dull danger sitting on the primary hue is hard to tell apart from it.
     // Measure the shorter arc so hues across 0° still count as nearby, and
     // leave vivid colors (50% saturation or more) untouched.
@@ -180,7 +182,6 @@ class LumenPalette {
     Color tone(double saturation, double lightness, [double alpha = 1]) =>
         HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
 
-    final dark = brightness == Brightness.dark;
     return LumenPalette(
       backgroundDeep: dark ? tone(0.5, 0.04) : tone(0.3, 0.96),
       backgroundMid: dark ? tone(0.5, 0.09) : tone(0.3, 1),
@@ -205,6 +206,9 @@ class LumenPalette {
   }
 
   /// Clear variant with default accents.
+  ///
+  /// Uses [AppColors.dangerLight] for [danger], which keeps AA contrast on the
+  /// light surfaces.
   factory LumenPalette.light() => const LumenPalette(
     backgroundDeep: Color(0xFFF5F5F5),
     backgroundMid: Color(0xFFFFFFFF),
@@ -220,7 +224,7 @@ class LumenPalette {
     textMuted: Color(0xFF858585),
     success: AppColors.success,
     warning: AppColors.warning,
-    danger: AppColors.danger,
+    danger: AppColors.dangerLight,
     accentGradient: AppColors.accentGradient,
   );
 

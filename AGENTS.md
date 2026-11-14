@@ -14,7 +14,7 @@ the published package and pinned Git checkouts.
 
 ## Toolchain
 
-- Dart `^3.13.0`, Flutter `>=3.47.0` (current stable channel will do).
+- Dart `^3.14.0`, Flutter `>=3.50.0` (current stable channel will do).
 - Use `package:material_ui/material_ui.dart` for Material types. It re-exports
   `package:flutter/widgets.dart`. Mixing it with `package:flutter/material.dart`
   can produce incompatible `ThemeData`, `Theme`, and `Material` types.

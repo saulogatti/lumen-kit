@@ -1,8 +1,25 @@
 # Changelog
 
-## 1.2.1
+## 1.3.0
 
-- Fixed `LumenPalette.fromSeed` with danger color within 30 degrees of primary color and less than 50% saturated.
+- Added optional `success`, `warning`, and `danger` parameters to
+  `LumenPalette.fromSeed`, so apps can set their own semantic colors. Omitted
+  values keep the `AppColors` defaults.
+  ([#27](https://github.com/saulogatti/lumen-kit/issues/27))
+- A custom `danger` passed to `LumenPalette.fromSeed` becomes 20% more
+  saturated when its hue is within 30 degrees of `primary` and its saturation
+  is below 50%, so it stays distinct from the primary color. Other colors are
+  kept as given, and the default `danger` is never changed.
+  ([#27](https://github.com/saulogatti/lumen-kit/issues/27))
+- Added `AppColors.dangerLight`, a darker `danger` with about 5:1 contrast on
+  white. `LumenPalette.light()` and light `LumenPalette.fromSeed` palettes use
+  it by default, so danger text, outlines and chips meet WCAG AA on light
+  surfaces. Dark palettes keep `AppColors.danger`.
+  ([#27](https://github.com/saulogatti/lumen-kit/issues/27))
+- `AppTheme.fromSeed` accepts `success`, `warning`, and `danger` and passes
+  them to `LumenPalette.fromSeed`.
+- Raised the minimum Dart SDK to `3.14.0` and Flutter to `3.50.0`.
+- Raised the minimum `material_ui` version to `1.11.0`.
 
 ## 1.2.0
 
