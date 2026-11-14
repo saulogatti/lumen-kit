@@ -32,16 +32,8 @@ class _FoundationSectionState extends State<FoundationSection>
 
     Widget pressableContent(String label) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: LumenDecorations.selectable(
-        p,
-        s,
-        accent: p.primary,
-        selected: _selected,
-      ),
-      child: Text(
-        label,
-        style: textTheme.labelLarge?.copyWith(color: p.textPrimary),
-      ),
+      decoration: LumenDecorations.selectable(p, s, accent: p.primary, selected: _selected),
+      child: Text(label, style: textTheme.labelLarge?.copyWith(color: p.textPrimary)),
     );
 
     return Column(
@@ -88,16 +80,8 @@ class _FoundationSectionState extends State<FoundationSection>
           runSpacing: 12,
           children: <Widget>[
             LumenActionContent(color: p.textPrimary, label: 'Text only'),
-            LumenActionContent(
-              color: p.primary,
-              icon: Icons.save_outlined,
-              label: 'Icon and text',
-            ),
-            LumenActionContent(
-              color: p.secondary,
-              label: 'Working',
-              busy: true,
-            ),
+            LumenActionContent(color: p.primary, icon: Icons.save_outlined, label: 'Icon and text'),
+            LumenActionContent(color: p.secondary, label: 'Working', busy: true),
           ],
         ),
         heading('LumenLabeled'),
@@ -111,9 +95,7 @@ class _FoundationSectionState extends State<FoundationSection>
             child: LumenLabeled(
               label: 'Email notifications',
               control: Icon(
-                _notifications
-                    ? Icons.check_box_outlined
-                    : Icons.check_box_outline_blank,
+                _notifications ? Icons.check_box_outlined : Icons.check_box_outline_blank,
                 color: p.primary,
               ),
             ),
