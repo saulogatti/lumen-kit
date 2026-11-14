@@ -32,7 +32,7 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
@@ -195,7 +195,6 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
         _heading(context, 'Disabled PIN and sliders'),
         const LumenPinField(
           value: '123456',
-          onChanged: null,
           semanticLabel: 'Disabled verification code',
         ),
         Text(
@@ -219,7 +218,7 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
   }
 
   Widget _heading(BuildContext context, String text) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     return Text(
       text,
       style: Theme.of(context).textTheme.titleSmall

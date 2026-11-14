@@ -21,7 +21,7 @@ class _StepperSectionState extends State<StepperSection>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     final textTheme = Theme.of(context).textTheme;
     final heading = textTheme.titleSmall?.copyWith(color: p.textPrimary);
     final body = textTheme.bodyMedium?.copyWith(color: p.textSecondary);
@@ -37,8 +37,7 @@ class _StepperSectionState extends State<StepperSection>
         LumenStepper(
           key: const ValueKey<String>('horizontal-stepper'),
           currentStep: _horizontalStep,
-          direction: LumenStepperDirection.horizontal,
-          onStepTapped: (int step) => setState(() => _horizontalStep = step),
+          onStepTapped: (step) => setState(() => _horizontalStep = step),
           steps: const <LumenStep>[
             LumenStep(title: 'Account'),
             LumenStep(title: 'Profile'),
@@ -61,7 +60,7 @@ class _StepperSectionState extends State<StepperSection>
           key: const ValueKey<String>('vertical-stepper'),
           currentStep: _verticalStep,
           direction: LumenStepperDirection.vertical,
-          onStepTapped: (int step) => setState(() => _verticalStep = step),
+          onStepTapped: (step) => setState(() => _verticalStep = step),
           steps: <LumenStep>[
             LumenStep(
               title: 'Account',

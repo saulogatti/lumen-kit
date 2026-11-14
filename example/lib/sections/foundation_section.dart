@@ -23,8 +23,8 @@ class _FoundationSectionState extends State<FoundationSection>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final LumenPalette p = LumenThemeExt.of(context).palette;
-    final LumenStyle s = LumenStyle.of(context);
+    final p = LumenThemeExt.of(context).palette;
+    final s = LumenStyle.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     Widget heading(String text) =>

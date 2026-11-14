@@ -10,11 +10,11 @@ Future<void> _pumpSection(WidgetTester tester) async {
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
   await tester.pumpWidget(
-    MaterialApp(
+    const MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: const FoundationSection(),
+          padding: EdgeInsets.all(20),
+          child: FoundationSection(),
         ),
       ),
     ),

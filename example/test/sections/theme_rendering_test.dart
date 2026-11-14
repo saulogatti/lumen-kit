@@ -25,17 +25,17 @@ void main() {
                 style: entry.value,
                 child: Scaffold(
                   backgroundColor: palette.backgroundDeep,
-                  body: MediaQuery(
-                    data: const MediaQueryData(
+                  body: const MediaQuery(
+                    data: MediaQueryData(
                       disableAnimations: true,
                       textScaler: TextScaler.linear(1.3),
                     ),
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(20),
+                      padding: EdgeInsets.all(20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         spacing: 28,
-                        children: const <Widget>[
+                        children: <Widget>[
                           FoundationSection(),
                           ControlStatesSection(),
                           StepperSection(),
