@@ -17,20 +17,27 @@ class AppTheme {
 
   /// Builds a theme from [primary] and optional [secondary] and [tertiary] colors.
   ///
-  /// Uses [LumenPalette.fromSeed] with [brightness], then passes the
-  /// resulting palette, [brightness], and [style] to [fromPalette].
+  /// Uses [LumenPalette.fromSeed] with [brightness] and the optional
+  /// [success], [warning], and [danger] colors, then passes the resulting
+  /// palette, [brightness], and [style] to [fromPalette].
   static ThemeData fromSeed({
     required Color primary,
     Color? secondary,
     Color? tertiary,
     Brightness brightness = Brightness.dark,
     LumenStyle style = LumenStyle.neon,
+    Color? success,
+    Color? warning,
+    Color? danger,
   }) => fromPalette(
     LumenPalette.fromSeed(
       primary: primary,
       secondary: secondary,
       tertiary: tertiary,
       brightness: brightness,
+      success: success,
+      warning: warning,
+      danger: danger,
     ),
     brightness: brightness,
     style: style,

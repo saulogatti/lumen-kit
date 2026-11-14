@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 
 void main() {
   testWidgets('gallery renders fully without exceptions', (
-    WidgetTester t,
+    t,
   ) async {
     t.view.physicalSize = const Size(420, 900);
     t.view.devicePixelRatio = 1;
@@ -19,7 +19,7 @@ void main() {
         .position;
     // Advance the viewport directly so nested input gestures cannot capture
     // the smoke test's scroll before it reaches later sections.
-    for (int i = 0; i < 200 && position.extentAfter > 0; i++) {
+    for (var i = 0; i < 200 && position.extentAfter > 0; i++) {
       position.jumpTo(
         (position.pixels + 600).clamp(0, position.maxScrollExtent),
       );

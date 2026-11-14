@@ -21,7 +21,7 @@ class _StepperSectionState extends State<StepperSection>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     final textTheme = Theme.of(context).textTheme;
     final heading = textTheme.titleSmall?.copyWith(color: p.textPrimary);
     final body = textTheme.bodyMedium?.copyWith(color: p.textSecondary);
@@ -30,15 +30,11 @@ class _StepperSectionState extends State<StepperSection>
       spacing: 16,
       children: <Widget>[
         Text('Horizontal', style: heading),
-        Text(
-          'Tap a step to change progress. Earlier steps are completed.',
-          style: body,
-        ),
+        Text('Tap a step to change progress. Earlier steps are completed.', style: body),
         LumenStepper(
           key: const ValueKey<String>('horizontal-stepper'),
           currentStep: _horizontalStep,
-          direction: LumenStepperDirection.horizontal,
-          onStepTapped: (int step) => setState(() => _horizontalStep = step),
+          onStepTapped: (step) => setState(() => _horizontalStep = step),
           steps: const <LumenStep>[
             LumenStep(title: 'Account'),
             LumenStep(title: 'Profile'),
@@ -50,9 +46,7 @@ class _StepperSectionState extends State<StepperSection>
           child: LumenButton.ghost(
             label: 'Reset horizontal',
             icon: Icons.restart_alt_rounded,
-            onPressed: _horizontalStep == 0
-                ? null
-                : () => setState(() => _horizontalStep = 0),
+            onPressed: _horizontalStep == 0 ? null : () => setState(() => _horizontalStep = 0),
           ),
         ),
         Text('Vertical', style: heading),
@@ -61,31 +55,22 @@ class _StepperSectionState extends State<StepperSection>
           key: const ValueKey<String>('vertical-stepper'),
           currentStep: _verticalStep,
           direction: LumenStepperDirection.vertical,
-          onStepTapped: (int step) => setState(() => _verticalStep = step),
+          onStepTapped: (step) => setState(() => _verticalStep = step),
           steps: <LumenStep>[
             LumenStep(
               title: 'Account',
               subtitle: 'Create credentials',
-              content: Text(
-                'Choose an email address and a secure password.',
-                style: body,
-              ),
+              content: Text('Choose an email address and a secure password.', style: body),
             ),
             LumenStep(
               title: 'Profile',
               subtitle: 'Personal details',
-              content: Text(
-                'Add your name and choose a profile picture.',
-                style: body,
-              ),
+              content: Text('Add your name and choose a profile picture.', style: body),
             ),
             LumenStep(
               title: 'Done',
               subtitle: 'Review and finish',
-              content: Text(
-                'Your account is ready. Review your details to finish.',
-                style: body,
-              ),
+              content: Text('Your account is ready. Review your details to finish.', style: body),
             ),
           ],
         ),
@@ -94,9 +79,7 @@ class _StepperSectionState extends State<StepperSection>
           child: LumenButton.ghost(
             label: 'Reset vertical',
             icon: Icons.restart_alt_rounded,
-            onPressed: _verticalStep == 0
-                ? null
-                : () => setState(() => _verticalStep = 0),
+            onPressed: _verticalStep == 0 ? null : () => setState(() => _verticalStep = 0),
           ),
         ),
       ],

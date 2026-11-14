@@ -6,20 +6,24 @@ Future<void> showMaterialGallery(BuildContext context) async {
     MaterialPageRoute<void>(
       builder: (context) => Theme(
         data: ThemeData(brightness: Theme.of(context).brightness),
-        child: const ScaffoldMessenger(child: _MaterialGallery()),
+        child: const ScaffoldMessenger(child: MaterialGallery()),
       ),
     ),
   );
 }
 
-class _MaterialGallery extends StatefulWidget {
-  const _MaterialGallery();
+/// A widget that displays a Material Gallery.
+class MaterialGallery extends StatefulWidget {
+  /// Creates a new [MaterialGallery].
+  const MaterialGallery({super.key});
 
   @override
-  State<_MaterialGallery> createState() => _MaterialGalleryState();
+  State<MaterialGallery> createState() => _MaterialGalleryState();
 }
 
-class _MaterialGalleryState extends State<_MaterialGallery> {
+/// A state that displays a Material Gallery.
+class _MaterialGalleryState extends State<MaterialGallery> {
+  /// The destinations of the gallery.
   static const _destinations = <NavigationDestination>[
     NavigationDestination(icon: Icon(Icons.dashboard_outlined), label: 'Home'),
     NavigationDestination(
@@ -70,9 +74,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                     spacing: 8,
                     children: <Widget>[
                       Text('Telemetry service'),
-                      Text(
-                        'Real-time event streaming, 124 active connections.',
-                      ),
+                      Text('Real-time event streaming, 124 active connections.'),
                       Wrap(
                         spacing: 8,
                         children: <Widget>[
@@ -97,8 +99,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 FilledButton.icon(
-                  onPressed: () =>
-                      _showMessage(context, 'Pipeline completed successfully'),
+                  onPressed: () => _showMessage(context, 'Pipeline completed successfully'),
                   icon: const Icon(Icons.play_arrow_rounded),
                   label: const Text('RUN'),
                 ),
@@ -126,8 +127,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   label: const Text('RETRY'),
                 ),
                 ElevatedButton(
-                  onPressed: () =>
-                      _showMessage(context, 'Primary action selected'),
+                  onPressed: () => _showMessage(context, 'Primary action selected'),
                   child: const Text('Continue'),
                 ),
                 IconButton(
@@ -139,10 +139,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   onSelected: (value) => _showMessage(context, value),
                   itemBuilder: (_) => const <PopupMenuEntry<String>>[
                     PopupMenuItem<String>(value: 'Edit', child: Text('Edit')),
-                    PopupMenuItem<String>(
-                      value: 'Duplicate',
-                      child: Text('Duplicate'),
-                    ),
+                    PopupMenuItem<String>(value: 'Duplicate', child: Text('Duplicate')),
                   ],
                 ),
               ],
@@ -154,13 +151,8 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 12,
               children: <Widget>[
-                const TextField(
-                  decoration: InputDecoration(labelText: 'Project name'),
-                ),
-                const SearchBar(
-                  hintText: 'Search events',
-                  leading: Icon(Icons.search),
-                ),
+                const TextField(decoration: InputDecoration(labelText: 'Project name')),
+                const SearchBar(hintText: 'Search events', leading: Icon(Icons.search)),
                 SwitchListTile(
                   title: const Text('Real-time notifications'),
                   value: _notifications,
@@ -177,44 +169,23 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   onChanged: (value) => setState(() => _accent = value),
                   child: const Column(
                     children: <Widget>[
-                      RadioListTile<String>(
-                        value: 'Primary',
-                        title: Text('Primary'),
-                      ),
-                      RadioListTile<String>(
-                        value: 'Secondary',
-                        title: Text('Secondary'),
-                      ),
-                      RadioListTile<String>(
-                        value: 'Tertiary',
-                        title: Text('Tertiary'),
-                      ),
+                      RadioListTile<String>(value: 'Primary', title: Text('Primary')),
+                      RadioListTile<String>(value: 'Secondary', title: Text('Secondary')),
+                      RadioListTile<String>(value: 'Tertiary', title: Text('Tertiary')),
                     ],
                   ),
                 ),
-                DropdownMenu<String>(
-                  label: const Text('Accent color'),
+                const DropdownMenu<String>(
+                  label: Text('Accent color'),
                   initialSelection: 'primary',
-                  dropdownMenuEntries: const <DropdownMenuEntry<String>>[
-                    DropdownMenuEntry<String>(
-                      value: 'primary',
-                      label: 'Primary',
-                    ),
-                    DropdownMenuEntry<String>(
-                      value: 'secondary',
-                      label: 'Secondary',
-                    ),
-                    DropdownMenuEntry<String>(
-                      value: 'tertiary',
-                      label: 'Tertiary',
-                    ),
+                  dropdownMenuEntries: <DropdownMenuEntry<String>>[
+                    DropdownMenuEntry<String>(value: 'primary', label: 'Primary'),
+                    DropdownMenuEntry<String>(value: 'secondary', label: 'Secondary'),
+                    DropdownMenuEntry<String>(value: 'tertiary', label: 'Tertiary'),
                   ],
                 ),
                 Text('Volume (${(_volume * 100).round()}%)'),
-                Slider(
-                  value: _volume,
-                  onChanged: (value) => setState(() => _volume = value),
-                ),
+                Slider(value: _volume, onChanged: (value) => setState(() => _volume = value)),
                 const Text('Price range'),
                 RangeSlider(
                   values: _price,
@@ -250,19 +221,13 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                       onPressed: _pickDate,
                       icon: const Icon(Icons.calendar_today_outlined),
                       label: Text(
-                        _date == null
-                            ? 'Start date'
-                            : localizations.formatCompactDate(_date!),
+                        _date == null ? 'Start date' : localizations.formatCompactDate(_date!),
                       ),
                     ),
                     OutlinedButton.icon(
                       onPressed: _pickTime,
                       icon: const Icon(Icons.schedule),
-                      label: Text(
-                        _time == null
-                            ? 'Time'
-                            : localizations.formatTimeOfDay(_time!),
-                      ),
+                      label: Text(_time == null ? 'Time' : localizations.formatTimeOfDay(_time!)),
                     ),
                   ],
                 ),
@@ -280,8 +245,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
                   runSpacing: 8,
                   children: <Widget>[
                     OutlinedButton(
-                      onPressed: () =>
-                          _showMessage(context, 'Material snackbar'),
+                      onPressed: () => _showMessage(context, 'Material snackbar'),
                       child: const Text('SNACKBAR'),
                     ),
                     OutlinedButton(
@@ -382,10 +346,7 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
   }
 
   Future<void> _pickTime() async {
-    final time = await showTimePicker(
-      context: context,
-      initialTime: _time ?? TimeOfDay.now(),
-    );
+    final time = await showTimePicker(context: context, initialTime: _time ?? TimeOfDay.now());
     if (mounted && time != null) setState(() => _time = time);
   }
 
@@ -402,7 +363,6 @@ class _MaterialGalleryState extends State<_MaterialGallery> {
   );
 
   void _showMessage(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 }

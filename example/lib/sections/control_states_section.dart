@@ -32,7 +32,7 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
@@ -42,22 +42,14 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
           spacing: 12,
           runSpacing: 12,
           children: <Widget>[
-            LumenButton(
-              label: 'Run action',
-              onPressed: () => setState(() => _actions++),
-            ),
+            LumenButton(label: 'Run action', onPressed: () => setState(() => _actions++)),
             const LumenButton(label: 'Disabled action', onPressed: null),
-            LumenButton(
-              label: 'Working',
-              busy: true,
-              onPressed: () => setState(() => _actions++),
-            ),
+            LumenButton(label: 'Working', busy: true, onPressed: () => setState(() => _actions++)),
           ],
         ),
         Text(
           'Actions completed: $_actions',
-          style: Theme.of(context).textTheme.bodyMedium
-              ?.copyWith(color: p.textSecondary),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textSecondary),
         ),
         _heading(context, 'Selection states'),
         Wrap(
@@ -70,11 +62,7 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
               tristate: true,
               onChanged: (value) => setState(() => _checked = value),
             ),
-            const LumenCheckbox(
-              label: 'Disabled checkbox',
-              value: true,
-              onChanged: null,
-            ),
+            const LumenCheckbox(label: 'Disabled checkbox', value: true, onChanged: null),
           ],
         ),
         Text(
@@ -83,8 +71,7 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
               : _checked!
               ? 'checked'
               : 'unchecked'}',
-          style: Theme.of(context).textTheme.bodyMedium
-              ?.copyWith(color: p.textSecondary),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textSecondary),
         ),
         Wrap(
           spacing: 20,
@@ -114,11 +101,7 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
               value: _notifications,
               onChanged: (value) => setState(() => _notifications = value),
             ),
-            const LumenSwitch(
-              label: 'Disabled notifications',
-              value: false,
-              onChanged: null,
-            ),
+            const LumenSwitch(label: 'Disabled notifications', value: false, onChanged: null),
           ],
         ),
         _heading(context, 'Text field states'),
@@ -132,9 +115,8 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
                 key: const ValueKey('state-project-name'),
                 label: 'Project name to validate',
                 helperText: 'Enter at least three characters.',
-                validator: (value) => (value ?? '').trim().length < 3
-                    ? 'Use at least three characters.'
-                    : null,
+                validator: (value) =>
+                    (value ?? '').trim().length < 3 ? 'Use at least three characters.' : null,
                 onChanged: (_) {
                   if (_valid) setState(() => _valid = false);
                 },
@@ -143,16 +125,13 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
                 alignment: AlignmentDirectional.centerStart,
                 child: LumenButton.outline(
                   label: 'Validate project',
-                  onPressed: () => setState(
-                    () => _valid = _formKey.currentState!.validate(),
-                  ),
+                  onPressed: () => setState(() => _valid = _formKey.currentState!.validate()),
                 ),
               ),
               if (_valid)
                 Text(
                   'Project is valid.',
-                  style: Theme.of(context).textTheme.bodyMedium
-                      ?.copyWith(color: p.success),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.success),
                 ),
             ],
           ),
@@ -186,44 +165,31 @@ class _ControlStatesSectionState extends State<ControlStatesSection>
           label: 'Required accent',
           value: _requiredAccent,
           hint: 'Choose an accent',
-          errorText: _requiredAccent == null
-              ? 'Choose an accent to clear this error.'
-              : null,
+          errorText: _requiredAccent == null ? 'Choose an accent to clear this error.' : null,
           items: _accents,
           onChanged: (value) => setState(() => _requiredAccent = value),
         ),
         _heading(context, 'Disabled PIN and sliders'),
-        const LumenPinField(
-          value: '123456',
-          onChanged: null,
-          semanticLabel: 'Disabled verification code',
-        ),
+        const LumenPinField(value: '123456', semanticLabel: 'Disabled verification code'),
         Text(
           'Disabled volume: 40%',
-          style: Theme.of(context).textTheme.bodyMedium
-              ?.copyWith(color: p.textSecondary),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textSecondary),
         ),
         const LumenSlider(value: 0.4, onChanged: null),
         Text(
           'Disabled range: 20–80',
-          style: Theme.of(context).textTheme.bodyMedium
-              ?.copyWith(color: p.textSecondary),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: p.textSecondary),
         ),
-        const LumenRangeSlider(
-          values: RangeValues(20, 80),
-          max: 100,
-          onChanged: null,
-        ),
+        const LumenRangeSlider(values: RangeValues(20, 80), max: 100, onChanged: null),
       ],
     );
   }
 
   Widget _heading(BuildContext context, String text) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     return Text(
       text,
-      style: Theme.of(context).textTheme.titleSmall
-          ?.copyWith(color: p.textPrimary),
+      style: Theme.of(context).textTheme.titleSmall?.copyWith(color: p.textPrimary),
     );
   }
 }

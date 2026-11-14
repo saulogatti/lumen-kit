@@ -50,6 +50,10 @@ class AppColors {
   /// Semantic color for error or danger states.
   static const Color danger = Color(0xFFFF5C7A);
 
+  /// [danger] on light backgrounds: same hue, darker, so text and outlines
+  /// reach about 5:1 contrast on white (WCAG AA asks for 4.5:1).
+  static const Color dangerLight = Color(0xFFE00029);
+
   /// Gradient application background pattern.
   static const LinearGradient backgroundGradient = LinearGradient(
     begin: Alignment.topLeft,

@@ -95,9 +95,54 @@ void main() {
         primary: const Color(0xFF000000),
         brightness: Brightness.light,
       );
-      expect(p2.danger, AppColors.danger);
+      expect(p2.danger, AppColors.dangerLight);
       expect(p2.success, AppColors.success);
       expect(p2.warning, AppColors.warning);
+    });
+
+    test('default light danger reaches AA contrast on the light surface', () {
+      double contrast(Color a, Color b) {
+        final la = a.computeLuminance();
+        final lb = b.computeLuminance();
+        return (la > lb ? la + 0.05 : lb + 0.05) / (la > lb ? lb + 0.05 : la + 0.05);
+      }
+
+      final light = LumenPalette.light();
+      expect(light.danger, AppColors.dangerLight);
+      expect(contrast(light.danger, light.surface), greaterThanOrEqualTo(4.5));
+      for (final hue in <double>[0, 60, 120, 180, 240, 300]) {
+        final p = LumenPalette.fromSeed(primary: hsl(hue, 0.9, 0.5), brightness: Brightness.light);
+        expect(contrast(p.danger, p.surface), greaterThanOrEqualTo(4.5), reason: 'hue $hue');
+      }
+      expect(LumenPalette.defaultDark().danger, AppColors.danger);
+    });
+
+    test('keeps a custom danger as given in light mode', () {
+      final custom = hsl(200, 0.9, 0.7);
+      final p = LumenPalette.fromSeed(
+        primary: hsl(0, 0.9, 0.5),
+        brightness: Brightness.light,
+        danger: custom,
+      );
+      expect(p.danger, custom);
+    });
+
+    test('AppTheme.fromSeed passes the semantic colors to the palette', () {
+      final success = hsl(120, 0.7, 0.4);
+      final warning = hsl(40, 0.9, 0.4);
+      final danger = hsl(0, 0.9, 0.4);
+      final theme = AppTheme.fromSeed(
+        primary: hsl(200, 0.8, 0.5),
+        brightness: Brightness.light,
+        success: success,
+        warning: warning,
+        danger: danger,
+      );
+      final p = theme.extension<LumenThemeExt>()!.palette;
+      expect(p.success, success);
+      expect(p.warning, warning);
+      expect(p.danger, danger);
+      expect(theme.colorScheme.error, danger);
     });
 
     test('does not boost the default danger when primary sits on the same hue', () {

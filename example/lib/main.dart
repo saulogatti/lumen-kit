@@ -17,11 +17,7 @@ const LumenStyle _baseStyle = LumenStyle(
 
 const List<LumenMenuEntry<String>> _menuItems = <LumenMenuEntry<String>>[
   LumenMenuItem<String>(value: 'edit', label: 'Edit', icon: Icons.edit),
-  LumenMenuItem<String>(
-    value: 'duplicate',
-    label: 'Duplicate',
-    icon: Icons.copy_rounded,
-  ),
+  LumenMenuItem<String>(value: 'duplicate', label: 'Duplicate', icon: Icons.copy_rounded),
   LumenMenuItem<String>(
     value: 'archive',
     label: 'Archive',
@@ -64,23 +60,27 @@ LumenPalette _materialPalette(ColorScheme scheme) {
   );
 }
 
+/// A widget that displays a Lumen Example App.
 class LumenExampleApp extends StatefulWidget {
   /// The brightness used when the gallery opens.
   final Brightness initialBrightness;
 
+  /// Creates a new [LumenExampleApp].
   const LumenExampleApp({super.key, this.initialBrightness = Brightness.light});
 
   @override
   State<LumenExampleApp> createState() => _LumenExampleAppState();
 }
 
+/// A widget that displays a Lumen Example App.
+// ignore: unreachable_from_main
 class MyWidget extends StatelessWidget {
+  /// Creates a new [MyWidget].
   @Preview(name: 'Constructor preview')
   const MyWidget.preview({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      const LumenExampleApp(initialBrightness: Brightness.dark);
+  Widget build(BuildContext context) => const LumenExampleApp(initialBrightness: Brightness.dark);
 }
 
 class _GalleryScreen extends StatefulWidget {
@@ -126,13 +126,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     return Scaffold(
       appBar: LumenAppBar(
         title: 'lumen_kit',
         subtitle: 'gallery',
         leading: Builder(
-          builder: (BuildContext ctx) => LumenIconButton.ghost(
+          builder: (ctx) => LumenIconButton.ghost(
             icon: Icons.menu_rounded,
             onPressed: () => Scaffold.of(ctx).openDrawer(),
           ),
@@ -151,15 +151,9 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   children: <Widget>[
                     Text(
                       'lumen_kit',
-                      style: TextStyle(
-                        color: p.textPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: TextStyle(color: p.textPrimary, fontWeight: FontWeight.w700),
                     ),
-                    Text(
-                      'demo gallery',
-                      style: TextStyle(color: p.textMuted, fontSize: 12),
-                    ),
+                    Text('demo gallery', style: TextStyle(color: p.textMuted, fontSize: 12)),
                   ],
                 ),
               ),
@@ -188,7 +182,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
       ),
       bottomNavigationBar: LumenBottomNavBar(
         selectedIndex: _bottomNav,
-        onChanged: (int i) => setState(() => _bottomNav = i),
+        onChanged: (i) => setState(() => _bottomNav = i),
         items: _navItems,
       ),
       floatingActionButton: LumenFab.extended(
@@ -211,12 +205,12 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             _section('Control states', const ControlStatesSection()),
             _section(
               'Cards & status',
-              LumenCard(
+              const LumenCard(
                 glow: true,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text('Telemetry service', style: TextStyle(fontSize: 16)),
                     SizedBox(height: 8),
                     Text('Real-time event streaming, 124 active connections.'),
@@ -225,26 +219,11 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       spacing: 8,
                       runSpacing: 8,
                       children: <Widget>[
-                        LumenStatusChip(
-                          label: 'OK',
-                          tone: LumenStatusTone.success,
-                        ),
-                        LumenStatusChip(
-                          label: 'INFO',
-                          tone: LumenStatusTone.info,
-                        ),
-                        LumenStatusChip(
-                          label: 'WARNING',
-                          tone: LumenStatusTone.warning,
-                        ),
-                        LumenStatusChip(
-                          label: 'FAILURE',
-                          tone: LumenStatusTone.danger,
-                        ),
-                        LumenStatusChip(
-                          label: 'OFFLINE',
-                          tone: LumenStatusTone.neutral,
-                        ),
+                        LumenStatusChip(label: 'OK', tone: LumenStatusTone.success),
+                        LumenStatusChip(label: 'INFO', tone: LumenStatusTone.info),
+                        LumenStatusChip(label: 'WARNING', tone: LumenStatusTone.warning),
+                        LumenStatusChip(label: 'FAILURE', tone: LumenStatusTone.danger),
+                        LumenStatusChip(label: 'OFFLINE', tone: LumenStatusTone.neutral),
                       ],
                     ),
                   ],
@@ -273,17 +252,9 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       );
                     },
                   ),
-                  LumenButton.outline(
-                    label: 'EDIT',
-                    icon: Icons.edit,
-                    onPressed: () {},
-                  ),
+                  LumenButton.outline(label: 'EDIT', icon: Icons.edit, onPressed: () {}),
                   LumenButton.ghost(label: 'cancel', onPressed: () {}),
-                  LumenButton.danger(
-                    label: 'DELETE',
-                    icon: Icons.delete_outline,
-                    onPressed: () {},
-                  ),
+                  LumenButton.danger(label: 'DELETE', icon: Icons.delete_outline, onPressed: () {}),
                   LumenButton.outline(
                     label: 'RETRY',
                     icon: Icons.refresh_rounded,
@@ -293,10 +264,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   LumenCta(
                     label: 'Continue',
                     icon: Icons.arrow_forward_rounded,
-                    onPressed: () => showLumenToast(
-                      context: context,
-                      message: 'Primary action selected',
-                    ),
+                    onPressed: () =>
+                        showLumenToast(context: context, message: 'Primary action selected'),
                   ),
                 ],
               ),
@@ -305,25 +274,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               'Icon buttons & FAB',
               Row(
                 children: <Widget>[
-                  LumenIconButton(
-                    icon: Icons.favorite,
-                    tooltip: 'Like',
-                    onPressed: () {},
-                  ),
+                  LumenIconButton(icon: Icons.favorite, tooltip: 'Like', onPressed: () {}),
                   const SizedBox(width: 12),
-                  LumenIconButton.solid(
-                    icon: Icons.refresh,
-                    tooltip: 'Refresh',
-                    onPressed: () {},
-                  ),
+                  LumenIconButton.solid(icon: Icons.refresh, tooltip: 'Refresh', onPressed: () {}),
                   const SizedBox(width: 12),
-                  LumenIconButton.ghost(
-                    icon: Icons.more_vert,
-                    tooltip: 'More',
-                    onPressed: () {},
-                  ),
+                  LumenIconButton.ghost(icon: Icons.more_vert, tooltip: 'More', onPressed: () {}),
                   const SizedBox(width: 12),
-                  LumenIconButton(
+                  const LumenIconButton(
                     icon: Icons.lock_outline_rounded,
                     shape: LumenIconButtonShape.rounded,
                     onPressed: null,
@@ -348,13 +305,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     label: 'Project slug',
                     initialValue: _slug,
                     icon: Icons.tag_rounded,
-                    onChanged: (String v) => _slug = v,
+                    onChanged: (v) => _slug = v,
                   ),
                   const SizedBox(height: 16),
                   LumenSearchBar(
                     hint: 'Search components…',
                     initialValue: _search,
-                    onChanged: (String v) => setState(() => _search = v),
+                    onChanged: (v) => setState(() => _search = v),
                   ),
                 ],
               ),
@@ -367,14 +324,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   LumenSwitch(
                     value: _switchOn,
                     label: 'Real-time notifications',
-                    onChanged: (bool v) => setState(() => _switchOn = v),
+                    onChanged: (v) => setState(() => _switchOn = v),
                   ),
                   const SizedBox(height: 12),
                   LumenCheckbox(
                     value: _checkbox,
                     tristate: true,
                     label: 'I accept the terms (tristate)',
-                    onChanged: (bool? v) => setState(() => _checkbox = v),
+                    onChanged: (v) => setState(() => _checkbox = v),
                   ),
                   const SizedBox(height: 12),
                   Wrap(
@@ -384,24 +341,21 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         value: 'a',
                         groupValue: _radio,
                         label: 'Primary',
-                        onChanged: (String? v) =>
-                            setState(() => _radio = v ?? _radio),
+                        onChanged: (v) => setState(() => _radio = v ?? _radio),
                       ),
                       LumenRadio<String>(
                         value: 'b',
                         groupValue: _radio,
                         label: 'Secondary',
                         accentColor: p.secondary,
-                        onChanged: (String? v) =>
-                            setState(() => _radio = v ?? _radio),
+                        onChanged: (v) => setState(() => _radio = v ?? _radio),
                       ),
                       LumenRadio<String>(
                         value: 'c',
                         groupValue: _radio,
                         label: 'Tertiary',
                         accentColor: p.tertiary,
-                        onChanged: (String? v) =>
-                            setState(() => _radio = v ?? _radio),
+                        onChanged: (v) => setState(() => _radio = v ?? _radio),
                       ),
                     ],
                   ),
@@ -410,10 +364,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     'Volume (${(_slider * 100).round()}%)',
                     style: TextStyle(color: p.textMuted),
                   ),
-                  LumenSlider(
-                    value: _slider,
-                    onChanged: (double v) => setState(() => _slider = v),
-                  ),
+                  LumenSlider(value: _slider, onChanged: (v) => setState(() => _slider = v)),
                   Text(
                     'Price (R\$ ${_price.start.round()} – '
                     'R\$ ${_price.end.round()})',
@@ -423,11 +374,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     values: _price,
                     max: 500,
                     divisions: 50,
-                    labels: RangeLabels(
-                      'R\$ ${_price.start.round()}',
-                      'R\$ ${_price.end.round()}',
-                    ),
-                    onChanged: (RangeValues v) => setState(() => _price = v),
+                    labels: RangeLabels('R\$ ${_price.start.round()}', 'R\$ ${_price.end.round()}'),
+                    onChanged: (v) => setState(() => _price = v),
                   ),
                   const SizedBox(height: 4),
                   LumenDropdown<String>(
@@ -450,8 +398,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         icon: Icons.circle_outlined,
                       ),
                     ],
-                    onChanged: (String? v) =>
-                        setState(() => _dropdown = v ?? _dropdown),
+                    onChanged: (v) => setState(() => _dropdown = v ?? _dropdown),
                   ),
                   const SizedBox(height: 16),
                   LumenDatePicker(
@@ -459,13 +406,13 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     value: _date,
                     firstDate: DateTime(2020),
                     lastDate: DateTime(2030),
-                    onChanged: (DateTime v) => setState(() => _date = v),
+                    onChanged: (v) => setState(() => _date = v),
                   ),
                   const SizedBox(height: 16),
                   LumenTimePicker(
                     label: 'Time',
                     value: _time,
-                    onChanged: (TimeOfDay v) => setState(() => _time = v),
+                    onChanged: (v) => setState(() => _time = v),
                   ),
                 ],
               ),
@@ -474,8 +421,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               'Code (PIN)',
               LumenPinField(
                 value: _pin,
-                onChanged: (String v) => setState(() => _pin = v),
-                onCompleted: (String v) => showLumenToast(
+                onChanged: (v) => setState(() => _pin = v),
+                onCompleted: (v) => showLumenToast(
                   context: context,
                   message: 'Code $v complete',
                   tone: LumenStatusTone.success,
@@ -492,26 +439,21 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     label: 'Favorite',
                     selected: _chipSelected,
                     showCheckmark: true,
-                    onSelected: (bool selected) =>
-                        setState(() => _chipSelected = selected),
+                    onSelected: (selected) => setState(() => _chipSelected = selected),
                   ),
                   LumenChoiceChips<String>(
                     value: _size,
-                    onChanged: (String? v) => setState(() => _size = v),
+                    onChanged: (v) => setState(() => _size = v),
                     items: const <LumenChipItem<String>>[
                       LumenChipItem<String>(value: 's', label: 'S'),
                       LumenChipItem<String>(value: 'm', label: 'M'),
                       LumenChipItem<String>(value: 'l', label: 'L'),
-                      LumenChipItem<String>(
-                        value: 'xl',
-                        label: 'XL',
-                        enabled: false,
-                      ),
+                      LumenChipItem<String>(value: 'xl', label: 'XL', enabled: false),
                     ],
                   ),
                   LumenFilterChips<String>(
                     values: _filters,
-                    onChanged: (Set<String> v) => setState(() => _filters = v),
+                    onChanged: (v) => setState(() => _filters = v),
                     items: const <LumenChipItem<String>>[
                       LumenChipItem<String>(value: 'promo', label: 'Sale'),
                       LumenChipItem<String>(
@@ -529,14 +471,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         min: 1,
                         max: 10,
                         semanticLabel: 'Quantity',
-                        onChanged: (int v) => setState(() => _qty = v),
+                        onChanged: (v) => setState(() => _qty = v),
                       ),
                       const Spacer(),
                       LumenRating(
                         value: _rating,
                         allowHalf: true,
                         semanticLabel: 'Rating',
-                        onChanged: (double v) => setState(() => _rating = v),
+                        onChanged: (v) => setState(() => _rating = v),
                       ),
                     ],
                   ),
@@ -544,10 +486,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     spacing: 8,
                     children: <Widget>[
                       const LumenRating(value: 4.3, size: 16),
-                      Text(
-                        '4.3 (128 ratings)',
-                        style: TextStyle(color: p.textMuted, fontSize: 12),
-                      ),
+                      Text('4.3 (128 ratings)', style: TextStyle(color: p.textMuted, fontSize: 12)),
                     ],
                   ),
                 ],
@@ -570,18 +509,15 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         ),
                         LumenMenuButton<String>(
                           items: _menuItems,
-                          onSelected: (String v) => showLumenToast(
-                            context: context,
-                            message: 'Action: $v',
-                          ),
+                          onSelected: (v) =>
+                              showLumenToast(context: context, message: 'Action: $v'),
                         ),
                       ],
                     ),
                   ),
                   LumenContextMenu<String>(
                     items: _menuItems,
-                    onSelected: (String v) =>
-                        showLumenToast(context: context, message: 'Action: $v'),
+                    onSelected: (v) => showLumenToast(context: context, message: 'Action: $v'),
                     child: LumenLoadingOverlay(
                       loading: _overlay,
                       message: 'Syncing…',
@@ -593,11 +529,9 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                             child: LumenSwitch(
                               value: _overlay,
                               label: 'Overlay for 3s (right-click: menu)',
-                              onChanged: (bool v) async {
+                              onChanged: (v) async {
                                 setState(() => _overlay = v);
-                                await Future<void>.delayed(
-                                  const Duration(seconds: 3),
-                                );
+                                await Future<void>.delayed(const Duration(seconds: 3));
                                 if (mounted) setState(() => _overlay = false);
                               },
                             ),
@@ -613,8 +547,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       await showLumenLoading<void>(
                         context: context,
                         message: 'Submitting form…',
-                        task: () =>
-                            Future<void>.delayed(const Duration(seconds: 2)),
+                        task: () => Future<void>.delayed(const Duration(seconds: 2)),
                       );
                       if (!context.mounted) return;
                       showLumenSnackBar(
@@ -632,22 +565,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               LumenCarousel(
                 itemCount: 4,
                 height: 150,
-                itemBuilder: (BuildContext context, int i) {
-                  final List<Color> c = <Color>[
-                    p.primary,
-                    p.secondary,
-                    p.tertiary,
-                    p.success,
-                  ];
+                itemBuilder: (context, i) {
+                  final c = <Color>[p.primary, p.secondary, p.tertiary, p.success];
                   return DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: <Color>[
-                          c[i].withValues(alpha: 0.55),
-                          p.surface,
-                        ],
+                        colors: <Color>[c[i].withValues(alpha: 0.55), p.surface],
                       ),
                     ),
                     child: Center(
@@ -673,17 +598,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   const SizedBox(height: 8),
                   LumenLinearProgress(value: _progress),
                   const SizedBox(height: 12),
-                  LumenSlider(
-                    value: _progress,
-                    onChanged: (double v) => setState(() => _progress = v),
-                  ),
+                  LumenSlider(value: _progress, onChanged: (v) => setState(() => _progress = v)),
                   const SizedBox(height: 12),
                   const Text('Indeterminate'),
                   const SizedBox(height: 8),
                   const LumenLinearProgress(),
                   const SizedBox(height: 20),
-                  Row(
-                    children: const <Widget>[
+                  const Row(
+                    children: <Widget>[
                       LumenCircularProgress(value: 0.7),
                       SizedBox(width: 20),
                       LumenCircularProgress(),
@@ -696,8 +618,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             ),
             _section(
               'Skeleton (loading state)',
-              Row(
-                children: const <Widget>[
+              const Row(
+                children: <Widget>[
                   LumenSkeleton.circle(size: 48),
                   SizedBox(width: 16),
                   Expanded(
@@ -726,11 +648,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       message: 'Sync paused on this device.',
                       tone: LumenStatusTone.warning,
                       actionLabel: 'Resume',
-                      onAction: () => showLumenToast(
-                        context: context,
-                        message: 'Resuming',
-                        tone: LumenStatusTone.info,
-                      ),
+                      onAction: () => showLumenToast(context: context, message: 'Resuming'),
                       onDismiss: () => setState(() => _bannerVisible = false),
                     )
                   else
@@ -744,21 +662,18 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   const LumenEmptyState(
                     icon: Icons.inbox_outlined,
                     title: 'No events',
-                    message:
-                        'The list below only builds items that are on screen.',
+                    message: 'The list below only builds items that are on screen.',
                   ),
                   SizedBox(
                     height: 220,
                     child: LumenList(
                       itemCount: 24,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const SizedBox(height: 8),
-                      itemBuilder: (BuildContext context, int i) =>
-                          LumenListTile(
-                            title: 'Event ${i + 1}',
-                            subtitle: 'virtualized item',
-                            onTap: () {},
-                          ),
+                      separatorBuilder: (context, index) => const SizedBox(height: 8),
+                      itemBuilder: (context, i) => LumenListTile(
+                        title: 'Event ${i + 1}',
+                        subtitle: 'virtualized item',
+                        onTap: () {},
+                      ),
                     ),
                   ),
                 ],
@@ -783,11 +698,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   LumenButton.outline(
                     label: 'TOAST',
                     icon: Icons.bolt_outlined,
-                    onPressed: () => showLumenToast(
-                      context: context,
-                      message: 'Floating toast via Overlay',
-                      tone: LumenStatusTone.info,
-                    ),
+                    onPressed: () =>
+                        showLumenToast(context: context, message: 'Floating toast via Overlay'),
                   ),
                   LumenButton.outline(
                     label: 'DIALOG',
@@ -800,14 +712,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                         'This operation cannot be undone. Do you want to continue?',
                       ),
                       actions: <Widget>[
-                        LumenButton.ghost(
-                          label: 'Cancel',
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        LumenButton(
-                          label: 'CONFIRM',
-                          onPressed: () => Navigator.pop(context),
-                        ),
+                        LumenButton.ghost(label: 'Cancel', onPressed: () => Navigator.pop(context)),
+                        LumenButton(label: 'CONFIRM', onPressed: () => Navigator.pop(context)),
                       ],
                     ),
                   ),
@@ -816,7 +722,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     icon: Icons.vertical_align_bottom_rounded,
                     onPressed: () => showLumenBottomSheet<void>(
                       context: context,
-                      builder: (BuildContext _) => Padding(
+                      builder: (_) => Padding(
                         padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -824,27 +730,18 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                           children: <Widget>[
                             const Text(
                               'Quick actions',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                             ),
                             const SizedBox(height: 12),
                             LumenListTile(
-                              leading: Icon(
-                                Icons.share_outlined,
-                                color: p.primary,
-                              ),
+                              leading: Icon(Icons.share_outlined, color: p.primary),
                               title: 'Share',
                               subtitle: 'Creates an invitation link',
                               onTap: () => Navigator.pop(context),
                             ),
                             const SizedBox(height: 8),
                             LumenListTile(
-                              leading: Icon(
-                                Icons.delete_outline,
-                                color: p.danger,
-                              ),
+                              leading: Icon(Icons.delete_outline, color: p.danger),
                               title: 'Remove',
                               onTap: () => Navigator.pop(context),
                             ),
@@ -863,7 +760,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 children: <Widget>[
                   LumenTabs(
                     selectedIndex: _tab,
-                    onChanged: (int i) => setState(() => _tab = i),
+                    onChanged: (i) => setState(() => _tab = i),
                     items: const <LumenTabItem>[
                       LumenTabItem(label: 'Overview', icon: Icons.bar_chart),
                       LumenTabItem(label: 'Events', icon: Icons.bolt_outlined),
@@ -873,7 +770,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                   const SizedBox(height: 16),
                   LumenSegmentedControl(
                     selectedIndex: _segment,
-                    onChanged: (int i) => setState(() => _segment = i),
+                    onChanged: (i) => setState(() => _segment = i),
                     items: const <LumenTabItem>[
                       LumenTabItem(label: 'Day'),
                       LumenTabItem(label: 'Week'),
@@ -892,26 +789,14 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
                   const LumenAvatar(initials: 'SG', radius: 26),
-                  LumenAvatar(
-                    initials: 'NU',
-                    radius: 26,
-                    statusColor: p.success,
-                  ),
+                  LumenAvatar(initials: 'NU', radius: 26, statusColor: p.success),
                   LumenBadge(
                     label: '12',
-                    child: Icon(
-                      Icons.notifications_outlined,
-                      color: p.textPrimary,
-                      size: 30,
-                    ),
+                    child: Icon(Icons.notifications_outlined, color: p.textPrimary, size: 30),
                   ),
                   LumenBadge.dot(
                     color: p.success,
-                    child: Icon(
-                      Icons.mail_outline,
-                      color: p.textPrimary,
-                      size: 30,
-                    ),
+                    child: Icon(Icons.mail_outline, color: p.textPrimary, size: 30),
                   ),
                   const LumenTag(label: 'new', icon: Icons.fiber_new_outlined),
                   LumenTag(label: 'beta', color: p.secondary),
@@ -919,10 +804,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     maxVisible: 3,
                     total: 12,
                     semanticLabel: '12 participants',
-                    onOverflowTap: () => showLumenToast(
-                      context: context,
-                      message: '+9 participants',
-                    ),
+                    onOverflowTap: () =>
+                        showLumenToast(context: context, message: '+9 participants'),
                     avatars: const <LumenAvatar>[
                       LumenAvatar(initials: 'SG'),
                       LumenAvatar(initials: 'NU'),
@@ -958,16 +841,12 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     subtitle: 'webhooks, SSO, API keys',
                     leading: Icon(Icons.hub_outlined, color: p.primary),
                     initiallyExpanded: _expanded,
-                    onExpansionChanged: (bool v) =>
-                        setState(() => _expanded = v),
+                    onExpansionChanged: (v) => setState(() => _expanded = v),
                     children: <Widget>[
                       LumenListTile(
                         title: 'Event webhook',
                         subtitle: 'POST → https://hooks.example.com',
-                        trailing: const LumenTag(
-                          label: 'active',
-                          icon: Icons.check_circle_outline,
-                        ),
+                        trailing: const LumenTag(label: 'active', icon: Icons.check_circle_outline),
                         onTap: () {},
                       ),
                       const SizedBox(height: 6),
@@ -983,46 +862,31 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             ),
             _section(
               'Data table',
-              LumenDataTable(
-                columns: const <DataColumn>[
+              const LumenDataTable(
+                columns: <DataColumn>[
                   DataColumn(label: Text('Service')),
                   DataColumn(label: Text('Status')),
                   DataColumn(label: Text('Latency'), numeric: true),
                 ],
-                rows: const <DataRow>[
+                rows: <DataRow>[
                   DataRow(
                     cells: <DataCell>[
                       DataCell(Text('api')),
-                      DataCell(
-                        LumenStatusChip(
-                          label: 'OK',
-                          tone: LumenStatusTone.success,
-                        ),
-                      ),
+                      DataCell(LumenStatusChip(label: 'OK', tone: LumenStatusTone.success)),
                       DataCell(Text('42ms')),
                     ],
                   ),
                   DataRow(
                     cells: <DataCell>[
                       DataCell(Text('worker')),
-                      DataCell(
-                        LumenStatusChip(
-                          label: 'WARNING',
-                          tone: LumenStatusTone.warning,
-                        ),
-                      ),
+                      DataCell(LumenStatusChip(label: 'WARNING', tone: LumenStatusTone.warning)),
                       DataCell(Text('118ms')),
                     ],
                   ),
                   DataRow(
                     cells: <DataCell>[
                       DataCell(Text('cache')),
-                      DataCell(
-                        LumenStatusChip(
-                          label: 'FAILURE',
-                          tone: LumenStatusTone.danger,
-                        ),
-                      ),
+                      DataCell(LumenStatusChip(label: 'FAILURE', tone: LumenStatusTone.danger)),
                       DataCell(Text('—')),
                     ],
                   ),
@@ -1033,13 +897,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               'Table rows',
               const Column(
                 children: <Widget>[
-                  LumenTableRow(
-                    isHeader: true,
-                    cells: <Widget>[Text('Service'), Text('State')],
-                  ),
-                  LumenTableRow(
-                    cells: <Widget>[Text('API'), Text('Available')],
-                  ),
+                  LumenTableRow(isHeader: true, cells: <Widget>[Text('Service'), Text('State')]),
+                  LumenTableRow(cells: <Widget>[Text('API'), Text('Available')]),
                 ],
               ),
             ),
@@ -1053,8 +912,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     child: LumenNavRail(
                       items: _navItems,
                       selectedIndex: _bottomNav,
-                      onChanged: (int index) =>
-                          setState(() => _bottomNav = index),
+                      onChanged: (index) => setState(() => _bottomNav = index),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -1084,7 +942,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   }
 
   Widget _section(String title, Widget child) {
-    final LumenPalette p = LumenThemeExt.of(context).palette;
+    final p = LumenThemeExt.of(context).palette;
     return Padding(
       padding: const EdgeInsets.only(bottom: 28),
       child: Column(
@@ -1126,9 +984,7 @@ class _LumenExampleAppState extends State<LumenExampleApp> {
       title: 'lumen_kit example',
       debugShowCheckedModeBanner: false,
       theme: materialTheme.copyWith(
-        extensions: <ThemeExtension<dynamic>>[
-          LumenThemeExt(palette: palette, style: style),
-        ],
+        extensions: <ThemeExtension<dynamic>>[LumenThemeExt(palette: palette, style: style)],
       ),
       home: _GalleryScreen(
         settings: Column(
@@ -1145,8 +1001,7 @@ class _LumenExampleAppState extends State<LumenExampleApp> {
             LumenSwitch(
               label: 'Lumen colors',
               value: _useLumenColors,
-              onChanged: (bool value) =>
-                  setState(() => _useLumenColors = value),
+              onChanged: (value) => setState(() => _useLumenColors = value),
             ),
             if (_useLumenColors)
               Wrap(
@@ -1165,7 +1020,7 @@ class _LumenExampleAppState extends State<LumenExampleApp> {
             LumenSwitch(
               label: 'Component style',
               value: _useLumenStyle,
-              onChanged: (bool value) => setState(() => _useLumenStyle = value),
+              onChanged: (value) => setState(() => _useLumenStyle = value),
             ),
             if (_useLumenStyle)
               Wrap(
@@ -1175,9 +1030,7 @@ class _LumenExampleAppState extends State<LumenExampleApp> {
                   for (final String name in LumenStyle.presets.keys)
                     LumenTag(
                       label: name,
-                      icon: _style == name
-                          ? Icons.check_rounded
-                          : Icons.auto_awesome_outlined,
+                      icon: _style == name ? Icons.check_rounded : Icons.auto_awesome_outlined,
                       onTap: () => setState(() => _style = name),
                     ),
                 ],
@@ -1185,9 +1038,8 @@ class _LumenExampleAppState extends State<LumenExampleApp> {
             LumenSwitch(
               label: 'Dark mode',
               value: _brightness == Brightness.dark,
-              onChanged: (bool dark) => setState(
-                () => _brightness = dark ? Brightness.dark : Brightness.light,
-              ),
+              onChanged: (dark) =>
+                  setState(() => _brightness = dark ? Brightness.dark : Brightness.light),
             ),
           ],
         ),
