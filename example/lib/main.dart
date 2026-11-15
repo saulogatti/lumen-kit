@@ -4,6 +4,7 @@ import 'package:lumen_kit_example/material_gallery.dart';
 import 'package:lumen_kit_example/sections/control_states_section.dart';
 import 'package:lumen_kit_example/sections/foundation_section.dart';
 import 'package:lumen_kit_example/sections/stepper_section.dart';
+import 'package:lumen_kit_example/sections/transitions_section.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const LumenExampleApp());
@@ -203,6 +204,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             _section('Colors and style', widget.settings),
             _section('Foundation', const FoundationSection()),
             _section('Control states', const ControlStatesSection()),
+            _section('Transitions', const TransitionsSection()),
             _section(
               'Cards & status',
               const LumenCard(
