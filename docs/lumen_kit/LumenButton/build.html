@@ -112,12 +112,13 @@ Widget build(BuildContext context) {
   final palette = LumenThemeExt.of(context).palette;
   final style = LumenStyle.of(context);
   final enabled = onPressed != null &amp;&amp; !busy;
-  final accent = accentColor ?? palette.primary;
+  final toneColor = tone?.colorOf(palette).withValues(alpha: 1);
+  final accent = accentColor ?? toneColor ?? palette.primary;
 
-  final content = _buildContent(palette, accent);
+  final content = _buildContent(palette, accent, toneColor);
 
   final body = switch (variant) {
-    LumenButtonVariant.solid =&gt; _solid(context, palette, content, enabled),
+    LumenButtonVariant.solid =&gt; _solid(context, palette, toneColor, content, enabled),
     LumenButtonVariant.outline =&gt; _outline(context, palette, accent, content, enabled),
     LumenButtonVariant.ghost =&gt; _ghost(content),
   };
@@ -156,7 +157,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.1
+      1.3.0
   </span>
   
 </footer>
