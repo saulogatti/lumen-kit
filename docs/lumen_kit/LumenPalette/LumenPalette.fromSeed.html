@@ -8,15 +8,15 @@
   <title>LumenPalette.fromSeed constructor - LumenPalette - lumen_kit library - Dart API</title>
 
 
-
+  
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-
+  
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
   <link rel="icon" href="../../static-assets/favicon.png?v1">
-
+  
 </head>
 
 <body data-base-href="../../" data-using-base-href="false" class="light-theme">
@@ -49,18 +49,21 @@
       data-above-sidebar="lumen_kit&#47;LumenPalette-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">LumenPalette.fromSeed</span> constructor
+<h1><span class="kind-constructor">LumenPalette.fromSeed</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
-
+      
       <span class="name ">LumenPalette.fromSeed</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fromSeed-param-primary"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a></span> <span class="parameter-name">primary</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-secondary"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">secondary</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-tertiary"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">tertiary</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-brightness"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Brightness.html">Brightness</a></span> <span class="parameter-name">brightness</span> = <span class="default-value">Brightness.dark</span>, </span></li>
+<li><span class="parameter" id="fromSeed-param-success"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">success</span>, </span></li>
+<li><span class="parameter" id="fromSeed-param-warning"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">warning</span>, </span></li>
+<li><span class="parameter" id="fromSeed-param-danger"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">danger</span>, </span></li>
 </ol>})
     </section>
-
+    
 <section class="desc markdown">
   <p>Generates a palette from <code>primary</code> and optional <code>secondary</code> and <code>tertiary</code>.</p>
 <p>When omitted, <code>secondary</code> uses a hue 150 degrees from <code>primary</code>, and
@@ -72,10 +75,18 @@ warning, and danger use the kit defaults.</p>
   brightness: Brightness.dark,
 );
 </code></pre>
+<p><code>success</code>, <code>warning</code>, and <code>danger</code> override the kit's semantic colors when
+set. Omitted values stay <a href="../../lumen_kit/AppColors/success-constant.html">AppColors.success</a> and <a href="../../lumen_kit/AppColors/warning-constant.html">AppColors.warning</a>, and
+<code>danger</code> defaults to <a href="../../lumen_kit/AppColors/danger-constant.html">AppColors.danger</a> in dark mode and
+<a href="../../lumen_kit/AppColors/dangerLight-constant.html">AppColors.dangerLight</a> in light mode.</p>
+<p>A custom <code>danger</code> becomes 20% more saturated only when both of these
+hold: its hue is within 30 degrees of <code>primary</code> on the shorter arc, and
+its saturation is below 50%. Colors at or above 50% saturation, and colors
+farther than 30 degrees, are kept as given.</p>
 </section>
 
 
-
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory LumenPalette.fromSeed({
@@ -83,10 +94,31 @@ warning, and danger use the kit defaults.</p>
   Color? secondary,
   Color? tertiary,
   Brightness brightness = Brightness.dark,
+  Color? success,
+  Color? warning,
+  Color? danger,
 }) {
   final p = HSLColor.fromColor(primary);
   final s = secondary != null ? HSLColor.fromColor(secondary) : p.withHue((p.hue + 150) % 360);
   final sec = s.toColor();
+  final successResult = success ?? AppColors.success;
+  final warningResult = warning ?? AppColors.warning;
+  final dark = brightness == Brightness.dark;
+  final dangerResult = danger ?? (dark ? AppColors.danger : AppColors.dangerLight);
+  &#47;&#47; Dull danger sitting on the primary hue is hard to tell apart from it.
+  &#47;&#47; Measure the shorter arc so hues across 0° still count as nearby, and
+  &#47;&#47; leave vivid colors (50% saturation or more) untouched.
+  var dangerColor = dangerResult;
+  if (danger != null) {
+    final dangerHSL = HSLColor.fromColor(danger);
+    final hueDistance = ((dangerHSL.hue - p.hue + 540) % 360) - 180;
+    if (hueDistance.abs() &lt; 30 &amp;&amp; dangerHSL.saturation &lt; 0.5) {
+      dangerColor = dangerHSL.withSaturation(dangerHSL.saturation * 1.2).toColor();
+    }
+  }
+  final successHSL = HSLColor.fromColor(successResult);
+  final warningHSL = HSLColor.fromColor(warningResult);
+
   &#47;&#47; Halfway along the shorter hue arc: orange +
   &#47;&#47; pink produces red rather than cyan.
   final delta = ((s.hue - p.hue + 540) % 360) - 180;
@@ -99,7 +131,6 @@ warning, and danger use the kit defaults.</p>
   Color tone(double saturation, double lightness, [double alpha = 1]) =&gt;
       HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
 
-  final dark = brightness == Brightness.dark;
   return LumenPalette(
     backgroundDeep: dark ? tone(0.5, 0.04) : tone(0.3, 0.96),
     backgroundMid: dark ? tone(0.5, 0.09) : tone(0.3, 1),
@@ -117,9 +148,9 @@ warning, and danger use the kit defaults.</p>
     textPrimary: dark ? tone(1, 0.96) : tone(0.3, 0.06),
     textSecondary: dark ? tone(1, 0.96, 0.7) : tone(0.15, 0.27),
     textMuted: dark ? tone(1, 0.96, 0.5) : tone(0.1, 0.52),
-    success: AppColors.success,
-    warning: AppColors.warning,
-    danger: AppColors.danger,
+    success: successHSL.toColor(),
+    warning: warningHSL.toColor(),
+    danger: dangerColor,
   );
 }</code></pre>
 </section>
@@ -149,9 +180,9 @@ warning, and danger use the kit defaults.</p>
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.1
+      1.3.0
   </span>
-
+  
 </footer>
 
 
@@ -160,3 +191,4 @@ warning, and danger use the kit defaults.</p>
 
 </body>
 </html>
+

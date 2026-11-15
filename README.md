@@ -15,11 +15,28 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Structure | `LumenAppBar`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
 | Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
+| Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
 | Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
 | Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
 
 The widgets take data, callbacks, and theme tokens so the app owns its business rules.
+
+## Transitions
+
+`LumenEntrance` reveals content once; give it a new key to replay.
+`LumenAnimatedSwitcher` animates between children with different types or keys.
+Both accept `duration`, `curve`, and a fractional slide `offset` (use
+`Offset.zero` for fade only), and show content immediately with reduced motion.
+They preserve the child's palette and visual style.
+
+```dart
+LumenAnimatedSwitcher(
+  duration: const Duration(milliseconds: 350),
+  curve: Curves.easeInOut,
+  child: Text(status, key: ValueKey(status)),
+)
+```
 
 ## Requirements
 

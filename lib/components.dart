@@ -64,3 +64,4 @@ export 'src/widgets/lumen_text_field.dart';
 export 'src/widgets/lumen_time_picker.dart';
 export 'src/widgets/lumen_toast.dart';
 export 'src/widgets/lumen_tooltip.dart';
+export 'src/widgets/lumen_transitions.dart';

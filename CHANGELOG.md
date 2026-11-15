@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added `LumenEntrance` and `LumenAnimatedSwitcher` with configurable duration,
+  easing, and slide offset, reduced motion support, and gallery examples.
+
 ## 1.3.0
 
 - Added optional `success`, `warning`, and `danger` parameters to
