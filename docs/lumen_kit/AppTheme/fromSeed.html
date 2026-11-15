@@ -54,12 +54,15 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://pub.dev/documentation/material_ui/1.10.0/material_ui/ThemeData-class.html">ThemeData</a></span>
+<span class="returntype"><a href="https://pub.dev/documentation/material_ui/1.11.0/material_ui/ThemeData-class.html">ThemeData</a></span>
 <span class="name ">fromSeed</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fromSeed-param-primary"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a></span> <span class="parameter-name">primary</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-secondary"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">secondary</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-tertiary"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">tertiary</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-brightness"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Brightness.html">Brightness</a></span> <span class="parameter-name">brightness</span> = <span class="default-value">Brightness.dark</span>, </span></li>
 <li><span class="parameter" id="fromSeed-param-style"><span class="type-annotation"><a href="../../lumen_kit/LumenStyle-class.html">LumenStyle</a></span> <span class="parameter-name">style</span> = <span class="default-value">LumenStyle.neon</span>, </span></li>
+<li><span class="parameter" id="fromSeed-param-success"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">success</span>, </span></li>
+<li><span class="parameter" id="fromSeed-param-warning"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">warning</span>, </span></li>
+<li><span class="parameter" id="fromSeed-param-danger"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">danger</span>, </span></li>
 </ol>})
 
       
@@ -68,8 +71,9 @@
     
 <section class="desc markdown">
   <p>Builds a theme from <code>primary</code> and optional <code>secondary</code> and <code>tertiary</code> colors.</p>
-<p>Uses <a href="../../lumen_kit/LumenPalette/LumenPalette.fromSeed.html">LumenPalette.fromSeed</a> with <code>brightness</code>, then passes the
-resulting palette, <code>brightness</code>, and <code>style</code> to <a href="../../lumen_kit/AppTheme/fromPalette.html">fromPalette</a>.</p>
+<p>Uses <a href="../../lumen_kit/LumenPalette/LumenPalette.fromSeed.html">LumenPalette.fromSeed</a> with <code>brightness</code> and the optional
+<code>success</code>, <code>warning</code>, and <code>danger</code> colors, then passes the resulting
+palette, <code>brightness</code>, and <code>style</code> to <a href="../../lumen_kit/AppTheme/fromPalette.html">fromPalette</a>.</p>
 </section>
 
 
@@ -82,12 +86,18 @@ resulting palette, <code>brightness</code>, and <code>style</code> to <a href=".
   Color? tertiary,
   Brightness brightness = Brightness.dark,
   LumenStyle style = LumenStyle.neon,
+  Color? success,
+  Color? warning,
+  Color? danger,
 }) =&gt; fromPalette(
   LumenPalette.fromSeed(
     primary: primary,
     secondary: secondary,
     tertiary: tertiary,
     brightness: brightness,
+    success: success,
+    warning: warning,
+    danger: danger,
   ),
   brightness: brightness,
   style: style,
@@ -119,7 +129,7 @@ resulting palette, <code>brightness</code>, and <code>style</code> to <a href=".
 <footer>
   <span class="no-break">
     lumen_kit
-      1.0.1
+      1.3.0
   </span>
   
 </footer>
