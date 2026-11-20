@@ -37,6 +37,10 @@
   child. `gridSpacing` must be greater than zero (it used to hang the painter),
   and `gridOpacity`, `LumenGlowOrbSpec.size` and `LumenGlowOrbSpec.opacity`
   are checked in debug.
+- Fixed `LumenLinearProgress` with a `value`: the filled part was laid out
+  with zero height, so the bar looked empty and did not follow the value. It
+  now fills the bar's height and grows from the start side, right to left in
+  RTL.
 
 ## 1.3.0
 

@@ -66,8 +66,13 @@ class LumenLinearProgress extends StatelessWidget {
             children: <Widget>[
               Container(color: track),
               if (value != null)
+                // The stack loosens its constraints, so without heightFactor
+                // the bar (a childless DecoratedBox) took zero height and the
+                // filled part never showed.
                 FractionallySizedBox(
+                  alignment: AlignmentDirectional.centerStart,
                   widthFactor: value!.clamp(0.0, 1.0),
+                  heightFactor: 1,
                   child: _GlowBar(gradient: g, glow: glow),
                 )
               else
