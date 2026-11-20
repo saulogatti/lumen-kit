@@ -13,6 +13,7 @@ void main() {
     required Color initial,
     void Function(Color? color)? onResult,
     List<Color>? swatches,
+    bool showAlpha = false,
   }) async {
     await pumpBare(
       tester,
@@ -25,6 +26,7 @@ void main() {
                 context: context,
                 initialColor: initial,
                 swatches: swatches,
+                showAlpha: showAlpha,
               ).then(onResult ?? (_) {}),
             );
           },
@@ -364,6 +366,117 @@ void main() {
     expect(find.text('Hex'), findsNothing);
   });
 
+  testWidgets('sem showAlpha não há trilha de opacidade nem xadrez em cor opaca', (tester) async {
+    await open(tester, initial: const Color(0xFF00BCD4));
+    expect(find.bySemanticsLabel('Opacity'), findsNothing);
+    expect(_checkers(), findsNothing);
+  });
+
+  testWidgets('sem showAlpha o alfa da cor inicial é mantido e mostrado no xadrez', (tester) async {
+    Color? chosen;
+    await open(tester, initial: const Color(0x8000BCD4), onResult: (color) => chosen = color);
+    expect(find.bySemanticsLabel('Opacity'), findsNothing);
+    // Original and selected halves of the comparison.
+    expect(_checkers(), findsNWidgets(2));
+
+    await confirm(tester);
+    expect(chosen!.toARGB32(), 0x8000BCD4);
+  });
+
+  testWidgets('trilha de opacidade por toque e arraste reflete no hex de 8 dígitos', (
+    tester,
+  ) async {
+    Color? chosen;
+    await open(
+      tester,
+      initial: const Color(0xFF00BCD4),
+      showAlpha: true,
+      onResult: (color) => chosen = color,
+    );
+    expect(semanticValue(tester, 'Opacity'), '100%');
+    expect(hexText(tester), '#00BCD4');
+    // The track's checkerboard, under the transparent-to-opaque gradient.
+    expect(_checkers(), findsOneWidget);
+
+    final track = tester.getRect(find.bySemanticsLabel('Opacity'));
+    await tester.tapAt(Offset(track.left + track.width / 2, track.center.dy));
+    await tester.pumpAndSettle();
+    expect(semanticValue(tester, 'Opacity'), '50%');
+    expect(hexText(tester), '#8000BCD4');
+    expect(semanticValue(tester, 'Selected color'), '#8000BCD4');
+    // Track and the translucent selected half.
+    expect(_checkers(), findsNWidgets(2));
+
+    await tester.dragFrom(
+      Offset(track.left + track.width / 2, track.center.dy),
+      Offset(-track.width, 0),
+    );
+    await tester.pumpAndSettle();
+    expect(semanticValue(tester, 'Opacity'), '0%');
+    expect(hexText(tester), '#0000BCD4');
+    expect(
+      semanticValue(tester, 'Hue'),
+      '${HSVColor.fromColor(const Color(0xFF00BCD4)).hue.round()}°',
+    );
+
+    await confirm(tester);
+    expect(chosen!.toARGB32(), 0x0000BCD4);
+  });
+
+  testWidgets('setas e acessibilidade ajustam a opacidade', (tester) async {
+    await open(tester, initial: const Color(0x8000BCD4), showAlpha: true);
+    expect(semanticValue(tester, 'Opacity'), '50%');
+
+    tester.semantics.increase(find.semantics.byLabel('Opacity'));
+    await tester.pump();
+    expect(semanticValue(tester, 'Opacity'), '55%');
+    tester.semantics.decrease(find.semantics.byLabel('Opacity'));
+    await tester.pump();
+    tester.semantics.decrease(find.semantics.byLabel('Opacity'));
+    await tester.pump();
+    expect(semanticValue(tester, 'Opacity'), '45%');
+
+    final track = tester.getRect(find.bySemanticsLabel('Opacity'));
+    await tester.tapAt(Offset(track.left + track.width / 4, track.center.dy));
+    await tester.pumpAndSettle();
+    expect(semanticValue(tester, 'Opacity'), '25%');
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowRight);
+    await tester.pump();
+    expect(semanticValue(tester, 'Opacity'), '26%');
+    await tester.sendKeyDownEvent(LogicalKeyboardKey.shiftLeft);
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowLeft);
+    await tester.sendKeyUpEvent(LogicalKeyboardKey.shiftLeft);
+    await tester.pump();
+    expect(semanticValue(tester, 'Opacity'), '16%');
+    // Other keys reach the track and are ignored.
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowUp);
+    await tester.pump();
+    expect(semanticValue(tester, 'Opacity'), '16%');
+    expect(hexText(tester), '#2900BCD4');
+  });
+
+  testWidgets('hex de 8 dígitos move a trilha de opacidade', (tester) async {
+    await open(tester, initial: const Color(0xFF00BCD4), showAlpha: true);
+
+    await tester.enterText(find.byType(EditableText), '#4000FF00');
+    await tester.pump();
+    expect(semanticValue(tester, 'Opacity'), '25%');
+
+    await tester.enterText(find.byType(EditableText), '#FF0000');
+    await tester.pump();
+    expect(semanticValue(tester, 'Opacity'), '25%');
+  });
+
+  testWidgets('amostra translúcida aparece sobre o xadrez', (tester) async {
+    await open(
+      tester,
+      initial: const Color(0xFF00BCD4),
+      swatches: const <Color>[Color(0x80FF5722), Color(0xFF4CAF50)],
+    );
+    expect(find.bySemanticsLabel('#80FF5722'), findsOneWidget);
+    expect(_checkers(), findsOneWidget);
+  });
+
   testWidgets('em tela baixa o conteúdo rola e o OK continua alcançável', (tester) async {
     // A phone with the keyboard open, or a short landscape window.
     tester.view.physicalSize = const Size(400, 420);
@@ -392,6 +505,11 @@ void main() {
     expect(chosen, isNotNull);
   });
 }
+
+/// Checkerboards drawn behind translucent colors.
+Finder _checkers() => find.byWidgetPredicate(
+  (widget) => widget is CustomPaint && '${widget.painter.runtimeType}' == '_CheckerPainter',
+);
 
 String _hex(Color color) =>
     '#${(color.toARGB32() & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
