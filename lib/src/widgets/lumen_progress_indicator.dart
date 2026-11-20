@@ -209,10 +209,10 @@ class LumenCircularProgress extends StatefulWidget {
   /// Default: `palette.accentGradient`.
   final Gradient? gradient;
 
-  /// Optional glow color parameter for the circular indicator.
+  /// Color of the blurred glow behind the active arc.
   ///
-  /// The current painter uses the active arc [gradient] for the glow.
-  /// Setting this value has no visual effect.
+  /// Default: the arc [gradient], so the glow follows its colors. The glow is
+  /// drawn only when [LumenStyle.shadow] is [LumenShadowKind.glow].
   final Color? glowColor;
 
   /// Background circular trail color.
@@ -257,7 +257,6 @@ class _LumenCircularProgressState extends State<LumenCircularProgress>
     final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
     final g = widget.gradient ?? p.accentGradient;
-    final glow = widget.glowColor ?? p.secondary;
     final track = widget.trackColor ?? p.surfaceOutline.outlineAlpha(0.4);
 
     return _ProgressSemantics(
@@ -275,7 +274,7 @@ class _LumenCircularProgressState extends State<LumenCircularProgress>
                 rotation: _ctrl.value,
                 gradient: style.fill(g)!,
                 showGlow: style.shadow == LumenShadowKind.glow,
-                glowColor: glow,
+                glowColor: widget.glowColor,
                 trackColor: track,
                 strokeWidth: widget.strokeWidth,
               ),
@@ -302,7 +301,9 @@ class _LumenCircularPainter extends CustomPainter {
   final double rotation;
   final Gradient gradient;
   final bool showGlow;
-  final Color glowColor;
+
+  /// Solid glow color, or `null` to blur the arc [gradient] instead.
+  final Color? glowColor;
   final Color trackColor;
   final double strokeWidth;
 
@@ -322,8 +323,13 @@ class _LumenCircularPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round
-      ..shader = gradient.createShader(rect)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
+    final solidGlow = glowColor;
+    if (solidGlow != null) {
+      glowPaint.color = solidGlow;
+    } else {
+      glowPaint.shader = gradient.createShader(rect);
+    }
     final arcPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
@@ -354,5 +360,6 @@ class _LumenCircularPainter extends CustomPainter {
       old.strokeWidth != strokeWidth ||
       old.trackColor != trackColor ||
       old.gradient != gradient ||
-      old.showGlow != showGlow;
+      old.showGlow != showGlow ||
+      old.glowColor != glowColor;
 }

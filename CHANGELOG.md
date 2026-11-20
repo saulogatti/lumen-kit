@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- `LumenCircularProgress.glowColor` now colors the blurred glow behind the
+  arc. It used to be ignored. Without it the glow still follows the arc
+  gradient, so the default look is unchanged; apps that already pass
+  `glowColor` will see that color in the glow.
+  ([#42](https://github.com/saulogatti/lumen-kit/issues/42))
+
 ## 1.4.0
 
 - Added `LumenTimeline`, a vertical list of events with markers joined by a

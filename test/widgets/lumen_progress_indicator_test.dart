@@ -20,6 +20,52 @@ void main() {
     expect(tester.hasRunningAnimations, isTrue);
   });
 
+  group('brilho do LumenCircularProgress', () {
+    Finder arc() =>
+        find.descendant(of: find.byType(LumenCircularProgress), matching: find.byType(CustomPaint));
+
+    // Glow arcs are the blurred ones; the arc itself has no mask filter.
+    bool glowArc(Symbol method, List<dynamic> args, bool Function(Paint) check) {
+      if (method != #drawArc) return false;
+      final paint = args[4] as Paint;
+      return paint.maskFilter != null && check(paint);
+    }
+
+    testWidgets('glowColor pinta o brilho com a cor dada', (tester) async {
+      const red = Color(0xFFFF0000);
+      await pumpBare(tester, const LumenCircularProgress(value: 0.5, glowColor: red));
+      expect(
+        arc(),
+        paints
+          ..circle()
+          ..something((m, a) => glowArc(m, a, (p) => p.color == red && p.shader == null))
+          ..arc(hasMaskFilter: false),
+      );
+    });
+
+    testWidgets('sem glowColor o brilho segue o gradiente do arco', (tester) async {
+      await pumpBare(tester, const LumenCircularProgress(value: 0.5));
+      expect(
+        arc(),
+        paints
+          ..circle()
+          ..something((m, a) => glowArc(m, a, (p) => p.shader != null))
+          ..arc(hasMaskFilter: false),
+      );
+    });
+
+    testWidgets('trocar o glowColor atualiza o brilho', (tester) async {
+      await pumpBare(tester, const LumenCircularProgress(value: 0.5));
+      await pumpBare(tester, const LumenCircularProgress(value: 0.5, glowColor: Color(0xFF00FF00)));
+      expect(
+        arc(),
+        paints
+          ..circle()
+          ..something((m, a) => glowArc(m, a, (p) => p.color == const Color(0xFF00FF00))),
+      );
+    });
+  });
+
   testWidgets('LumenLinearProgress preenche a fração do valor, limitada a 1', (tester) async {
     for (final value in <double>[0.25, 1.5]) {
       await pumpBare(tester, SizedBox(width: 200, child: LumenLinearProgress(value: value)));
