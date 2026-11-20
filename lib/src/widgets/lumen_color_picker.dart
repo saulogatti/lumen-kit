@@ -8,6 +8,7 @@ import 'package:flutter/services.dart'
         LengthLimitingTextInputFormatter,
         LogicalKeyboardKey,
         TextInputFormatter;
+import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
 import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
 import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
@@ -44,15 +45,23 @@ final RegExp _hexPattern = RegExp(r'^[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$');
 /// The alpha of [initialColor] is kept. Swatches and six-digit hex input
 /// (`#RRGGBB`) keep it too. Eight-digit hex input (`#AARRGGBB`) replaces it.
 ///
-/// The color area and the hue track stay gradients in every visual style.
-/// Flattening them would hide the color being edited. Their radius and
-/// border, and the dialog chrome, still follow [LumenStyle].
+/// [showAlpha] adds an opacity track below the hue track, from transparent
+/// to opaque in the current color. It is off by default, and the alpha of
+/// [initialColor] is still kept without it. The hex field shows `#AARRGGBB`
+/// whenever the color is translucent.
 ///
-/// The area and the track accept drags, taps, and arrow keys once focused.
+/// The color area and the tracks stay gradients in every visual style.
+/// Flattening them would hide the color being edited. Their radius and
+/// border, and the dialog chrome, still follow [LumenStyle]. Translucent
+/// colors, in the opacity track, the comparison, and the swatches, are drawn
+/// over a light gray checkerboard that is the same in every palette.
+///
+/// The area and the tracks accept drags, taps, and arrow keys once focused.
 /// Shift moves in larger steps. Screen readers adjust saturation,
-/// brightness, and hue as three separate sliders named by [saturationLabel],
-/// [brightnessLabel], and [hueLabel]. Tapping the original color, announced
-/// as [originalLabel], restores it. [selectedLabel] names the new color.
+/// brightness, hue, and opacity as separate sliders named by
+/// [saturationLabel], [brightnessLabel], [hueLabel], and [alphaLabel].
+/// Tapping the original color, announced as [originalLabel], restores it.
+/// [selectedLabel] names the new color.
 ///
 /// OK completes with the selected color. Cancel, and a tap on the barrier,
 /// complete with `null`.
@@ -67,12 +76,14 @@ Future<Color?> showLumenColorPicker({
   required BuildContext context,
   required Color initialColor,
   List<Color>? swatches,
+  bool showAlpha = false,
   String title = 'Color',
   String okLabel = 'OK',
   String cancelLabel = 'Cancel',
   String hueLabel = 'Hue',
   String saturationLabel = 'Saturation',
   String brightnessLabel = 'Brightness',
+  String alphaLabel = 'Opacity',
   String hexLabel = 'Hex',
   String originalLabel = 'Original color',
   String selectedLabel = 'Selected color',
@@ -82,17 +93,184 @@ Future<Color?> showLumenColorPicker({
     builder: (_) => _LumenColorPickerDialog(
       initialColor: initialColor,
       swatches: swatches,
+      showAlpha: showAlpha,
       title: title,
       okLabel: okLabel,
       cancelLabel: cancelLabel,
       hueLabel: hueLabel,
       saturationLabel: saturationLabel,
       brightnessLabel: brightnessLabel,
+      alphaLabel: alphaLabel,
       hexLabel: hexLabel,
       originalLabel: originalLabel,
       selectedLabel: selectedLabel,
     ),
   );
+}
+
+/// Displays a color in a read-only field that opens [showLumenColorPicker].
+///
+/// The field shows a swatch of [value] as its prefix and the hex code as its
+/// text: `#RRGGBB` for opaque colors and `#AARRGGBB` for translucent ones,
+/// which are drawn over a checkerboard. Without a [value] it shows [hint]
+/// and a palette icon.
+///
+/// The picker opens on [value], or on the accent color when [value] is
+/// `null`. OK calls [onChanged] with the picked color; Cancel and a tap on
+/// the barrier leave it uncalled. [swatches], [showAlpha], and the labels are
+/// forwarded to [showLumenColorPicker]. [accentColor] tints the field only;
+/// the picker keeps the palette colors.
+///
+/// ```dart
+/// LumenColorField(
+///   label: 'Accent',
+///   value: accent,
+///   showAlpha: true,
+///   onChanged: (color) => setState(() => accent = color),
+/// )
+/// ```
+class LumenColorField extends StatelessWidget {
+  /// Creates a read-only field that opens a color picker on touch.
+  const LumenColorField({
+    required this.value,
+    required this.onChanged,
+    super.key,
+    this.label,
+    this.hint,
+    this.accentColor,
+    this.swatches,
+    this.showAlpha = false,
+    this.title = 'Color',
+    this.okLabel = 'OK',
+    this.cancelLabel = 'Cancel',
+    this.hueLabel = 'Hue',
+    this.saturationLabel = 'Saturation',
+    this.brightnessLabel = 'Brightness',
+    this.alphaLabel = 'Opacity',
+    this.hexLabel = 'Hex',
+    this.originalLabel = 'Original color',
+    this.selectedLabel = 'Selected color',
+  });
+
+  /// Color currently selected.
+  final Color? value;
+
+  /// Called with the color confirmed in the picker.
+  /// When `null`, the field is visually disabled.
+  final ValueChanged<Color>? onChanged;
+
+  /// Label displayed by the field.
+  final String? label;
+
+  /// Text displayed when [value] is `null`.
+  final String? hint;
+
+  /// Highlight color override for the field.
+  ///
+  /// Default: `palette.primary`. It is also the picker's initial color when
+  /// [value] is `null`.
+  final Color? accentColor;
+
+  /// Preset colors offered in the picker. See [showLumenColorPicker].
+  final List<Color>? swatches;
+
+  /// Whether the picker shows the opacity track.
+  final bool showAlpha;
+
+  /// Picker dialog title.
+  final String title;
+
+  /// Label of the picker's confirm button.
+  final String okLabel;
+
+  /// Label of the picker's cancel button.
+  final String cancelLabel;
+
+  /// Screen reader name of the hue track.
+  final String hueLabel;
+
+  /// Screen reader name of the saturation axis.
+  final String saturationLabel;
+
+  /// Screen reader name of the brightness axis.
+  final String brightnessLabel;
+
+  /// Screen reader name of the opacity track.
+  final String alphaLabel;
+
+  /// Label of the picker's hex field.
+  final String hexLabel;
+
+  /// Screen reader name of the original color in the picker.
+  final String originalLabel;
+
+  /// Screen reader name of the new color in the picker.
+  final String selectedLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = LumenThemeExt.of(context).palette;
+    final style = LumenStyle.of(context);
+    final accent = accentColor ?? p.primary;
+    final disabled = onChanged == null;
+    final color = value;
+
+    return LumenPressable(
+      borderRadius: style.radius(12),
+      onTap: disabled
+          ? null
+          : () async {
+              final picked = await showLumenColorPicker(
+                context: context,
+                initialColor: color ?? accent,
+                swatches: swatches,
+                showAlpha: showAlpha,
+                title: title,
+                okLabel: okLabel,
+                cancelLabel: cancelLabel,
+                hueLabel: hueLabel,
+                saturationLabel: saturationLabel,
+                brightnessLabel: brightnessLabel,
+                alphaLabel: alphaLabel,
+                hexLabel: hexLabel,
+                originalLabel: originalLabel,
+                selectedLabel: selectedLabel,
+              );
+              if (picked != null) {
+                onChanged!(picked);
+              }
+            },
+      child: InputDecorator(
+        decoration: LumenDecorations.input(
+          p,
+          style,
+          accent: accent,
+          label: label,
+          hint: hint,
+          prefixIcon: color == null
+              ? Icon(Icons.palette_outlined, color: accent)
+              : Center(
+                  widthFactor: 1,
+                  heightFactor: 1,
+                  child: Container(
+                    width: 22,
+                    height: 22,
+                    foregroundDecoration: BoxDecoration(
+                      borderRadius: style.radius(6),
+                      border: style.borderAll(color: p.surfaceOutline),
+                    ),
+                    child: _ColorFill(color: color, borderRadius: style.radius(6)),
+                  ),
+                ),
+        ),
+        isEmpty: color == null,
+        child: Text(
+          color == null ? '' : _hexOf(color),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: p.textPrimary),
+        ),
+      ),
+    );
+  }
 }
 
 String _degrees(double value) => '${value.round()}°';
@@ -145,6 +323,45 @@ double? _arrowStep(
     return scaled;
   }
   return null;
+}
+
+/// Light gray checkerboard drawn behind translucent colors.
+class _CheckerPainter extends CustomPainter {
+  static const double cell = 6;
+  static const Color light = Color(0xFFFFFFFF);
+  static const Color dark = Color(0xFFCCCCCC);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawRect(Offset.zero & size, Paint()..color = light);
+    final squares = Paint()..color = dark;
+    for (var row = 0; row * cell < size.height; row++) {
+      for (var col = row.isEven ? 1 : 0; col * cell < size.width; col += 2) {
+        canvas.drawRect(Rect.fromLTWH(col * cell, row * cell, cell, cell), squares);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_CheckerPainter oldDelegate) => false;
+}
+
+/// Fills its box with [color], over a checkerboard when [color] is translucent.
+class _ColorFill extends StatelessWidget {
+  final Color color;
+  final BorderRadius borderRadius;
+  final Widget? child;
+
+  const _ColorFill({required this.color, this.borderRadius = BorderRadius.zero, this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget fill = ColoredBox(color: color, child: child);
+    return ClipRRect(
+      borderRadius: borderRadius,
+      child: color.a < 1 ? CustomPaint(painter: _CheckerPainter(), child: fill) : fill,
+    );
+  }
 }
 
 /// Invisible adjustable node, so screen readers can change one channel.
@@ -378,7 +595,7 @@ class _ColorCompare extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: ColoredBox(
+              child: _ColorFill(
                 color: original,
                 child: LumenPressable(
                   onTap: onRestore,
@@ -397,7 +614,7 @@ class _ColorCompare extends StatelessWidget {
               child: Semantics(
                 label: selectedLabel,
                 value: _hexOf(selected),
-                child: ColoredBox(color: selected),
+                child: _ColorFill(color: selected),
               ),
             ),
           ],
@@ -407,28 +624,55 @@ class _ColorCompare extends StatelessWidget {
   }
 }
 
-/// Horizontal hue track.
-class _HueTrack extends StatefulWidget {
+/// Horizontal track for one channel, from `0` to [max]: hue or opacity.
+class _ChannelTrack extends StatefulWidget {
   static const double _barHeight = 14;
 
-  final double hue;
+  final double value;
+  final double max;
+
+  /// Step of screen reader adjustments.
+  final double semanticStep;
+
+  /// Step of an arrow key press, before Shift.
+  final double keyStep;
+
   final String label;
+  final String Function(double value) format;
+  final Gradient gradient;
+
+  /// Paints a checkerboard behind [gradient], for translucent stops.
+  final bool checkered;
+
+  final Color thumbColor;
   final ValueChanged<double> onChanged;
 
-  const _HueTrack({required this.hue, required this.label, required this.onChanged});
+  const _ChannelTrack({
+    required this.value,
+    required this.max,
+    required this.semanticStep,
+    required this.keyStep,
+    required this.label,
+    required this.format,
+    required this.gradient,
+    required this.thumbColor,
+    required this.onChanged,
+    this.checkered = false,
+  });
 
   @override
-  State<_HueTrack> createState() => _HueTrackState();
+  State<_ChannelTrack> createState() => _ChannelTrackState();
 }
 
-class _HueTrackState extends State<_HueTrack> {
-  final FocusNode _focus = FocusNode(debugLabel: 'LumenHueTrack');
+class _ChannelTrackState extends State<_ChannelTrack> {
+  final FocusNode _focus = FocusNode(debugLabel: 'LumenColorTrack');
   bool _focused = false;
 
   @override
   Widget build(BuildContext context) {
     final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
+    final radius = style.radius(_ChannelTrack._barHeight / 2);
 
     return Focus(
       focusNode: _focus,
@@ -441,7 +685,7 @@ class _HueTrackState extends State<_HueTrack> {
             final width = constraints.maxWidth;
             void pick(Offset local) {
               _focus.requestFocus();
-              widget.onChanged((local.dx / width * 360).clamp(0, 360).toDouble());
+              widget.onChanged((local.dx / width * widget.max).clamp(0, widget.max).toDouble());
             }
 
             return GestureDetector(
@@ -457,29 +701,32 @@ class _HueTrackState extends State<_HueTrack> {
                   Positioned.fill(
                     child: _ChannelSemantics(
                       label: widget.label,
-                      value: widget.hue,
-                      max: 360,
-                      step: 5,
-                      format: _degrees,
+                      value: widget.value,
+                      max: widget.max,
+                      step: widget.semanticStep,
+                      format: widget.format,
                       onChanged: widget.onChanged,
                     ),
                   ),
                   Container(
-                    height: _HueTrack._barHeight,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _hueStops),
-                      borderRadius: style.radius(_HueTrack._barHeight / 2),
+                    height: _ChannelTrack._barHeight,
+                    foregroundDecoration: BoxDecoration(
+                      gradient: widget.gradient,
+                      borderRadius: radius,
                       border: _focused
                           ? style.borderAll(color: p.primary, width: 2)
                           : style.borderAll(color: p.surfaceOutline),
                     ),
+                    child: widget.checkered
+                        ? ClipRRect(
+                            borderRadius: radius,
+                            child: CustomPaint(painter: _CheckerPainter(), size: Size.infinite),
+                          )
+                        : null,
                   ),
                   Positioned(
-                    left: widget.hue / 360 * width - _Thumb.size / 2,
-                    child: _Thumb(
-                      color: HSVColor.fromAHSV(1, widget.hue, 1, 1).toColor(),
-                      focused: _focused,
-                    ),
+                    left: widget.value / widget.max * width - _Thumb.size / 2,
+                    child: _Thumb(color: widget.thumbColor, focused: _focused),
                   ),
                 ],
               ),
@@ -497,11 +744,16 @@ class _HueTrackState extends State<_HueTrack> {
   }
 
   KeyEventResult _onKey(FocusNode node, KeyEvent event) {
-    final step = _arrowStep(event, LogicalKeyboardKey.arrowLeft, LogicalKeyboardKey.arrowRight, 1);
+    final step = _arrowStep(
+      event,
+      LogicalKeyboardKey.arrowLeft,
+      LogicalKeyboardKey.arrowRight,
+      widget.keyStep,
+    );
     if (step == null) {
       return KeyEventResult.ignored;
     }
-    widget.onChanged((widget.hue + step).clamp(0, 360).toDouble());
+    widget.onChanged((widget.value + step).clamp(0, widget.max).toDouble());
     return KeyEventResult.handled;
   }
 }
@@ -509,12 +761,14 @@ class _HueTrackState extends State<_HueTrack> {
 class _LumenColorPickerDialog extends StatefulWidget {
   final Color initialColor;
   final List<Color>? swatches;
+  final bool showAlpha;
   final String title;
   final String okLabel;
   final String cancelLabel;
   final String hueLabel;
   final String saturationLabel;
   final String brightnessLabel;
+  final String alphaLabel;
   final String hexLabel;
   final String originalLabel;
   final String selectedLabel;
@@ -522,12 +776,14 @@ class _LumenColorPickerDialog extends StatefulWidget {
   const _LumenColorPickerDialog({
     required this.initialColor,
     required this.swatches,
+    required this.showAlpha,
     required this.title,
     required this.okLabel,
     required this.cancelLabel,
     required this.hueLabel,
     required this.saturationLabel,
     required this.brightnessLabel,
+    required this.alphaLabel,
     required this.hexLabel,
     required this.originalLabel,
     required this.selectedLabel,
@@ -556,6 +812,7 @@ class _LumenColorPickerDialogState extends State<_LumenColorPickerDialog> {
             .toSet()
             .toList();
     final selected = _selected;
+    final opaque = selected.withValues(alpha: 1);
 
     return LumenDialog(
       title: widget.title,
@@ -575,7 +832,30 @@ class _LumenColorPickerDialogState extends State<_LumenColorPickerDialog> {
               _brightness = brightness ?? _brightness;
             }),
           ),
-          _HueTrack(hue: _hue, label: widget.hueLabel, onChanged: (h) => _update(() => _hue = h)),
+          _ChannelTrack(
+            value: _hue,
+            max: 360,
+            semanticStep: 5,
+            keyStep: 1,
+            label: widget.hueLabel,
+            format: _degrees,
+            gradient: LinearGradient(colors: _hueStops),
+            thumbColor: HSVColor.fromAHSV(1, _hue, 1, 1).toColor(),
+            onChanged: (h) => _update(() => _hue = h),
+          ),
+          if (widget.showAlpha)
+            _ChannelTrack(
+              value: _alpha,
+              max: 1,
+              semanticStep: 0.05,
+              keyStep: 0.01,
+              label: widget.alphaLabel,
+              format: _percent,
+              gradient: LinearGradient(colors: <Color>[opaque.withValues(alpha: 0), opaque]),
+              checkered: true,
+              thumbColor: opaque,
+              onChanged: (a) => _update(() => _alpha = a),
+            ),
           Row(
             spacing: 12,
             children: <Widget>[
@@ -715,14 +995,17 @@ class _Swatch extends StatelessWidget {
       child: Container(
         width: size,
         height: size,
-        decoration: BoxDecoration(
-          color: color,
+        foregroundDecoration: BoxDecoration(
           borderRadius: radius,
           border: selected
               ? style.borderAll(color: p.textPrimary, width: 2)
               : style.borderAll(color: p.surfaceOutline),
         ),
-        child: selected ? Icon(Icons.check_rounded, size: 18, color: _onColor(color)) : null,
+        child: _ColorFill(
+          color: color,
+          borderRadius: radius,
+          child: selected ? Icon(Icons.check_rounded, size: 18, color: _onColor(color)) : null,
+        ),
       ),
     );
   }
