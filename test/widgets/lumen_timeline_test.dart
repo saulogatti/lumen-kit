@@ -429,4 +429,252 @@ void main() {
     expect(find.text('Row 2'), findsOneWidget);
     expect(find.text('after'), findsOneWidget);
   });
+
+  group('title line', () {
+    const longTime = 'Wednesday, November 12, 2026 at 10:42 AM';
+
+    /// Render object of the title line that holds [timestamp].
+    RenderBox titleRow(WidgetTester tester, String timestamp) => tester.renderObject<RenderBox>(
+      find
+          .ancestor(
+            of: find.text(timestamp),
+            matching: find.byWidgetPredicate((w) => w is MultiChildRenderObjectWidget),
+          )
+          .first,
+    );
+
+    testWidgets('a long timestamp in a narrow box with large text goes below the title', (
+      tester,
+    ) async {
+      await pumpBare(
+        tester,
+        const MediaQuery(
+          data: MediaQueryData(textScaler: TextScaler.linear(1.6)),
+          child: SizedBox(
+            width: 220,
+            child: LumenTimeline(
+              entries: <LumenTimelineEntry>[
+                LumenTimelineEntry(title: 'Quote approved', timestamp: longTime),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      final box = titleRow(tester, longTime);
+      final row = box.localToGlobal(Offset.zero) & box.size;
+      final title = tester.getRect(find.text('Quote approved'));
+      final time = tester.getRect(find.text(longTime));
+      expect(title.width, greaterThan(0));
+      expect(time.width, greaterThan(0));
+      expect(time.top, greaterThanOrEqualTo(title.bottom), reason: 'stacked');
+      expect(time.right, moreOrLessEquals(row.right), reason: 'still at the end');
+      for (final rect in <Rect>[title, time]) {
+        expect(rect.left, greaterThanOrEqualTo(row.left));
+        expect(rect.right, lessThanOrEqualTo(row.right));
+      }
+      expect(row.right, lessThanOrEqualTo(tester.getRect(find.byType(LumenTimeline)).right));
+    });
+
+    testWidgets('a long timestamp next to a long title takes at most 40% and wraps', (
+      tester,
+    ) async {
+      const title = 'Quote approved by the customer';
+      await pumpBare(
+        tester,
+        _box(
+          const LumenTimeline(
+            entries: <LumenTimelineEntry>[LumenTimelineEntry(title: title, timestamp: longTime)],
+          ),
+        ),
+      );
+
+      final box = titleRow(tester, longTime);
+      final row = box.localToGlobal(Offset.zero) & box.size;
+      final titleRect = tester.getRect(find.text(title));
+      final time = tester.getRect(find.text(longTime));
+      expect(time.width, lessThanOrEqualTo(row.width * 0.4 + 0.01));
+      expect(time.height, greaterThan(titleRect.height), reason: 'the timestamp wrapped');
+      expect(titleRect.right, lessThanOrEqualTo(time.left));
+      expect(time.right, moreOrLessEquals(row.right));
+      expect(time.top, lessThan(titleRect.bottom), reason: 'side by side');
+    });
+
+    testWidgets('a short timestamp leaves the rest of the line to the title', (tester) async {
+      await pumpBare(
+        tester,
+        _box(
+          const LumenTimeline(
+            entries: <LumenTimelineEntry>[
+              LumenTimelineEntry(
+                title: 'A title long enough to need more than sixty percent of the line',
+                timestamp: '10:42',
+              ),
+            ],
+          ),
+        ),
+      );
+
+      final row = titleRow(tester, '10:42');
+      final title = tester.getRect(
+        find.text('A title long enough to need more than sixty percent of the line'),
+      );
+      final time = tester.getRect(find.text('10:42'));
+      expect(time.right, moreOrLessEquals(row.localToGlobal(Offset(row.size.width, 0)).dx));
+      expect(title.width, greaterThan(row.size.width * 0.6));
+      expect(time.left - title.right, greaterThanOrEqualTo(12));
+    });
+
+    testWidgets('keeps the longest timestamp word whole while the title words still fit', (
+      tester,
+    ) async {
+      const time = '2026-11-12T18:12 UTC';
+      await pumpBare(
+        tester,
+        _box(
+          const LumenTimeline(
+            entries: <LumenTimelineEntry>[
+              LumenTimelineEntry(title: 'Opened by the front desk', timestamp: time),
+            ],
+          ),
+        ),
+      );
+
+      final row = titleRow(tester, time);
+      final longestWord = tester
+          .renderObject<RenderBox>(find.text(time))
+          .getMinIntrinsicWidth(double.infinity);
+      expect(longestWord, greaterThan(row.size.width * 0.4), reason: 'beyond the plain cap');
+      expect(tester.getSize(find.text(time)).width, greaterThanOrEqualTo(longestWord - 0.01));
+      expect(
+        tester.getRect(find.text('Opened by the front desk')).right,
+        lessThanOrEqualTo(tester.getRect(find.text(time)).left),
+      );
+    });
+
+    testWidgets('a long timestamp stays on one line when a short title leaves room', (
+      tester,
+    ) async {
+      await pumpBare(
+        tester,
+        _box(
+          const LumenTimeline(
+            entries: <LumenTimelineEntry>[
+              LumenTimelineEntry(title: 'Opened', timestamp: 'Nov 12, 10:42:05'),
+            ],
+          ),
+        ),
+      );
+
+      final row = titleRow(tester, 'Nov 12, 10:42:05');
+      final time = tester.getRect(find.text('Nov 12, 10:42:05'));
+      expect(time.width, greaterThan(row.size.width * 0.4));
+      expect(
+        time.height,
+        lessThanOrEqualTo(tester.getSize(find.text('Opened')).height),
+        reason: 'one line',
+      );
+    });
+
+    testWidgets('follows the text direction', (tester) async {
+      Widget timeline(TextDirection direction) => Directionality(
+        textDirection: direction,
+        child: _box(
+          const LumenTimeline(
+            entries: <LumenTimelineEntry>[LumenTimelineEntry(title: 'Title', timestamp: '10:42')],
+          ),
+        ),
+      );
+
+      await pumpBare(tester, timeline(TextDirection.ltr));
+      expect(
+        tester.getRect(find.text('Title')).left,
+        lessThan(tester.getRect(find.text('10:42')).left),
+      );
+
+      await pumpBare(tester, timeline(TextDirection.rtl));
+      expect(
+        tester.getRect(find.text('Title')).left,
+        greaterThan(tester.getRect(find.text('10:42')).left),
+      );
+
+      await pumpBare(tester, timeline(TextDirection.rtl));
+      expect(
+        tester.getRect(find.text('Title')).left,
+        greaterThan(tester.getRect(find.text('10:42')).left),
+      );
+    });
+
+    testWidgets('sizes itself intrinsically inside an AlertDialog', (tester) async {
+      await pumpBare(
+        tester,
+        const AlertDialog(
+          title: Text('History'),
+          content: IntrinsicHeight(
+            child: LumenTimeline(
+              entries: <LumenTimelineEntry>[
+                LumenTimelineEntry(title: 'Approved', timestamp: longTime),
+                LumenTimelineEntry(title: 'Opened', timestamp: 'Nov 8'),
+              ],
+            ),
+          ),
+        ),
+      );
+      expect(find.text(longTime), findsOneWidget);
+      expect(find.text('Opened'), findsOneWidget);
+
+      final row = titleRow(tester, longTime);
+      expect(row.getMinIntrinsicWidth(100), greaterThan(12));
+      expect(row.getMaxIntrinsicWidth(100), greaterThan(row.getMinIntrinsicWidth(100)));
+      expect(row.getMinIntrinsicHeight(120), greaterThan(row.getMinIntrinsicHeight(1000)));
+      expect(row.getMaxIntrinsicHeight(120), row.getMinIntrinsicHeight(120));
+      expect(row.getMinIntrinsicHeight(double.infinity), greaterThan(0));
+      expect(
+        row.getDryLayout(const BoxConstraints(maxWidth: 300)).width,
+        300,
+        reason: 'fills the width it gets',
+      );
+    });
+
+    testWidgets('tapping the timestamp taps the event', (tester) async {
+      var taps = 0;
+      await pumpBare(
+        tester,
+        _box(
+          LumenTimeline(
+            entries: <LumenTimelineEntry>[
+              LumenTimelineEntry(title: 'Edited', timestamp: '10:42', onTap: () => taps++),
+            ],
+          ),
+        ),
+      );
+      await tester.tap(find.text('10:42'));
+      expect(taps, 1);
+    });
+
+    testWidgets('exposes the title baseline to a baseline-aligned parent', (tester) async {
+      await pumpBare(
+        tester,
+        const SizedBox(
+          width: 360,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: <Widget>[
+              Text('Label'),
+              Expanded(
+                child: LumenTimeline(
+                  entries: <LumenTimelineEntry>[LumenTimelineEntry(title: 'Title', timestamp: '1')],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+      expect(
+        tester.getBottomLeft(find.text('Label')).dy,
+        moreOrLessEquals(tester.getBottomLeft(find.text('Title')).dy, epsilon: 2),
+      );
+    });
+  });
 }

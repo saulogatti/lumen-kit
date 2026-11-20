@@ -1,4 +1,6 @@
-import 'package:flutter/semantics.dart';
+import 'dart:math' as math;
+
+import 'package:flutter/rendering.dart';
 import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
 import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
 import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
@@ -311,28 +313,31 @@ class _TimelineContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = palette;
     final text = Theme.of(context).textTheme;
+    final Widget title = Text(
+      entry.title,
+      style: text.titleSmall?.copyWith(
+        color: p.textPrimary,
+        fontWeight: highlighted ? FontWeight.w700 : FontWeight.w600,
+      ),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 2,
       children: <Widget>[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          spacing: 12,
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                entry.title,
-                style: text.titleSmall?.copyWith(
-                  color: p.textPrimary,
-                  fontWeight: highlighted ? FontWeight.w700 : FontWeight.w600,
-                ),
+        if (entry.timestamp case final String timestamp)
+          _TitleRow(
+            textDirection: Directionality.of(context),
+            children: <Widget>[
+              title,
+              Text(
+                timestamp,
+                textAlign: TextAlign.end,
+                style: text.labelSmall?.copyWith(color: p.textMuted),
               ),
-            ),
-            if (entry.timestamp case final String timestamp)
-              Text(timestamp, style: text.labelSmall?.copyWith(color: p.textMuted)),
-          ],
-        ),
+            ],
+          )
+        else
+          title,
         if (entry.subtitle case final String subtitle)
           Text(subtitle, style: text.labelMedium?.copyWith(color: p.textMuted)),
         if (entry.description case final String description)
@@ -345,6 +350,169 @@ class _TimelineContent extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Share of the width the timestamp may take before it wraps.
+const double _kTimestampMaxFraction = 0.4;
+const double _kTitleGap = 12;
+
+/// Title and timestamp on one line, aligned by baseline, with the timestamp at
+/// the end.
+///
+/// A long localized time or a large text scale can't push the line past its
+/// box:
+/// - both texts fit on one line: nothing wraps;
+/// - otherwise the timestamp takes at most [_kTimestampMaxFraction] of the
+///   width (but never less than its longest word) and wraps; the title takes
+///   the rest and wraps too;
+/// - not even the longest word of each fits side by side: the timestamp goes
+///   below the title, still at the end.
+///
+/// A `Row` can't cap a non-flex child by a share of its width, and a
+/// `LayoutBuilder` would break intrinsic sizing (`AlertDialog` wraps its
+/// content in `IntrinsicWidth`).
+class _TitleRow extends MultiChildRenderObjectWidget {
+  const _TitleRow({required this.textDirection, required super.children});
+
+  final TextDirection textDirection;
+
+  @override
+  _RenderTitleRow createRenderObject(BuildContext context) =>
+      _RenderTitleRow(textDirection: textDirection);
+
+  @override
+  void updateRenderObject(BuildContext context, _RenderTitleRow renderObject) =>
+      renderObject.textDirection = textDirection;
+}
+
+class _TitleRowParentData extends ContainerBoxParentData<RenderBox> {
+  // Same as the defaults; the class only gives the row its own parent data type.
+}
+
+class _RenderTitleRow extends RenderBox
+    with
+        ContainerRenderObjectMixin<RenderBox, _TitleRowParentData>,
+        RenderBoxContainerDefaultsMixin<RenderBox, _TitleRowParentData> {
+  _RenderTitleRow({required this._textDirection});
+
+  TextDirection get textDirection => _textDirection;
+  TextDirection _textDirection;
+  set textDirection(TextDirection value) {
+    if (value == _textDirection) return;
+    _textDirection = value;
+    markNeedsLayout();
+  }
+
+  RenderBox get _title => firstChild!;
+  RenderBox get _time => lastChild!;
+
+  @override
+  void setupParentData(RenderBox child) {
+    if (child.parentData is! _TitleRowParentData) child.parentData = _TitleRowParentData();
+  }
+
+  /// Sizes the children for [constraints]; lays them out for real unless [dry].
+  ({Size size, Offset title, Offset time}) _compute(
+    BoxConstraints constraints, {
+    required bool dry,
+  }) {
+    (Size, double) place(RenderBox child, BoxConstraints c) {
+      if (dry) {
+        final size = child.getDryLayout(c);
+        return (size, child.getDryBaseline(c, TextBaseline.alphabetic) ?? size.height);
+      }
+      child.layout(c, parentUsesSize: true);
+      return (
+        child.size,
+        child.getDistanceToBaseline(TextBaseline.alphabetic) ?? child.size.height,
+      );
+    }
+
+    final maxWidth = constraints.maxWidth;
+    final rtl = textDirection == TextDirection.rtl;
+    final titleWord = _title.getMinIntrinsicWidth(double.infinity);
+    final timeWord = _time.getMinIntrinsicWidth(double.infinity);
+
+    if (titleWord + _kTitleGap + timeWord > maxWidth) {
+      // Not even the longest words fit side by side: the timestamp goes below.
+      final (titleSize, _) = place(_title, BoxConstraints(maxWidth: maxWidth));
+      final (timeSize, _) = place(_time, BoxConstraints(maxWidth: maxWidth));
+      final width = constraints.constrainWidth(maxWidth);
+      final timeTop = titleSize.height + 2;
+      return (
+        size: constraints.constrain(Size(width, timeTop + timeSize.height)),
+        title: Offset(rtl ? width - titleSize.width : 0, 0),
+        time: Offset(rtl ? 0 : width - timeSize.width, timeTop),
+      );
+    }
+
+    // When both texts fit on one line nothing wraps. Otherwise the timestamp
+    // gets the share cap, but never less than its longest word nor so much that
+    // the title's longest word stops fitting.
+    final leftByTitle = maxWidth - _kTitleGap - _title.getMaxIntrinsicWidth(double.infinity);
+    final timeMax = math
+        .max(maxWidth * _kTimestampMaxFraction, leftByTitle)
+        .clamp(timeWord, maxWidth - _kTitleGap - titleWord);
+    final (timeSize, timeBaseline) = place(_time, BoxConstraints(maxWidth: timeMax));
+    final (titleSize, titleBaseline) = place(
+      _title,
+      BoxConstraints(maxWidth: maxWidth - timeSize.width - _kTitleGap),
+    );
+    final width = constraints.constrainWidth(
+      maxWidth.isFinite ? maxWidth : titleSize.width + _kTitleGap + timeSize.width,
+    );
+    final baseline = math.max(titleBaseline, timeBaseline);
+    final titleTop = baseline - titleBaseline;
+    final timeTop = baseline - timeBaseline;
+    final height = math.max(titleTop + titleSize.height, timeTop + timeSize.height);
+    return (
+      size: constraints.constrain(Size(width, height)),
+      title: Offset(rtl ? width - titleSize.width : 0, titleTop),
+      time: Offset(rtl ? 0 : width - timeSize.width, timeTop),
+    );
+  }
+
+  // Stacked, the line needs only the wider of the two longest words.
+  @override
+  double computeMinIntrinsicWidth(double height) => math.max(
+    _title.getMinIntrinsicWidth(double.infinity),
+    _time.getMinIntrinsicWidth(double.infinity),
+  );
+
+  @override
+  double computeMaxIntrinsicWidth(double height) =>
+      _title.getMaxIntrinsicWidth(double.infinity) +
+      _kTitleGap +
+      _time.getMaxIntrinsicWidth(double.infinity);
+
+  @override
+  double computeMinIntrinsicHeight(double width) =>
+      _compute(BoxConstraints(maxWidth: width), dry: true).size.height;
+
+  @override
+  double computeMaxIntrinsicHeight(double width) => computeMinIntrinsicHeight(width);
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) => _compute(constraints, dry: true).size;
+
+  @override
+  void performLayout() {
+    final result = _compute(constraints, dry: false);
+    size = result.size;
+    (_title.parentData! as _TitleRowParentData).offset = result.title;
+    (_time.parentData! as _TitleRowParentData).offset = result.time;
+  }
+
+  @override
+  double? computeDistanceToActualBaseline(TextBaseline baseline) =>
+      defaultComputeDistanceToHighestActualBaseline(baseline);
+
+  @override
+  void paint(PaintingContext context, Offset offset) => defaultPaint(context, offset);
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) =>
+      defaultHitTestChildren(result, position: position);
 }
 
 class _Marker extends StatelessWidget {
