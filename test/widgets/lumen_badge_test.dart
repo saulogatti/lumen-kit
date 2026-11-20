@@ -29,6 +29,16 @@ void main() {
     expect(find.descendant(of: dot, matching: find.byIcon(Icons.chat)), findsOneWidget);
   });
 
+  testWidgets('LumenBadge.dot pinta o ponto com a cor recebida', (tester) async {
+    final color = LumenPalette.light().success;
+    await pumpBare(tester, LumenBadge.dot(color: color, child: const Icon(Icons.chat)));
+
+    final dot = tester.widget<Container>(
+      find.descendant(of: find.byType(LumenBadge), matching: find.byType(Container)),
+    );
+    expect((dot.decoration! as BoxDecoration).color, color);
+  });
+
   testWidgets('LumenBadge escolhe texto claro ou escuro pela cor de fundo', (tester) async {
     await pumpBare(
       tester,

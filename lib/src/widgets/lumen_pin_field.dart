@@ -173,10 +173,14 @@ class _LumenPinFieldState extends State<LumenPinField> {
     }
     final next = _digits(raw);
     if (next != _controller.text) {
+      // Defensive: the field's input formatters already keep only digits up to
+      // `widget.length`, so `raw` reaches here already filtered.
+      // coverage:ignore-start
       _controller.value = TextEditingValue(
         text: next,
         selection: TextSelection.collapsed(offset: next.length),
       );
+      // coverage:ignore-end
     }
     final justCompleted = next.length == widget.length && _previousLength != widget.length;
     _previousLength = next.length;

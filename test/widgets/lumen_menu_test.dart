@@ -117,6 +117,36 @@ void main() {
     expect(find.text('Editar'), findsNothing);
   });
 
+  testWidgets('estilo sem brilho usa sombra neutra com itens montados de dados', (tester) async {
+    String? picked;
+    await pumpBare(
+      tester,
+      LumenScope(
+        palette: LumenPalette.light(),
+        style: LumenStyle.flat,
+        child: LumenMenuButton<String>(
+          items: _grouped<String>(<List<(String, String)>>[
+            <(String, String)>[('copy', 'Copiar')],
+            <(String, String)>[('share', 'Compartilhar')],
+          ]),
+          onSelected: (v) => picked = v,
+        ),
+      ),
+    );
+
+    await tester.tap(find.byType(LumenMenuButton<String>));
+    await tester.pumpAndSettle();
+    expect(find.byType(PopupMenuDivider), findsOneWidget);
+    expect(
+      find.byWidgetPredicate((w) => w is Material && w.shadowColor == Colors.black54),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.text('Compartilhar'));
+    await tester.pumpAndSettle();
+    expect(picked, 'share');
+  });
+
   testWidgets('LumenContextMenu abre pela ação de toque longo do leitor de tela', (tester) async {
     final handle = tester.ensureSemantics();
     await pumpBare(
@@ -133,6 +163,14 @@ void main() {
     handle.dispose();
   });
 }
+
+/// Groups actions built from data, separated by dividers, as an app would.
+List<LumenMenuEntry<T>> _grouped<T>(List<List<(T, String)>> groups) => <LumenMenuEntry<T>>[
+  for (final (index, group) in groups.indexed) ...<LumenMenuEntry<T>>[
+    if (index > 0) LumenMenuDivider<T>(),
+    for (final (value, label) in group) LumenMenuItem<T>(value: value, label: label),
+  ],
+];
 
 const List<LumenMenuEntry<String>> _items = <LumenMenuEntry<String>>[
   LumenMenuItem<String>(value: 'edit', label: 'Editar', icon: Icons.edit),

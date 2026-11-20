@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lumen_kit/components.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '_harness.dart';
 
@@ -17,5 +18,13 @@ void main() {
     await tester.pumpWidget(bareApp(const LumenCircularProgress()));
     await tester.pump(const Duration(milliseconds: 100));
     expect(tester.hasRunningAnimations, isTrue);
+  });
+
+  testWidgets('LumenLinearProgress preenche a fração do valor, limitada a 1', (tester) async {
+    for (final value in <double>[0.25, 1.5]) {
+      await pumpBare(tester, SizedBox(width: 200, child: LumenLinearProgress(value: value)));
+      final bar = tester.widget<FractionallySizedBox>(find.byType(FractionallySizedBox));
+      expect(bar.widthFactor, value.clamp(0.0, 1.0));
+    }
   });
 }

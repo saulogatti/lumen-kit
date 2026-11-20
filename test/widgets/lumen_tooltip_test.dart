@@ -16,4 +16,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('Atalho'), findsOneWidget);
   });
+
+  testWidgets('LumenTooltip acompanha a mensagem montada em tempo de execução', (tester) async {
+    for (final count in <int>[1, 3]) {
+      await pumpBare(
+        tester,
+        LumenTooltip(message: '$count pendentes', child: const Icon(Icons.inbox)),
+      );
+      expect(tester.widget<Tooltip>(find.byType(Tooltip)).message, '$count pendentes');
+    }
+  });
 }

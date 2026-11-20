@@ -60,6 +60,25 @@ void main() {
     expect(tapped, 2);
   });
 
+  testWidgets('LumenStep montado de dados mostra um título por passo', (tester) async {
+    const titles = <String>['Carrinho', 'Entrega', 'Pagamento'];
+    await pumpBare(
+      tester,
+      SizedBox(
+        width: 360,
+        child: LumenStepper(
+          steps: <LumenStep>[for (final title in titles) LumenStep(title: title)],
+          currentStep: 2,
+        ),
+      ),
+    );
+
+    for (final title in titles) {
+      expect(find.text(title), findsOneWidget);
+    }
+    expect(find.byIcon(Icons.check_rounded), findsNWidgets(2));
+  });
+
   testWidgets('LumenStepper vertical mostra subtitle e check nos passos anteriores', (
     tester,
   ) async {

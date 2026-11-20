@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lumen_kit/components.dart';
 import 'package:material_ui/material_ui.dart';
@@ -63,6 +65,30 @@ void main() {
       tester.widget<DatePickerDialog>(find.byType(DatePickerDialog)).initialDate,
       DateTime(1990, 2),
     );
+  });
+
+  testWidgets('showLumenDatePicker sem accentColor usa o primary da paleta', (tester) async {
+    late BuildContext ctx;
+    await pumpBare(
+      tester,
+      Builder(
+        builder: (c) {
+          ctx = c;
+          return const SizedBox();
+        },
+      ),
+    );
+    unawaited(
+      showLumenDatePicker(
+        context: ctx,
+        initialDate: DateTime(2026, 3, 5),
+        firstDate: DateTime(2026),
+        lastDate: DateTime(2026, 12, 31),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final BuildContext dialog = tester.element(find.byType(DatePickerDialog));
+    expect(Theme.of(dialog).colorScheme.primary, LumenThemeExt.of(ctx).palette.primary);
   });
 
   testWidgets('LumenDatePicker usa o format e não abre desabilitado', (tester) async {

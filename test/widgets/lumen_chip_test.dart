@@ -55,6 +55,25 @@ void main() {
     expect(calls, <String?>[null]);
   });
 
+  testWidgets('LumenChipItem montado de dados respeita enabled', (tester) async {
+    final calls = <String?>[];
+    await pumpBare(
+      tester,
+      LumenChoiceChips<String>(
+        items: <LumenChipItem<String>>[
+          for (final (size, stock) in <(String, int)>[('P', 3), ('M', 0)])
+            LumenChipItem<String>(value: size, label: size, enabled: stock > 0),
+        ],
+        value: null,
+        onChanged: calls.add,
+      ),
+    );
+
+    await tester.tap(find.text('M'));
+    await tester.tap(find.text('P'));
+    expect(calls, <String?>['P']);
+  });
+
   testWidgets('LumenFilterChips alterna vários valores e mostra o check', (tester) async {
     var values = <String>{'p'};
     final original = values;

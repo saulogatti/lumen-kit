@@ -188,8 +188,12 @@ class LumenStyle {
         );
       case LumenShadowKind.hard:
         return BoxShadow(color: s.color.withValues(alpha: 1), offset: const Offset(4, 4));
+      // `shadows` returns before calling `_adapt` for this kind; the case only keeps
+      // the switch exhaustive.
+      // coverage:ignore-start
       case LumenShadowKind.none:
         return const BoxShadow(color: Color(0x00000000));
+      // coverage:ignore-end
     }
   }
 
