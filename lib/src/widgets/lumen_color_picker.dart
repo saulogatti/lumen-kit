@@ -240,8 +240,17 @@ class _ColorAreaState extends State<_ColorArea> {
 
             return GestureDetector(
               behavior: HitTestBehavior.opaque,
+              // The dialog content scrolls on short screens. A vertical drag
+              // recognizer here wins over the scroll view's, so dragging up
+              // or down inside the area edits brightness instead of scrolling.
+              // With two recognizers competing, the winner only accepts after
+              // the touch slop, so its start position is handled too.
               onPanDown: (details) => pick(details.localPosition),
+              onPanStart: (details) => pick(details.localPosition),
               onPanUpdate: (details) => pick(details.localPosition),
+              onVerticalDragDown: (details) => pick(details.localPosition),
+              onVerticalDragStart: (details) => pick(details.localPosition),
+              onVerticalDragUpdate: (details) => pick(details.localPosition),
               child: Stack(
                 clipBehavior: Clip.none,
                 children: <Widget>[
@@ -438,6 +447,8 @@ class _HueTrackState extends State<_HueTrack> {
             return GestureDetector(
               behavior: HitTestBehavior.opaque,
               onHorizontalDragDown: (details) => pick(details.localPosition),
+              // Competes with the dialog's scroll view, as in the area.
+              onHorizontalDragStart: (details) => pick(details.localPosition),
               onHorizontalDragUpdate: (details) => pick(details.localPosition),
               child: Stack(
                 clipBehavior: Clip.none,

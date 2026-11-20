@@ -338,6 +338,34 @@ void main() {
     expect(chosen, isNull);
     expect(find.text('Hex'), findsNothing);
   });
+
+  testWidgets('em tela baixa o conteúdo rola e o OK continua alcançável', (tester) async {
+    // A phone with the keyboard open, or a short landscape window.
+    tester.view.physicalSize = const Size(400, 420);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    Color? chosen;
+    await open(tester, initial: const Color(0xFF00BCD4), onResult: (color) => chosen = color);
+    expect(tester.takeException(), isNull);
+
+    // Dragging inside the area edits the color instead of scrolling.
+    final scrollable = find
+        .descendant(of: find.byType(SingleChildScrollView), matching: find.byType(Scrollable))
+        .first;
+    final position = tester.state<ScrollableState>(scrollable).position;
+    expect(position.maxScrollExtent, greaterThan(0), reason: 'the content must not fit');
+    final offset = tester.state<ScrollableState>(scrollable).position.pixels;
+    final rect = area(tester);
+    await tester.dragFrom(Offset(rect.center.dx, rect.top + 10), Offset(0, rect.height * 0.5));
+    await tester.pumpAndSettle();
+    expect(tester.state<ScrollableState>(scrollable).position.pixels, offset);
+    final brightness = 1 - (10 + rect.height * 0.5) / rect.height;
+    expect(semanticValue(tester, 'Brightness'), '${(brightness * 100).round()}%');
+
+    // The actions sit outside the scroll view, so OK is tappable as is.
+    await confirm(tester);
+    expect(chosen, isNotNull);
+  });
 }
 
 String _hex(Color color) =>

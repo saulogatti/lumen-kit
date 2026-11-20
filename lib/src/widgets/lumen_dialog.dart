@@ -22,6 +22,10 @@ class LumenDialog extends StatelessWidget {
   final String title;
 
   /// Main content of the dialogue.
+  ///
+  /// It scrolls vertically when it does not fit, so the title and [actions]
+  /// stay visible. It is laid out with unbounded height: use
+  /// `shrinkWrap: true` on lists and avoid [Expanded] directly inside it.
   final Widget content;
 
   /// Actions displayed in the footer, aligned to the right.
@@ -87,7 +91,16 @@ class LumenDialog extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 18),
-                DefaultTextStyle.merge(style: text.bodyMedium ?? const TextStyle(), child: content),
+                // Scrolls when the screen is short (keyboard open, landscape)
+                // while the header and the actions stay in view.
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: DefaultTextStyle.merge(
+                      style: text.bodyMedium ?? const TextStyle(),
+                      child: content,
+                    ),
+                  ),
+                ),
                 if (actions.isNotEmpty) ...<Widget>[
                   const SizedBox(height: 24),
                   // Wrap: long actions flow onto another line instead of overflowing.
