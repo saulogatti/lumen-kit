@@ -676,5 +676,43 @@ void main() {
         moreOrLessEquals(tester.getBottomLeft(find.text('Title')).dy, epsilon: 2),
       );
     });
+
+    testWidgets('dry baseline matches the laid-out one, side by side and stacked', (tester) async {
+      await pumpBare(
+        tester,
+        const SizedBox(
+          width: 220,
+          child: LumenTimeline(
+            entries: <LumenTimelineEntry>[
+              LumenTimelineEntry(title: 'Opened', timestamp: '10:42'),
+              LumenTimelineEntry(title: 'Quote approved', timestamp: longTime),
+            ],
+          ),
+        ),
+      );
+      // The laid-out baseline is the title's: its top in the row plus its own
+      // baseline (getDistanceToBaseline is only callable during layout).
+      for (final (title, timestamp) in <(String, String)>[
+        ('Opened', '10:42'),
+        ('Quote approved', longTime),
+      ]) {
+        final row = titleRow(tester, timestamp);
+        final text = tester.renderObject<RenderBox>(find.text(title));
+        final actual =
+            text.localToGlobal(Offset.zero, ancestor: row).dy +
+            text.getDryBaseline(text.constraints, TextBaseline.alphabetic)!;
+        expect(
+          row.getDryBaseline(row.constraints, TextBaseline.alphabetic),
+          moreOrLessEquals(actual),
+          reason: timestamp,
+        );
+      }
+      // A narrow box stacks the timestamp below; the title baseline still wins.
+      final stacked = titleRow(tester, longTime);
+      expect(
+        stacked.getDryBaseline(const BoxConstraints(maxWidth: 60), TextBaseline.alphabetic),
+        lessThan(stacked.getDryLayout(const BoxConstraints(maxWidth: 60)).height / 2),
+      );
+    });
   });
 }

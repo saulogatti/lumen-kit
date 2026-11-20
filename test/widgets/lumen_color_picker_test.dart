@@ -14,6 +14,7 @@ void main() {
     void Function(Color? color)? onResult,
     List<Color>? swatches,
     bool showAlpha = false,
+    bool reduceMotion = false,
   }) async {
     await pumpBare(
       tester,
@@ -32,6 +33,7 @@ void main() {
           },
         ),
       ),
+      reduceMotion: reduceMotion,
     );
     await tester.tap(find.text('Open'));
     await tester.pumpAndSettle();
@@ -297,28 +299,7 @@ void main() {
   });
 
   testWidgets('com animações reduzidas o marcador não anima', (tester) async {
-    // bareApp puts its MediaQuery below the navigator, out of the dialog's
-    // reach. Here the reduced-motion flag wraps the navigator itself.
-    await tester.pumpWidget(
-      MaterialApp(
-        builder: (context, child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(disableAnimations: true),
-          child: child!,
-        ),
-        home: Builder(
-          builder: (context) => Center(
-            child: LumenButton(
-              label: 'Open',
-              onPressed: () => unawaited(
-                showLumenColorPicker(context: context, initialColor: const Color(0xFF00BCD4)),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    await tester.tap(find.text('Open'));
-    await tester.pumpAndSettle();
+    await open(tester, initial: const Color(0xFF00BCD4), reduceMotion: true);
 
     final rect = area(tester);
     await tester.tapAt(rect.center);
@@ -475,6 +456,15 @@ void main() {
     );
     expect(find.bySemanticsLabel('#80FF5722'), findsOneWidget);
     expect(_checkers(), findsOneWidget);
+  });
+
+  testWidgets('ícones sobre cor escura translúcida usam o contraste do xadrez', (tester) async {
+    // 20% black reads as light gray over the checkerboard, so the icons are
+    // black; judged on the raw color they would be white and vanish.
+    const faint = Color(0x33000000);
+    await open(tester, initial: faint, swatches: const <Color>[faint]);
+    expect(tester.widget<Icon>(find.byIcon(Icons.check_rounded)).color, Colors.black);
+    expect(tester.widget<Icon>(find.byIcon(Icons.undo_rounded)).color, Colors.black);
   });
 
   testWidgets('em tela baixa o conteúdo rola e o OK continua alcançável', (tester) async {

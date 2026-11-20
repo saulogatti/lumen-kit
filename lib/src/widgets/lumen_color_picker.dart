@@ -297,10 +297,18 @@ Color? _parseHex(String text, double alpha) {
 }
 
 /// Text color that stays readable on top of [background].
-Color _onColor(Color background) =>
-    ThemeData.estimateBrightnessForColor(background) == Brightness.dark
-    ? Colors.white
-    : Colors.black;
+///
+/// A translucent [background] is drawn by [_ColorFill] over the light
+/// checkerboard, so its contrast is judged on the blend with the
+/// checkerboard's average tone, not on the raw color.
+Color _onColor(Color background) {
+  final shown = background.a < 1
+      ? Color.alphaBlend(background, _CheckerPainter.average)
+      : background;
+  return ThemeData.estimateBrightnessForColor(shown) == Brightness.dark
+      ? Colors.white
+      : Colors.black;
+}
 
 /// Returns the step for an arrow key press, or `null` for other keys.
 ///
@@ -330,6 +338,9 @@ class _CheckerPainter extends CustomPainter {
   static const double cell = 6;
   static const Color light = Color(0xFFFFFFFF);
   static const Color dark = Color(0xFFCCCCCC);
+
+  /// Mean of [light] and [dark], the tone the eye reads from a distance.
+  static const Color average = Color(0xFFE6E6E6);
 
   @override
   void paint(Canvas canvas, Size size) {
