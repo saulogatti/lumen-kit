@@ -403,9 +403,12 @@ LumenTimePicker(
   onChanged: (t) => setState(() => time = t),
 );
 
+// Saturation/brightness area, hue track, hex field, and swatches.
+// The default swatches are the palette accents; pass [] to hide them.
 final Color? picked = await showLumenColorPicker(
   context: context,
   initialColor: color,
+  swatches: const <Color>[Color(0xFF00E5FF), Color(0xFFFF4081), Color(0xFFFFD740)],
 );
 if (picked != null) {
   setState(() => color = picked);
