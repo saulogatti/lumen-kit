@@ -314,6 +314,70 @@ void main() {
     expect(submitted.last, 42.5);
   });
 
+  testWidgets('LumenNumberField limita ao confirmar mesmo sem onSubmitted e com foco', (
+    tester,
+  ) async {
+    final changes = <double?>[];
+    await pumpBare(
+      tester,
+      _sized(
+        LumenNumberField(
+          label: 'Quantity',
+          value: null,
+          max: 10,
+          textInputAction: TextInputAction.continueAction,
+          onChanged: changes.add,
+        ),
+      ),
+    );
+    await tester.enterText(_input, '50');
+    await tester.testTextInput.receiveAction(TextInputAction.continueAction);
+    await tester.pump();
+
+    // A ação mantém o foco, então não há blur: quem limita é o submit.
+    expect(tester.widget<TextField>(_input).focusNode!.hasFocus, isTrue);
+    expect(_text(tester), '10');
+    expect(changes, <double?>[50, 10]);
+  });
+
+  testWidgets('LumenNumberField arredonda min e max para dentro do intervalo', (tester) async {
+    Future<String> commit(String typed, {double? min, double? max}) async {
+      final changes = <double?>[];
+      await tester.pumpWidget(const SizedBox());
+      await pumpBare(
+        tester,
+        _sized(
+          LumenNumberField(
+            label: 'Price',
+            value: null,
+            decimals: 2,
+            min: min,
+            max: max,
+            textInputAction: TextInputAction.continueAction,
+            onChanged: changes.add,
+          ),
+        ),
+      );
+      await tester.enterText(_input, typed);
+      await tester.testTextInput.receiveAction(TextInputAction.continueAction);
+      await tester.pump();
+      // O valor informado é o mesmo do texto, já arredondado.
+      expect(changes.last, double.tryParse(_text(tester)));
+      return _text(tester);
+    }
+
+    // O max desce e o min sobe para a casa permitida.
+    expect(await commit('2', max: 1.236), '1.23');
+    expect(await commit('1', min: 1.234), '1.24');
+    expect(await commit('-5', min: -1.236), '-1.23');
+    // Limites que já cabem nas casas não mudam (0.29 e 1.1 não são exatos em binário).
+    expect(await commit('0.1', min: 0.29), '0.29');
+    expect(await commit('5', max: 1.1), '1.1');
+    // Sem valor representável entre min e max, vale o min arredondado.
+    expect(await commit('5', min: 1.231, max: 1.239), '1.24');
+    expect(await commit('0', min: 1.231, max: 1.239), '1.24');
+  });
+
   testWidgets('LumenNumberField sem onChanged fica desabilitado e esmaecido', (tester) async {
     await pumpBare(
       tester,

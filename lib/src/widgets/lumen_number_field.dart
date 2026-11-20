@@ -99,11 +99,20 @@ class LumenNumberField extends StatefulWidget {
 
   /// Smallest value, applied when the field loses focus or is submitted.
   ///
+  /// With more fraction digits than [decimals], it is rounded up to the
+  /// nearest value the field can show, so the committed number never falls
+  /// below it. When no such value fits between [min] and [max] (for example
+  /// `min: 1.231`, `max: 1.239` with two decimals), the rounded [min] wins.
+  ///
   /// A null or negative [min] also accepts a leading minus sign. An empty
   /// field stays `null`; use [validator] to require a value.
   final double? min;
 
   /// Largest value, applied when the field loses focus or is submitted.
+  ///
+  /// With more fraction digits than [decimals], it is rounded down to the
+  /// nearest value the field can show, so the committed number never exceeds
+  /// it.
   final double? max;
 
   /// Whether the text shows exactly [decimals] fraction digits after focus
@@ -211,7 +220,11 @@ class _LumenNumberFieldState extends State<LumenNumberField> {
         textAlign: widget.textAlign,
         inputFormatters: <TextInputFormatter>[_NumberInputFormatter(format)],
         onChanged: _textChanged,
-        onFieldSubmitted: (_) => widget.onSubmitted?.call(_commit()),
+        onFieldSubmitted: (_) {
+          // Commit even without a callback: actions that keep focus never blur.
+          final value = _commit();
+          widget.onSubmitted?.call(value);
+        },
         validator: validator == null ? null : (text) => validator(format.parse(text ?? '')),
         cursorColor: accent,
         style: textStyle,
@@ -267,13 +280,18 @@ class _LumenNumberFieldState extends State<LumenNumberField> {
     return _textValue;
   }
 
+  /// Limits [value] to the bounds rounded inward to [LumenNumberField.decimals],
+  /// so rounding the result for display cannot leave the range.
   double? _clamp(double? value) {
+    if (value == null) return null;
+    final format = _format;
     final min = widget.min;
     final max = widget.max;
-    if (value == null) return null;
-    if (min != null && value < min) return min;
-    if (max != null && value > max) return max;
-    return value;
+    var clamped = value;
+    if (max != null) clamped = math.min(clamped, format.snap(max, up: false));
+    // Applied last, so the rounded min wins when no value fits the range.
+    if (min != null) clamped = math.max(clamped, format.snap(min, up: true));
+    return clamped;
   }
 
   void _focusChanged() {
@@ -321,6 +339,17 @@ class _NumberFormat {
   final String decimalSeparator;
   final String? groupSeparator;
   final bool allowNegative;
+
+  /// [bound] rounded to [decimals], up or down when rounding to the nearest
+  /// value would cross it.
+  double snap(double bound, {required bool up}) {
+    double fixed(double v) => double.parse(v.toStringAsFixed(decimals));
+    final step = 1 / math.pow(10, decimals);
+    final nearest = fixed(bound);
+    if (up && nearest < bound) return fixed(nearest + step);
+    if (!up && nearest > bound) return fixed(nearest - step);
+    return nearest;
+  }
 
   bool sameAs(_NumberFormat other) =>
       decimals == other.decimals &&
