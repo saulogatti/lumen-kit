@@ -5,7 +5,6 @@ For implementation conventions, see [AGENTS.md](AGENTS.md).
 
 ## Candidates
 
-- [ ] `LumenTimeline` for order and activity history.
 - [ ] `LumenFileUpload` for a web or desktop dropzone when a consuming app
   needs it.
 
