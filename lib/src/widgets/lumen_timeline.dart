@@ -412,10 +412,16 @@ class _RenderTitleRow extends RenderBox
   }
 
   /// Sizes the children for [constraints]; lays them out for real unless [dry].
-  ({Size size, Offset title, Offset time}) _compute(
-    BoxConstraints constraints, {
-    required bool dry,
-  }) {
+  ///
+  /// Also returns the constraints each child got, for [computeDryBaseline].
+  ({
+    Size size,
+    Offset title,
+    Offset time,
+    BoxConstraints titleConstraints,
+    BoxConstraints timeConstraints,
+  })
+  _compute(BoxConstraints constraints, {required bool dry}) {
     (Size, double) place(RenderBox child, BoxConstraints c) {
       if (dry) {
         final size = child.getDryLayout(c);
@@ -435,14 +441,17 @@ class _RenderTitleRow extends RenderBox
 
     if (titleWord + _kTitleGap + timeWord > maxWidth) {
       // Not even the longest words fit side by side: the timestamp goes below.
-      final (titleSize, _) = place(_title, BoxConstraints(maxWidth: maxWidth));
-      final (timeSize, _) = place(_time, BoxConstraints(maxWidth: maxWidth));
+      final stacked = BoxConstraints(maxWidth: maxWidth);
+      final (titleSize, _) = place(_title, stacked);
+      final (timeSize, _) = place(_time, stacked);
       final width = constraints.constrainWidth(maxWidth);
       final timeTop = titleSize.height + 2;
       return (
         size: constraints.constrain(Size(width, timeTop + timeSize.height)),
         title: Offset(rtl ? width - titleSize.width : 0, 0),
         time: Offset(rtl ? 0 : width - timeSize.width, timeTop),
+        titleConstraints: stacked,
+        timeConstraints: stacked,
       );
     }
 
@@ -453,11 +462,10 @@ class _RenderTitleRow extends RenderBox
     final timeMax = math
         .max(maxWidth * _kTimestampMaxFraction, leftByTitle)
         .clamp(timeWord, maxWidth - _kTitleGap - titleWord);
-    final (timeSize, timeBaseline) = place(_time, BoxConstraints(maxWidth: timeMax));
-    final (titleSize, titleBaseline) = place(
-      _title,
-      BoxConstraints(maxWidth: maxWidth - timeSize.width - _kTitleGap),
-    );
+    final timeConstraints = BoxConstraints(maxWidth: timeMax);
+    final (timeSize, timeBaseline) = place(_time, timeConstraints);
+    final titleConstraints = BoxConstraints(maxWidth: maxWidth - timeSize.width - _kTitleGap);
+    final (titleSize, titleBaseline) = place(_title, titleConstraints);
     final width = constraints.constrainWidth(
       maxWidth.isFinite ? maxWidth : titleSize.width + _kTitleGap + timeSize.width,
     );
@@ -469,6 +477,8 @@ class _RenderTitleRow extends RenderBox
       size: constraints.constrain(Size(width, height)),
       title: Offset(rtl ? width - titleSize.width : 0, titleTop),
       time: Offset(rtl ? 0 : width - timeSize.width, timeTop),
+      titleConstraints: titleConstraints,
+      timeConstraints: timeConstraints,
     );
   }
 
@@ -506,6 +516,20 @@ class _RenderTitleRow extends RenderBox
   @override
   double? computeDistanceToActualBaseline(TextBaseline baseline) =>
       defaultComputeDistanceToHighestActualBaseline(baseline);
+
+  // Same answer as the actual baseline, from the dry layout: the highest
+  // baseline among the children, measured from the top of the row.
+  @override
+  double? computeDryBaseline(BoxConstraints constraints, TextBaseline baseline) {
+    final result = _compute(constraints, dry: true);
+    final titleBaseline = _title.getDryBaseline(result.titleConstraints, baseline);
+    final timeBaseline = _time.getDryBaseline(result.timeConstraints, baseline);
+    final candidates = <double>[
+      if (titleBaseline != null) titleBaseline + result.title.dy,
+      if (timeBaseline != null) timeBaseline + result.time.dy,
+    ];
+    return candidates.isEmpty ? null : candidates.reduce(math.min);
+  }
 
   @override
   void paint(PaintingContext context, Offset offset) => defaultPaint(context, offset);

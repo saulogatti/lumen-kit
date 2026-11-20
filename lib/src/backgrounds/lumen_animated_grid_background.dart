@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
@@ -14,6 +15,11 @@ typedef GlowOrbSpec = LumenGlowOrbSpec;
 /// Decorative backdrop with futuristic grid, gradient and glow orbs.
 ///
 /// Fully configurable — defaults reproduce the original look of the theme.
+///
+/// With bounded constraints, the background and [child] fill the available
+/// space, as a screen or app backdrop. In an axis without a bound (inside a
+/// [Column], [Row], [ListView] or [SingleChildScrollView]), [child] sets the
+/// size in that axis and the background covers it.
 class LumenAnimatedGridBackground extends StatelessWidget {
   /// Content rendered above the gradient, grid and orbs.
   final Widget child;
@@ -29,7 +35,7 @@ class LumenAnimatedGridBackground extends StatelessWidget {
   /// at bottom left, or none when [LumenStyle.orbs] is `false`.
   final List<LumenGlowOrbSpec>? orbs;
 
-  /// Distance in px between grid lines.
+  /// Distance in px between grid lines. Must be greater than zero.
   final double gridSpacing;
 
   /// Color of the grid lines.
@@ -58,7 +64,8 @@ class LumenAnimatedGridBackground extends StatelessWidget {
     this.gridColor,
     this.gridOpacity = 0.05,
     this.showGrid = true,
-  });
+  }) : assert(gridSpacing > 0, 'gridSpacing must be greater than zero.'),
+       assert(gridOpacity >= 0 && gridOpacity <= 1, 'gridOpacity must be between 0 and 1.');
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +78,9 @@ class LumenAnimatedGridBackground extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(gradient: effectiveGradient),
+      // The child is the only non-positioned entry, so it sizes the stack.
+      // A stack of positioned entries alone takes the largest size it is
+      // allowed, which is infinite inside a Column, Row or scroll view.
       child: Stack(
         children: <Widget>[
           if (drawPattern)
@@ -91,7 +101,7 @@ class LumenAnimatedGridBackground extends StatelessWidget {
               left: spec.left,
               child: _GlowOrb(spec: spec),
             ),
-          Positioned.fill(child: child),
+          _FillBoundedAxes(child: child),
         ],
       ),
     );
@@ -148,7 +158,39 @@ class LumenGlowOrbSpec {
     this.bottom,
     this.left,
     this.opacity = 0.35,
-  });
+  }) : assert(size >= 0, 'size must not be negative.'),
+       assert(opacity >= 0 && opacity <= 1, 'opacity must be between 0 and 1.');
+}
+
+/// Gives [child] the full extent of every bounded axis and lets it size
+/// itself in an unbounded one.
+///
+/// Bounded, it matches the old `Positioned.fill`: the child fills the
+/// backdrop. Unbounded, a tight constraint would be infinite, so the child's
+/// own size is used instead. Intrinsic sizes come from the child.
+class _FillBoundedAxes extends SingleChildRenderObjectWidget {
+  const _FillBoundedAxes({required Widget super.child});
+
+  @override
+  RenderObject createRenderObject(BuildContext context) => _RenderFillBoundedAxes();
+}
+
+class _RenderFillBoundedAxes extends RenderProxyBox {
+  static BoxConstraints _inner(BoxConstraints c) => BoxConstraints(
+    minWidth: c.hasBoundedWidth ? c.maxWidth : c.minWidth,
+    maxWidth: c.maxWidth,
+    minHeight: c.hasBoundedHeight ? c.maxHeight : c.minHeight,
+    maxHeight: c.maxHeight,
+  );
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) => child!.getDryLayout(_inner(constraints));
+
+  @override
+  void performLayout() {
+    child!.layout(_inner(constraints), parentUsesSize: true);
+    size = child!.size;
+  }
 }
 
 class _GlowOrb extends StatelessWidget {
@@ -193,6 +235,9 @@ class _GridPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // The constructor asserts this in debug; in release a zero step would
+    // loop forever, so skip the pattern instead.
+    if (spacing <= 0 || !spacing.isFinite) return;
     final paint = Paint()
       ..color = color
       ..strokeWidth = 1;

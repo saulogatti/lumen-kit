@@ -30,6 +30,13 @@
 - Added `LumenNumberField`, a numeric text field controlled by `double?` with
   configurable decimals, decimal and group separators, prefix and suffix text,
   and `min`/`max` applied when focus leaves or the field is submitted.
+- Fixed `LumenAnimatedGridBackground` throwing an infinite size error inside a
+  `Column`, `Row`, `ListView` or `SingleChildScrollView`. In an axis without a
+  bound, the child now sets the size and the background covers it; with
+  bounds it still fills the space. It also reports its intrinsic size from the
+  child. `gridSpacing` must be greater than zero (it used to hang the painter),
+  and `gridOpacity`, `LumenGlowOrbSpec.size` and `LumenGlowOrbSpec.opacity`
+  are checked in debug.
 
 ## 1.3.0
 
