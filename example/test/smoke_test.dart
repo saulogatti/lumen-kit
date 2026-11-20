@@ -4,9 +4,7 @@ import 'package:lumen_kit_example/main.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() {
-  testWidgets('gallery renders fully without exceptions', (
-    t,
-  ) async {
+  testWidgets('gallery renders fully without exceptions', (t) async {
     t.view.physicalSize = const Size(420, 900);
     t.view.devicePixelRatio = 1;
     addTearDown(t.view.resetPhysicalSize);
@@ -14,24 +12,17 @@ void main() {
     await t.pumpWidget(const LumenExampleApp());
     await t.pump(const Duration(milliseconds: 500));
     final end = find.byKey(const ValueKey('gallery-end'));
-    final position = t
-        .state<ScrollableState>(find.byType(Scrollable).first)
-        .position;
+    final position = t.state<ScrollableState>(find.byType(Scrollable).first).position;
     // Advance the viewport directly so nested input gestures cannot capture
     // the smoke test's scroll before it reaches later sections.
     for (var i = 0; i < 200 && position.extentAfter > 0; i++) {
-      position.jumpTo(
-        (position.pixels + 600).clamp(0, position.maxScrollExtent),
-      );
+      position.jumpTo((position.pixels + 600).clamp(0, position.maxScrollExtent));
       await t.pump(const Duration(milliseconds: 100));
       expect(t.takeException(), isNull);
     }
     expect(position.extentAfter, 0);
     expect(end, findsOneWidget);
-    expect(
-      t.getRect(end).overlaps(t.getRect(find.byType(ListView).first)),
-      isTrue,
-    );
+    expect(t.getRect(end).overlaps(t.getRect(find.byType(ListView).first)), isTrue);
   });
 
   testWidgets('gallery toggles colors and style independently', (tester) async {
@@ -80,48 +71,40 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets(
-    'comparison uses Material widgets and theme and returns to the Lumen gallery',
-    (tester) async {
-      tester.view.physicalSize = const Size(420, 900);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
+  testWidgets('comparison uses Material widgets and theme and returns to the Lumen gallery', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(420, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
 
-      await tester.pumpWidget(const LumenExampleApp());
-      await tester.tap(find.text('matrix'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(find.text('Default Material'));
-      await tester.pumpAndSettle();
+    await tester.pumpWidget(const LumenExampleApp());
+    await tester.tap(find.text('matrix'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.tap(find.text('Default Material'));
+    await tester.pumpAndSettle();
 
-      expect(find.widgetWithText(AppBar, 'Default Material'), findsOneWidget);
-      expect(find.byType(LumenCard), findsNothing);
-      final execute = find.widgetWithText(FilledButton, 'RUN');
-      final materialTheme = Theme.of(tester.element(execute));
-      expect(materialTheme.colorScheme, ThemeData.light().colorScheme);
-      expect(materialTheme.extension<LumenThemeExt>(), isNull);
+    expect(find.widgetWithText(AppBar, 'Default Material'), findsOneWidget);
+    expect(find.byType(LumenCard), findsNothing);
+    final execute = find.widgetWithText(FilledButton, 'RUN');
+    final materialTheme = Theme.of(tester.element(execute));
+    expect(materialTheme.colorScheme, ThemeData.light().colorScheme);
+    expect(materialTheme.extension<LumenThemeExt>(), isNull);
 
-      await tester.tap(execute);
-      await tester.pumpAndSettle();
-      expect(find.byType(SnackBar), findsOneWidget);
+    await tester.tap(execute);
+    await tester.pumpAndSettle();
+    expect(find.byType(SnackBar), findsOneWidget);
 
-      final list = find.byType(Scrollable).first;
-      await tester.scrollUntilVisible(
-        find.byType(DataTable),
-        280,
-        scrollable: list,
-      );
-      expect(tester.takeException(), isNull);
+    final list = find.byType(Scrollable).first;
+    await tester.scrollUntilVisible(find.byType(DataTable), 280, scrollable: list);
+    expect(tester.takeException(), isNull);
 
-      await tester.pageBack();
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 400));
-      final title = find.text('COLORS AND STYLE');
-      expect(
-        LumenThemeExt.of(tester.element(title)).palette.primary,
-        LumenPreset.matrix.primary,
-      );
-    },
-  );
+    await tester.pageBack();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    final title = find.text('COLORS AND STYLE');
+    expect(LumenThemeExt.of(tester.element(title)).palette.primary, LumenPreset.matrix.primary);
+  });
 }

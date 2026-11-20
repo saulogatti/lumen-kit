@@ -4,14 +4,11 @@ import 'package:lumen_kit_example/sections/stepper_section.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() {
-  testWidgets('stepper directions keep independent progress and reset', (
-    tester,
-  ) async {
+  testWidgets('stepper directions keep independent progress and reset', (tester) async {
     await _pumpSection(tester);
     final horizontal = find.byKey(const ValueKey<String>('horizontal-stepper'));
     final vertical = find.byKey(const ValueKey<String>('vertical-stepper'));
-    int currentStep(Finder finder) =>
-        tester.widget<LumenStepper>(finder).currentStep;
+    int currentStep(Finder finder) => tester.widget<LumenStepper>(finder).currentStep;
     Finder step(Finder stepper, String title) =>
         find.descendant(of: stepper, matching: find.text(title));
 
@@ -23,10 +20,7 @@ void main() {
     expect(currentStep(horizontal), 2);
     expect(currentStep(vertical), 1);
     expect(
-      find.descendant(
-        of: horizontal,
-        matching: find.byIcon(Icons.check_rounded),
-      ),
+      find.descendant(of: horizontal, matching: find.byIcon(Icons.check_rounded)),
       findsNWidgets(2),
     );
 
@@ -47,9 +41,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('vertical stepper expands only the active content', (
-    tester,
-  ) async {
+  testWidgets('vertical stepper expands only the active content', (tester) async {
     await _pumpSection(tester);
     const account = 'Choose an email address and a secure password.';
     const profile = 'Add your name and choose a profile picture.';
@@ -60,25 +52,19 @@ void main() {
     expect(find.text(account), findsNothing);
     expect(find.text(done), findsNothing);
 
-    await tester.tap(
-      find.descendant(of: vertical, matching: find.text('Account')),
-    );
+    await tester.tap(find.descendant(of: vertical, matching: find.text('Account')));
     await tester.pump();
     expect(find.text(account), findsOneWidget);
     expect(find.text(profile), findsNothing);
 
-    await tester.tap(
-      find.descendant(of: vertical, matching: find.text('Done')),
-    );
+    await tester.tap(find.descendant(of: vertical, matching: find.text('Done')));
     await tester.pump();
     expect(find.text(done), findsOneWidget);
     expect(find.text(account), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('stepper progress survives scrolling outside the list cache', (
-    tester,
-  ) async {
+  testWidgets('stepper progress survives scrolling outside the list cache', (tester) async {
     tester.view.physicalSize = const Size(420, 1100);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -103,9 +89,7 @@ void main() {
     );
     final horizontal = find.byKey(const ValueKey<String>('horizontal-stepper'));
     final vertical = find.byKey(const ValueKey<String>('vertical-stepper'));
-    await tester.tap(
-      find.descendant(of: horizontal, matching: find.text('Done')),
-    );
+    await tester.tap(find.descendant(of: horizontal, matching: find.text('Done')));
     await tester.tap(find.text('Reset vertical'));
     FocusManager.instance.primaryFocus?.unfocus();
     await tester.pumpAndSettle();
@@ -130,10 +114,7 @@ Future<void> _pumpSection(WidgetTester tester) async {
   await tester.pumpWidget(
     const MaterialApp(
       home: Scaffold(
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(20),
-          child: StepperSection(),
-        ),
+        body: SingleChildScrollView(padding: EdgeInsets.all(20), child: StepperSection()),
       ),
     ),
   );
