@@ -132,6 +132,31 @@ void main() {
     expect(got.saturation, greaterThan(0.4));
   });
 
+  testWidgets('arraste contínuo acompanha o dedo na área e na trilha', (tester) async {
+    await open(tester, initial: const Color(0xFF00BCD4));
+
+    // Several moves, as a real finger does: after the slop, each move
+    // arrives as an update.
+    Future<void> slide(Offset from, Offset step, int steps) async {
+      final gesture = await tester.startGesture(from);
+      for (var i = 0; i < steps; i++) {
+        await gesture.moveBy(step);
+        await tester.pump();
+      }
+      await gesture.up();
+      await tester.pumpAndSettle();
+    }
+
+    final rect = area(tester);
+    await slide(Offset(rect.left + 1, rect.center.dy), Offset(rect.width / 10, 0), 4);
+    expect(semanticValue(tester, 'Saturation'), '40%');
+
+    final track = tester.getRect(find.bySemanticsLabel('Hue'));
+    await slide(Offset(track.left + 1, track.center.dy), Offset(track.width / 8, 0), 4);
+    final hue = (1 + track.width / 2) / track.width * 360;
+    expect(semanticValue(tester, 'Hue'), '${hue.round()}°');
+  });
+
   testWidgets('trilha de matiz muda o matiz e mantém saturação e brilho', (tester) async {
     const initial = Color(0xFF00BCD4);
     Color? chosen;
