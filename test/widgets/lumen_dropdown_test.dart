@@ -47,4 +47,28 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Cyan'), findsOneWidget);
   });
+
+  testWidgets('LumenDropdownItem montado de dados devolve o valor tipado', (tester) async {
+    int? value = 12;
+    await tester.pumpWidget(
+      bareApp(
+        StatefulBuilder(
+          builder: (context, setState) => LumenDropdown<int>(
+            value: value,
+            items: <LumenDropdownItem<int>>[
+              for (final size in <int>[12, 14, 16])
+                LumenDropdownItem<int>(value: size, label: '$size px'),
+            ],
+            onChanged: (next) => setState(() => value = next),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.byType(LumenDropdown<int>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('16 px').last);
+    await tester.pumpAndSettle();
+    expect(value, 16);
+  });
 }

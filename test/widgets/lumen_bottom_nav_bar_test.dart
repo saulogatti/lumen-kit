@@ -31,6 +31,24 @@ void main() {
     expect(index, 2);
   });
 
+  testWidgets('LumenNavItem montado de dados só mostra badge onde há contagem', (tester) async {
+    await pumpBare(
+      tester,
+      LumenBottomNavBar(
+        items: <LumenNavItem>[
+          for (final (label, count) in <(String, int)>[('Início', 0), ('Mensagens', 5)])
+            LumenNavItem(icon: Icons.circle, label: label, badge: count > 0 ? '$count' : null),
+        ],
+        selectedIndex: 0,
+        onChanged: (_) {},
+      ),
+    );
+
+    expect(find.text('Mensagens'), findsOneWidget);
+    expect(find.text('5'), findsOneWidget);
+    expect(find.text('0'), findsNothing);
+  });
+
   testWidgets('LumenNavRail troca o índice pelo toque e marca o selecionado', (tester) async {
     var index = 0;
     await tester.pumpWidget(

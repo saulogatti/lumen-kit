@@ -208,6 +208,23 @@ void main() {
       expect(gradient.colors.every((c) => c.a == 1), isTrue);
     });
 
+    testWidgets('sólido com tom claro usa o texto escuro da paleta', (tester) async {
+      final palette = LumenPalette.light();
+      await pumpBare(
+        tester,
+        _scoped(
+          LumenButton(label: 'Wait', tone: LumenStatusTone.warning, onPressed: () {}),
+          palette: palette,
+        ),
+      );
+
+      expect(_contentColor(tester), palette.textPrimary);
+      expect(
+        _contrast(palette.textPrimary, palette.warning),
+        greaterThan(_contrast(palette.backgroundDeep, palette.warning)),
+      );
+    });
+
     testWidgets('sólido com tom funciona sem tema registrado e desabilita', (tester) async {
       var taps = 0;
       await pumpBare(tester, LumenButton.danger(label: 'Delete', onPressed: () => taps++));

@@ -76,4 +76,21 @@ void main() {
     final BuildContext dialog = tester.element(find.byType(TimePickerDialog));
     expect(TimePickerTheme.of(dialog).dialHandColor, accent);
   });
+
+  testWidgets('showLumenTimePicker sem accentColor usa o primary da paleta', (tester) async {
+    late BuildContext ctx;
+    await pumpBare(
+      tester,
+      Builder(
+        builder: (c) {
+          ctx = c;
+          return const SizedBox();
+        },
+      ),
+    );
+    unawaited(showLumenTimePicker(context: ctx, initialTime: const TimeOfDay(hour: 10, minute: 0)));
+    await tester.pumpAndSettle();
+    final BuildContext dialog = tester.element(find.byType(TimePickerDialog));
+    expect(TimePickerTheme.of(dialog).dialHandColor, LumenThemeExt.of(ctx).palette.primary);
+  });
 }

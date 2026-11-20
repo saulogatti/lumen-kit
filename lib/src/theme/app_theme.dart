@@ -7,7 +7,8 @@ import 'package:material_ui/material_ui.dart';
 /// Register a [LumenThemeExt] on an existing [ThemeData] to keep the app's own
 /// typography and Material settings.
 class AppTheme {
-  const AppTheme._();
+  // Private constructor that only blocks instantiation; nothing calls it.
+  const AppTheme._(); // coverage:ignore-line
 
   /// Default dark theme using the default palette.
   static ThemeData get dark => fromPalette(LumenPalette.defaultDark());

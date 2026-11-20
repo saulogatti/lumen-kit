@@ -32,6 +32,26 @@ void main() {
     expect(taps, 1);
   });
 
+  testWidgets('LumenDataTable monta as linhas a partir de dados', (tester) async {
+    await pumpBare(
+      tester,
+      LumenDataTable(
+        columns: const <DataColumn>[
+          DataColumn(label: Text('Nome')),
+          DataColumn(label: Text('Idade'), numeric: true),
+        ],
+        rows: <DataRow>[
+          for (final (name, age) in <(String, int)>[('Ada', 36), ('Alan', 41)])
+            DataRow(cells: <DataCell>[DataCell(Text(name)), DataCell(Text('$age'))]),
+        ],
+      ),
+    );
+
+    expect(find.text('Ada'), findsOneWidget);
+    expect(find.text('Alan'), findsOneWidget);
+    expect(find.text('41'), findsOneWidget);
+  });
+
   testWidgets('LumenDataTable pinta a linha selecionada com o accent', (tester) async {
     const accent = Color(0xFF00E5FF);
     await pumpBare(

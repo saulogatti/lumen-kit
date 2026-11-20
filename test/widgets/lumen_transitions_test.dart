@@ -6,19 +6,33 @@ import '_harness.dart';
 
 void main() {
   testWidgets('entrance animates once and preserves its child on rebuild', (tester) async {
-    Widget entrance() => const LumenEntrance(
-      duration: Duration(seconds: 1),
+    // Non-const, so each pump hands the state a new widget (didUpdateWidget).
+    Widget entrance(String label) => LumenEntrance(
+      duration: const Duration(seconds: 1),
       curve: Curves.linear,
-      child: Text('Hello'),
+      child: Text(label),
     );
-    await pumpBare(tester, entrance());
+    await pumpBare(tester, entrance('Hello'));
     final opacity = find.descendant(of: find.byType(LumenEntrance), matching: find.byType(Opacity));
     expect(tester.widget<Opacity>(opacity).opacity, 0);
     await tester.pump(const Duration(milliseconds: 500));
     expect(tester.widget<Opacity>(opacity).opacity, closeTo(0.5, 0.01));
     await tester.pumpAndSettle();
-    await pumpBare(tester, entrance());
+    await pumpBare(tester, entrance('Hello again'));
     expect(tester.widget<Opacity>(opacity).opacity, 1);
+    expect(find.text('Hello again'), findsOneWidget);
+    expect(tester.hasRunningAnimations, isFalse);
+  });
+
+  testWidgets('rebuilding with a zero duration finishes an active entrance', (tester) async {
+    Widget entrance(Duration duration) =>
+        LumenEntrance(duration: duration, child: const Text('Hi'));
+    await pumpBare(tester, entrance(const Duration(seconds: 1)));
+    await tester.pump(const Duration(milliseconds: 100));
+    await pumpBare(tester, entrance(Duration.zero));
+    final opacity = find.descendant(of: find.byType(LumenEntrance), matching: find.byType(Opacity));
+    expect(tester.widget<Opacity>(opacity).opacity, 1);
+    expect(tester.hasRunningAnimations, isFalse);
   });
 
   testWidgets('switcher removes outgoing semantics and pointer actions', (tester) async {
