@@ -56,6 +56,10 @@
 <section class="desc markdown">
   <p>Decorative backdrop with futuristic grid, gradient and glow orbs.</p>
 <p>Fully configurable — defaults reproduce the original look of the theme.</p>
+<p>With bounded constraints, the background and <a href="../lumen_kit/LumenAnimatedGridBackground/child.html">child</a> fill the available
+space, as a screen or app backdrop. In an axis without a bound (inside a
+<a href="https://api.flutter.dev/flutter/widgets/Column-class.html">Column</a>, <a href="https://api.flutter.dev/flutter/widgets/Row-class.html">Row</a>, <a href="https://api.flutter.dev/flutter/widgets/ListView-class.html">ListView</a> or <a href="https://api.flutter.dev/flutter/widgets/SingleChildScrollView-class.html">SingleChildScrollView</a>), <a href="../lumen_kit/LumenAnimatedGridBackground/child.html">child</a> sets the
+size in that axis and the background covers it.</p>
 </section>
 
 
@@ -160,7 +164,7 @@ and orbs.
 
 </dt>
 <dd>
-  Distance in px between grid lines.
+  Distance in px between grid lines. Must be greater than zero.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -416,7 +420,7 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
 <footer>
   <span class="no-break">
     lumen_kit
-      1.3.0
+      1.4.0
   </span>
   
 </footer>

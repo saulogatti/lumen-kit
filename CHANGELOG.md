@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.4.0
 
 - Added `LumenTimeline`, a vertical list of events with markers joined by a
   line, for order and activity history. Each `LumenTimelineEntry` takes a
@@ -14,10 +14,6 @@
   a hue track, the original color next to the new one, a hex field, and
   swatches (palette accents by default). It supports keyboard arrows and
   screen reader adjustments. OK returns the color and Cancel returns null.
-- `LumenDialog` content now scrolls when it does not fit (keyboard open,
-  short or landscape windows), while the title and actions stay in view.
-  Content is still laid out with unbounded height, so lists inside it need
-  `shrinkWrap: true` or a bounded height, as before.
 - Added `showAlpha` to `showLumenColorPicker`, an opacity track below the hue
   track over a checkerboard, with the same keyboard and screen reader support
   (`alphaLabel`). It is off by default. Translucent colors in the comparison
@@ -25,11 +21,16 @@
 - Added `LumenColorField`, a read-only field that shows a color swatch and its
   hex code and opens `showLumenColorPicker` on tap. Cancel leaves `onChanged`
   uncalled.
-- Added `LumenEntrance` and `LumenAnimatedSwitcher` with configurable duration,
-  easing, and slide offset, reduced motion support, and gallery examples.
 - Added `LumenNumberField`, a numeric text field controlled by `double?` with
   configurable decimals, decimal and group separators, prefix and suffix text,
   and `min`/`max` applied when focus leaves or the field is submitted.
+- Added `LumenEntrance` and `LumenAnimatedSwitcher` with configurable duration,
+  easing, and slide offset, reduced motion support, and gallery examples.
+- `LumenDialog` content now scrolls when it does not fit (keyboard open,
+  short or landscape windows), while the title and actions stay in view.
+  Content is still laid out with unbounded height, so lists inside it need
+  `shrinkWrap: true` or a bounded height, as before.
+- Minimum `material_ui` is now `1.11.1`.
 - Fixed `LumenAnimatedGridBackground` throwing an infinite size error inside a
   `Column`, `Row`, `ListView` or `SingleChildScrollView`. In an axis without a
   bound, the child now sets the size and the background covers it; with

@@ -84,7 +84,8 @@ and orbs.</p>
   this.gridColor,
   this.gridOpacity = 0.05,
   this.showGrid = true,
-});</code></pre>
+}) : assert(gridSpacing &gt; 0, &#39;gridSpacing must be greater than zero.&#39;),
+     assert(gridOpacity &gt;= 0 &amp;&amp; gridOpacity &lt;= 1, &#39;gridOpacity must be between 0 and 1.&#39;);</code></pre>
 </section>
 
 
@@ -112,7 +113,7 @@ and orbs.</p>
 <footer>
   <span class="no-break">
     lumen_kit
-      1.3.0
+      1.4.0
   </span>
   
 </footer>

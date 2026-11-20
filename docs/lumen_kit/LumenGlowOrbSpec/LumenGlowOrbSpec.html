@@ -81,7 +81,8 @@ Position fields follow the same semantics as <a href="https://api.flutter.dev/fl
   this.bottom,
   this.left,
   this.opacity = 0.35,
-});</code></pre>
+}) : assert(size &gt;= 0, &#39;size must not be negative.&#39;),
+     assert(opacity &gt;= 0 &amp;&amp; opacity &lt;= 1, &#39;opacity must be between 0 and 1.&#39;);</code></pre>
 </section>
 
 
@@ -109,7 +110,7 @@ Position fields follow the same semantics as <a href="https://api.flutter.dev/fl
 <footer>
   <span class="no-break">
     lumen_kit
-      1.3.0
+      1.4.0
   </span>
   
 </footer>

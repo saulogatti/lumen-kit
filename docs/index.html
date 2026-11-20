@@ -75,7 +75,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 </tr>
 <tr>
 <td>Input</td>
-<td><code>LumenTextField</code>, <code>LumenSwitch</code>, <code>LumenCheckbox</code>, <code>LumenRadio</code>, <code>LumenSlider</code>, <code>LumenRangeSlider</code>, <code>LumenDropdown</code>, <code>LumenSearchBar</code>, <code>LumenDatePicker</code>, <code>LumenTimePicker</code>, <code>LumenChip</code> (+ <code>LumenChoiceChips</code>, <code>LumenFilterChips</code>), <code>LumenQuantityStepper</code>, <code>LumenRating</code>, <code>LumenPinField</code></td>
+<td><code>LumenTextField</code>, <code>LumenSwitch</code>, <code>LumenCheckbox</code>, <code>LumenRadio</code>, <code>LumenSlider</code>, <code>LumenRangeSlider</code>, <code>LumenDropdown</code>, <code>LumenSearchBar</code>, <code>LumenDatePicker</code>, <code>LumenTimePicker</code>, <code>showLumenColorPicker</code>, <code>LumenColorField</code>, <code>LumenChip</code> (+ <code>LumenChoiceChips</code>, <code>LumenFilterChips</code>), <code>LumenQuantityStepper</code>, <code>LumenNumberField</code>, <code>LumenRating</code>, <code>LumenPinField</code></td>
 </tr>
 <tr>
 <td>Motion</td>
@@ -91,7 +91,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 </tr>
 <tr>
 <td>Display</td>
-<td><code>LumenBadge</code>, <code>LumenTag</code>, <code>LumenAvatar</code>, <code>LumenAvatarGroup</code>, <code>LumenListTile</code>, <code>LumenList</code>, <code>LumenEmptyState</code>, <code>LumenDivider</code>, <code>LumenExpansionTile</code>, <code>LumenDataTable</code>, <code>LumenTableRow</code></td>
+<td><code>LumenBadge</code>, <code>LumenTag</code>, <code>LumenAvatar</code>, <code>LumenAvatarGroup</code>, <code>LumenListTile</code>, <code>LumenList</code>, <code>LumenEmptyState</code>, <code>LumenDivider</code>, <code>LumenExpansionTile</code>, <code>LumenDataTable</code>, <code>LumenTableRow</code>, <code>LumenTimeline</code></td>
 </tr>
 </tbody>
 </table>
@@ -120,10 +120,10 @@ when adding Lumen to an existing Flutter app.</li>
 <h2 id="installation">Installation</h2>
 <h3 id="published-package">Published package</h3>
 <p>Use the <a href="https://pub.dev/packages/lumen_kit">pub.dev release</a> for the published
-version. This example uses the <code>1.3.0</code> release constraints.</p>
+version. This example uses the <code>1.4.0</code> release constraints.</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  lumen_kit: ^1.3.0
-  material_ui: ^1.11.0
+  lumen_kit: ^1.4.0
+  material_ui: ^1.11.1
 </code></pre>
 <h3 id="git-checkout">Git checkout</h3>
 <p>To try unreleased code from <code>main</code>, pin a commit on the repository instead.</p>
@@ -132,7 +132,7 @@ version. This example uses the <code>1.3.0</code> release constraints.</p>
     git:
       url: https://github.com/saulogatti/lumen-kit.git
       ref: &lt;commit-sha&gt;
-  material_ui: ^1.11.0
+  material_ui: ^1.11.1
 </code></pre>
 <p>Run <code>flutter pub get</code> from your app after choosing an installation method.</p>
 <h2 id="minimum-usage">Minimum usage</h2>
@@ -378,8 +378,46 @@ or pasting takes the code from incomplete to complete. Assigning a complete
   onCompleted: submit,
 )
 </code></pre>
+<p><code>LumenNumberField</code> is a typed numeric field controlled by <code>value</code> (<code>double?</code>,
+<code>null</code> when empty) and <code>onChanged</code>. <code>decimals</code> sets the fraction digits,
+<code>min</code> and <code>max</code> apply when focus leaves or the field is submitted, and
+<code>decimalSeparator</code> and <code>groupSeparator</code> adapt it to the app's locale.</p>
+<pre class="language-dart"><code class="language-dart">LumenNumberField(
+  label: 'Price',
+  value: _price,
+  decimals: 2,
+  min: 0,
+  decimalSeparator: ',',
+  groupSeparator: '.',
+  padDecimals: true,
+  prefixText: r'R$ ',
+  onChanged: (double? v) =&gt; setState(() =&gt; _price = v),
+)
+</code></pre>
 <p><code>LumenBanner</code> stays visible until its parent removes it. To add a close
 button, pass an <code>onDismiss</code> callback that updates the parent's state.</p>
+<h2 id="timeline">Timeline</h2>
+<p><code>LumenTimeline</code> shows order or activity history as events joined by a line.
+Pass the events already sorted and <code>timestamp</code> already formatted: the kit
+doesn't sort or format dates. <code>highlightedIndex</code> marks the current event, and
+<code>tone</code> (or <code>accentColor</code>) colors each marker from the palette. The default
+constructor is a <code>Column</code> that fits inside cards and dialogs;
+<code>LumenTimeline.builder</code> scrolls and builds events on demand.</p>
+<pre class="language-dart"><code class="language-dart">LumenTimeline(
+  highlightedIndex: 0,
+  entries: &lt;LumenTimelineEntry&gt;[
+    for (final change in history)
+      LumenTimelineEntry(
+        title: change.label,
+        subtitle: change.authorName,
+        description: change.notes,
+        timestamp: formatDate(change.changedAt),
+        tone: change.isCanceled ? LumenStatusTone.danger : LumenStatusTone.success,
+        onTap: () =&gt; open(change),
+      ),
+  ],
+)
+</code></pre>
 <h2 id="button-variants">Button variants</h2>
 <pre class="language-dart"><code class="language-dart">Row(
   children: &lt;Widget&gt;[
@@ -450,6 +488,26 @@ LumenTimePicker(
   label: 'Time',
   value: time,
   onChanged: (t) =&gt; setState(() =&gt; time = t),
+);
+
+// Saturation/brightness area, hue track, hex field, and swatches.
+// The default swatches are the palette accents; pass [] to hide them.
+final Color? picked = await showLumenColorPicker(
+  context: context,
+  initialColor: color,
+  swatches: const &lt;Color&gt;[Color(0xFF00E5FF), Color(0xFFFF4081), Color(0xFFFFD740)],
+);
+if (picked != null) {
+  setState(() =&gt; color = picked);
+}
+
+// Read-only field that opens the picker. showAlpha adds an opacity track,
+// and translucent colors show as #AARRGGBB over a checkerboard.
+LumenColorField(
+  label: 'Accent',
+  value: color,
+  showAlpha: true,
+  onChanged: (c) =&gt; setState(() =&gt; color = c),
 );
 
 LumenRangeSlider(
@@ -632,7 +690,7 @@ To use just the widgets, without any themes, import
 <footer>
   <span class="no-break">
     lumen_kit
-      1.3.0
+      1.4.0
   </span>
   
 </footer>
