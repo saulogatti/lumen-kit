@@ -6,6 +6,17 @@
   a hue track, the original color next to the new one, a hex field, and
   swatches (palette accents by default). It supports keyboard arrows and
   screen reader adjustments. OK returns the color and Cancel returns null.
+- `LumenDialog` content now scrolls when it does not fit (keyboard open,
+  short or landscape windows), while the title and actions stay in view.
+  Content is still laid out with unbounded height, so lists inside it need
+  `shrinkWrap: true` or a bounded height, as before.
+- Added `showAlpha` to `showLumenColorPicker`, an opacity track below the hue
+  track over a checkerboard, with the same keyboard and screen reader support
+  (`alphaLabel`). It is off by default. Translucent colors in the comparison
+  and the swatches are drawn over the checkerboard too.
+- Added `LumenColorField`, a read-only field that shows a color swatch and its
+  hex code and opens `showLumenColorPicker` on tap. Cancel leaves `onChanged`
+  uncalled.
 - Added `LumenEntrance` and `LumenAnimatedSwitcher` with configurable duration,
   easing, and slide offset, reduced motion support, and gallery examples.
 - Added `LumenNumberField`, a numeric text field controlled by `double?` with

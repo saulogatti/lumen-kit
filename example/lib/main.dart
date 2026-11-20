@@ -468,37 +468,11 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     onChanged: (v) => setState(() => _time = v),
                   ),
                   const SizedBox(height: 16),
-                  Row(
-                    spacing: 12,
-                    children: <Widget>[
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: _pickedColor,
-                          borderRadius: LumenStyle.of(context).radius(12),
-                          border: LumenStyle.of(context).borderAll(color: p.surfaceOutline),
-                        ),
-                      ),
-                      LumenButton.outline(
-                        label: 'Pick color',
-                        icon: Icons.palette_outlined,
-                        onPressed: () {
-                          final picked = showLumenColorPicker(
-                            context: context,
-                            initialColor: _pickedColor,
-                          );
-                          unawaited(
-                            picked.then((color) {
-                              if (!mounted || color == null) {
-                                return;
-                              }
-                              setState(() => _pickedColor = color);
-                            }),
-                          );
-                        },
-                      ),
-                    ],
+                  LumenColorField(
+                    label: 'Color',
+                    value: _pickedColor,
+                    showAlpha: true,
+                    onChanged: (v) => setState(() => _pickedColor = v),
                   ),
                 ],
               ),
