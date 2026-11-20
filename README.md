@@ -18,7 +18,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
 | Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
-| Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow` |
+| Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow`, `LumenTimeline` |
 
 The widgets take data, callbacks, and theme tokens so the app owns its business rules.
 
@@ -321,6 +321,32 @@ LumenPinField(
 
 `LumenBanner` stays visible until its parent removes it. To add a close
 button, pass an `onDismiss` callback that updates the parent's state.
+
+## Timeline
+
+`LumenTimeline` shows order or activity history as events joined by a line.
+Pass the events already sorted and `timestamp` already formatted: the kit
+doesn't sort or format dates. `highlightedIndex` marks the current event, and
+`tone` (or `accentColor`) colors each marker from the palette. The default
+constructor is a `Column` that fits inside cards and dialogs;
+`LumenTimeline.builder` scrolls and builds events on demand.
+
+```dart
+LumenTimeline(
+  highlightedIndex: 0,
+  entries: <LumenTimelineEntry>[
+    for (final change in history)
+      LumenTimelineEntry(
+        title: change.label,
+        subtitle: change.authorName,
+        description: change.notes,
+        timestamp: formatDate(change.changedAt),
+        tone: change.isCanceled ? LumenStatusTone.danger : LumenStatusTone.success,
+        onTap: () => open(change),
+      ),
+  ],
+)
+```
 
 ## Button variants
 

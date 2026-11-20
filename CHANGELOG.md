@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Added `LumenTimeline`, a vertical list of events with markers joined by a
+  line, for order and activity history. Each `LumenTimelineEntry` takes a
+  title, optional subtitle, description, preformatted timestamp, icon, tone or
+  accent color, extra child and `onTap`. `highlightedIndex` marks the current
+  event. The default constructor doesn't scroll, so it fits inside cards and
+  dialogs; `LumenTimeline.builder` builds long histories on demand. Screen
+  readers announce a list whose items read the title, timestamp, subtitle and
+  description.
 - Added `showLumenColorPicker`, a dialog with a saturation and brightness area,
   a hue track, the original color next to the new one, a hex field, and
   swatches (palette accents by default). It supports keyboard arrows and

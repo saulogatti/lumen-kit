@@ -123,6 +123,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   // Navigation
   int _tab = 0;
   int _segment = 1;
+  int _timelineCurrent = 0;
   int _bottomNav = 0;
 
   // Display
@@ -819,6 +820,47 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               ),
             ),
             _section('Stepper', const StepperSection()),
+            _section(
+              'Timeline (tap an event to highlight it)',
+              LumenCard(
+                child: LumenTimeline(
+                  highlightedIndex: _timelineCurrent,
+                  entries: <LumenTimelineEntry>[
+                    LumenTimelineEntry(
+                      title: 'Ready for pickup',
+                      subtitle: 'Ana Lima',
+                      timestamp: 'Nov 12, 10:42',
+                      icon: Icons.check_rounded,
+                      tone: LumenStatusTone.success,
+                      onTap: () => setState(() => _timelineCurrent = 0),
+                      child: const LumenStatusChip(label: 'DONE', tone: LumenStatusTone.success),
+                    ),
+                    LumenTimelineEntry(
+                      title: 'Waiting for parts',
+                      subtitle: 'Bruno Reis',
+                      description: 'Screen ordered from the supplier, arrives in 2 days.',
+                      timestamp: 'Nov 10, 16:05',
+                      icon: Icons.hourglass_top_rounded,
+                      tone: LumenStatusTone.warning,
+                      onTap: () => setState(() => _timelineCurrent = 1),
+                    ),
+                    LumenTimelineEntry(
+                      title: 'Quote approved',
+                      subtitle: 'Customer',
+                      timestamp: 'Nov 9, 09:30',
+                      onTap: () => setState(() => _timelineCurrent = 2),
+                    ),
+                    LumenTimelineEntry(
+                      title: 'Order opened',
+                      description: 'Cracked screen, device turns on.',
+                      timestamp: 'Nov 8, 18:12',
+                      icon: Icons.add_rounded,
+                      onTap: () => setState(() => _timelineCurrent = 3),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             _section(
               'Avatar, badge & tag',
               Wrap(
