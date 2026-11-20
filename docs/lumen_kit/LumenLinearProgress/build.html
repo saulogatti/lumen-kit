@@ -126,8 +126,13 @@ Widget build(BuildContext context) {
           children: &lt;Widget&gt;[
             Container(color: track),
             if (value != null)
+              &#47;&#47; The stack loosens its constraints, so without heightFactor
+              &#47;&#47; the bar (a childless DecoratedBox) took zero height and the
+              &#47;&#47; filled part never showed.
               FractionallySizedBox(
+                alignment: AlignmentDirectional.centerStart,
                 widthFactor: value!.clamp(0.0, 1.0),
+                heightFactor: 1,
                 child: _GlowBar(gradient: g, glow: glow),
               )
             else
@@ -165,7 +170,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     lumen_kit
-      1.3.0
+      1.4.0
   </span>
   
 </footer>

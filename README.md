@@ -52,12 +52,12 @@ LumenAnimatedSwitcher(
 ### Published package
 
 Use the [pub.dev release](https://pub.dev/packages/lumen_kit) for the published
-version. This example uses the `1.3.0` release constraints.
+version. This example uses the `1.4.0` release constraints.
 
 ```yaml
 dependencies:
-  lumen_kit: ^1.3.0
-  material_ui: ^1.11.0
+  lumen_kit: ^1.4.0
+  material_ui: ^1.11.1
 ```
 
 ### Git checkout
@@ -70,7 +70,7 @@ dependencies:
     git:
       url: https://github.com/saulogatti/lumen-kit.git
       ref: <commit-sha>
-  material_ui: ^1.11.0
+  material_ui: ^1.11.1
 ```
 
 Run `flutter pub get` from your app after choosing an installation method.

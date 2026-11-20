@@ -118,6 +118,9 @@ Widget build(BuildContext context) {
 
   return DecoratedBox(
     decoration: BoxDecoration(gradient: effectiveGradient),
+    &#47;&#47; The child is the only non-positioned entry, so it sizes the stack.
+    &#47;&#47; A stack of positioned entries alone takes the largest size it is
+    &#47;&#47; allowed, which is infinite inside a Column, Row or scroll view.
     child: Stack(
       children: &lt;Widget&gt;[
         if (drawPattern)
@@ -138,7 +141,7 @@ Widget build(BuildContext context) {
             left: spec.left,
             child: _GlowOrb(spec: spec),
           ),
-        Positioned.fill(child: child),
+        _FillBoundedAxes(child: child),
       ],
     ),
   );
@@ -170,7 +173,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     lumen_kit
-      1.3.0
+      1.4.0
   </span>
   
 </footer>
