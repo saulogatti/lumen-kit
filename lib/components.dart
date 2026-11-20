@@ -30,6 +30,7 @@ export 'src/widgets/lumen_button.dart';
 export 'src/widgets/lumen_card.dart';
 export 'src/widgets/lumen_checkbox.dart';
 export 'src/widgets/lumen_chip.dart';
+export 'src/widgets/lumen_color_picker.dart';
 export 'src/widgets/lumen_cta.dart';
 export 'src/widgets/lumen_data_table.dart';
 export 'src/widgets/lumen_date_picker.dart';

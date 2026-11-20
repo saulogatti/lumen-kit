@@ -14,7 +14,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Background | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec` |
 | Structure | `LumenAppBar`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
-| Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
+| Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
 | Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
@@ -402,6 +402,14 @@ LumenTimePicker(
   value: time,
   onChanged: (t) => setState(() => time = t),
 );
+
+final Color? picked = await showLumenColorPicker(
+  context: context,
+  initialColor: color,
+);
+if (picked != null) {
+  setState(() => color = picked);
+}
 
 LumenRangeSlider(
   values: price,

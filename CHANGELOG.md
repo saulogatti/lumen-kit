@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added `showLumenColorPicker`, a dialog that picks a color by hue, saturation,
+  and brightness. OK returns the color and Cancel returns null.
 - Added `LumenEntrance` and `LumenAnimatedSwitcher` with configurable duration,
   easing, and slide offset, reduced motion support, and gallery examples.
 
