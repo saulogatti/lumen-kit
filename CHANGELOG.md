@@ -8,6 +8,9 @@
   screen reader adjustments. OK returns the color and Cancel returns null.
 - Added `LumenEntrance` and `LumenAnimatedSwitcher` with configurable duration,
   easing, and slide offset, reduced motion support, and gallery examples.
+- Added `LumenNumberField`, a numeric text field controlled by `double?` with
+  configurable decimals, decimal and group separators, prefix and suffix text,
+  and `min`/`max` applied when focus leaves or the field is submitted.
 
 ## 1.3.0
 
