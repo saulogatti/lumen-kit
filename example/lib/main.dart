@@ -119,6 +119,8 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   bool _bannerVisible = true;
   bool _chipSelected = false;
   String _pin = '';
+  double? _unitPrice = 1249.9;
+  double? _stock = 12.5;
 
   // Navigation
   int _tab = 0;
@@ -318,6 +320,52 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     hint: 'Search components…',
                     initialValue: _search,
                     onChanged: (v) => setState(() => _search = v),
+                  ),
+                ],
+              ),
+            ),
+            _section(
+              'Inputs — numbers',
+              Column(
+                spacing: 16,
+                children: <Widget>[
+                  LumenNumberField(
+                    label: 'Unit price',
+                    value: _unitPrice,
+                    decimals: 2,
+                    min: 0,
+                    groupSeparator: ',',
+                    padDecimals: true,
+                    prefixText: r'$ ',
+                    helperText: 'Two decimals, grouped thousands',
+                    onChanged: (v) => setState(() => _unitPrice = v),
+                  ),
+                  Row(
+                    spacing: 12,
+                    children: <Widget>[
+                      Expanded(
+                        child: LumenNumberField(
+                          label: 'Stock',
+                          value: _stock,
+                          decimals: 3,
+                          min: 0,
+                          max: 9999,
+                          decimalSeparator: ',',
+                          groupSeparator: '.',
+                          suffixText: 'kg',
+                          accentColor: p.secondary,
+                          onChanged: (v) => setState(() => _stock = v),
+                        ),
+                      ),
+                      const Expanded(
+                        child: LumenNumberField(
+                          label: 'Discount',
+                          value: 10,
+                          suffixText: '%',
+                          onChanged: null,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

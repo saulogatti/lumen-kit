@@ -14,7 +14,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Background | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec` |
 | Structure | `LumenAppBar`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
-| Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenRating`, `LumenPinField` |
+| Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenNumberField`, `LumenRating`, `LumenPinField` |
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
 | Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
@@ -316,6 +316,25 @@ LumenPinField(
   value: _code,
   onChanged: (String v) => setState(() => _code = v),
   onCompleted: submit,
+)
+```
+
+`LumenNumberField` is a typed numeric field controlled by `value` (`double?`,
+`null` when empty) and `onChanged`. `decimals` sets the fraction digits,
+`min` and `max` apply when focus leaves or the field is submitted, and
+`decimalSeparator` and `groupSeparator` adapt it to the app's locale.
+
+```dart
+LumenNumberField(
+  label: 'Price',
+  value: _price,
+  decimals: 2,
+  min: 0,
+  decimalSeparator: ',',
+  groupSeparator: '.',
+  padDecimals: true,
+  prefixText: r'R$ ',
+  onChanged: (double? v) => setState(() => _price = v),
 )
 ```
 
