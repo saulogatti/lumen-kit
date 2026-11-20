@@ -6,12 +6,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lumen_kit/lumen_kit.dart';
 import 'package:material_ui/material_ui.dart';
 
+// Same shape as `bareApp`: reduced motion wraps the navigator and keeps the
+// rest of the test view's MediaQueryData.
 Widget _app(Widget child, {bool reduceMotion = false}) => MaterialApp(
   theme: AppTheme.fromPreset(LumenPreset.neon),
-  home: MediaQuery(
-    data: MediaQueryData(disableAnimations: reduceMotion),
-    child: Scaffold(body: Center(child: child)),
+  builder: (context, navigator) => MediaQuery(
+    data: MediaQuery.of(context).copyWith(disableAnimations: reduceMotion),
+    child: navigator!,
   ),
+  home: Scaffold(body: Center(child: child)),
 );
 
 void main() {

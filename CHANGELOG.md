@@ -6,6 +6,10 @@
   a hue track, the original color next to the new one, a hex field, and
   swatches (palette accents by default). It supports keyboard arrows and
   screen reader adjustments. OK returns the color and Cancel returns null.
+- `LumenDialog` content now scrolls when it does not fit (keyboard open,
+  short or landscape windows), while the title and actions stay in view.
+  Content is still laid out with unbounded height, so lists inside it need
+  `shrinkWrap: true` or a bounded height, as before.
 - Added `LumenEntrance` and `LumenAnimatedSwitcher` with configurable duration,
   easing, and slide offset, reduced motion support, and gallery examples.
 
