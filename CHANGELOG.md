@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added `showLumenColorPicker`, a dialog with a saturation and brightness area,
+  a hue track, the original color next to the new one, a hex field, and
+  swatches (palette accents by default). It supports keyboard arrows and
+  screen reader adjustments. OK returns the color and Cancel returns null.
 - Added `LumenEntrance` and `LumenAnimatedSwitcher` with configurable duration,
   easing, and slide offset, reduced motion support, and gallery examples.
 

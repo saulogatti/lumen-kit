@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widget_previews.dart';
 import 'package:lumen_kit/components.dart';
 import 'package:lumen_kit_example/material_gallery.dart';
@@ -107,6 +109,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   String _search = '';
   DateTime? _date;
   TimeOfDay? _time;
+  Color _pickedColor = const Color(0xFF00E5FF);
   RangeValues _price = const RangeValues(80, 320);
   String? _size = 'm';
   Set<String> _filters = <String>{'promo'};
@@ -415,6 +418,39 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     label: 'Time',
                     value: _time,
                     onChanged: (v) => setState(() => _time = v),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    spacing: 12,
+                    children: <Widget>[
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: _pickedColor,
+                          borderRadius: LumenStyle.of(context).radius(12),
+                          border: LumenStyle.of(context).borderAll(color: p.surfaceOutline),
+                        ),
+                      ),
+                      LumenButton.outline(
+                        label: 'Pick color',
+                        icon: Icons.palette_outlined,
+                        onPressed: () {
+                          final picked = showLumenColorPicker(
+                            context: context,
+                            initialColor: _pickedColor,
+                          );
+                          unawaited(
+                            picked.then((color) {
+                              if (!mounted || color == null) {
+                                return;
+                              }
+                              setState(() => _pickedColor = color);
+                            }),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
