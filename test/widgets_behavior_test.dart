@@ -238,7 +238,8 @@ void main() {
     await tester.tap(find.byType(LumenDatePicker));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    expect(find.byType(DatePickerDialog), findsOneWidget);
+    expect(find.text('Select date'), findsOneWidget);
+    expect(find.text('December 2000'), findsOneWidget);
   });
 
   testWidgets('LumenNavRail mostra o badge do item', (tester) async {

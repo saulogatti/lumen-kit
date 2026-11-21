@@ -122,7 +122,7 @@ Widget build(BuildContext context) {
         : () async {
             final picked = await showLumenDatePicker(
               context: context,
-              initialDate: _clamp(value ?? DateTime.now()),
+              initialDate: value ?? DateTime.now(),
               firstDate: firstDate,
               lastDate: lastDate,
               accentColor: accent,
