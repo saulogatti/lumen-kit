@@ -15,6 +15,18 @@
   Tests that looked for `DatePickerDialog` or `CalendarDatePicker` need to
   look for the text or semantics instead.
   ([#40](https://github.com/saulogatti/lumen-kit/issues/40))
+- `showLumenTimePicker` and `LumenTimePicker` now open a dialog drawn by the
+  kit instead of Material's time picker: the selected time, an hour column
+  and a minute column with up and down buttons, an AM/PM toggle in 12-hour
+  format, and two text fields for typing the time. The parameters are
+  unchanged; `initialEntryMode` `dial` opens the columns, `input` the fields,
+  and the `*Only` modes hide the switch. 12 or 24 hours follow
+  `use24HourFormat`, or `MediaQuery.alwaysUse24HourFormat` of the caller.
+  Up and Down change the focused column, Left and Right move between columns,
+  Enter confirms and Escape cancels. Screen readers adjust the hour and the
+  minute as separate values. Tests that looked for `TimePickerDialog` or
+  `TimePickerTheme` need to look for the text or semantics instead.
+  ([#40](https://github.com/saulogatti/lumen-kit/issues/40))
 - Added `LumenFileUpload`, a list of files with name, percentage, progress
   bar, and a status label colored by `LumenUploadStatus` (pending, uploading,
   completed, failed). Each file is an immutable `LumenUploadItem`; the app

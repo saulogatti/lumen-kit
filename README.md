@@ -474,6 +474,7 @@ LumenDatePicker(
   onChanged: (d) => setState(() => date = d),
 );
 
+// Hour and minute columns, AM/PM in 12-hour format, and a text input mode.
 LumenTimePicker(
   label: 'Time',
   value: time,

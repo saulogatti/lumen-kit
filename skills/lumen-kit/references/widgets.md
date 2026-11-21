@@ -44,7 +44,7 @@ dependency).
 | `DropdownButton(FormField)` | `LumenDropdown<T>(value:, items:, onChanged:, label:, validator:)` | Items: `LumenDropdownItem(value:, label:, icon:)` instead of `DropdownMenuItem`. |
 | `showDatePicker` | `showLumenDatePicker(context:, initialDate:, firstDate:, lastDate:, helpText:)` | Kit dialog: month grid, year list and text input. `initialDate` is moved into range. Tests: no `DatePickerDialog`; find the day by text or semantics. |
 | date field | `LumenDatePicker(value:, firstDate:, lastDate:, onChanged:, label:)` | Read-only field that opens the picker. |
-| `showTimePicker` | `showLumenTimePicker(context:, initialTime:)` | |
+| `showTimePicker` | `showLumenTimePicker(context:, initialTime:, use24HourFormat:, initialEntryMode:)` | Kit dialog: hour and minute columns, AM/PM, text input. `initialEntryMode` keeps Material's `TimePickerEntryMode`. Tests: no `TimePickerDialog`; find the value by text or semantics. |
 | time field | `LumenTimePicker(value:, onChanged:, label:, use24HourFormat:)` | |
 | `FilterChip` / `ChoiceChip` | `LumenChip(label:, selected:, onSelected:)` | Ready-made groups: `LumenChoiceChips<T>(items:, value:, onChanged:)` (single) and `LumenFilterChips<T>(items:, values:, onChanged:)` (`Set<T>`, returns a new Set). Items: `LumenChipItem(value:, label:)`. |
 | quantity `+`/`−` | `LumenQuantityStepper(value:, onChanged:, min:, max:, step:)` | `int`. |

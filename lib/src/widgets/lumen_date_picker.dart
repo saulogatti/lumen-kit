@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/services.dart'
     show HardwareKeyboard, KeyDownEvent, KeyEvent, KeyRepeatEvent, LogicalKeyboardKey;
 import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
+import 'package:lumen_kit/src/foundation/lumen_picker_support.dart';
 import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
 import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
@@ -183,19 +184,6 @@ DateTime _clampDate(DateTime date, DateTime first, DateTime last) => date.isBefo
     ? last
     : date;
 
-/// The palette text tone that contrasts more with [fill].
-Color _foregroundOn(LumenPalette palette, Color fill) {
-  final f = fill.computeLuminance();
-  double contrast(Color c) {
-    final l = c.computeLuminance();
-    return (math.max(l, f) + 0.05) / (math.min(l, f) + 0.05);
-  }
-
-  return contrast(palette.backgroundDeep) >= contrast(palette.textPrimary)
-      ? palette.backgroundDeep
-      : palette.textPrimary;
-}
-
 /// [date] moved by [months], with the day capped to the target month.
 DateTime _addMonths(DateTime date, int months) {
   final month = DateUtils.addMonthsToMonthDate(date, months);
@@ -375,7 +363,7 @@ class _LumenDatePickerDialogState extends State<_LumenDatePickerDialog> {
   }
 
   KeyEventResult _onGridKey(FocusNode node, KeyEvent event) {
-    if (event is KeyDownEvent && _isEnter(event.logicalKey)) {
+    if (event is KeyDownEvent && isLumenEnterKey(event.logicalKey)) {
       _confirm();
       return KeyEventResult.handled;
     }
@@ -413,7 +401,7 @@ class _LumenDatePickerDialogState extends State<_LumenDatePickerDialog> {
   }
 
   KeyEventResult _onYearKey(FocusNode node, KeyEvent event) {
-    if (event is KeyDownEvent && _isEnter(event.logicalKey)) {
+    if (event is KeyDownEvent && isLumenEnterKey(event.logicalKey)) {
       setState(() => _mode = _DateMode.calendar);
       return KeyEventResult.handled;
     }
@@ -454,9 +442,6 @@ class _LumenDatePickerDialogState extends State<_LumenDatePickerDialog> {
       }
     });
   }
-
-  static bool _isEnter(LogicalKeyboardKey key) =>
-      key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter;
 }
 
 /// Month title with previous and next buttons, weekday names and day grid.
@@ -545,7 +530,7 @@ class _CalendarView extends StatelessWidget {
             ),
           ],
         ),
-        _FocusFrame(
+        LumenPickerFocusFrame(
           debugLabel: 'LumenDateGrid',
           onKey: onKey,
           child: AnimatedSwitcher(
@@ -621,7 +606,7 @@ class _DayCell extends StatelessWidget {
                   child: Text(
                     l.formatDecimal(date.day),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: selected ? _foregroundOn(p, accent) : p.textPrimary,
+                      color: selected ? lumenForegroundOn(p, accent) : p.textPrimary,
                       fontWeight: selected || today ? FontWeight.w700 : null,
                     ),
                   ),
@@ -632,66 +617,6 @@ class _DayCell extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-/// Focus target for a picker grid that outlines itself while it has
-/// keyboard focus in the traditional (keyboard) highlight mode.
-class _FocusFrame extends StatefulWidget {
-  final String debugLabel;
-  final FocusOnKeyEventCallback onKey;
-  final Widget child;
-
-  const _FocusFrame({required this.debugLabel, required this.onKey, required this.child});
-
-  @override
-  State<_FocusFrame> createState() => _FocusFrameState();
-}
-
-class _FocusFrameState extends State<_FocusFrame> {
-  late final FocusNode _focus = FocusNode(debugLabel: widget.debugLabel);
-  bool _focused = false;
-  bool _keyboard = FocusManager.instance.highlightMode == FocusHighlightMode.traditional;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = LumenThemeExt.of(context).palette;
-    final style = LumenStyle.of(context);
-    final outlined = _focused && _keyboard;
-
-    return Focus(
-      focusNode: _focus,
-      autofocus: true,
-      onFocusChange: (focused) => setState(() => _focused = focused),
-      onKeyEvent: widget.onKey,
-      child: Container(
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          borderRadius: style.radius(14),
-          border: outlined
-              ? style.borderAll(color: p.primary, width: 2)
-              : style.borderAll(color: p.primary.withValues(alpha: 0), width: 2),
-        ),
-        child: widget.child,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    FocusManager.instance.removeHighlightModeListener(_onHighlightMode);
-    _focus.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    FocusManager.instance.addHighlightModeListener(_onHighlightMode);
-  }
-
-  void _onHighlightMode(FocusHighlightMode mode) {
-    setState(() => _keyboard = mode == FocusHighlightMode.traditional);
   }
 }
 
@@ -807,7 +732,7 @@ class _YearViewState extends State<_YearView> {
     final first = widget.firstDate.year;
     final count = widget.lastDate.year - first + 1;
 
-    return _FocusFrame(
+    return LumenPickerFocusFrame(
       debugLabel: 'LumenYearGrid',
       onKey: widget.onKey,
       child: SizedBox(
@@ -839,7 +764,7 @@ class _YearViewState extends State<_YearView> {
                       child: Text(
                         l.formatYear(DateTime(year)),
                         style: text.bodyMedium?.copyWith(
-                          color: selected ? _foregroundOn(p, widget.accent) : p.textPrimary,
+                          color: selected ? lumenForegroundOn(p, widget.accent) : p.textPrimary,
                           fontWeight: selected ? FontWeight.w700 : null,
                         ),
                       ),
