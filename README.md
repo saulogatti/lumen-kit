@@ -25,14 +25,14 @@ The widgets take data, callbacks, and theme tokens so the app owns its business 
 ## File uploads
 
 `LumenFileUpload` displays the name, status label, and progress of each file.
-The app owns file selection, drop handling, and uploads. Update `progress`,
-`status`, and `statusLabel` on the existing `LumenUploadItem`. Rebuild the
-widget when the list gains, loses, or replaces a file.
+The app owns file selection, drop handling, and uploads. `LumenUploadItem` is
+immutable: when a file's progress or status changes, rebuild the widget with
+a new list, replacing that item with `copyWith`.
 
 ```dart
 LumenFileUpload(
   items: <LumenUploadItem>[
-    LumenUploadItem(
+    const LumenUploadItem(
       name: 'invoice.pdf',
       status: LumenUploadStatus.uploading,
       statusLabel: 'Uploading',
@@ -40,15 +40,18 @@ LumenFileUpload(
     ),
   ],
 )
+
+// On the next progress report:
+setState(() => _invoice = _invoice.copyWith(progress: 0.8));
 ```
 
 Progress is a fraction from `0.0` to `1.0`. The constructor rejects values
-outside that range when assertions are enabled. The setter clamps finite
-values into range.
+outside that range, including `NaN`, when assertions are enabled; without
+them, the row clamps the value it displays.
 `status` colors the label: pending uses muted text, uploading uses primary,
 completed uses success, and failed uses danger. Supply a localized
 `statusLabel` for each file. The gallery shows pending, uploading, completed,
-and failed files.
+and failed files, and its Upload button simulates one upload.
 
 ## Transitions
 

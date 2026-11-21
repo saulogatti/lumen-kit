@@ -98,12 +98,12 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 <p>The widgets take data, callbacks, and theme tokens so the app owns its business rules.</p>
 <h2 id="file-uploads">File uploads</h2>
 <p><code>LumenFileUpload</code> displays the name, status label, and progress of each file.
-The app owns file selection, drop handling, and uploads. Update <code>progress</code>,
-<code>status</code>, and <code>statusLabel</code> on the existing <code>LumenUploadItem</code>. Rebuild the
-widget when the list gains, loses, or replaces a file.</p>
+The app owns file selection, drop handling, and uploads. <code>LumenUploadItem</code> is
+immutable: when a file's progress or status changes, rebuild the widget with
+a new list, replacing that item with <code>copyWith</code>.</p>
 <pre class="language-dart"><code class="language-dart">LumenFileUpload(
   items: &lt;LumenUploadItem&gt;[
-    LumenUploadItem(
+    const LumenUploadItem(
       name: 'invoice.pdf',
       status: LumenUploadStatus.uploading,
       statusLabel: 'Uploading',
@@ -111,14 +111,17 @@ widget when the list gains, loses, or replaces a file.</p>
     ),
   ],
 )
+
+// On the next progress report:
+setState(() =&gt; _invoice = _invoice.copyWith(progress: 0.8));
 </code></pre>
 <p>Progress is a fraction from <code>0.0</code> to <code>1.0</code>. The constructor rejects values
-outside that range when assertions are enabled. The setter clamps finite
-values into range.
+outside that range, including <code>NaN</code>, when assertions are enabled; without
+them, the row clamps the value it displays.
 <code>status</code> colors the label: pending uses muted text, uploading uses primary,
 completed uses success, and failed uses danger. Supply a localized
 <code>statusLabel</code> for each file. The gallery shows pending, uploading, completed,
-and failed files.</p>
+and failed files, and its Upload button simulates one upload.</p>
 <h2 id="transitions">Transitions</h2>
 <p><code>LumenEntrance</code> reveals content once; give it a new key to replay.
 <code>LumenAnimatedSwitcher</code> animates between children with different types or keys.

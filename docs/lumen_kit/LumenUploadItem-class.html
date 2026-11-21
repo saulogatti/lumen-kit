@@ -54,33 +54,13 @@
 
     
 <section class="desc markdown">
-  <p>The name, status label, and progress of one file in a <code>LumenFileUpload</code>.</p>
-<p>The upload list listens to this object. Assign <a href="../lumen_kit/LumenUploadItem/progress.html">progress</a>, <a href="../lumen_kit/LumenUploadItem/status.html">status</a>, or
-<a href="../lumen_kit/LumenUploadItem/statusLabel.html">statusLabel</a> to update that row. <a href="../lumen_kit/LumenUploadItem/status.html">status</a> selects the label color.
-<a href="../lumen_kit/LumenUploadItem/statusLabel.html">statusLabel</a> is the text and is not derived from <a href="../lumen_kit/LumenUploadItem/status.html">status</a>.</p>
+  <p>The name, status label, and progress of one file in a <a href="../lumen_kit/LumenFileUpload-class.html">LumenFileUpload</a>.</p>
+<p>Immutable. To update a row, rebuild <a href="../lumen_kit/LumenFileUpload-class.html">LumenFileUpload</a> with a new list,
+replacing the item with one made by <a href="../lumen_kit/LumenUploadItem/copyWith.html">copyWith</a>. <a href="../lumen_kit/LumenUploadItem/status.html">status</a> selects the label
+color. <a href="../lumen_kit/LumenUploadItem/statusLabel.html">statusLabel</a> is the text and is not derived from <a href="../lumen_kit/LumenUploadItem/status.html">status</a>.</p>
 </section>
 
 
-    <section>
-      <dl class="dl-horizontal">
-        
-
-        
-        
-  <dt>Mixed-in types</dt>
-  <dd>
-    <ul class="comma-separated clazz-relationships">
-        <li><a href="https://pub.dev/documentation/listen/1.0.1/listen/ChangeNotifier-class.html">ChangeNotifier</a></li>
-    </ul>
-  </dd>
-
-
-        
-        
-
-
-      </dl>
-    </section>
 
     
   <section class="summary offset-anchor" id="constructors">
@@ -91,6 +71,7 @@
         </dt>
         <dd>
           Describes a file, its status label, and its reported progress.
+            <div class="constructor-modifier features">const</div>
         </dd>
     </dl>
   </section>
@@ -112,18 +93,6 @@
 
 </dd>
 
-        <dt id="hasListeners" class="property inherited">
-  <span class="name"><a href="https://pub.dev/documentation/listen/1.0.1/listen/ChangeNotifier/hasListeners.html">hasListeners</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Whether any listeners are currently registered.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
         <dt id="name" class="property">
   <span class="name"><a href="../lumen_kit/LumenUploadItem/name.html">name</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
@@ -138,13 +107,13 @@
 
         <dt id="progress" class="property">
   <span class="name"><a href="../lumen_kit/LumenUploadItem/progress.html">progress</a></span>
-  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
   
 
 </dt>
 <dd>
-  Stored upload fraction, independent of <a href="../lumen_kit/LumenUploadItem/status.html">status</a>.
-  <div class="features"><span class="feature">getter/setter pair</span></div>
+  Upload fraction from <code>0.0</code> to <code>1.0</code>, independent of <a href="../lumen_kit/LumenUploadItem/status.html">status</a>.
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -162,25 +131,25 @@
 
         <dt id="status" class="property">
   <span class="name"><a href="../lumen_kit/LumenUploadItem/status.html">status</a></span>
-  <span class="signature">&#8596; <a href="../lumen_kit/LumenUploadStatus.html">LumenUploadStatus</a></span>
+  <span class="signature">&#8594; <a href="../lumen_kit/LumenUploadStatus.html">LumenUploadStatus</a></span>
   
 
 </dt>
 <dd>
   State used to color <a href="../lumen_kit/LumenUploadItem/statusLabel.html">statusLabel</a>.
-  <div class="features"><span class="feature">getter/setter pair</span></div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
         <dt id="statusLabel" class="property">
   <span class="name"><a href="../lumen_kit/LumenUploadItem/statusLabel.html">statusLabel</a></span>
-  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
   
 
 </dt>
 <dd>
   App-provided status text, including any error details to show.
-  <div class="features"><span class="feature">getter/setter pair</span></div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -189,33 +158,20 @@
 
     
   <section
-      class="summary offset-anchor inherited"
+      class="summary offset-anchor"
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
-        <dt id="addListener" class="callable inherited">
-  <span class="name"><a href="https://pub.dev/documentation/listen/1.0.1/listen/ChangeNotifier/addListener.html">addListener</a></span><span class="signature">(<wbr><span class="parameter" id="addListener-param-listener"><span class="type-annotation"><a href="https://pub.dev/documentation/listen/1.0.1/listen/VoidCallback.html">VoidCallback</a></span> <span class="parameter-name">listener</span></span>)
-    <span class="returntype parameter">&#8594; void</span>
+        <dt id="copyWith" class="callable">
+  <span class="name"><a href="../lumen_kit/LumenUploadItem/copyWith.html">copyWith</a></span><span class="signature">(<wbr>{<span class="parameter" id="copyWith-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="copyWith-param-status"><span class="type-annotation"><a href="../lumen_kit/LumenUploadStatus.html">LumenUploadStatus</a>?</span> <span class="parameter-name">status</span>, </span><span class="parameter" id="copyWith-param-statusLabel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">statusLabel</span>, </span><span class="parameter" id="copyWith-param-progress"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">progress</span></span>})
+    <span class="returntype parameter">&#8594; <a href="../lumen_kit/LumenUploadItem-class.html">LumenUploadItem</a></span>
   </span>
   
 
 </dt>
-<dd class="inherited">
-  Register a closure to be called when the object changes.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="dispose" class="callable inherited">
-  <span class="name"><a href="https://pub.dev/documentation/listen/1.0.1/listen/ChangeNotifier/dispose.html">dispose</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
+<dd>
+  Returns a copy with the given fields replaced.
   
-
-</dt>
-<dd class="inherited">
-  Discards any resources used by the object.
-  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -228,33 +184,6 @@
 </dt>
 <dd class="inherited">
   Invoked when a nonexistent method or property is accessed.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="notifyListeners" class="callable inherited">
-  <span class="name"><a href="https://pub.dev/documentation/listen/1.0.1/listen/ChangeNotifier/notifyListeners.html">notifyListeners</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Call all the registered listeners.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="removeListener" class="callable inherited">
-  <span class="name"><a href="https://pub.dev/documentation/listen/1.0.1/listen/ChangeNotifier/removeListener.html">removeListener</a></span><span class="signature">(<wbr><span class="parameter" id="removeListener-param-listener"><span class="type-annotation"><a href="https://pub.dev/documentation/listen/1.0.1/listen/VoidCallback.html">VoidCallback</a></span> <span class="parameter-name">listener</span></span>)
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Remove a previously registered closure from the list of closures that are
-notified when the object changes.
   <div class="features"><span class="feature">inherited</span></div>
 
 </dd>

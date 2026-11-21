@@ -55,16 +55,25 @@
     
 <section class="desc markdown">
   <p>A list of file names, status labels, and upload percentages.</p>
-<p>The app selects, receives, and uploads files. Each row listens to its
-<a href="../lumen_kit/LumenUploadItem-class.html">LumenUploadItem</a>. Update <a href="../lumen_kit/LumenUploadItem/progress.html">LumenUploadItem.progress</a>, <a href="../lumen_kit/LumenUploadItem/status.html">LumenUploadItem.status</a>,
-and <a href="../lumen_kit/LumenUploadItem/statusLabel.html">LumenUploadItem.statusLabel</a> on that item. Rebuild this widget only
-when <a href="../lumen_kit/LumenFileUpload/items.html">items</a> gains, loses, or replaces a file.</p>
+<p>The app selects, receives, and uploads files, and rebuilds this widget with
+new <a href="../lumen_kit/LumenFileUpload/items.html">items</a> whenever a file's progress, status, or label changes.</p>
 <p><a href="../lumen_kit/LumenUploadItem/status.html">LumenUploadItem.status</a> colors <a href="../lumen_kit/LumenUploadItem/statusLabel.html">LumenUploadItem.statusLabel</a>. The label
 text comes from the app; an empty label is still shown. The visible
 percentage clamps <a href="../lumen_kit/LumenUploadItem/progress.html">LumenUploadItem.progress</a> to <code>0.0</code>–<code>1.0</code>, multiplies by
 100, rounds to an integer, and formats it with
 <a href="https://pub.dev/documentation/material_ui/1.11.1/material_ui/MaterialLocalizations/formatDecimal.html">MaterialLocalizations.formatDecimal</a>. The progress bar announces the file
 name and that percentage.</p>
+<pre class="language-dart"><code class="language-dart">LumenFileUpload(
+  items: &lt;LumenUploadItem&gt;[
+    const LumenUploadItem(
+      name: 'invoice.pdf',
+      status: LumenUploadStatus.uploading,
+      statusLabel: 'Uploading',
+      progress: 0.65,
+    ),
+  ],
+)
+</code></pre>
 </section>
 
 

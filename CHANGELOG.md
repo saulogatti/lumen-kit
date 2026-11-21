@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Added `LumenFileUpload`, a list of files with name, percentage, progress
+  bar, and a status label colored by `LumenUploadStatus` (pending, uploading,
+  completed, failed). Each file is an immutable `LumenUploadItem`; the app
+  picks and uploads the files and rebuilds the list with `copyWith` as
+  progress changes. Screen readers announce each file name with its
+  percentage. The drop area and file actions from
+  [#41](https://github.com/saulogatti/lumen-kit/issues/41) are not included
+  yet.
 - `LumenCircularProgress.glowColor` now colors the blurred glow behind the
   arc. It used to be ignored. Without it the glow still follows the arc
   gradient, so the default look is unchanged; apps that already pass

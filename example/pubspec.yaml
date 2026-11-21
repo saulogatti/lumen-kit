@@ -8,7 +8,6 @@ environment:
   flutter: ">=3.50.0"
 resolution: workspace
 dependencies:
-  cupertino_ui: ^1.1.7
   flutter:
     sdk: flutter
   lumen_kit:

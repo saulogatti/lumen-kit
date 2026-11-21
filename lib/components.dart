@@ -17,7 +17,6 @@ export 'src/foundation/lumen_decorations.dart';
 export 'src/foundation/lumen_labeled.dart';
 export 'src/foundation/lumen_pressable.dart';
 export 'src/foundation/lumen_tokens.dart';
-export 'src/foundation/lumen_upload_item.dart';
 export 'src/theme/lumen_palette.dart';
 export 'src/theme/lumen_style.dart';
 export 'src/widgets/lumen_app_bar.dart';

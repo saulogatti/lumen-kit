@@ -20,9 +20,58 @@ void main() {
     expect(() => item(double.nan), throwsAssertionError);
   });
 
+  test('copyWith replaces only the given fields and keeps the progress rule', () {
+    const item = LumenUploadItem(name: 'report.pdf', statusLabel: 'Waiting');
+
+    expect(item.status, LumenUploadStatus.pending);
+    expect(item.progress, 0);
+
+    final failed = item.copyWith(status: LumenUploadStatus.failed, statusLabel: 'Connection lost');
+    expect(failed.name, 'report.pdf');
+    expect(failed.status, LumenUploadStatus.failed);
+    expect(failed.statusLabel, 'Connection lost');
+    expect(failed.progress, 0);
+
+    final renamed = failed.copyWith(name: 'invoice.pdf', progress: 0.5);
+    expect(renamed.name, 'invoice.pdf');
+    expect(renamed.status, LumenUploadStatus.failed);
+    expect(renamed.statusLabel, 'Connection lost');
+    expect(renamed.progress, 0.5);
+
+    expect(() => item.copyWith(progress: 1.5), throwsAssertionError);
+    expect(() => item.copyWith(progress: double.nan), throwsAssertionError);
+  });
+
+  testWidgets('updates a row when the app rebuilds with a copied item', (tester) async {
+    final palette = LumenPalette.defaultDark();
+    const item = LumenUploadItem(name: 'report.pdf', statusLabel: 'Waiting');
+    Future<void> render(LumenUploadItem item) => pumpBare(
+      tester,
+      LumenScope(
+        palette: palette,
+        child: SizedBox(width: 240, child: LumenFileUpload(items: <LumenUploadItem>[item])),
+      ),
+      reduceMotion: true,
+    );
+
+    await render(item);
+    expect(find.text('0%'), findsOneWidget);
+
+    await render(
+      item.copyWith(status: LumenUploadStatus.uploading, statusLabel: 'Uploading', progress: 0.6),
+    );
+
+    final bar = find.byType(LumenLinearProgress);
+    expect(find.text('Waiting'), findsNothing);
+    expect(find.text('60%'), findsOneWidget);
+    expect(tester.widget<Text>(find.text('Uploading')).style?.color, palette.primary);
+    expect(tester.widget<LumenLinearProgress>(bar).value, 0.6);
+    expect(tester.getSemantics(bar).value, '60%');
+  });
+
   testWidgets('shows app-provided statuses and announces each file percentage', (tester) async {
-    final items = <LumenUploadItem>[
-      LumenUploadItem(name: 'waiting.pdf', statusLabel: 'Na fila', progress: 0),
+    const items = <LumenUploadItem>[
+      LumenUploadItem(name: 'waiting.pdf', statusLabel: 'Na fila'),
       LumenUploadItem(
         name: 'report.pdf',
         status: LumenUploadStatus.uploading,
@@ -49,7 +98,7 @@ void main() {
       LumenScope(
         palette: palette,
         style: style,
-        child: SizedBox(width: 240, child: LumenFileUpload(items: items)),
+        child: const SizedBox(width: 240, child: LumenFileUpload(items: items)),
       ),
     );
 

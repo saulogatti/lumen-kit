@@ -53,67 +53,26 @@
 </h1></div>
 
     
-
-    
+      <section class="multi-line-signature">
         
-  <section id="getter">
-    <section class="multi-line-signature">
-      
-      <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
-      get
-      <span class="name ">progress</span>
-      
+        <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>
+        <span class="name ">progress</span>
+        <div class="features"><span class="feature">final</span></div>
 
-    </section>
-    
+      </section>
+      
 <section class="desc markdown">
-  <p>Stored upload fraction, independent of <a href="../../lumen_kit/LumenUploadItem/status.html">status</a>.</p>
-<p>With assertions enabled this is from <code>0.0</code> to <code>1.0</code> inclusive. Without
-them, a constructor argument outside that range is kept. The setter clamps
-finite values into range.</p>
+  <p>Upload fraction from <code>0.0</code> to <code>1.0</code>, independent of <a href="../../lumen_kit/LumenUploadItem/status.html">status</a>.</p>
 </section>
 
-    
+      
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">double get progress =&gt; _progress;</code></pre>
+  <pre class="language-dart"><code class="language-dart">final double progress;</code></pre>
 </section>
 
-  </section>
-
-
-        
-  <section id="setter">
-    <section class="multi-line-signature">
-      
-      set
-      <span class="name ">progress</span>
-      <span class="signature">(<wbr><span class="parameter" id="progress=-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">value</span></span>)</span>
-      
-
-    </section>
-    
-<section class="desc markdown">
-  <p>Sets the progress fraction and notifies listeners.</p>
-<p>Finite values below <code>0.0</code> become <code>0.0</code>, and finite values above <code>1.0</code>
-become <code>1.0</code>. <code>NaN</code> is stored unchanged. Listeners are notified when the
-assigned value is not equal to the stored fraction. Clamping back to the
-current fraction still notifies. <code>NaN</code> never compares equal, so assigning
-it notifies again.</p>
-</section>
 
     
-<section class="summary source-code" id="source">
-  <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">set progress(double value) {
-  if (_progress == value) return;
-  _progress = value.clamp(0.0, 1.0);
-  notifyListeners();
-}</code></pre>
-</section>
-
-  </section>
-
 </div> <!-- /.main-content -->
 <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
   <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->

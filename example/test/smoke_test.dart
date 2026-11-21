@@ -4,8 +4,6 @@ import 'package:lumen_kit_example/main.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   testWidgets('gallery renders fully without exceptions', (t) async {
     t.view.physicalSize = const Size(420, 900);
     t.view.devicePixelRatio = 1;

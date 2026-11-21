@@ -53,60 +53,27 @@
 </h1></div>
 
     
-
-    
+      <section class="multi-line-signature">
         
-  <section id="getter">
-    <section class="multi-line-signature">
-      
-      <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-      get
-      <span class="name ">statusLabel</span>
-      
+        <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>
+        <span class="name ">statusLabel</span>
+        <div class="features"><span class="feature">final</span></div>
 
-    </section>
-    
+      </section>
+      
 <section class="desc markdown">
   <p>App-provided status text, including any error details to show.</p>
 <p>Independent of <a href="../../lumen_kit/LumenUploadItem/status.html">status</a>. The upload row shows this string as given.</p>
 </section>
 
-    
+      
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">String get statusLabel =&gt; _statusLabel;</code></pre>
+  <pre class="language-dart"><code class="language-dart">final String statusLabel;</code></pre>
 </section>
 
-  </section>
-
-
-        
-  <section id="setter">
-    <section class="multi-line-signature">
-      
-      set
-      <span class="name ">statusLabel</span>
-      <span class="signature">(<wbr><span class="parameter" id="statusLabel=-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">value</span></span>)</span>
-      
-
-    </section>
-    
-<section class="desc markdown">
-  <p>Sets the status text and notifies listeners when it changes.</p>
-</section>
 
     
-<section class="summary source-code" id="source">
-  <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">set statusLabel(String value) {
-  if (_statusLabel == value) return;
-  _statusLabel = value;
-  notifyListeners();
-}</code></pre>
-</section>
-
-  </section>
-
 </div> <!-- /.main-content -->
 <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
   <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
