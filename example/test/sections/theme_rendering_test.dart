@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lumen_kit/components.dart';
 import 'package:lumen_kit_example/sections/control_states_section.dart';
 import 'package:lumen_kit_example/sections/date_time_section.dart';
+import 'package:lumen_kit_example/sections/file_upload_panel_section.dart';
 import 'package:lumen_kit_example/sections/file_upload_section.dart';
 import 'package:lumen_kit_example/sections/foundation_section.dart';
 import 'package:lumen_kit_example/sections/stepper_section.dart';
@@ -39,6 +40,7 @@ void main() {
                         ControlStatesSection(),
                         StepperSection(),
                         FileUploadSection(),
+                        FileUploadPanelSection(),
                         DateTimeSection(),
                       ],
                     ),
@@ -60,6 +62,7 @@ void main() {
         }
         expect(find.byType(StepperSection), findsOneWidget);
         expect(find.byType(FileUploadSection), findsOneWidget);
+        expect(find.byType(FileUploadPanelSection), findsOneWidget);
         expect(find.byType(DateTimeSection), findsOneWidget);
       });
     }

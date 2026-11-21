@@ -14,7 +14,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Background | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec` |
 | Structure | `LumenAppBar`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
-| Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenFileUpload`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenNumberField`, `LumenRating`, `LumenPinField` |
+| Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenFileUpload`, `LumenFileUploadPanel`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenNumberField`, `LumenRating`, `LumenPinField` |
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
 | Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
@@ -52,6 +52,28 @@ them, the row clamps the value it displays.
 completed uses success, and failed uses danger. Supply a localized
 `statusLabel` for each file. The gallery shows pending, uploading, completed,
 and failed files, and its Upload button simulates one upload.
+
+`onRemove` adds a remove button to every row and `onRetry` a retry button to
+failed rows. Both receive the row index; update your list and rebuild.
+
+`LumenFileUploadPanel` frames the list with an icon, a title, a hint, and an
+add button. It stays UI only: `onPick` opens whichever picker the app uses,
+and `highlighted` is set by the app's own drop handler while a drag is over
+the panel. `null` for `onPick` disables the button and `busy` shows its
+spinner.
+
+```dart
+LumenFileUploadPanel(
+  title: 'Attach documents',
+  hint: 'PDF or PNG, up to 10 MB',
+  actionLabel: 'Choose files',
+  onPick: _pickFiles, // file_picker, camera, ...
+  highlighted: _dragging, // from desktop_drop or similar
+  items: _files,
+  onRemove: (index) => setState(() => _files = [..._files]..removeAt(index)),
+  onRetry: _restartUpload,
+)
+```
 
 ## Transitions
 

@@ -85,6 +85,16 @@ BoxDecoration _dayDecoration(WidgetTester tester, String day) =>
             .decoration!
         as BoxDecoration;
 
+/// Border of the focus frame around the day grid or the year list.
+Border _frameBorder(WidgetTester tester) {
+  final frame = tester.widget<Container>(
+    find.byWidgetPredicate(
+      (widget) => widget is Container && widget.padding == const EdgeInsets.all(2),
+    ),
+  );
+  return (frame.decoration! as BoxDecoration).border! as Border;
+}
+
 Color? _dayTextColor(WidgetTester tester, String day) =>
     tester.widget<Text>(find.text(day)).style?.color;
 
@@ -344,22 +354,53 @@ void main() {
     expect(find.byType(LumenDialog), findsNothing);
   });
 
-  testWidgets('a grade ganha contorno só com foco de teclado', (tester) async {
-    await _open(tester);
-    Border? frame() {
-      final decorated = tester.widget<Container>(
-        find.byWidgetPredicate(
-          (widget) => widget is Container && widget.padding == const EdgeInsets.all(2),
-        ),
-      );
-      return (decorated.decoration! as BoxDecoration).border as Border?;
-    }
-
-    final BuildContext dialog = tester.element(find.byType(LumenDialog));
-    final primary = LumenThemeExt.of(dialog).palette.primary;
-    expect(frame()!.top.color, primary.withValues(alpha: 0));
+  testWidgets('a grade ganha contorno no accent só com foco de teclado', (tester) async {
+    const accent = Color(0xFFFF4081);
+    await _open(tester, accentColor: accent);
+    expect(_frameBorder(tester).top.color, accent.withValues(alpha: 0));
     await _key(tester, LogicalKeyboardKey.arrowRight);
-    expect(frame()!.top.color, primary);
+    expect(_frameBorder(tester).top.color, accent);
+
+    await tester.tap(find.text('March 2026'));
+    await tester.pumpAndSettle();
+    await _key(tester, LogicalKeyboardKey.arrowRight);
+    expect(_frameBorder(tester).top.color, accent);
+  });
+
+  testWidgets('no estilo soft o foco e o dia de hoje continuam contornados', (tester) async {
+    final today = DateUtils.dateOnly(DateTime.now());
+    final other = DateTime(today.year, today.month, today.day == 1 ? 2 : 1);
+    final palette = LumenPalette.defaultDark();
+    final results = <DateTime?>[];
+    await tester.pumpWidget(
+      MaterialApp(
+        home: LumenScope(
+          palette: palette,
+          style: LumenStyle.soft,
+          child: Scaffold(
+            body: Center(
+              child: _opener(
+                results: results,
+                initial: other,
+                first: DateTime(today.year - 1),
+                last: DateTime(today.year + 1, 12, 31),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+    expect(LumenStyle.soft.borderScale, 0);
+
+    final todayBorder = _dayDecoration(tester, '${today.day}').border! as Border;
+    expect(todayBorder.top.color, palette.primary);
+    expect(todayBorder.top.width, 1);
+
+    await _key(tester, LogicalKeyboardKey.arrowRight);
+    expect(_frameBorder(tester).top.color, palette.primary);
+    expect(_frameBorder(tester).top.width, 2);
   });
 
   testWidgets('o título do mês abre a lista de anos e um toque escolhe o ano', (tester) async {
@@ -368,6 +409,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('2026'), findsOneWidget);
     expect(find.byType(GridView), findsOneWidget);
+    expect(tester.getSize(find.byType(GridView)).height, 5 * 48);
 
     await tester.tap(find.text('2030'));
     await tester.pumpAndSettle();
@@ -431,6 +473,8 @@ void main() {
     );
     await tester.tap(find.text('February 2024'));
     await tester.pumpAndSettle();
+    // Two years fit in one row, so the list is one row tall.
+    expect(tester.getSize(find.byType(GridView)).height, 48);
     await tester.tap(find.text('2025'));
     await tester.pumpAndSettle();
     expect(find.text('Friday, January 31, 2025'), findsOneWidget);

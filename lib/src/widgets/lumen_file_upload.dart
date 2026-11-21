@@ -1,5 +1,6 @@
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
+import 'package:lumen_kit/src/widgets/lumen_icon_button.dart';
 import 'package:lumen_kit/src/widgets/lumen_progress_indicator.dart';
 import 'package:lumen_kit/src/widgets/lumen_status_chip.dart';
 import 'package:material_ui/material_ui.dart';
@@ -89,24 +90,57 @@ class LumenUploadItem {
 /// [MaterialLocalizations.formatDecimal]. The progress bar announces the file
 /// name and that percentage.
 ///
+/// Set [onRemove] to show a remove button on every row and [onRetry] to show
+/// a retry button on rows whose status is [LumenUploadStatus.failed]. Both
+/// receive the row index in [items]. The app updates its list and rebuilds
+/// this widget; the kit neither removes the item nor restarts the upload.
+///
 /// ```dart
 /// LumenFileUpload(
-///   items: <LumenUploadItem>[
-///     const LumenUploadItem(
-///       name: 'invoice.pdf',
-///       status: LumenUploadStatus.uploading,
-///       statusLabel: 'Uploading',
-///       progress: 0.65,
-///     ),
-///   ],
+///   items: _files,
+///   onRemove: (index) => setState(() => _files = [..._files]..removeAt(index)),
+///   onRetry: (index) => uploads.restart(_files[index]),
 /// )
 /// ```
 class LumenFileUpload extends StatelessWidget {
   /// Files in display order.
   final List<LumenUploadItem> items;
 
+  /// Called with a row index when its remove button is pressed.
+  ///
+  /// `null` hides the remove button on every row.
+  final ValueChanged<int>? onRemove;
+
+  /// Called with a row index when its retry button is pressed.
+  ///
+  /// The button only appears on rows with [LumenUploadStatus.failed]. `null`
+  /// hides it.
+  final ValueChanged<int>? onRetry;
+
+  /// Tooltip of the remove button.
+  ///
+  /// Screen readers announce it followed by the file name, as in
+  /// `Remove report.pdf`, so each row's button has a distinct label.
+  final String removeLabel;
+
+  /// Tooltip of the retry button.
+  ///
+  /// Screen readers announce it followed by the file name, as in
+  /// `Retry report.pdf`, so each row's button has a distinct label.
+  final String retryLabel;
+
   /// Creates an upload progress list.
-  const LumenFileUpload({required this.items, super.key});
+  ///
+  /// [removeLabel] and [retryLabel] default to English text; pass localized
+  /// strings when the app uses another language.
+  const LumenFileUpload({
+    required this.items,
+    super.key,
+    this.onRemove,
+    this.onRetry,
+    this.removeLabel = 'Remove',
+    this.retryLabel = 'Retry',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +154,8 @@ class LumenFileUpload extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 8,
       children: <Widget>[
-        for (final item in items) _itemUpload(p, s, item, textTheme, localizations),
+        for (var index = 0; index < items.length; index++)
+          _itemUpload(p, s, index, items[index], textTheme, localizations),
       ],
     );
   }
@@ -128,10 +163,13 @@ class LumenFileUpload extends StatelessWidget {
   Widget _itemUpload(
     LumenPalette p,
     LumenStyle s,
+    int index,
     LumenUploadItem item,
     TextTheme textTheme,
     MaterialLocalizations localizations,
   ) {
+    final retry = onRetry;
+    final remove = onRemove;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: p.surface.withValues(alpha: s.surfaceAlpha(0.45)),
@@ -162,6 +200,23 @@ class LumenFileUpload extends StatelessWidget {
                     style: textTheme.labelMedium?.copyWith(color: p.textPrimary),
                   ),
                 ),
+                if (retry != null && item.status == LumenUploadStatus.failed)
+                  _action(
+                    key: const ValueKey<String>('retry'),
+                    icon: Icons.refresh,
+                    tooltip: retryLabel,
+                    semanticLabel: '$retryLabel ${item.name}',
+                    onPressed: () => retry(index),
+                  ),
+                if (remove != null)
+                  _action(
+                    key: const ValueKey<String>('remove'),
+                    icon: Icons.close,
+                    tooltip: removeLabel,
+                    semanticLabel: '$removeLabel ${item.name}',
+                    accentColor: p.textSecondary,
+                    onPressed: () => remove(index),
+                  ),
               ],
             ),
             LumenLinearProgress(value: item.progress, semanticsLabel: item.name),
@@ -175,3 +230,29 @@ class LumenFileUpload extends StatelessWidget {
     );
   }
 }
+
+/// Row action button.
+///
+/// [tooltip] is the short text shown on hover and long press. [semanticLabel]
+/// goes on the focusable button node. [key] keeps each button's element, and
+/// so its keyboard focus, when the other button of the row appears or goes.
+Widget _action({
+  required Key key,
+  required IconData icon,
+  required String tooltip,
+  required String semanticLabel,
+  required VoidCallback onPressed,
+  Color? accentColor,
+}) => Tooltip(
+  key: key,
+  message: tooltip,
+  excludeFromSemantics: true,
+  child: LumenIconButton.ghost(
+    icon: icon,
+    semanticLabel: semanticLabel,
+    accentColor: accentColor,
+    size: 36,
+    iconSize: 18,
+    onPressed: onPressed,
+  ),
+);

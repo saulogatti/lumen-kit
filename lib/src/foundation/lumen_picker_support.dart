@@ -19,6 +19,15 @@ Color lumenForegroundOn(LumenPalette palette, Color fill) {
       : palette.textPrimary;
 }
 
+/// Outline that marks a state, such as keyboard focus or today.
+///
+/// It follows [LumenStyle.borderAll], except in styles without borders
+/// ([LumenStyle.borderScale] `0`, as in soft): there it keeps [width] and
+/// [color], so the state stays visible.
+Border lumenStateBorder(LumenStyle style, Color color, double width) => style.borderScale == 0
+    ? Border.all(color: color, width: width)
+    : style.borderAll(color: color, width: width);
+
 /// Whether [key] is Enter on the main keyboard or the numeric keypad.
 bool isLumenEnterKey(LogicalKeyboardKey key) =>
     key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter;
@@ -31,6 +40,7 @@ class LumenPickerFocusFrame extends StatefulWidget {
   /// Creates a focusable frame around [child].
   const LumenPickerFocusFrame({
     required this.debugLabel,
+    required this.color,
     required this.onKey,
     required this.child,
     super.key,
@@ -40,6 +50,9 @@ class LumenPickerFocusFrame extends StatefulWidget {
 
   /// Name of the focus node in debug output.
   final String debugLabel;
+
+  /// Outline color, usually the dialog accent.
+  final Color color;
 
   /// Handles key events while the frame has focus.
   final FocusOnKeyEventCallback onKey;
@@ -64,7 +77,6 @@ class _LumenPickerFocusFrameState extends State<LumenPickerFocusFrame> {
 
   @override
   Widget build(BuildContext context) {
-    final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
     final outlined = _focused && _keyboard;
 
@@ -77,9 +89,11 @@ class _LumenPickerFocusFrameState extends State<LumenPickerFocusFrame> {
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           borderRadius: style.radius(widget.radius),
-          border: style.borderAll(
-            color: outlined ? p.primary : p.primary.withValues(alpha: 0),
-            width: 2,
+          // Transparent while unfocused, so the content keeps its size.
+          border: lumenStateBorder(
+            style,
+            outlined ? widget.color : widget.color.withValues(alpha: 0),
+            2,
           ),
         ),
         child: widget.child,

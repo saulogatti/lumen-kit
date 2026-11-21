@@ -532,6 +532,7 @@ class _CalendarView extends StatelessWidget {
         ),
         LumenPickerFocusFrame(
           debugLabel: 'LumenDateGrid',
+          color: accent,
           onKey: onKey,
           child: AnimatedSwitcher(
             duration: LumenMotion.duration(context, kLumenMediumDuration),
@@ -594,7 +595,7 @@ class _DayCell extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: radius,
                 color: selected ? accent : accent.withValues(alpha: 0),
-                border: today && !selected ? style.borderAll(color: accent) : null,
+                border: today && !selected ? lumenStateBorder(style, accent, 1) : null,
                 boxShadow: selected
                     ? style.shadows(<BoxShadow>[
                         BoxShadow(color: accent.withValues(alpha: 0.45), blurRadius: 14),
@@ -734,9 +735,11 @@ class _YearViewState extends State<_YearView> {
 
     return LumenPickerFocusFrame(
       debugLabel: 'LumenYearGrid',
+      color: widget.accent,
       onKey: widget.onKey,
       child: SizedBox(
-        height: _yearRowExtent * _visibleRows,
+        // A short range shows only its rows, up to five before scrolling.
+        height: _yearRowExtent * math.min(_rowOf(widget.lastDate.year) + 1, _visibleRows),
         child: GridView.builder(
           controller: _scroll,
           itemCount: count,

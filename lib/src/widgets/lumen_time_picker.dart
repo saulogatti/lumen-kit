@@ -593,6 +593,7 @@ class _TimeColumn extends StatelessWidget {
         step(Icons.keyboard_arrow_up_rounded, 1),
         LumenPickerFocusFrame(
           debugLabel: debugLabel,
+          color: accent,
           autofocus: autofocus,
           onKey: _onKey,
           child: Semantics(

@@ -441,6 +441,37 @@ void main() {
     expect(frameColor(), primary);
   });
 
+  testWidgets('no estilo soft o foco aparece no accent', (tester) async {
+    const accent = Color(0xFFFF4081);
+    final results = <TimeOfDay?>[];
+    await tester.pumpWidget(
+      MaterialApp(
+        home: LumenScope(
+          palette: LumenPalette.defaultDark(),
+          style: LumenStyle.soft,
+          child: Scaffold(
+            body: Center(
+              child: _opener(results: results, accentColor: accent),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+    await _key(tester, LogicalKeyboardKey.arrowUp);
+    final frame = tester.widget<Container>(
+      find
+          .byWidgetPredicate(
+            (widget) => widget is Container && widget.padding == const EdgeInsets.all(2),
+          )
+          .first,
+    );
+    final border = (frame.decoration! as BoxDecoration).border! as Border;
+    expect(border.top.color, accent);
+    expect(border.top.width, 2);
+  });
+
   testWidgets('reduce motion não deixa animação rodando', (tester) async {
     await _open(tester, reduceMotion: true);
     expect(tester.hasRunningAnimations, isFalse);

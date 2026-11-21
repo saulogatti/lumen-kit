@@ -63,15 +63,14 @@ percentage clamps <a href="../lumen_kit/LumenUploadItem/progress.html">LumenUplo
 100, rounds to an integer, and formats it with
 <a href="https://pub.dev/documentation/material_ui/1.11.1/material_ui/MaterialLocalizations/formatDecimal.html">MaterialLocalizations.formatDecimal</a>. The progress bar announces the file
 name and that percentage.</p>
+<p>Set <a href="../lumen_kit/LumenFileUpload/onRemove.html">onRemove</a> to show a remove button on every row and <a href="../lumen_kit/LumenFileUpload/onRetry.html">onRetry</a> to show
+a retry button on rows whose status is <a href="../lumen_kit/LumenUploadStatus.html">LumenUploadStatus.failed</a>. Both
+receive the row index in <a href="../lumen_kit/LumenFileUpload/items.html">items</a>. The app updates its list and rebuilds
+this widget; the kit neither removes the item nor restarts the upload.</p>
 <pre class="language-dart"><code class="language-dart">LumenFileUpload(
-  items: &lt;LumenUploadItem&gt;[
-    const LumenUploadItem(
-      name: 'invoice.pdf',
-      status: LumenUploadStatus.uploading,
-      statusLabel: 'Uploading',
-      progress: 0.65,
-    ),
-  ],
+  items: _files,
+  onRemove: (index) =&gt; setState(() =&gt; _files = [..._files]..removeAt(index)),
+  onRetry: (index) =&gt; uploads.restart(_files[index]),
 )
 </code></pre>
 </section>
@@ -107,7 +106,7 @@ name and that percentage.</p>
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="LumenFileUpload.new" class="callable">
-          <span class="name"><a href="../lumen_kit/LumenFileUpload/LumenFileUpload.html">LumenFileUpload</a></span><span class="signature">({<span class="parameter" id="param-items"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../lumen_kit/LumenUploadItem-class.html">LumenUploadItem</a></span>&gt;</span></span> <span class="parameter-name">items</span>, </span><span class="parameter" id="param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span></span>})</span>
+          <span class="name"><a href="../lumen_kit/LumenFileUpload/LumenFileUpload.html">LumenFileUpload</a></span><span class="signature">({<span class="parameter" id="param-items"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../lumen_kit/LumenUploadItem-class.html">LumenUploadItem</a></span>&gt;</span></span> <span class="parameter-name">items</span>, </span><span class="parameter" id="param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span><span class="parameter" id="param-onRemove"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/ValueChanged.html">ValueChanged</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">onRemove</span>, </span><span class="parameter" id="param-onRetry"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/ValueChanged.html">ValueChanged</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">onRetry</span>, </span><span class="parameter" id="param-removeLabel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">removeLabel</span> = <span class="default-value">&#39;Remove&#39;</span>, </span><span class="parameter" id="param-retryLabel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">retryLabel</span> = <span class="default-value">&#39;Retry&#39;</span></span>})</span>
         </dt>
         <dd>
           Creates an upload progress list.
@@ -154,6 +153,54 @@ name and that percentage.</p>
 <dd class="inherited">
   Controls how one widget replaces another widget in the tree.
   <div class="features"><span class="feature">final</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="onRemove" class="property">
+  <span class="name"><a href="../lumen_kit/LumenFileUpload/onRemove.html">onRemove</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/foundation/ValueChanged.html">ValueChanged</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span>?</span>
+  
+
+</dt>
+<dd>
+  Called with a row index when its remove button is pressed.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="onRetry" class="property">
+  <span class="name"><a href="../lumen_kit/LumenFileUpload/onRetry.html">onRetry</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/foundation/ValueChanged.html">ValueChanged</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span>?</span>
+  
+
+</dt>
+<dd>
+  Called with a row index when its retry button is pressed.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="removeLabel" class="property">
+  <span class="name"><a href="../lumen_kit/LumenFileUpload/removeLabel.html">removeLabel</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Tooltip of the remove button.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="retryLabel" class="property">
+  <span class="name"><a href="../lumen_kit/LumenFileUpload/retryLabel.html">retryLabel</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Tooltip of the retry button.
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
