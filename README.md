@@ -14,13 +14,44 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Background | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec` |
 | Structure | `LumenAppBar`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
-| Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenNumberField`, `LumenRating`, `LumenPinField` |
+| Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenFileUpload`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenNumberField`, `LumenRating`, `LumenPinField` |
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
 | Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
 | Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow`, `LumenTimeline` |
 
 The widgets take data, callbacks, and theme tokens so the app owns its business rules.
+
+## File uploads
+
+`LumenFileUpload` displays the name, status label, and progress of each file.
+The app owns file selection, drop handling, and uploads. `LumenUploadItem` is
+immutable: when a file's progress or status changes, rebuild the widget with
+a new list, replacing that item with `copyWith`.
+
+```dart
+LumenFileUpload(
+  items: <LumenUploadItem>[
+    const LumenUploadItem(
+      name: 'invoice.pdf',
+      status: LumenUploadStatus.uploading,
+      statusLabel: 'Uploading',
+      progress: 0.65,
+    ),
+  ],
+)
+
+// On the next progress report:
+setState(() => _invoice = _invoice.copyWith(progress: 0.8));
+```
+
+Progress is a fraction from `0.0` to `1.0`. The constructor rejects values
+outside that range, including `NaN`, when assertions are enabled; without
+them, the row clamps the value it displays.
+`status` colors the label: pending uses muted text, uploading uses primary,
+completed uses success, and failed uses danger. Supply a localized
+`statusLabel` for each file. The gallery shows pending, uploading, completed,
+and failed files, and its Upload button simulates one upload.
 
 ## Transitions
 

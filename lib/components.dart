@@ -41,6 +41,7 @@ export 'src/widgets/lumen_dropdown.dart';
 export 'src/widgets/lumen_empty_state.dart';
 export 'src/widgets/lumen_expansion_tile.dart';
 export 'src/widgets/lumen_fab.dart';
+export 'src/widgets/lumen_file_upload.dart';
 export 'src/widgets/lumen_icon_button.dart';
 export 'src/widgets/lumen_list.dart';
 export 'src/widgets/lumen_list_tile.dart';
