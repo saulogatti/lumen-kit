@@ -484,6 +484,31 @@ void main() {
     );
   });
 
+  for (final width in <double>[320, 360]) {
+    for (final use24 in <bool>[false, true]) {
+      testWidgets('cabe em $width px no formato ${use24 ? 24 : 12} h, colunas e texto', (
+        tester,
+      ) async {
+        tester.view.physicalSize = Size(width, 700);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        await _open(tester, initial: const TimeOfDay(hour: 10, minute: 30), use24HourFormat: use24);
+        expect(tester.takeException(), isNull);
+        expect(find.text(use24 ? '10:30' : '10:30 AM'), findsOneWidget);
+        // The minute column and AM/PM stay inside the screen.
+        expect(tester.getRect(find.text('30')).right, lessThanOrEqualTo(width));
+        if (!use24) {
+          expect(tester.getRect(find.text('PM')).right, lessThanOrEqualTo(width));
+        }
+
+        await tester.tap(find.byTooltip('Switch to text input mode'));
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+        expect(find.byType(TextField), findsNWidgets(2));
+      });
+    }
+  }
+
   testWidgets('em tela baixa o conteúdo rola e o OK continua ao alcance', (tester) async {
     tester.view.physicalSize = const Size(400, 300);
     tester.view.devicePixelRatio = 1;

@@ -179,6 +179,10 @@ class LumenTimePicker extends StatelessWidget {
 /// Height of the value box in a column and of the AM/PM toggle.
 const double _boxHeight = 64;
 
+/// Widest a column gets. Columns share the row and shrink below this on
+/// narrow screens, so 12-hour format with AM/PM fits from 320 px wide.
+const double _columnWidth = 80;
+
 /// [time] with [hour] wrapped into the day.
 TimeOfDay _withHour(TimeOfDay time, int hour) =>
     TimeOfDay(hour: hour % TimeOfDay.hoursPerDay, minute: time.minute);
@@ -325,16 +329,18 @@ class _LumenTimePickerDialogState extends State<_LumenTimePickerDialog> {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 8,
       children: <Widget>[
-        _TimeColumn(
-          debugLabel: 'LumenTimeHour',
-          label: l.timePickerHourLabel,
-          value: hour(0),
-          increased: hour(1),
-          decreased: hour(-1),
-          accent: accent,
-          autofocus: true,
-          onStep: (delta) => setState(() => _time = stepHour(delta)),
-          onEnter: _confirm,
+        Flexible(
+          child: _TimeColumn(
+            debugLabel: 'LumenTimeHour',
+            label: l.timePickerHourLabel,
+            value: hour(0),
+            increased: hour(1),
+            decreased: hour(-1),
+            accent: accent,
+            autofocus: true,
+            onStep: (delta) => setState(() => _time = stepHour(delta)),
+            onEnter: _confirm,
+          ),
         ),
         ExcludeSemantics(
           child: Text(
@@ -343,20 +349,22 @@ class _LumenTimePickerDialogState extends State<_LumenTimePickerDialog> {
                 ?.copyWith(color: LumenThemeExt.of(context).palette.textMuted),
           ),
         ),
-        _TimeColumn(
-          debugLabel: 'LumenTimeMinute',
-          label: l.timePickerMinuteLabel,
-          value: minute(0),
-          increased: minute(1),
-          decreased: minute(-1),
-          accent: accent,
-          onStep: (delta) => setState(() {
-            _time = TimeOfDay(
-              hour: _time.hour,
-              minute: (_time.minute + delta) % TimeOfDay.minutesPerHour,
-            );
-          }),
-          onEnter: _confirm,
+        Flexible(
+          child: _TimeColumn(
+            debugLabel: 'LumenTimeMinute',
+            label: l.timePickerMinuteLabel,
+            value: minute(0),
+            increased: minute(1),
+            decreased: minute(-1),
+            accent: accent,
+            onStep: (delta) => setState(() {
+              _time = TimeOfDay(
+                hour: _time.hour,
+                minute: (_time.minute + delta) % TimeOfDay.minutesPerHour,
+              );
+            }),
+            onEnter: _confirm,
+          ),
         ),
         ?period,
       ],
@@ -606,8 +614,10 @@ class _TimeColumn extends StatelessWidget {
             onIncrease: () => onStep(1),
             onDecrease: () => onStep(-1),
             child: Container(
-              width: 80,
               height: _boxHeight,
+              // Up to [_columnWidth]; narrower when the row is short of space.
+              constraints: const BoxConstraints(maxWidth: _columnWidth),
+              padding: const EdgeInsets.symmetric(horizontal: 6),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: style.radius(14),
@@ -615,11 +625,15 @@ class _TimeColumn extends StatelessWidget {
                 border: style.borderAll(color: accent.withValues(alpha: 0.5)),
               ),
               child: ExcludeSemantics(
-                child: Text(
-                  value,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: p.textPrimary,
-                    fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+                // Shrinks the digits only if the box gets narrower than they are.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    value,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: p.textPrimary,
+                      fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+                    ),
                   ),
                 ),
               ),
