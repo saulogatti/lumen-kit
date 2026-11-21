@@ -53,6 +53,24 @@ void main() {
     expect(tester.widget<LumenTimePicker>(time).value, isNotNull);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('24-hour shift field steps the minutes in the Lumen picker', (tester) async {
+    await _pumpSection(tester);
+    final shift = find.widgetWithText(LumenTimePicker, 'Shift start (24 h)');
+    expect(find.text('22:15'), findsOneWidget);
+
+    await tester.tap(shift);
+    await tester.pumpAndSettle();
+    expect(find.text('AM'), findsNothing);
+    await tester.tap(find.byIcon(Icons.keyboard_arrow_up_rounded).at(1));
+    await tester.pump();
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    expect(tester.widget<LumenTimePicker>(shift).value, const TimeOfDay(hour: 22, minute: 16));
+    expect(find.text('22:16'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }
 
 Future<void> _pumpSection(WidgetTester tester) async {
