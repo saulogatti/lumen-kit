@@ -73,10 +73,16 @@ class LumenFileUploadPanel extends StatelessWidget {
   /// Passed to [LumenFileUpload.onRetry].
   final ValueChanged<int>? onRetry;
 
-  /// Passed to [LumenFileUpload.removeLabel].
+  /// Tooltip of each row's remove button, passed to
+  /// [LumenFileUpload.removeLabel].
+  ///
+  /// Screen readers announce it followed by the file name.
   final String removeLabel;
 
-  /// Passed to [LumenFileUpload.retryLabel].
+  /// Tooltip of each failed row's retry button, passed to
+  /// [LumenFileUpload.retryLabel].
+  ///
+  /// Screen readers announce it followed by the file name.
   final String retryLabel;
 
   /// Accent of the icon, the add button, and the drag-over state.

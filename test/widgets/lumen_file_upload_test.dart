@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lumen_kit/components.dart';
@@ -216,12 +217,20 @@ void main() {
 
       expect(_tooltip('Remove'), findsNothing);
       expect(_tooltip('Remover'), findsNWidgets(2));
-      expect(
-        tester.getSemantics(
-          find.descendant(of: _tooltip('Tentar de novo'), matching: find.byType(LumenPressable)),
-        ),
-        isSemantics(label: 'Tentar de novo', isButton: true, isEnabled: true, hasTapAction: true),
+      SemanticsNode button(String tooltip, int at) => tester.getSemantics(
+        find.descendant(of: _tooltip(tooltip).at(at), matching: find.byType(LumenPressable)),
       );
+      expect(
+        button('Tentar de novo', 0),
+        isSemantics(
+          label: 'Tentar de novo notes.txt',
+          isButton: true,
+          isEnabled: true,
+          hasTapAction: true,
+        ),
+      );
+      expect(button('Remover', 0).getSemanticsData().label, 'Remover report.pdf');
+      expect(button('Remover', 1).getSemanticsData().label, 'Remover notes.txt');
 
       // Focus order: remove (row 0), retry (row 1), remove (row 1).
       await tester.sendKeyEvent(LogicalKeyboardKey.tab);
@@ -237,21 +246,47 @@ void main() {
     });
 
     testWidgets('retry disappears when the app rebuilds the row as uploading', (tester) async {
-      Future<void> render(LumenUploadItem item) => pumpBare(
+      final removed = <int>[];
+      var item = items[1];
+      await pumpBare(
         tester,
-        SizedBox(
-          width: 280,
-          child: LumenFileUpload(items: <LumenUploadItem>[item], onRetry: (_) {}),
+        StatefulBuilder(
+          builder: (context, setState) => SizedBox(
+            width: 280,
+            child: LumenFileUpload(
+              items: <LumenUploadItem>[item],
+              onRemove: removed.add,
+              onRetry: (_) => setState(
+                () => item = item.copyWith(
+                  status: LumenUploadStatus.uploading,
+                  statusLabel: 'Uploading',
+                ),
+              ),
+            ),
+          ),
         ),
       );
-
-      await render(items[1]);
       expect(_tooltip('Retry'), findsOneWidget);
 
-      await render(
-        items[1].copyWith(status: LumenUploadStatus.uploading, statusLabel: 'Uploading'),
+      FocusNode? focusOf(String tooltip) => Focus.maybeOf(
+        tester.element(find.descendant(of: _tooltip(tooltip), matching: find.byType(Icon))),
       );
+      final removeFocus = focusOf('Remove');
+
+      // Tab focuses retry, the first button of the row.
+      await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+      await tester.pump();
+      expect(focusOf('Retry')!.hasPrimaryFocus, isTrue);
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pump();
       expect(_tooltip('Retry'), findsNothing);
+      expect(focusOf('Remove'), same(removeFocus));
+      expect(removeFocus!.hasFocus, isFalse);
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pump();
+      expect(removed, isEmpty);
     });
   });
 }

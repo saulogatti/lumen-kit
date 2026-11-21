@@ -136,7 +136,7 @@ spinner.</p>
   onPick: _pickFiles, // file_picker, camera, ...
   highlighted: _dragging, // from desktop_drop or similar
   items: _files,
-  onRemove: (index) =&gt; setState(() =&gt; _files.removeAt(index)),
+  onRemove: (index) =&gt; setState(() =&gt; _files = [..._files]..removeAt(index)),
   onRetry: _restartUpload,
 )
 </code></pre>

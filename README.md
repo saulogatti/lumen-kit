@@ -70,7 +70,7 @@ LumenFileUploadPanel(
   onPick: _pickFiles, // file_picker, camera, ...
   highlighted: _dragging, // from desktop_drop or similar
   items: _files,
-  onRemove: (index) => setState(() => _files.removeAt(index)),
+  onRemove: (index) => setState(() => _files = [..._files]..removeAt(index)),
   onRetry: _restartUpload,
 )
 ```

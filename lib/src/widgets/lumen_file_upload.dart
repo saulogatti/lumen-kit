@@ -117,10 +117,16 @@ class LumenFileUpload extends StatelessWidget {
   /// hides it.
   final ValueChanged<int>? onRetry;
 
-  /// Tooltip and screen reader label of the remove button.
+  /// Tooltip of the remove button.
+  ///
+  /// Screen readers announce it followed by the file name, as in
+  /// `Remove report.pdf`, so each row's button has a distinct label.
   final String removeLabel;
 
-  /// Tooltip and screen reader label of the retry button.
+  /// Tooltip of the retry button.
+  ///
+  /// Screen readers announce it followed by the file name, as in
+  /// `Retry report.pdf`, so each row's button has a distinct label.
   final String retryLabel;
 
   /// Creates an upload progress list.
@@ -195,9 +201,22 @@ class LumenFileUpload extends StatelessWidget {
                   ),
                 ),
                 if (retry != null && item.status == LumenUploadStatus.failed)
-                  _action(Icons.refresh, retryLabel, null, () => retry(index)),
+                  _action(
+                    key: const ValueKey<String>('retry'),
+                    icon: Icons.refresh,
+                    tooltip: retryLabel,
+                    semanticLabel: '$retryLabel ${item.name}',
+                    onPressed: () => retry(index),
+                  ),
                 if (remove != null)
-                  _action(Icons.close, removeLabel, p.textSecondary, () => remove(index)),
+                  _action(
+                    key: const ValueKey<String>('remove'),
+                    icon: Icons.close,
+                    tooltip: removeLabel,
+                    semanticLabel: '$removeLabel ${item.name}',
+                    accentColor: p.textSecondary,
+                    onPressed: () => remove(index),
+                  ),
               ],
             ),
             LumenLinearProgress(value: item.progress, semanticsLabel: item.name),
@@ -212,14 +231,25 @@ class LumenFileUpload extends StatelessWidget {
   }
 }
 
-/// Row action button. The label goes on the focusable button node; the
-/// [Tooltip] only shows it on hover and long press.
-Widget _action(IconData icon, String label, Color? accentColor, VoidCallback onPressed) => Tooltip(
-  message: label,
+/// Row action button.
+///
+/// [tooltip] is the short text shown on hover and long press. [semanticLabel]
+/// goes on the focusable button node. [key] keeps each button's element, and
+/// so its keyboard focus, when the other button of the row appears or goes.
+Widget _action({
+  required Key key,
+  required IconData icon,
+  required String tooltip,
+  required String semanticLabel,
+  required VoidCallback onPressed,
+  Color? accentColor,
+}) => Tooltip(
+  key: key,
+  message: tooltip,
   excludeFromSemantics: true,
   child: LumenIconButton.ghost(
     icon: icon,
-    semanticLabel: label,
+    semanticLabel: semanticLabel,
     accentColor: accentColor,
     size: 36,
     iconSize: 18,
