@@ -196,6 +196,15 @@ Color _foregroundOn(LumenPalette palette, Color fill) {
       : palette.textPrimary;
 }
 
+/// Outline that marks a state, such as keyboard focus or today.
+///
+/// It follows [LumenStyle.borderAll], except in styles without borders
+/// ([LumenStyle.borderScale] `0`, as in soft): there it keeps [width] and
+/// [color], so the state stays visible.
+Border _stateBorder(LumenStyle style, Color color, double width) => style.borderScale == 0
+    ? Border.all(color: color, width: width)
+    : style.borderAll(color: color, width: width);
+
 /// [date] moved by [months], with the day capped to the target month.
 DateTime _addMonths(DateTime date, int months) {
   final month = DateUtils.addMonthsToMonthDate(date, months);
@@ -547,6 +556,7 @@ class _CalendarView extends StatelessWidget {
         ),
         _FocusFrame(
           debugLabel: 'LumenDateGrid',
+          color: accent,
           onKey: onKey,
           child: AnimatedSwitcher(
             duration: LumenMotion.duration(context, kLumenMediumDuration),
@@ -609,7 +619,7 @@ class _DayCell extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: radius,
                 color: selected ? accent : accent.withValues(alpha: 0),
-                border: today && !selected ? style.borderAll(color: accent) : null,
+                border: today && !selected ? _stateBorder(style, accent, 1) : null,
                 boxShadow: selected
                     ? style.shadows(<BoxShadow>[
                         BoxShadow(color: accent.withValues(alpha: 0.45), blurRadius: 14),
@@ -639,10 +649,16 @@ class _DayCell extends StatelessWidget {
 /// keyboard focus in the traditional (keyboard) highlight mode.
 class _FocusFrame extends StatefulWidget {
   final String debugLabel;
+  final Color color;
   final FocusOnKeyEventCallback onKey;
   final Widget child;
 
-  const _FocusFrame({required this.debugLabel, required this.onKey, required this.child});
+  const _FocusFrame({
+    required this.debugLabel,
+    required this.color,
+    required this.onKey,
+    required this.child,
+  });
 
   @override
   State<_FocusFrame> createState() => _FocusFrameState();
@@ -655,7 +671,6 @@ class _FocusFrameState extends State<_FocusFrame> {
 
   @override
   Widget build(BuildContext context) {
-    final p = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
     final outlined = _focused && _keyboard;
 
@@ -668,9 +683,12 @@ class _FocusFrameState extends State<_FocusFrame> {
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           borderRadius: style.radius(14),
-          border: outlined
-              ? style.borderAll(color: p.primary, width: 2)
-              : style.borderAll(color: p.primary.withValues(alpha: 0), width: 2),
+          // Transparent while unfocused, so the grid keeps its size.
+          border: _stateBorder(
+            style,
+            outlined ? widget.color : widget.color.withValues(alpha: 0),
+            2,
+          ),
         ),
         child: widget.child,
       ),
@@ -809,9 +827,11 @@ class _YearViewState extends State<_YearView> {
 
     return _FocusFrame(
       debugLabel: 'LumenYearGrid',
+      color: widget.accent,
       onKey: widget.onKey,
       child: SizedBox(
-        height: _yearRowExtent * _visibleRows,
+        // A short range shows only its rows, up to five before scrolling.
+        height: _yearRowExtent * math.min(_rowOf(widget.lastDate.year) + 1, _visibleRows),
         child: GridView.builder(
           controller: _scroll,
           itemCount: count,
