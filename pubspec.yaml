@@ -9,6 +9,7 @@ environment:
 workspace:
   - example
 dependencies:
+  cupertino_ui: ^1.1.7
   flutter:
     sdk: flutter
 
