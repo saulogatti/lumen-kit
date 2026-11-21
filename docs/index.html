@@ -75,7 +75,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 </tr>
 <tr>
 <td>Input</td>
-<td><code>LumenTextField</code>, <code>LumenSwitch</code>, <code>LumenCheckbox</code>, <code>LumenRadio</code>, <code>LumenSlider</code>, <code>LumenRangeSlider</code>, <code>LumenDropdown</code>, <code>LumenSearchBar</code>, <code>LumenDatePicker</code>, <code>LumenTimePicker</code>, <code>showLumenColorPicker</code>, <code>LumenColorField</code>, <code>LumenFileUpload</code>, <code>LumenChip</code> (+ <code>LumenChoiceChips</code>, <code>LumenFilterChips</code>), <code>LumenQuantityStepper</code>, <code>LumenNumberField</code>, <code>LumenRating</code>, <code>LumenPinField</code></td>
+<td><code>LumenTextField</code>, <code>LumenSwitch</code>, <code>LumenCheckbox</code>, <code>LumenRadio</code>, <code>LumenSlider</code>, <code>LumenRangeSlider</code>, <code>LumenDropdown</code>, <code>LumenSearchBar</code>, <code>LumenDatePicker</code>, <code>LumenTimePicker</code>, <code>showLumenColorPicker</code>, <code>LumenColorField</code>, <code>LumenFileUpload</code>, <code>LumenFileUploadPanel</code>, <code>LumenChip</code> (+ <code>LumenChoiceChips</code>, <code>LumenFilterChips</code>), <code>LumenQuantityStepper</code>, <code>LumenNumberField</code>, <code>LumenRating</code>, <code>LumenPinField</code></td>
 </tr>
 <tr>
 <td>Motion</td>
@@ -122,6 +122,24 @@ them, the row clamps the value it displays.
 completed uses success, and failed uses danger. Supply a localized
 <code>statusLabel</code> for each file. The gallery shows pending, uploading, completed,
 and failed files, and its Upload button simulates one upload.</p>
+<p><code>onRemove</code> adds a remove button to every row and <code>onRetry</code> a retry button to
+failed rows. Both receive the row index; update your list and rebuild.</p>
+<p><code>LumenFileUploadPanel</code> frames the list with an icon, a title, a hint, and an
+add button. It stays UI only: <code>onPick</code> opens whichever picker the app uses,
+and <code>highlighted</code> is set by the app's own drop handler while a drag is over
+the panel. <code>null</code> for <code>onPick</code> disables the button and <code>busy</code> shows its
+spinner.</p>
+<pre class="language-dart"><code class="language-dart">LumenFileUploadPanel(
+  title: 'Attach documents',
+  hint: 'PDF or PNG, up to 10 MB',
+  actionLabel: 'Choose files',
+  onPick: _pickFiles, // file_picker, camera, ...
+  highlighted: _dragging, // from desktop_drop or similar
+  items: _files,
+  onRemove: (index) =&gt; setState(() =&gt; _files.removeAt(index)),
+  onRetry: _restartUpload,
+)
+</code></pre>
 <h2 id="transitions">Transitions</h2>
 <p><code>LumenEntrance</code> reveals content once; give it a new key to replay.
 <code>LumenAnimatedSwitcher</code> animates between children with different types or keys.
