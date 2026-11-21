@@ -1,5 +1,6 @@
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
+import 'package:lumen_kit/src/widgets/lumen_icon_button.dart';
 import 'package:lumen_kit/src/widgets/lumen_progress_indicator.dart';
 import 'package:lumen_kit/src/widgets/lumen_status_chip.dart';
 import 'package:material_ui/material_ui.dart';
@@ -89,24 +90,51 @@ class LumenUploadItem {
 /// [MaterialLocalizations.formatDecimal]. The progress bar announces the file
 /// name and that percentage.
 ///
+/// Set [onRemove] to show a remove button on every row and [onRetry] to show
+/// a retry button on rows whose status is [LumenUploadStatus.failed]. Both
+/// receive the row index in [items]. The app updates its list and rebuilds
+/// this widget; the kit neither removes the item nor restarts the upload.
+///
 /// ```dart
 /// LumenFileUpload(
-///   items: <LumenUploadItem>[
-///     const LumenUploadItem(
-///       name: 'invoice.pdf',
-///       status: LumenUploadStatus.uploading,
-///       statusLabel: 'Uploading',
-///       progress: 0.65,
-///     ),
-///   ],
+///   items: _files,
+///   onRemove: (index) => setState(() => _files = [..._files]..removeAt(index)),
+///   onRetry: (index) => uploads.restart(_files[index]),
 /// )
 /// ```
 class LumenFileUpload extends StatelessWidget {
   /// Files in display order.
   final List<LumenUploadItem> items;
 
+  /// Called with a row index when its remove button is pressed.
+  ///
+  /// `null` hides the remove button on every row.
+  final ValueChanged<int>? onRemove;
+
+  /// Called with a row index when its retry button is pressed.
+  ///
+  /// The button only appears on rows with [LumenUploadStatus.failed]. `null`
+  /// hides it.
+  final ValueChanged<int>? onRetry;
+
+  /// Tooltip and screen reader label of the remove button.
+  final String removeLabel;
+
+  /// Tooltip and screen reader label of the retry button.
+  final String retryLabel;
+
   /// Creates an upload progress list.
-  const LumenFileUpload({required this.items, super.key});
+  ///
+  /// [removeLabel] and [retryLabel] default to English text; pass localized
+  /// strings when the app uses another language.
+  const LumenFileUpload({
+    required this.items,
+    super.key,
+    this.onRemove,
+    this.onRetry,
+    this.removeLabel = 'Remove',
+    this.retryLabel = 'Retry',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +148,8 @@ class LumenFileUpload extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 8,
       children: <Widget>[
-        for (final item in items) _itemUpload(p, s, item, textTheme, localizations),
+        for (var index = 0; index < items.length; index++)
+          _itemUpload(p, s, index, items[index], textTheme, localizations),
       ],
     );
   }
@@ -128,10 +157,13 @@ class LumenFileUpload extends StatelessWidget {
   Widget _itemUpload(
     LumenPalette p,
     LumenStyle s,
+    int index,
     LumenUploadItem item,
     TextTheme textTheme,
     MaterialLocalizations localizations,
   ) {
+    final retry = onRetry;
+    final remove = onRemove;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: p.surface.withValues(alpha: s.surfaceAlpha(0.45)),
@@ -162,6 +194,10 @@ class LumenFileUpload extends StatelessWidget {
                     style: textTheme.labelMedium?.copyWith(color: p.textPrimary),
                   ),
                 ),
+                if (retry != null && item.status == LumenUploadStatus.failed)
+                  _action(Icons.refresh, retryLabel, null, () => retry(index)),
+                if (remove != null)
+                  _action(Icons.close, removeLabel, p.textSecondary, () => remove(index)),
               ],
             ),
             LumenLinearProgress(value: item.progress, semanticsLabel: item.name),
@@ -175,3 +211,18 @@ class LumenFileUpload extends StatelessWidget {
     );
   }
 }
+
+/// Row action button. The label goes on the focusable button node; the
+/// [Tooltip] only shows it on hover and long press.
+Widget _action(IconData icon, String label, Color? accentColor, VoidCallback onPressed) => Tooltip(
+  message: label,
+  excludeFromSemantics: true,
+  child: LumenIconButton.ghost(
+    icon: icon,
+    semanticLabel: label,
+    accentColor: accentColor,
+    size: 36,
+    iconSize: 18,
+    onPressed: onPressed,
+  ),
+);
