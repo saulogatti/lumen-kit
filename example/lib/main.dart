@@ -4,6 +4,7 @@ import 'package:flutter/widget_previews.dart';
 import 'package:lumen_kit/components.dart';
 import 'package:lumen_kit_example/material_gallery.dart';
 import 'package:lumen_kit_example/sections/control_states_section.dart';
+import 'package:lumen_kit_example/sections/file_upload_panel_section.dart';
 import 'package:lumen_kit_example/sections/file_upload_section.dart';
 import 'package:lumen_kit_example/sections/foundation_section.dart';
 import 'package:lumen_kit_example/sections/stepper_section.dart';
@@ -480,6 +481,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               ),
             ),
             _section('Upload progress', const FileUploadSection()),
+            _section('Upload panel', const FileUploadPanelSection()),
             _section(
               'Code (PIN)',
               LumenPinField(

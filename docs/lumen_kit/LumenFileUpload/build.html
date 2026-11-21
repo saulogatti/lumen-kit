@@ -119,7 +119,8 @@ Widget build(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     spacing: 8,
     children: &lt;Widget&gt;[
-      for (final item in items) _itemUpload(p, s, item, textTheme, localizations),
+      for (var index = 0; index &lt; items.length; index++)
+        _itemUpload(p, s, index, items[index], textTheme, localizations),
     ],
   );
 }</code></pre>
