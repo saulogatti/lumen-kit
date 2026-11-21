@@ -23,6 +23,15 @@
   percentage. Picking and dropping files stay with the app, so the kit adds no
   plugin dependency.
   ([#41](https://github.com/saulogatti/lumen-kit/issues/41))
+- Added `LumenFileUploadPanel`, a framed upload area with an app-supplied
+  icon, title, and hint, an add button that calls `onPick`, and the
+  `LumenFileUpload` list below. `onPick: null` disables the button, `busy`
+  shows its spinner, and `highlighted` draws the drag-over state (accent
+  border, tinted fill, and glow, following `LumenStyle`, instant with reduced
+  motion). The app still opens the picker and handles drops.
+  `LumenFileUpload` gained `onRemove` (every row) and `onRetry` (failed rows),
+  both called with the row index, plus `removeLabel` and `retryLabel`.
+  ([#44](https://github.com/saulogatti/lumen-kit/issues/44))
 - `LumenCircularProgress.glowColor` now colors the blurred glow behind the
   arc. It used to be ignored. Without it the glow still follows the arc
   gradient, so the default look is unchanged; apps that already pass
