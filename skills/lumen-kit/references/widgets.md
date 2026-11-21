@@ -42,7 +42,7 @@ dependency).
 | `Slider` | `LumenSlider(value:, onChanged:, min:, max:, divisions:, label:)` | |
 | `RangeSlider` | `LumenRangeSlider(values:, onChanged:, min:, max:, divisions:, labels:, onChangeEnd:)` | |
 | `DropdownButton(FormField)` | `LumenDropdown<T>(value:, items:, onChanged:, label:, validator:)` | Items: `LumenDropdownItem(value:, label:, icon:)` instead of `DropdownMenuItem`. |
-| `showDatePicker` | `showLumenDatePicker(context:, initialDate:, firstDate:, lastDate:)` | |
+| `showDatePicker` | `showLumenDatePicker(context:, initialDate:, firstDate:, lastDate:, helpText:)` | Kit dialog: month grid, year list and text input. `initialDate` is moved into range. Tests: no `DatePickerDialog`; find the day by text or semantics. |
 | date field | `LumenDatePicker(value:, firstDate:, lastDate:, onChanged:, label:)` | Read-only field that opens the picker. |
 | `showTimePicker` | `showLumenTimePicker(context:, initialTime:)` | |
 | time field | `LumenTimePicker(value:, onChanged:, label:, use24HourFormat:)` | |

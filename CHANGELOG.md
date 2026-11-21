@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+- `showLumenDatePicker` and `LumenDatePicker` now open a dialog drawn by the
+  kit instead of Material's date picker: the selected date, a month grid with
+  previous and next month buttons, a year list opened from the month title,
+  and a text field for typing the date. The parameters are unchanged. The
+  grid follows the palette and style in the five styles, light and dark, and
+  works without a registered theme. Arrow keys move the day, Page Up and Page
+  Down the month (Shift for a year), Enter confirms and Escape cancels.
+  Screen readers read each day as a full date. Labels and date formats come
+  from `MaterialLocalizations`, as before. `initialDate` outside the range is
+  now moved to the nearest end by the helper too, not only by the field.
+  Tests that looked for `DatePickerDialog` or `CalendarDatePicker` need to
+  look for the text or semantics instead.
+  ([#40](https://github.com/saulogatti/lumen-kit/issues/40))
 - Added `LumenFileUpload`, a list of files with name, percentage, progress
   bar, and a status label colored by `LumenUploadStatus` (pending, uploading,
   completed, failed). Each file is an immutable `LumenUploadItem`; the app

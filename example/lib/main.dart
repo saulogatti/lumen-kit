@@ -4,6 +4,7 @@ import 'package:flutter/widget_previews.dart';
 import 'package:lumen_kit/components.dart';
 import 'package:lumen_kit_example/material_gallery.dart';
 import 'package:lumen_kit_example/sections/control_states_section.dart';
+import 'package:lumen_kit_example/sections/date_time_section.dart';
 import 'package:lumen_kit_example/sections/file_upload_panel_section.dart';
 import 'package:lumen_kit_example/sections/file_upload_section.dart';
 import 'package:lumen_kit_example/sections/foundation_section.dart';
@@ -109,8 +110,6 @@ class _GalleryScreenState extends State<_GalleryScreen> {
   double _slider = 0.4;
   String _dropdown = 'primary';
   String _search = '';
-  DateTime? _date;
-  TimeOfDay? _time;
   Color _pickedColor = const Color(0xFF00E5FF);
   RangeValues _price = const RangeValues(80, 320);
   String? _size = 'm';
@@ -457,20 +456,6 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                     onChanged: (v) => setState(() => _dropdown = v ?? _dropdown),
                   ),
                   const SizedBox(height: 16),
-                  LumenDatePicker(
-                    label: 'Start date',
-                    value: _date,
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2030),
-                    onChanged: (v) => setState(() => _date = v),
-                  ),
-                  const SizedBox(height: 16),
-                  LumenTimePicker(
-                    label: 'Time',
-                    value: _time,
-                    onChanged: (v) => setState(() => _time = v),
-                  ),
-                  const SizedBox(height: 16),
                   LumenColorField(
                     label: 'Color',
                     value: _pickedColor,
@@ -480,6 +465,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 ],
               ),
             ),
+            _section('Date & time', const DateTimeSection()),
             _section('Upload progress', const FileUploadSection()),
             _section('Upload panel', const FileUploadPanelSection()),
             _section(

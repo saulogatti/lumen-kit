@@ -487,6 +487,7 @@ LumenDropdown<String>(
   onChanged: (v) => setState(() => current = v ?? current),
 );
 
+// Opens the kit's month grid, with a year list and a text field.
 LumenDatePicker(
   label: 'Start',
   value: date,

@@ -68,12 +68,34 @@
     </section>
     
 <section class="desc markdown">
-  <p>Opens the Material date picker with colors from the active Lumen palette.</p>
-<p>The colors come from <code>context</code> and apply to the route's Material theme.
-Provide an <code>initialDate</code> between <code>firstDate</code> and <code>lastDate</code>, inclusive.
-<code>accentColor</code> overrides the primary palette color and <code>helpText</code> is
-forwarded to <a href="https://pub.dev/documentation/material_ui/1.11.1/material_ui/showDatePicker.html">showDatePicker</a>. Returns the selected date or <code>null</code> on
-dismissal.</p>
+  <p>Opens a Lumen dialog for picking a date from a month grid.</p>
+<p>The dialog shows the selected date, a month grid with previous and next
+month buttons, a year list opened from the month title, and a text field
+for typing the date. The returned date has no time of day.</p>
+<p>The palette and style come from <code>context</code>, as the Material-based picker
+did, so a <a href="../lumen_kit/LumenScope-class.html">LumenScope</a> that only wraps the caller still applies. Text,
+localizations and media settings come from the dialog route. Month and
+weekday names, the date format of the text field, its errors, and the
+button labels come from <a href="https://pub.dev/documentation/material_ui/1.11.1/material_ui/MaterialLocalizations-class.html">MaterialLocalizations</a>. <code>helpText</code> replaces the
+title, which defaults to <a href="https://pub.dev/documentation/material_ui/1.11.1/material_ui/MaterialLocalizations/datePickerHelpText.html">MaterialLocalizations.datePickerHelpText</a>.</p>
+<p><code>initialDate</code> is moved into the range from <code>firstDate</code> to <code>lastDate</code>,
+inclusive, so a date outside it opens on the nearest end. <code>firstDate</code>
+must not be after <code>lastDate</code>. <code>accentColor</code> overrides the primary palette
+color for the dialog border, the selected day and the buttons.</p>
+<p>Arrow keys move the selection by a day or a week once the grid is focused,
+which it is when the dialog opens. Page Up and Page Down move it by a
+month, or by a year with Shift. In the year list, the arrows move by one
+year or one row and Enter returns to the grid. Enter in the grid or the
+text field confirms; Escape and a tap on the barrier complete with <code>null</code>.
+Screen readers read each day as a full date, and the selected one as
+selected.</p>
+<pre class="language-dart"><code class="language-dart">final DateTime? picked = await showLumenDatePicker(
+  context: context,
+  initialDate: DateTime.now(),
+  firstDate: DateTime(2020),
+  lastDate: DateTime(2030),
+);
+</code></pre>
 </section>
 
 
@@ -88,33 +110,24 @@ dismissal.</p>
   Color? accentColor,
   String? helpText,
 }) {
-  final p = LumenThemeExt.of(context).palette;
-  final accent = accentColor ?? p.primary;
+  final first = DateUtils.dateOnly(firstDate);
+  final last = DateUtils.dateOnly(lastDate);
+  assert(!first.isAfter(last), &#39;firstDate must not be after lastDate.&#39;);
+  final theme = LumenThemeExt.of(context);
 
-  return showDatePicker(
+  return showDialog&lt;DateTime&gt;(
     context: context,
-    initialDate: initialDate,
-    firstDate: firstDate,
-    lastDate: lastDate,
-    helpText: helpText,
-    builder: (ctx, child) {
-      final base = Theme.of(ctx);
-      return Theme(
-        data: base.copyWith(
-          colorScheme: base.colorScheme.copyWith(
-            primary: accent,
-            onPrimary: p.textPrimary,
-            surface: p.surface,
-            onSurface: p.textPrimary,
-          ),
-          dialogTheme: DialogThemeData(backgroundColor: p.backgroundMid),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(foregroundColor: accent),
-          ),
-        ),
-        child: child ?? const SizedBox.shrink(),
-      );
-    },
+    builder: (_) =&gt; LumenScope(
+      palette: theme.palette,
+      style: theme.style,
+      child: _LumenDatePickerDialog(
+        initialDate: _clampDate(DateUtils.dateOnly(initialDate), first, last),
+        firstDate: first,
+        lastDate: last,
+        accentColor: accentColor,
+        helpText: helpText,
+      ),
+    ),
   );
 }</code></pre>
 </section>
