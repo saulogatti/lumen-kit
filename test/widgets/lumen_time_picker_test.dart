@@ -149,25 +149,34 @@ void main() {
     expect(picked, isEmpty);
   });
 
-  testWidgets('12 h: a hora gira dentro do período e AM/PM troca o período', (tester) async {
+  testWidgets('12 h: a hora troca AM e PM ao passar do 11 e o toggle troca o período', (
+    tester,
+  ) async {
     final results = await _open(tester, initial: const TimeOfDay(hour: 23, minute: 30));
     expect(find.text('11:30 PM'), findsOneWidget);
     expect(find.text('11'), findsOneWidget);
     expect(find.text('30'), findsOneWidget);
 
     await _step(tester, 0, 1);
-    expect(find.text('12:30 PM'), findsOneWidget);
+    expect(find.text('12:30 AM'), findsOneWidget);
     await _step(tester, 0, 1);
-    expect(find.text('1:30 PM'), findsOneWidget);
+    expect(find.text('1:30 AM'), findsOneWidget);
     await _step(tester, 0, -1);
     await _step(tester, 0, -1);
     expect(find.text('11:30 PM'), findsOneWidget);
 
+    // 11 AM goes up to 12 PM and back down to 11 AM.
     await tester.tap(find.text('AM'));
     await tester.pump();
     expect(find.text('11:30 AM'), findsOneWidget);
+    await _step(tester, 0, 1);
+    expect(find.text('12:30 PM'), findsOneWidget);
+    await _step(tester, 0, -1);
+    expect(find.text('11:30 AM'), findsOneWidget);
+
     await tester.tap(find.text('PM'));
     await tester.pump();
+    expect(find.text('11:30 PM'), findsOneWidget);
     await tester.tap(find.text('AM'));
     await tester.pump();
     await _ok(tester);

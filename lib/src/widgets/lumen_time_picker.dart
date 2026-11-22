@@ -46,7 +46,8 @@ import 'package:material_ui/material_ui.dart';
 /// focused column by one and wrap around; Left and Right move between the
 /// columns. Enter confirms; Escape and a tap on the barrier complete with
 /// `null`. Screen readers adjust the hour and the minute as separate values.
-/// Changing the hour in 12-hour format keeps AM or PM.
+/// In 12-hour format the hour column moves through the whole day, so going
+/// up from 11 AM gives 12 PM and going down from 12 AM gives 11 PM.
 ///
 /// ```dart
 /// final TimeOfDay? picked = await showLumenTimePicker(
@@ -269,7 +270,7 @@ class _LumenTimePickerDialogState extends State<_LumenTimePickerDialog> {
                 ),
             ],
           ),
-          if (_input) _inputs(l, p, accent, period) else _columns(l, accent, use24, period),
+          if (_input) _inputs(l, p, accent, period) else _columns(l, accent, period),
         ],
       ),
       actions: <Widget>[
@@ -309,15 +310,10 @@ class _LumenTimePickerDialogState extends State<_LumenTimePickerDialog> {
     }
   }
 
-  Widget _columns(MaterialLocalizations l, Color accent, bool use24, Widget? period) {
-    // In 12-hour format the hour wraps within AM or PM.
-    TimeOfDay stepHour(int delta) => use24
-        ? _withHour(_time, _time.hour + delta)
-        : _withHour(
-            _time,
-            _time.period.index * TimeOfDay.hoursPerPeriod +
-                (_time.hour + delta) % TimeOfDay.hoursPerPeriod,
-          );
+  Widget _columns(MaterialLocalizations l, Color accent, Widget? period) {
+    // The hour steps through the whole day, so in 12-hour format going past
+    // 11 also switches AM and PM, as on a clock.
+    TimeOfDay stepHour(int delta) => _withHour(_time, _time.hour + delta);
     String hour(int delta) =>
         l.formatHour(stepHour(delta), alwaysUse24HourFormat: widget.alwaysUse24HourFormat);
 

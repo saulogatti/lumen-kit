@@ -91,7 +91,8 @@ the columns and the buttons.</p>
 focused column by one and wrap around; Left and Right move between the
 columns. Enter confirms; Escape and a tap on the barrier complete with
 <code>null</code>. Screen readers adjust the hour and the minute as separate values.
-Changing the hour in 12-hour format keeps AM or PM.</p>
+In 12-hour format the hour column moves through the whole day, so going
+up from 11 AM gives 12 PM and going down from 12 AM gives 11 PM.</p>
 <pre class="language-dart"><code class="language-dart">final TimeOfDay? picked = await showLumenTimePicker(
   context: context,
   initialTime: TimeOfDay.now(),
