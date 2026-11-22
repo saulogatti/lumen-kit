@@ -1,7 +1,24 @@
 # Changelog
 
-## Unreleased
+## 1.5.0
 
+- Added `LumenFileUpload`, a list of files with name, percentage, progress
+  bar, and a status label colored by `LumenUploadStatus` (pending, uploading,
+  completed, failed). Each file is an immutable `LumenUploadItem`; the app
+  picks and uploads the files and rebuilds the list with `copyWith` as
+  progress changes. Screen readers announce each file name with its
+  percentage. Picking and dropping files stay with the app, so the kit adds no
+  plugin dependency.
+  ([#41](https://github.com/saulogatti/lumen-kit/issues/41))
+- Added `LumenFileUploadPanel`, a framed upload area with an app-supplied
+  icon, title, and hint, an add button that calls `onPick`, and the
+  `LumenFileUpload` list below. `onPick: null` disables the button, `busy`
+  shows its spinner, and `highlighted` draws the drag-over state (accent
+  border, tinted fill, and glow, following `LumenStyle`, instant with reduced
+  motion). The app still opens the picker and handles drops.
+  `LumenFileUpload` gained `onRemove` (every row) and `onRetry` (failed rows),
+  both called with the row index, plus `removeLabel` and `retryLabel`.
+  ([#44](https://github.com/saulogatti/lumen-kit/issues/44))
 - `showLumenDatePicker` and `LumenDatePicker` now open a dialog drawn by the
   kit instead of Material's date picker: the selected date, a month grid with
   previous and next month buttons, a year list opened from the month title,
@@ -25,26 +42,9 @@
   In 12-hour format the hour column moves like a clock: up from 11 AM gives
   12 PM. Up and Down change the focused column, Left and Right move between
   columns, Enter confirms and Escape cancels. Screen readers adjust the hour
-  and the minute as separate values. Tests that looked for `TimePickerDialog` or
-  `TimePickerTheme` need to look for the text or semantics instead.
+  and the minute as separate values. Tests that looked for `TimePickerDialog`
+  or `TimePickerTheme` need to look for the text or semantics instead.
   ([#40](https://github.com/saulogatti/lumen-kit/issues/40))
-- Added `LumenFileUpload`, a list of files with name, percentage, progress
-  bar, and a status label colored by `LumenUploadStatus` (pending, uploading,
-  completed, failed). Each file is an immutable `LumenUploadItem`; the app
-  picks and uploads the files and rebuilds the list with `copyWith` as
-  progress changes. Screen readers announce each file name with its
-  percentage. Picking and dropping files stay with the app, so the kit adds no
-  plugin dependency.
-  ([#41](https://github.com/saulogatti/lumen-kit/issues/41))
-- Added `LumenFileUploadPanel`, a framed upload area with an app-supplied
-  icon, title, and hint, an add button that calls `onPick`, and the
-  `LumenFileUpload` list below. `onPick: null` disables the button, `busy`
-  shows its spinner, and `highlighted` draws the drag-over state (accent
-  border, tinted fill, and glow, following `LumenStyle`, instant with reduced
-  motion). The app still opens the picker and handles drops.
-  `LumenFileUpload` gained `onRemove` (every row) and `onRetry` (failed rows),
-  both called with the row index, plus `removeLabel` and `retryLabel`.
-  ([#44](https://github.com/saulogatti/lumen-kit/issues/44))
 - `LumenCircularProgress.glowColor` now colors the blurred glow behind the
   arc. It used to be ignored. Without it the glow still follows the arc
   gradient, so the default look is unchanged; apps that already pass
