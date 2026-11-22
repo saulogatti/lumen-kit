@@ -22,9 +22,10 @@
   unchanged; `initialEntryMode` `dial` opens the columns, `input` the fields,
   and the `*Only` modes hide the switch. 12 or 24 hours follow
   `use24HourFormat`, or `MediaQuery.alwaysUse24HourFormat` of the caller.
-  Up and Down change the focused column, Left and Right move between columns,
-  Enter confirms and Escape cancels. Screen readers adjust the hour and the
-  minute as separate values. Tests that looked for `TimePickerDialog` or
+  In 12-hour format the hour column moves like a clock: up from 11 AM gives
+  12 PM. Up and Down change the focused column, Left and Right move between
+  columns, Enter confirms and Escape cancels. Screen readers adjust the hour
+  and the minute as separate values. Tests that looked for `TimePickerDialog` or
   `TimePickerTheme` need to look for the text or semantics instead.
   ([#40](https://github.com/saulogatti/lumen-kit/issues/40))
 - Added `LumenFileUpload`, a list of files with name, percentage, progress
