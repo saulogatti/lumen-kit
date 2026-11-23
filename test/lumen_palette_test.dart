@@ -26,6 +26,20 @@ void main() {
       expect(light.textPrimary.computeLuminance(), lessThan(0.05));
     });
 
+    test('fromSeed escurece o laranja e respeita a secundária explícita', () {
+      const orange = Color(0xFFFF6F00);
+      for (final brightness in Brightness.values) {
+        final theme = AppTheme.fromSeed(primary: orange, brightness: brightness);
+        final palette = theme.extension<LumenThemeExt>()!.palette;
+        expect(palette.secondary.toARGB32(), 0xFFCC5900);
+        expect(palette.tertiary.toARGB32(), 0xFFE66400);
+      }
+
+      const blue = Color(0xFF0000FF);
+      final custom = LumenPalette.fromSeed(primary: orange, secondary: blue);
+      expect(custom.secondary.toARGB32(), blue.toARGB32());
+    });
+
     test('copyWith recalcula o gradiente quando um accent muda', () {
       final p = LumenPalette.defaultDark().copyWith(primary: const Color(0xFFFF8A00));
       expect(p.accentGradient.colors.first, const Color(0xFFFF8A00));

@@ -213,7 +213,7 @@ MaterialApp(theme: AppTheme.fromPreset(LumenPreset.matrix), home: ...);
 MaterialApp(
   theme: AppTheme.fromSeed(
     primary: Colors.greenAccent,
-    secondary: Colors.orangeAccent, // optional
+    secondary: Colors.orangeAccent, // omit for a darker shade of primary
     brightness: Brightness.dark,     // or Brightness.light
   ),
   home: ...,

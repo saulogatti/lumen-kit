@@ -119,7 +119,8 @@ class LumenPalette {
 
   /// Generates a palette from [primary] and optional [secondary] and [tertiary].
   ///
-  /// When omitted, [secondary] uses a hue 150 degrees from [primary], and
+  /// When omitted, [secondary] keeps the hue and saturation of [primary] at
+  /// 80% of its HSL lightness. By default,
   /// [tertiary] blends the two along the shorter hue arc. Background and text
   /// tones use the tertiary hue and the requested [brightness]. Success,
   /// warning, and danger use the kit defaults.
@@ -150,7 +151,9 @@ class LumenPalette {
     Color? danger,
   }) {
     final p = HSLColor.fromColor(primary);
-    final s = secondary != null ? HSLColor.fromColor(secondary) : p.withHue((p.hue + 150) % 360);
+    final s = secondary != null
+        ? HSLColor.fromColor(secondary)
+        : p.withLightness(p.lightness * 0.8);
     final sec = s.toColor();
     final successResult = success ?? AppColors.success;
     final warningResult = warning ?? AppColors.warning;
