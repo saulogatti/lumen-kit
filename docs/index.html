@@ -91,7 +91,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 </tr>
 <tr>
 <td>Display</td>
-<td><code>LumenBadge</code>, <code>LumenTag</code>, <code>LumenAvatar</code>, <code>LumenAvatarGroup</code>, <code>LumenListTile</code>, <code>LumenList</code>, <code>LumenEmptyState</code>, <code>LumenDivider</code>, <code>LumenExpansionTile</code>, <code>LumenDataTable</code>, <code>LumenTableRow</code>, <code>LumenTimeline</code></td>
+<td><code>LumenBadge</code>, <code>LumenTag</code>, <code>LumenAvatar</code>, <code>LumenAvatarGroup</code>, <code>LumenListTile</code>, <code>LumenList</code>, <code>LumenActionList</code>, <code>LumenEmptyState</code>, <code>LumenDivider</code>, <code>LumenExpansionTile</code>, <code>LumenDataTable</code>, <code>LumenTableRow</code>, <code>LumenTimeline</code></td>
 </tr>
 </tbody>
 </table>
@@ -394,6 +394,38 @@ when the system requests reduced motion. Transitions using
   ],
   child: child,
 );
+</code></pre>
+<h2 id="action-list">Action list</h2>
+<p><code>LumenActionList</code> takes a list of <code>LumenActionListItem</code> widgets. Each row can
+show a leading icon and up to two icon buttons. The action label serves as
+the tooltip and accessible name. Omit <code>onPressed</code> to disable a button.
+Give the list a bounded height so it can scroll when the rows exceed the
+available space. It builds rows on demand. Use <code>primary</code> to opt into the
+nearest <code>PrimaryScrollController</code>, <code>padding</code> to inset the list contents,
+and <code>spacing</code> to set the gap between rows. Omitted or <code>null</code> values default
+to <code>false</code>, <code>EdgeInsets.zero</code>, and <code>8</code> logical pixels, respectively.</p>
+<pre class="language-dart"><code class="language-dart">SizedBox(
+  height: 200,
+  child: LumenActionList(
+    items: &lt;LumenActionListItem&gt;[
+      LumenActionListItem(
+        title: 'Project brief',
+        subtitle: 'Updated today',
+        icon: Icons.description_outlined,
+        primaryAction: LumenListAction(
+          icon: Icons.edit_outlined,
+          label: 'Edit project brief',
+          onPressed: editBrief,
+        ),
+        secondaryAction: LumenListAction(
+          icon: Icons.archive_outlined,
+          label: 'Archive project brief',
+          onPressed: archiveBrief,
+        ),
+      ),
+    ],
+  ),
+)
 </code></pre>
 <h2 id="large-list-and-code">Large list and code</h2>
 <p><code>LumenList</code> builds rows on demand. Supply a <code>separatorBuilder</code> to add

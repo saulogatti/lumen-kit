@@ -18,7 +18,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
 | Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
-| Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow`, `LumenTimeline` |
+| Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenActionList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow`, `LumenTimeline` |
 
 The widgets take data, callbacks, and theme tokens so the app owns its business rules.
 
@@ -336,6 +336,42 @@ LumenAnimatedGridBackground(
   ],
   child: child,
 );
+```
+
+## Action list
+
+`LumenActionList` takes a list of `LumenActionListItem` widgets. Each row can
+show a leading icon and up to two icon buttons. The action label serves as
+the tooltip and accessible name. Omit `onPressed` to disable a button.
+Give the list a bounded height so it can scroll when the rows exceed the
+available space. It builds rows on demand. Use `primary` to opt into the
+nearest `PrimaryScrollController`, `padding` to inset the list contents,
+and `spacing` to set the gap between rows. Omitted or `null` values default
+to `false`, `EdgeInsets.zero`, and `8` logical pixels, respectively.
+
+```dart
+SizedBox(
+  height: 200,
+  child: LumenActionList(
+    items: <LumenActionListItem>[
+      LumenActionListItem(
+        title: 'Project brief',
+        subtitle: 'Updated today',
+        icon: Icons.description_outlined,
+        primaryAction: LumenListAction(
+          icon: Icons.edit_outlined,
+          label: 'Edit project brief',
+          onPressed: editBrief,
+        ),
+        secondaryAction: LumenListAction(
+          icon: Icons.archive_outlined,
+          label: 'Archive project brief',
+          onPressed: archiveBrief,
+        ),
+      ),
+    ],
+  ),
+)
 ```
 
 ## Large list and code
