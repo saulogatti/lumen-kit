@@ -164,9 +164,9 @@ when adding Lumen to an existing Flutter app.</li>
 <h2 id="installation">Installation</h2>
 <h3 id="published-package">Published package</h3>
 <p>Use the <a href="https://pub.dev/packages/lumen_kit">pub.dev release</a> for the published
-version. This example uses the <code>1.5.0</code> release constraints.</p>
+version. This example uses the <code>1.6.0</code> release constraints.</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  lumen_kit: ^1.5.0
+  lumen_kit: ^1.6.0
   material_ui: ^1.11.1
 </code></pre>
 <h3 id="git-checkout">Git checkout</h3>
@@ -247,7 +247,7 @@ MaterialApp(theme: AppTheme.fromPreset(LumenPreset.matrix), home: ...);
 MaterialApp(
   theme: AppTheme.fromSeed(
     primary: Colors.greenAccent,
-    secondary: Colors.orangeAccent, // optional
+    secondary: Colors.orangeAccent, // omit for a darker shade of primary
     brightness: Brightness.dark,     // or Brightness.light
   ),
   home: ...,
@@ -768,7 +768,7 @@ To use just the widgets, without any themes, import
 <footer>
   <span class="no-break">
     lumen_kit
-      1.5.0
+      1.6.0
   </span>
   
 </footer>
