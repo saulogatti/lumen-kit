@@ -105,11 +105,11 @@ LumenAnimatedSwitcher(
 ### Published package
 
 Use the [pub.dev release](https://pub.dev/packages/lumen_kit) for the published
-version. This example uses the `1.5.0` release constraints.
+version. This example uses the `1.6.0` release constraints.
 
 ```yaml
 dependencies:
-  lumen_kit: ^1.5.0
+  lumen_kit: ^1.6.0
   material_ui: ^1.11.1
 ```
 

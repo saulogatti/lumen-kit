@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.6.0
 
 - Solid actions and badge labels choose a foreground that contrasts with their
   fill. Material themes honor the palette tertiary color and choose contrasting
