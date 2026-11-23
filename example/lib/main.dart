@@ -953,6 +953,44 @@ class _GalleryScreenState extends State<_GalleryScreen> {
               ),
             ),
             _section(
+              'Action list',
+              SizedBox(
+                height: 200,
+                child: LumenActionList(
+                  items: <LumenActionListItem>[
+                    LumenActionListItem(
+                      title: 'Project brief',
+                      subtitle: 'Updated today',
+                      icon: Icons.description_outlined,
+                      primaryAction: LumenListAction(
+                        icon: Icons.edit_outlined,
+                        label: 'Edit project brief',
+                        onPressed: () =>
+                            showLumenSnackBar(context: context, message: 'Edit selected'),
+                      ),
+                      secondaryAction: LumenListAction(
+                        icon: Icons.archive_outlined,
+                        label: 'Archive project brief',
+                        onPressed: () =>
+                            showLumenSnackBar(context: context, message: 'Archive selected'),
+                      ),
+                    ),
+                    LumenActionListItem(
+                      title: 'Meeting notes',
+                      icon: Icons.notes_outlined,
+                      primaryAction: LumenListAction(
+                        icon: Icons.visibility_outlined,
+                        label: 'Preview meeting notes',
+                        onPressed: () =>
+                            showLumenSnackBar(context: context, message: 'Preview selected'),
+                      ),
+                    ),
+                    const LumenActionListItem(title: 'Shared references'),
+                  ],
+                ),
+              ),
+            ),
+            _section(
               'Data table',
               const LumenDataTable(
                 columns: <DataColumn>[

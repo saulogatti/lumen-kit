@@ -19,6 +19,7 @@ export 'src/foundation/lumen_pressable.dart';
 export 'src/foundation/lumen_tokens.dart';
 export 'src/theme/lumen_palette.dart';
 export 'src/theme/lumen_style.dart';
+export 'src/widgets/lumen_action_list.dart';
 export 'src/widgets/lumen_app_bar.dart';
 export 'src/widgets/lumen_avatar.dart';
 export 'src/widgets/lumen_avatar_group.dart';
