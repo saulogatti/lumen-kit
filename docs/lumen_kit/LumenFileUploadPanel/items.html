@@ -53,26 +53,34 @@
 </h1></div>
 
     
-      <section class="multi-line-signature">
-        
-        <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../lumen_kit/LumenUploadItem-class.html">LumenUploadItem</a></span>&gt;</span>
-        <span class="name ">items</span>
-        <div class="features"><span class="feature">final</span></div>
-
-      </section>
-      
-<section class="desc markdown">
-  <p>Files shown in the <a href="../../lumen_kit/LumenFileUpload-class.html">LumenFileUpload</a> list, in display order.</p>
-</section>
-
-      
-<section class="summary source-code" id="source">
-  <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final List&lt;LumenUploadItem&gt; items;</code></pre>
-</section>
-
 
     
+        
+  <section id="getter">
+    <section class="multi-line-signature">
+      
+      <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../lumen_kit/LumenUploadItem-class.html">LumenUploadItem</a></span>&gt;</span></span>
+      get
+      <span class="name ">items</span>
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Files shown in the <a href="../../lumen_kit/LumenFileUpload-class.html">LumenFileUpload</a> list, in display order.
+With <a href="../../lumen_kit/LumenFileUploadPanel/LumenFileUploadPanel.fromListenables.html">LumenFileUploadPanel.fromListenables</a>, returns a snapshot of the current values.</p>
+</section>
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">List&lt;LumenUploadItem&gt; get items =&gt;
+    _sources?.map((source) =&gt; source.value).toList(growable: false) ?? _items;</code></pre>
+</section>
+
+  </section>
+
+
 </div> <!-- /.main-content -->
 <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
   <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->

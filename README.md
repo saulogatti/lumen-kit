@@ -16,11 +16,37 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
 | Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenFileUpload`, `LumenFileUploadPanel`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenNumberField`, `LumenRating`, `LumenPinField` |
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
-| Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
+| Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenProgressList`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
 | Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenActionList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow`, `LumenTimeline` |
 
 The widgets take data, callbacks, and theme tokens so the app owns its business rules.
+
+## Task progress
+
+Use `LumenProgressList` for work such as indexing records or rendering frames.
+Keep one progress source per task in your controller. Publish a fraction from
+0 to 1, or `null` while the total is unknown. Only the listening row rebuilds.
+
+```dart
+// In your controller:
+final indexing = ValueNotifier<double?>(null);
+
+// In your screen:
+SizedBox(
+  height: 200,
+  child: LumenProgressList(
+    items: [LumenProgressItem(label: 'Index records', progress: indexing)],
+  ),
+)
+
+// In your controller, when 42 of 100 records have been indexed:
+indexing.value = 42 / 100;
+```
+
+The list scrolls inside the available height and builds rows on demand. A task
+updated off screen shows its latest value when you scroll to it. Dispose the
+notifiers when the controller releases the tasks.
 
 ## File uploads
 
@@ -74,6 +100,44 @@ LumenFileUploadPanel(
   onRetry: _restartUpload,
 )
 ```
+
+### Observe upload or download progress
+
+Use `LumenFileUpload.fromListenables` or `LumenFileUploadPanel.fromListenables`
+when a transfer service reports progress while the screen is open. Keep one
+`ValueNotifier<LumenUploadItem>` per file ID in your app's controller. Each row
+reads the latest value when the screen opens and listens for subsequent changes.
+
+```dart
+// In the controller, register each file once when it enters the queue.
+final files = <String, ValueNotifier<LumenUploadItem>>{
+  'invoice': ValueNotifier(const LumenUploadItem(name: 'invoice.pdf', statusLabel: 'Queued')),
+};
+
+// Call from the controller's subscription to the download service.
+void onProgress(String id, int received, int total) {
+  final file = files[id];
+  if (file == null) return;
+  file.value = file.value.copyWith(
+    status: .uploading,
+    statusLabel: total > 0 ? 'Downloading' : 'Downloading · $received bytes',
+    progress: total > 0 ? (received / total).clamp(0.0, 1.0).toDouble() : null,
+  );
+}
+
+void onSaved(String id) {
+  final file = files[id];
+  if (file == null) return;
+  file.value = file.value.copyWith(status: .completed, statusLabel: 'Saved', progress: 1);
+}
+
+// In the screen's build method:
+// LumenFileUpload.fromListenables(items: controller.files.values.toList())
+```
+
+Rebuild the list when files are added, removed, or reordered. Progress updates
+rebuild only the row that changed. The controller owns the notifiers and
+disposes them when it releases the transfers.
 
 ## Transitions
 

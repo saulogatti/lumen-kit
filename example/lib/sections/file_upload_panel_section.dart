@@ -31,6 +31,9 @@ class _FileUploadPanelSectionState extends State<FileUploadPanelSection> {
   void dispose() {
     _picker?.cancel();
     _uploads?.cancel();
+    for (final file in _files) {
+      file.dispose();
+    }
     super.dispose();
   }
 
@@ -40,15 +43,15 @@ class _FileUploadPanelSectionState extends State<FileUploadPanelSection> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
       children: <Widget>[
-        LumenFileUploadPanel(
+        LumenFileUploadPanel.fromListenables(
           title: 'Attach documents',
           hint: 'PDF or PNG, up to 10 MB',
           actionLabel: 'Choose files',
           onPick: _pick,
           busy: _picker != null,
           highlighted: _dragging,
-          items: <LumenUploadItem>[for (final file in _files) file.item],
-          onRemove: (index) => setState(() => _files.removeAt(index)),
+          items: _files,
+          onRemove: (index) => setState(() => _files.removeAt(index).dispose()),
           onRetry: _retry,
         ),
         LumenSwitch(
@@ -83,24 +86,22 @@ class _FileUploadPanelSectionState extends State<FileUploadPanelSection> {
   }
 
   void _retry(int index) {
-    setState(() {
-      final file = _files[index];
-      file.item = file.item.copyWith(
-        status: LumenUploadStatus.uploading,
-        statusLabel: 'Uploading',
-        progress: 0,
-      );
-    });
+    final file = _files[index];
+    file.value = file.value.copyWith(
+      status: LumenUploadStatus.uploading,
+      statusLabel: 'Uploading',
+      progress: 0,
+    );
     _startUploads();
   }
 
   void _startUploads() {
-    _uploads ??= Timer.periodic(_tick, (_) => setState(_advance));
+    _uploads ??= Timer.periodic(_tick, (_) => _advance());
   }
 
   void _advance() {
     for (final file in _files) {
-      final item = file.item;
+      final item = file.value;
       if (item.status != LumenUploadStatus.uploading) {
         continue;
       }
@@ -108,22 +109,22 @@ class _FileUploadPanelSectionState extends State<FileUploadPanelSection> {
       final progress = ((item.progress * _steps).round() + 1) / _steps;
       if (file.failHalfway && progress >= 0.5) {
         file.failHalfway = false;
-        file.item = item.copyWith(
+        file.value = item.copyWith(
           status: LumenUploadStatus.failed,
           statusLabel: 'Connection lost',
           progress: progress,
         );
       } else if (progress >= 1) {
-        file.item = item.copyWith(
+        file.value = item.copyWith(
           status: LumenUploadStatus.completed,
           statusLabel: 'Uploaded',
           progress: 1,
         );
       } else {
-        file.item = item.copyWith(progress: progress);
+        file.value = item.copyWith(progress: progress);
       }
     }
-    if (!_files.any((file) => file.item.status == LumenUploadStatus.uploading)) {
+    if (!_files.any((file) => file.value.status == LumenUploadStatus.uploading)) {
       _uploads?.cancel();
       _uploads = null;
     }
@@ -131,9 +132,8 @@ class _FileUploadPanelSectionState extends State<FileUploadPanelSection> {
 }
 
 /// A gallery file and whether its first upload attempt should fail.
-class _SimulatedFile {
-  LumenUploadItem item;
+class _SimulatedFile extends ValueNotifier<LumenUploadItem> {
   bool failHalfway;
 
-  _SimulatedFile(this.item, {required this.failHalfway});
+  _SimulatedFile(super._value, {required this.failHalfway});
 }

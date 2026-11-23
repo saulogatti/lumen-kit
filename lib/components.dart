@@ -54,6 +54,7 @@ export 'src/widgets/lumen_number_field.dart';
 export 'src/widgets/lumen_page_indicator.dart';
 export 'src/widgets/lumen_pin_field.dart';
 export 'src/widgets/lumen_progress_indicator.dart';
+export 'src/widgets/lumen_progress_list.dart';
 export 'src/widgets/lumen_quantity_stepper.dart';
 export 'src/widgets/lumen_radio.dart';
 export 'src/widgets/lumen_rating.dart';

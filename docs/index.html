@@ -83,7 +83,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 </tr>
 <tr>
 <td>Feedback</td>
-<td><code>LumenStatusChip</code>, <code>LumenBanner</code>, <code>LumenDialog</code>, <code>showLumenSnackBar</code>, <code>showLumenToast</code>, <code>LumenLinearProgress</code>, <code>LumenCircularProgress</code>, <code>LumenSkeleton</code>, <code>LumenTooltip</code>, <code>LumenLoadingPanel</code>, <code>LumenLoadingOverlay</code> (+ <code>showLumenLoading</code>)</td>
+<td><code>LumenStatusChip</code>, <code>LumenBanner</code>, <code>LumenDialog</code>, <code>showLumenSnackBar</code>, <code>showLumenToast</code>, <code>LumenLinearProgress</code>, <code>LumenProgressList</code>, <code>LumenCircularProgress</code>, <code>LumenSkeleton</code>, <code>LumenTooltip</code>, <code>LumenLoadingPanel</code>, <code>LumenLoadingOverlay</code> (+ <code>showLumenLoading</code>)</td>
 </tr>
 <tr>
 <td>Navigation</td>
@@ -96,6 +96,27 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 </tbody>
 </table>
 <p>The widgets take data, callbacks, and theme tokens so the app owns its business rules.</p>
+<h2 id="task-progress">Task progress</h2>
+<p>Use <code>LumenProgressList</code> for work such as indexing records or rendering frames.
+Keep one progress source per task in your controller. Publish a fraction from
+0 to 1, or <code>null</code> while the total is unknown. Only the listening row rebuilds.</p>
+<pre class="language-dart"><code class="language-dart">// In your controller:
+final indexing = ValueNotifier&lt;double?&gt;(null);
+
+// In your screen:
+SizedBox(
+  height: 200,
+  child: LumenProgressList(
+    items: [LumenProgressItem(label: 'Index records', progress: indexing)],
+  ),
+)
+
+// In your controller, when 42 of 100 records have been indexed:
+indexing.value = 42 / 100;
+</code></pre>
+<p>The list scrolls inside the available height and builds rows on demand. A task
+updated off screen shows its latest value when you scroll to it. Dispose the
+notifiers when the controller releases the tasks.</p>
 <h2 id="file-uploads">File uploads</h2>
 <p><code>LumenFileUpload</code> displays the name, status label, and progress of each file.
 The app owns file selection, drop handling, and uploads. <code>LumenUploadItem</code> is
@@ -140,6 +161,39 @@ spinner.</p>
   onRetry: _restartUpload,
 )
 </code></pre>
+<h3 id="observe-upload-or-download-progress">Observe upload or download progress</h3>
+<p>Use <code>LumenFileUpload.fromListenables</code> or <code>LumenFileUploadPanel.fromListenables</code>
+when a transfer service reports progress while the screen is open. Keep one
+<code>ValueNotifier&lt;LumenUploadItem&gt;</code> per file ID in your app's controller. Each row
+reads the latest value when the screen opens and listens for subsequent changes.</p>
+<pre class="language-dart"><code class="language-dart">// In the controller, register each file once when it enters the queue.
+final files = &lt;String, ValueNotifier&lt;LumenUploadItem&gt;&gt;{
+  'invoice': ValueNotifier(const LumenUploadItem(name: 'invoice.pdf', statusLabel: 'Queued')),
+};
+
+// Call from the controller's subscription to the download service.
+void onProgress(String id, int received, int total) {
+  final file = files[id];
+  if (file == null) return;
+  file.value = file.value.copyWith(
+    status: .uploading,
+    statusLabel: total &gt; 0 ? 'Downloading' : 'Downloading · $received bytes',
+    progress: total &gt; 0 ? (received / total).clamp(0.0, 1.0).toDouble() : null,
+  );
+}
+
+void onSaved(String id) {
+  final file = files[id];
+  if (file == null) return;
+  file.value = file.value.copyWith(status: .completed, statusLabel: 'Saved', progress: 1);
+}
+
+// In the screen's build method:
+// LumenFileUpload.fromListenables(items: controller.files.values.toList())
+</code></pre>
+<p>Rebuild the list when files are added, removed, or reordered. Progress updates
+rebuild only the row that changed. The controller owns the notifiers and
+disposes them when it releases the transfers.</p>
 <h2 id="transitions">Transitions</h2>
 <p><code>LumenEntrance</code> reveals content once; give it a new key to replay.
 <code>LumenAnimatedSwitcher</code> animates between children with different types or keys.

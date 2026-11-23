@@ -177,9 +177,17 @@ Widget build(BuildContext context) {
             ),
           ],
         ),
-        if (items.isNotEmpty)
+        if (_sources case final sources? when sources.isNotEmpty)
+          LumenFileUpload.fromListenables(
+            items: sources,
+            onRemove: onRemove,
+            onRetry: onRetry,
+            removeLabel: removeLabel,
+            retryLabel: retryLabel,
+          )
+        else if (_items.isNotEmpty)
           LumenFileUpload(
-            items: items,
+            items: _items,
             onRemove: onRemove,
             onRetry: onRetry,
             removeLabel: removeLabel,

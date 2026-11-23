@@ -99,6 +99,16 @@ class _GalleryScreen extends StatefulWidget {
 }
 
 class _GalleryScreenState extends State<_GalleryScreen> {
+  final List<ValueNotifier<double>> _tasks = List.generate(30, (_) => ValueNotifier<double>(0));
+
+  @override
+  void dispose() {
+    for (final task in _tasks) {
+      task.dispose();
+    }
+    super.dispose();
+  }
+
   double _progress = 0.35;
   bool _busy = false;
   String _slug = 'my-app';
@@ -663,6 +673,34 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                       SizedBox(width: 20),
                       LumenCircularProgress(size: 56, strokeWidth: 5),
                     ],
+                  ),
+                ],
+              ),
+            ),
+            _section(
+              'Task progress',
+              Column(
+                spacing: 8,
+                children: [
+                  SizedBox(
+                    height: 200,
+                    child: LumenProgressList(
+                      items: [
+                        for (var i = 0; i < _tasks.length; i++)
+                          LumenProgressItem(label: 'Index batch ${i + 1}', progress: _tasks[i]),
+                      ],
+                    ),
+                  ),
+                  LumenButton.outline(
+                    label: 'Advance next batch',
+                    onPressed: () {
+                      for (final task in _tasks) {
+                        if (task.value < 1) {
+                          task.value += 0.25;
+                          break;
+                        }
+                      }
+                    },
                   ),
                 ],
               ),

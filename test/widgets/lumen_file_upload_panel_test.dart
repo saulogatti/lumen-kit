@@ -232,6 +232,72 @@ void main() {
     );
   });
 
+  testWidgets('can scroll to and remove the last of 30 files on a 500px screen', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(360, 500);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
+
+    final items = <LumenUploadItem>[];
+    final upload = StatefulBuilder(
+      builder: (context, setState) => panel(
+        items: items,
+        onPick: () => setState(() {
+          items.addAll(List.generate(30, (index) => done.copyWith(name: 'file-${index + 1}.pdf')));
+        }),
+        onRemove: (index) => setState(() => items.removeAt(index)),
+      ),
+    );
+    await pumpBare(tester, SingleChildScrollView(child: upload));
+    await tester.tap(find.text('Choose files'));
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+    expect(items, hasLength(30));
+
+    final lastRemove = _tooltip('Delete').last;
+    expect(lastRemove.hitTestable(), findsNothing);
+    await tester.scrollUntilVisible(lastRemove, 350);
+    await tester.tap(lastRemove);
+    await tester.pump();
+    expect(items, hasLength(29));
+    expect(find.text('file-30.pdf'), findsNothing);
+  });
+
+  testWidgets('listenable panel updates one row and retries by current index', (tester) async {
+    final report = ValueNotifier(done.copyWith(progress: 0.6, status: .uploading));
+    final notes = ValueNotifier(failed);
+    addTearDown(report.dispose);
+    addTearDown(notes.dispose);
+    final retries = <int>[];
+    Future<void> render(List<ValueNotifier<LumenUploadItem>> sources) => pumpBare(
+      tester,
+      LumenFileUploadPanel.fromListenables(
+        title: 'Transfers',
+        actionLabel: 'Choose files',
+        onPick: null,
+        items: sources,
+        onRetry: retries.add,
+      ),
+    );
+
+    await render([report, notes]);
+    expect(find.text('60%'), findsOneWidget);
+    final unchanged = tester.widget<Text>(find.text('notes.txt'));
+    report.value = done;
+    await tester.pump();
+    expect(find.text('100%'), findsOneWidget);
+    expect(tester.widget<Text>(find.text('notes.txt')), same(unchanged));
+
+    await render([notes, report]);
+    await tester.tap(_tooltip('Retry'));
+    expect(retries, [0]);
+    await render([]);
+    expect(find.byType(LumenFileUpload), findsNothing);
+    report.value = done.copyWith(progress: 0.2);
+    await render([report]);
+    expect(find.text('20%'), findsOneWidget);
+  });
+
   testWidgets('passes items and per-file actions to the list', (tester) async {
     final removed = <int>[];
     final retried = <int>[];

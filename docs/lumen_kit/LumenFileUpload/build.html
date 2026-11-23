@@ -119,8 +119,17 @@ Widget build(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     spacing: 8,
     children: &lt;Widget&gt;[
-      for (var index = 0; index &lt; items.length; index++)
-        _itemUpload(p, s, index, items[index], textTheme, localizations),
+      if (_sources case final sources?)
+        for (var index = 0; index &lt; sources.length; index++)
+          ValueListenableBuilder&lt;LumenUploadItem&gt;(
+            key: ObjectKey(sources[index]),
+            valueListenable: sources[index],
+            builder: (context, item, child) =&gt;
+                _itemUpload(p, s, index, item, textTheme, localizations),
+          )
+      else
+        for (var index = 0; index &lt; _items.length; index++)
+          _itemUpload(p, s, index, _items[index], textTheme, localizations),
     ],
   );
 }</code></pre>

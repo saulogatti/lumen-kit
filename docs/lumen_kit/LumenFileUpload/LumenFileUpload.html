@@ -74,13 +74,13 @@ strings when the app uses another language.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">const LumenFileUpload({
-  required this.items,
+  required this._items,
   super.key,
   this.onRemove,
   this.onRetry,
   this.removeLabel = &#39;Remove&#39;,
   this.retryLabel = &#39;Retry&#39;,
-});</code></pre>
+}) : _sources = null;</code></pre>
 </section>
 
 

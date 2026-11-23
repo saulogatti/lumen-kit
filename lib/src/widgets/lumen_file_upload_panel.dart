@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:lumen_kit/src/foundation/lumen_decorations.dart';
 import 'package:lumen_kit/src/foundation/lumen_tokens.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
@@ -16,7 +17,8 @@ import 'package:material_ui/material_ui.dart';
 /// multiple selection.
 ///
 /// [items], [onRemove], [onRetry], [removeLabel], and [retryLabel] are passed
-/// to [LumenFileUpload]. The list is omitted while [items] is empty.
+/// to [LumenFileUpload]. Use [LumenFileUploadPanel.fromListenables] for per-file progress updates.
+/// The list is omitted while [items] is empty.
 ///
 /// ```dart
 /// LumenFileUploadPanel(
@@ -65,7 +67,12 @@ class LumenFileUploadPanel extends StatelessWidget {
   final bool highlighted;
 
   /// Files shown in the [LumenFileUpload] list, in display order.
-  final List<LumenUploadItem> items;
+  /// With [LumenFileUploadPanel.fromListenables], returns a snapshot of the current values.
+  List<LumenUploadItem> get items =>
+      _sources?.map((source) => source.value).toList(growable: false) ?? _items;
+
+  final List<LumenUploadItem> _items;
+  final List<ValueListenable<LumenUploadItem>>? _sources;
 
   /// Passed to [LumenFileUpload.onRemove].
   final ValueChanged<int>? onRemove;
@@ -104,13 +111,37 @@ class LumenFileUploadPanel extends StatelessWidget {
     this.actionIcon = Icons.add,
     this.busy = false,
     this.highlighted = false,
-    this.items = const <LumenUploadItem>[],
+    this._items = const <LumenUploadItem>[],
     this.onRemove,
     this.onRetry,
     this.removeLabel = 'Remove',
     this.retryLabel = 'Retry',
     this.accentColor,
-  });
+  }) : _sources = null;
+
+  /// Observes one app-owned [ValueListenable] per file in display order.
+  ///
+  /// Each row displays its current value immediately and rebuilds when that
+  /// source notifies. Keep a stable source per file and rebuild the parent
+  /// when files are added, removed, or reordered. The app disposes its sources.
+  const LumenFileUploadPanel.fromListenables({
+    required this.title,
+    required this.actionLabel,
+    required this.onPick,
+    required List<ValueListenable<LumenUploadItem>> items,
+    super.key,
+    this.hint,
+    this.icon = Icons.cloud_upload_outlined,
+    this.actionIcon = Icons.add,
+    this.busy = false,
+    this.highlighted = false,
+    this.onRemove,
+    this.onRetry,
+    this.removeLabel = 'Remove',
+    this.retryLabel = 'Retry',
+    this.accentColor,
+  }) : _sources = items,
+       _items = const <LumenUploadItem>[];
 
   @override
   Widget build(BuildContext context) {
@@ -182,9 +213,17 @@ class LumenFileUploadPanel extends StatelessWidget {
               ),
             ],
           ),
-          if (items.isNotEmpty)
+          if (_sources case final sources? when sources.isNotEmpty)
+            LumenFileUpload.fromListenables(
+              items: sources,
+              onRemove: onRemove,
+              onRetry: onRetry,
+              removeLabel: removeLabel,
+              retryLabel: retryLabel,
+            )
+          else if (_items.isNotEmpty)
             LumenFileUpload(
-              items: items,
+              items: _items,
               onRemove: onRemove,
               onRetry: onRetry,
               removeLabel: removeLabel,

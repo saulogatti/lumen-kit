@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:lumen_kit/src/widgets/lumen_icon_button.dart';
@@ -81,7 +82,8 @@ class LumenUploadItem {
 /// A list of file names, status labels, and upload percentages.
 ///
 /// The app selects, receives, and uploads files, and rebuilds this widget with
-/// new [items] whenever a file's progress, status, or label changes.
+/// new [items] whenever a file's progress, status, or label changes. Use [LumenFileUpload.fromListenables]
+/// to publish updates to individual rows from an app controller.
 ///
 /// [LumenUploadItem.status] colors [LumenUploadItem.statusLabel]. The label
 /// text comes from the app; an empty label is still shown. The visible
@@ -104,7 +106,12 @@ class LumenUploadItem {
 /// ```
 class LumenFileUpload extends StatelessWidget {
   /// Files in display order.
-  final List<LumenUploadItem> items;
+  /// With [LumenFileUpload.fromListenables], returns a snapshot of the current values.
+  List<LumenUploadItem> get items =>
+      _sources?.map((source) => source.value).toList(growable: false) ?? _items;
+
+  final List<LumenUploadItem> _items;
+  final List<ValueListenable<LumenUploadItem>>? _sources;
 
   /// Called with a row index when its remove button is pressed.
   ///
@@ -134,13 +141,28 @@ class LumenFileUpload extends StatelessWidget {
   /// [removeLabel] and [retryLabel] default to English text; pass localized
   /// strings when the app uses another language.
   const LumenFileUpload({
-    required this.items,
+    required this._items,
     super.key,
     this.onRemove,
     this.onRetry,
     this.removeLabel = 'Remove',
     this.retryLabel = 'Retry',
-  });
+  }) : _sources = null;
+
+  /// Observes one app-owned [ValueListenable] per file in display order.
+  ///
+  /// Each row displays its current value immediately and rebuilds when that
+  /// source notifies. Keep a stable source per file and rebuild the parent
+  /// when files are added, removed, or reordered. The app disposes its sources.
+  const LumenFileUpload.fromListenables({
+    required List<ValueListenable<LumenUploadItem>> items,
+    super.key,
+    this.onRemove,
+    this.onRetry,
+    this.removeLabel = 'Remove',
+    this.retryLabel = 'Retry',
+  }) : _sources = items,
+       _items = const <LumenUploadItem>[];
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +176,17 @@ class LumenFileUpload extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 8,
       children: <Widget>[
-        for (var index = 0; index < items.length; index++)
-          _itemUpload(p, s, index, items[index], textTheme, localizations),
+        if (_sources case final sources?)
+          for (var index = 0; index < sources.length; index++)
+            ValueListenableBuilder<LumenUploadItem>(
+              key: ObjectKey(sources[index]),
+              valueListenable: sources[index],
+              builder: (context, item, child) =>
+                  _itemUpload(p, s, index, item, textTheme, localizations),
+            )
+        else
+          for (var index = 0; index < _items.length; index++)
+            _itemUpload(p, s, index, _items[index], textTheme, localizations),
       ],
     );
   }
