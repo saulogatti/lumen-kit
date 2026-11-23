@@ -46,11 +46,13 @@ void main() {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           LumenBadge(label: 'escuro', color: Color(0xFF1A237E)),
+          LumenBadge(label: 'laranja', color: Color(0xFFFF6F00)),
           LumenBadge(label: 'claro', color: Color(0xFFFFEB3B)),
         ],
       ),
     );
     expect(tester.widget<Text>(find.text('escuro')).style?.color, Colors.white);
+    expect(tester.widget<Text>(find.text('laranja')).style?.color, Colors.black);
     expect(tester.widget<Text>(find.text('claro')).style?.color, Colors.black);
   });
 }

@@ -1,5 +1,6 @@
 import 'package:lumen_kit/src/foundation/lumen_action_content.dart';
 import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_contrast.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:lumen_kit/src/widgets/lumen_status_chip.dart';
@@ -121,8 +122,7 @@ class LumenButton extends StatelessWidget {
   ///
   /// A solid button fills with a gradient derived from the tone color, which
   /// [LumenStyle.fill] turns into the plain tone color in styles without
-  /// gradients. Its text and icon take [LumenPalette.backgroundDeep] or
-  /// [LumenPalette.textPrimary], whichever contrasts more with the fill.
+  /// gradients. Text and icons use a contrasting color for the styled fill.
   /// Outline and ghost buttons use the tone color for border, text and icon.
   ///
   /// Default: `null`, which keeps the accent gradient and the primary color.
@@ -143,10 +143,22 @@ class LumenButton extends StatelessWidget {
     final toneColor = tone?.colorOf(palette).withValues(alpha: 1);
     final accent = accentColor ?? toneColor ?? palette.primary;
 
-    final content = _buildContent(palette, accent, toneColor);
+    final fill = variant == LumenButtonVariant.solid
+        ? style.fill(toneColor == null ? palette.accentGradient : _toneGradient(toneColor))
+        : null;
+    final fg = fill == null
+        ? accent
+        : lumenContrastingForeground(fill.colors, backdrop: palette.surface, palette: palette);
+    final content = LumenActionContent(
+      color: fg,
+      label: label,
+      icon: icon,
+      busy: busy,
+      expand: expand,
+    );
 
     final body = switch (variant) {
-      LumenButtonVariant.solid => _solid(context, palette, toneColor, content, enabled),
+      LumenButtonVariant.solid => _solid(context, palette, toneColor, fill!, content, enabled),
       LumenButtonVariant.outline => _outline(context, palette, accent, content, enabled),
       LumenButtonVariant.ghost => _ghost(content),
     };
@@ -159,20 +171,11 @@ class LumenButton extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(LumenPalette palette, Color accent, Color? toneColor) {
-    final fg = switch (variant) {
-      LumenButtonVariant.solid when toneColor != null => _foregroundOn(palette, toneColor),
-      LumenButtonVariant.solid => palette.backgroundDeep,
-      LumenButtonVariant.outline || LumenButtonVariant.ghost => accent,
-    };
-
-    return LumenActionContent(color: fg, label: label, icon: icon, busy: busy, expand: expand);
-  }
-
   Widget _solid(
     BuildContext context,
     LumenPalette palette,
     Color? toneColor,
+    Gradient fill,
     Widget content,
     bool enabled,
   ) {
@@ -180,7 +183,7 @@ class LumenButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
       decoration: BoxDecoration(
-        gradient: style.fill(toneColor == null ? palette.accentGradient : _toneGradient(toneColor)),
+        gradient: fill,
         borderRadius: style.radius(borderRadius),
         boxShadow: style.shadows(
           enabled
@@ -245,17 +248,4 @@ LinearGradient _toneGradient(Color color) {
     end: Alignment.bottomRight,
     colors: <Color>[color, hsl.withLightness(hsl.lightness * 0.85).toColor()],
   );
-}
-
-/// The palette text tone that contrasts more with [fill].
-Color _foregroundOn(LumenPalette palette, Color fill) {
-  final f = fill.computeLuminance();
-  double contrast(Color c) {
-    final l = c.computeLuminance();
-    return (l > f ? l + 0.05 : f + 0.05) / (l > f ? f + 0.05 : l + 0.05);
-  }
-
-  return contrast(palette.backgroundDeep) >= contrast(palette.textPrimary)
-      ? palette.backgroundDeep
-      : palette.textPrimary;
 }

@@ -3,6 +3,30 @@ import 'package:lumen_kit/lumen_kit.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() {
+  test('Material uses the custom accents and contrasting foregrounds', () {
+    for (final brightness in Brightness.values) {
+      final theme = AppTheme.fromSeed(
+        primary: const Color(0xFFFF6F00),
+        secondary: Colors.black,
+        tertiary: const Color(0xFF008000),
+        danger: Colors.white,
+        brightness: brightness,
+      );
+      final scheme = theme.colorScheme;
+      expect(scheme.tertiary, const Color(0xFF008000));
+      for (final (fill, foreground) in [
+        (scheme.primary, scheme.onPrimary),
+        (scheme.secondary, scheme.onSecondary),
+        (scheme.tertiary, scheme.onTertiary),
+        (scheme.error, scheme.onError),
+      ]) {
+        final a = fill.computeLuminance() + 0.05;
+        final b = foreground.computeLuminance() + 0.05;
+        expect(a > b ? a / b : b / a, greaterThanOrEqualTo(4.5));
+      }
+    }
+  });
+
   group('LumenPalette', () {
     test('defaultDark mantém exatamente os tokens de AppColors', () {
       final p = LumenPalette.defaultDark();

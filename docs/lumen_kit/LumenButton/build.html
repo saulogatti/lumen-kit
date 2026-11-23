@@ -115,10 +115,22 @@ Widget build(BuildContext context) {
   final toneColor = tone?.colorOf(palette).withValues(alpha: 1);
   final accent = accentColor ?? toneColor ?? palette.primary;
 
-  final content = _buildContent(palette, accent, toneColor);
+  final fill = variant == LumenButtonVariant.solid
+      ? style.fill(toneColor == null ? palette.accentGradient : _toneGradient(toneColor))
+      : null;
+  final fg = fill == null
+      ? accent
+      : lumenContrastingForeground(fill.colors, backdrop: palette.surface, palette: palette);
+  final content = LumenActionContent(
+    color: fg,
+    label: label,
+    icon: icon,
+    busy: busy,
+    expand: expand,
+  );
 
   final body = switch (variant) {
-    LumenButtonVariant.solid =&gt; _solid(context, palette, toneColor, content, enabled),
+    LumenButtonVariant.solid =&gt; _solid(context, palette, toneColor, fill!, content, enabled),
     LumenButtonVariant.outline =&gt; _outline(context, palette, accent, content, enabled),
     LumenButtonVariant.ghost =&gt; _ghost(content),
   };

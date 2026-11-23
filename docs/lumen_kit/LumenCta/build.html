@@ -112,9 +112,10 @@ Widget build(BuildContext context) {
   final p = LumenThemeExt.of(context).palette;
   final style = LumenStyle.of(context);
   final enabled = onPressed != null &amp;&amp; !busy;
-  final g = gradient ?? p.accentGradient;
+  final fill = style.fill(gradient ?? p.accentGradient)!;
   final glow = glowColor ?? p.secondary;
-  final fg = foregroundColor ?? p.backgroundDeep;
+  final fg =
+      foregroundColor ?? lumenContrastingForeground(fill.colors, backdrop: p.surface, palette: p);
 
   return LumenPressable(
     onTap: onPressed,
@@ -123,7 +124,7 @@ Widget build(BuildContext context) {
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
       decoration: BoxDecoration(
-        gradient: style.fill(g),
+        gradient: fill,
         borderRadius: style.radius(borderRadius),
         boxShadow: style.shadows(
           enabled

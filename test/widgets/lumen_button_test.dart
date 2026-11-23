@@ -19,6 +19,54 @@ Color _contentColor(WidgetTester tester) =>
     tester.widget<LumenActionContent>(find.byType(LumenActionContent)).color;
 
 void main() {
+  testWidgets('solid actions contrast with the styled orange fill', (tester) async {
+    final palette = LumenPalette.fromSeed(
+      primary: const Color(0xFFFF6F00),
+      brightness: Brightness.light,
+    );
+    for (final style in LumenStyle.presets.values) {
+      await pumpBare(
+        tester,
+        _scoped(
+          Column(
+            children: <Widget>[
+              LumenButton(label: 'Save', onPressed: () {}),
+              LumenIconButton.solid(icon: Icons.add, onPressed: () {}),
+              LumenFab(icon: Icons.add, onPressed: () {}),
+              LumenCta(label: 'Continue', onPressed: () {}),
+            ],
+          ),
+          palette: palette,
+          style: style,
+        ),
+      );
+      final contents = tester.widgetList<LumenActionContent>(find.byType(LumenActionContent));
+      expect(contents, hasLength(4));
+      for (final content in contents) {
+        for (final stop in style.fill(palette.accentGradient)!.colors) {
+          expect(_contrast(content.color, stop), greaterThanOrEqualTo(4.5));
+        }
+      }
+    }
+  });
+
+  testWidgets('CTA uses the custom gradient stops that the style paints', (tester) async {
+    const gradient = LinearGradient(colors: <Color>[Color(0xFF999999), Colors.black]);
+    final palette = LumenPalette.defaultDark();
+    for (final style in [LumenStyle.flat, LumenStyle.neon]) {
+      await pumpBare(
+        tester,
+        _scoped(
+          LumenCta(label: 'Continue', onPressed: () {}, gradient: gradient),
+          palette: palette,
+          style: style,
+        ),
+      );
+      final luminance = _contentColor(tester).computeLuminance();
+      expect(luminance, style.gradients ? greaterThan(0.8) : lessThan(0.1));
+    }
+  });
+
   group('rótulo em largura estreita (#24)', () {
     for (final busy in <bool>[false, true]) {
       for (final expand in <bool>[false, true]) {

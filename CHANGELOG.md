@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Solid actions and badge labels choose a foreground that contrasts with their
+  fill. Material themes honor the palette tertiary color and choose contrasting
+  foregrounds for primary, secondary, tertiary, and error colors.
+
 - With only a primary color, `AppTheme.fromSeed` and `LumenPalette.fromSeed`
   now generate a same-hue gradient. The secondary uses 80% of the primary's
   HSL lightness.
