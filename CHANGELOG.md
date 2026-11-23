@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Added `LumenActionList`, a scrollable list that builds rows on demand. Each
+  `LumenActionListItem` supports an optional leading icon, a subtitle, and
+  up to two icon buttons with accessible labels. The buttons move below
+  the text in narrow layouts. Omit `onPressed` to disable an action.
+  `primary`, `padding`, and `spacing` configure the list. See the gallery
+  for an example. ([#51](https://github.com/saulogatti/lumen-kit/pull/51))
+
 ## 1.5.0
 
 - Added `LumenFileUpload`, a list of files with name, percentage, progress
