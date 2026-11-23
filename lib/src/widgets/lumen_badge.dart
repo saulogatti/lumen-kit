@@ -1,4 +1,5 @@
 import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_contrast.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
@@ -43,10 +44,7 @@ class LumenBadge extends StatelessWidget {
     final style = LumenStyle.of(context);
     final c = color ?? p.danger;
 
-    // Keep text readable on any background color, including red.
-    final fg = ThemeData.estimateBrightnessForColor(c) == Brightness.dark
-        ? Colors.white
-        : Colors.black;
+    final fg = lumenContrastingForeground(<Color>[c], backdrop: p.surface);
 
     final Widget badge = Container(
       padding: switch ((dot, dense)) {

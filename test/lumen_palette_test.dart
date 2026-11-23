@@ -3,6 +3,30 @@ import 'package:lumen_kit/lumen_kit.dart';
 import 'package:material_ui/material_ui.dart';
 
 void main() {
+  test('Material uses the custom accents and contrasting foregrounds', () {
+    for (final brightness in Brightness.values) {
+      final theme = AppTheme.fromSeed(
+        primary: const Color(0xFFFF6F00),
+        secondary: Colors.black,
+        tertiary: const Color(0xFF008000),
+        danger: Colors.white,
+        brightness: brightness,
+      );
+      final scheme = theme.colorScheme;
+      expect(scheme.tertiary, const Color(0xFF008000));
+      for (final (fill, foreground) in [
+        (scheme.primary, scheme.onPrimary),
+        (scheme.secondary, scheme.onSecondary),
+        (scheme.tertiary, scheme.onTertiary),
+        (scheme.error, scheme.onError),
+      ]) {
+        final a = fill.computeLuminance() + 0.05;
+        final b = foreground.computeLuminance() + 0.05;
+        expect(a > b ? a / b : b / a, greaterThanOrEqualTo(4.5));
+      }
+    }
+  });
+
   group('LumenPalette', () {
     test('defaultDark mantém exatamente os tokens de AppColors', () {
       final p = LumenPalette.defaultDark();
@@ -24,6 +48,20 @@ void main() {
       final light = LumenPalette.fromSeed(primary: green, brightness: Brightness.light);
       expect(light.backgroundDeep.computeLuminance(), greaterThan(0.8));
       expect(light.textPrimary.computeLuminance(), lessThan(0.05));
+    });
+
+    test('fromSeed escurece o laranja e respeita a secundária explícita', () {
+      const orange = Color(0xFFFF6F00);
+      for (final brightness in Brightness.values) {
+        final theme = AppTheme.fromSeed(primary: orange, brightness: brightness);
+        final palette = theme.extension<LumenThemeExt>()!.palette;
+        expect(palette.secondary.toARGB32(), 0xFFCC5900);
+        expect(palette.tertiary.toARGB32(), 0xFFE66400);
+      }
+
+      const blue = Color(0xFF0000FF);
+      final custom = LumenPalette.fromSeed(primary: orange, secondary: blue);
+      expect(custom.secondary.toARGB32(), blue.toARGB32());
     });
 
     test('copyWith recalcula o gradiente quando um accent muda', () {

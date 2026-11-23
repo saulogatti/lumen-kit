@@ -112,9 +112,11 @@ Widget build(BuildContext context) {
   final palette = LumenThemeExt.of(context).palette;
   final style = LumenStyle.of(context);
   final enabled = onPressed != null &amp;&amp; !busy;
-  final g = gradient ?? palette.accentGradient;
+  final fill = style.fill(gradient ?? palette.accentGradient)!;
   final glow = glowColor ?? palette.secondary;
-  final fg = foregroundColor ?? palette.backgroundDeep;
+  final fg =
+      foregroundColor ??
+      lumenContrastingForeground(fill.colors, backdrop: palette.surface, palette: palette);
   final extended = label != null;
 
   final radius = style.radius(size &#47; 2);
@@ -132,7 +134,7 @@ Widget build(BuildContext context) {
     height: size,
     width: extended ? null : size,
     decoration: BoxDecoration(
-      gradient: style.fill(g),
+      gradient: fill,
       borderRadius: radius,
       boxShadow: style.shadows(
         enabled

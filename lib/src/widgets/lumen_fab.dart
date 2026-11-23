@@ -1,5 +1,6 @@
 import 'package:lumen_kit/src/foundation/lumen_action_content.dart';
 import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_contrast.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
@@ -63,7 +64,7 @@ class LumenFab extends StatelessWidget {
 
   /// Text/icon color.
   ///
-  /// Default: `palette.backgroundDeep`.
+  /// Defaults to a contrasting color for the styled gradient.
   final Color? foregroundColor;
 
   /// Diameter in compact mode.
@@ -82,9 +83,11 @@ class LumenFab extends StatelessWidget {
     final palette = LumenThemeExt.of(context).palette;
     final style = LumenStyle.of(context);
     final enabled = onPressed != null && !busy;
-    final g = gradient ?? palette.accentGradient;
+    final fill = style.fill(gradient ?? palette.accentGradient)!;
     final glow = glowColor ?? palette.secondary;
-    final fg = foregroundColor ?? palette.backgroundDeep;
+    final fg =
+        foregroundColor ??
+        lumenContrastingForeground(fill.colors, backdrop: palette.surface, palette: palette);
     final extended = label != null;
 
     final radius = style.radius(size / 2);
@@ -102,7 +105,7 @@ class LumenFab extends StatelessWidget {
       height: size,
       width: extended ? null : size,
       decoration: BoxDecoration(
-        gradient: style.fill(g),
+        gradient: fill,
         borderRadius: radius,
         boxShadow: style.shadows(
           enabled

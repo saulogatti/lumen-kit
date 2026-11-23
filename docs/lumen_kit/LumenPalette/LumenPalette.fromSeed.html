@@ -66,7 +66,8 @@
     
 <section class="desc markdown">
   <p>Generates a palette from <code>primary</code> and optional <code>secondary</code> and <code>tertiary</code>.</p>
-<p>When omitted, <code>secondary</code> uses a hue 150 degrees from <code>primary</code>, and
+<p>When omitted, <code>secondary</code> keeps the hue and saturation of <code>primary</code> at
+80% of its HSL lightness. By default,
 <code>tertiary</code> blends the two along the shorter hue arc. Background and text
 tones use the tertiary hue and the requested <code>brightness</code>. Success,
 warning, and danger use the kit defaults.</p>
@@ -99,7 +100,9 @@ farther than 30 degrees, are kept as given.</p>
   Color? danger,
 }) {
   final p = HSLColor.fromColor(primary);
-  final s = secondary != null ? HSLColor.fromColor(secondary) : p.withHue((p.hue + 150) % 360);
+  final s = secondary != null
+      ? HSLColor.fromColor(secondary)
+      : p.withLightness(p.lightness * 0.8);
   final sec = s.toColor();
   final successResult = success ?? AppColors.success;
   final warningResult = warning ?? AppColors.warning;

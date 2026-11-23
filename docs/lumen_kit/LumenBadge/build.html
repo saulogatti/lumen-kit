@@ -113,10 +113,7 @@ Widget build(BuildContext context) {
   final style = LumenStyle.of(context);
   final c = color ?? p.danger;
 
-  &#47;&#47; Keep text readable on any background color, including red.
-  final fg = ThemeData.estimateBrightnessForColor(c) == Brightness.dark
-      ? Colors.white
-      : Colors.black;
+  final fg = lumenContrastingForeground(&lt;Color&gt;[c], backdrop: p.surface);
 
   final Widget badge = Container(
     padding: switch ((dot, dense)) {

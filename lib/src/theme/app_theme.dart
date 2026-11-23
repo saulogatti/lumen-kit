@@ -1,3 +1,4 @@
+import 'package:lumen_kit/src/theme/lumen_contrast.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
@@ -65,18 +66,23 @@ class AppTheme {
     Brightness brightness = Brightness.dark,
     LumenStyle style = LumenStyle.neon,
   }) {
+    Color foregroundOn(Color fill) =>
+        lumenContrastingForeground(<Color>[fill], backdrop: p.surface, palette: p);
+
     final scheme = ColorScheme.fromSeed(
       dynamicSchemeVariant: .vibrant,
       brightness: brightness,
       seedColor: p.primary,
       primary: p.primary,
       secondary: p.secondary,
+      tertiary: p.tertiary,
       surface: p.surface,
-      onPrimary: p.backgroundDeep,
-      onSecondary: p.textPrimary,
+      onPrimary: foregroundOn(p.primary),
+      onSecondary: foregroundOn(p.secondary),
+      onTertiary: foregroundOn(p.tertiary),
       onSurface: p.textPrimary,
       error: p.danger,
-      onError: p.textPrimary,
+      onError: foregroundOn(p.danger),
     );
 
     final textTheme = TextTheme(

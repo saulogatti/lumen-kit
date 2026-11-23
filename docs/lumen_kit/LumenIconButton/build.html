@@ -119,7 +119,12 @@ Widget build(BuildContext context) {
     LumenIconButtonShape.rounded =&gt; style.radius(12),
   };
 
-  final fg = variant == LumenIconButtonVariant.solid ? palette.backgroundDeep : accent;
+  final fill = variant == LumenIconButtonVariant.solid
+      ? style.fill(palette.accentGradient)
+      : null;
+  final fg = fill == null
+      ? accent
+      : lumenContrastingForeground(fill.colors, backdrop: palette.surface, palette: palette);
 
   final Widget content = Center(
     child: LumenActionContent(
@@ -136,7 +141,7 @@ Widget build(BuildContext context) {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        gradient: style.fill(palette.accentGradient),
+        gradient: fill,
         borderRadius: radius,
         boxShadow: style.shadows(
           enabled

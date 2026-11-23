@@ -1,5 +1,6 @@
 import 'package:lumen_kit/src/foundation/lumen_action_content.dart';
 import 'package:lumen_kit/src/foundation/lumen_pressable.dart';
+import 'package:lumen_kit/src/theme/lumen_contrast.dart';
 import 'package:lumen_kit/src/theme/lumen_palette.dart';
 import 'package:lumen_kit/src/theme/lumen_style.dart';
 import 'package:material_ui/material_ui.dart';
@@ -108,7 +109,12 @@ class LumenIconButton extends StatelessWidget {
       LumenIconButtonShape.rounded => style.radius(12),
     };
 
-    final fg = variant == LumenIconButtonVariant.solid ? palette.backgroundDeep : accent;
+    final fill = variant == LumenIconButtonVariant.solid
+        ? style.fill(palette.accentGradient)
+        : null;
+    final fg = fill == null
+        ? accent
+        : lumenContrastingForeground(fill.colors, backdrop: palette.surface, palette: palette);
 
     final Widget content = Center(
       child: LumenActionContent(
@@ -125,7 +131,7 @@ class LumenIconButton extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          gradient: style.fill(palette.accentGradient),
+          gradient: fill,
           borderRadius: radius,
           boxShadow: style.shadows(
             enabled
