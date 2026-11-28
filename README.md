@@ -12,7 +12,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | ------------- | -------------------------------------------------------------------- |
 | Theme | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `LumenScope`, `AppTheme` |
 | Background | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec` |
-| Structure | `LumenAppBar`, `LumenCard` |
+| Structure | `LumenAppBar`, `LumenSliverAppBar`, `LumenSliverList`, `LumenSliverGrid`, `LumenCard` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
 | Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenFileUpload`, `LumenFileUploadPanel`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenNumberField`, `LumenRating`, `LumenPinField` |
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
@@ -413,6 +413,38 @@ LumenGrid.extent(
     leading: Icon(modules[i].icon),
     selected: modules[i] == current,
     onTap: () => open(modules[i]),
+  ),
+)
+```
+
+To scroll the app bar together with the body, use the sliver versions inside
+a `CustomScrollView`. `LumenSliverAppBar` stays at the top by default
+(`pinned`); set `floating` to bring it back as soon as the user scrolls up,
+and `expandedHeight` to start with a large title that collapses into the
+toolbar. It pads the status bar itself, so leave `Scaffold.appBar` empty, and
+set `primary: false` when the scroll view is not at the top of the screen.
+`LumenSliverList` and `LumenSliverGrid` take the same builders, `empty`, and
+grid options as `LumenList` and `LumenGrid`, plus a `padding`.
+
+```dart
+Scaffold(
+  body: CustomScrollView(
+    slivers: <Widget>[
+      const LumenSliverAppBar(
+        title: 'Orders',
+        subtitle: '12 open',
+        expandedHeight: 140,
+      ),
+      LumenSliverList(
+        padding: const EdgeInsets.all(16),
+        itemCount: orders.length,
+        separatorBuilder: (context, i) => const SizedBox(height: 8),
+        itemBuilder: (context, i) => LumenListTile(
+          title: orders[i].name,
+          onTap: () => open(orders[i]),
+        ),
+      ),
+    ],
   ),
 )
 ```
