@@ -8,6 +8,9 @@ import 'package:material_ui/material_ui.dart';
 /// Maintains the type of the generic value.
 class LumenDropdownItem<T> {
   /// Creates a dropdown item with [value] and [label].
+  ///
+  /// [value] is returned when selected, and [icon] optionally precedes
+  /// [label] in the options list.
   const LumenDropdownItem({required this.value, required this.label, this.icon});
 
   /// Value returned when this item is selected.
@@ -25,6 +28,15 @@ class LumenDropdownItem<T> {
 /// Replaces the [DropdownButton] defaults to [DropdownButtonFormField].
 class LumenDropdown<T> extends StatelessWidget {
   /// Creates a neon dropdown for values ​​of type [T].
+  ///
+  /// [value] is the caller-controlled selection, which may be null; [items]
+  /// provide the options. [onChanged] receives selection changes and a null
+  /// callback disables the field. [label], [hint], and the leading [icon]
+  /// are optional. [accentColor] defaults to the palette's primary color.
+  ///
+  /// [errorText] supplies an error message, while [validator] and
+  /// [autovalidateMode] configure form validation. All three default to
+  /// null. [key] identifies the widget in the tree.
   const LumenDropdown({
     required this.value,
     required this.items,

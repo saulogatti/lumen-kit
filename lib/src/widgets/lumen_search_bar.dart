@@ -9,6 +9,14 @@ import 'package:material_ui/material_ui.dart';
 /// Maintains [TextEditingController] itself to prevent loss of focus.
 class LumenSearchBar extends StatefulWidget {
   /// Creates a search bar with internal controller.
+  ///
+  /// [onChanged] receives each edit and the empty string when the clear
+  /// button is pressed. [onSubmitted] optionally receives keyboard
+  /// submissions. [initialValue] initializes the internal controller once
+  /// and defaults to an empty string; later changes do not replace its text.
+  ///
+  /// [hint] defaults to `Buscar`, [autofocus] to false, and [accentColor] to
+  /// the palette's primary color. [key] identifies the widget.
   const LumenSearchBar({
     required this.onChanged,
     super.key,

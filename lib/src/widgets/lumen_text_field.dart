@@ -12,6 +12,29 @@ import 'package:material_ui/material_ui.dart';
 /// [initialValue] to preserve focus/cursor between rebuilds.
 class LumenTextField extends StatefulWidget {
   /// Creates a neon text field.
+  ///
+  /// [label] is required. Without a [controller], an internal controller
+  /// starts with [initialValue], which defaults to the empty string. The
+  /// caller owns an external controller; removing it restores the previous
+  /// internal controller, or copies the last external value if none existed.
+  /// [focusNode] optionally supplies external focus control. [onChanged]
+  /// reports edits and [onSubmitted] reports keyboard submission.
+  ///
+  /// [hint], [helperText], [icon], and [suffix] add optional decoration.
+  /// [errorText] supplies an error, overridden by a non-null result from
+  /// [validator]; [autovalidateMode] controls automatic validation. All
+  /// default to `null`.
+  ///
+  /// [enabled] defaults to `true`; [readOnly] and [autofocus] default to
+  /// `false`. [obscure] defaults to `false` and forces one line when true.
+  /// [minLines] defaults to `null`, [maxLines] to 1 (or `null` for growth
+  /// as layout permits), and [maxLength] to `null` (no character limit).
+  ///
+  /// [keyboardType], [textInputAction], [inputFormatters], and [autofillHints]
+  /// are optional input settings passed to the underlying field. Optional
+  /// parameters not otherwise specified default to `null`; a null
+  /// [accentColor] uses the palette's primary color. [key] identifies the
+  /// widget in the tree.
   const LumenTextField({
     required this.label,
     super.key,

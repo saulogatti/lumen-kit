@@ -18,6 +18,17 @@ import 'package:material_ui/material_ui.dart';
 /// ```
 class LumenLoadingOverlay extends StatelessWidget {
   /// Creates the loading layer over [child].
+  ///
+  /// When [loading] is true, the overlay blocks pointer input, focus, and
+  /// semantics for [child]. When loading ends, focus and semantics return
+  /// immediately, but the outgoing layer can block pointers until its
+  /// transition finishes. [message] is optional text below the spinner and
+  /// is announced as a live region.
+  ///
+  /// [accentColor] defaults to the palette's primary color, and
+  /// [barrierColor] to its background-deep color at 60% opacity.
+  /// [borderRadius] optionally clips the veil; by default it is not clipped.
+  /// [key] identifies the widget in the tree.
   const LumenLoadingOverlay({
     required this.loading,
     required this.child,
@@ -97,6 +108,11 @@ Color _defaultBarrier(LumenPalette p) => p.backgroundDeep.withValues(alpha: 0.6)
 /// Useful for creating your own loading screens.
 class LumenLoadingPanel extends StatelessWidget {
   /// Creates the loading panel.
+  ///
+  /// [message] optionally appears below the spinner and labels its live
+  /// region. [accentColor] controls the panel accent and defaults to the
+  /// current palette's primary color. [key] identifies the widget in the
+  /// tree.
   const LumenLoadingPanel({super.key, this.message, this.accentColor});
 
   /// Text below the spinner.

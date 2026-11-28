@@ -31,6 +31,12 @@ class LumenAvatar extends StatelessWidget {
   final bool showRing;
 
   /// Creates a circular avatar with image, initials or textual fallback.
+  ///
+  /// [image] takes precedence over [initials]; both default to null.
+  /// [radius] defaults to 22 logical pixels. [showRing] defaults to true,
+  /// with [accentColor] defaulting to the palette's primary color.
+  /// [statusColor] optionally adds a presence indicator. [key] identifies
+  /// the widget in the tree.
   const LumenAvatar({
     super.key,
     this.image,

@@ -11,6 +11,18 @@ import 'package:material_ui/material_ui.dart';
 /// Shared by buttons, CTA and FAB.
 class LumenActionContent extends StatelessWidget {
   /// Creates the content of an action.
+  ///
+  /// [color] applies to the text, icon, and spinner; [key] identifies this
+  /// widget. An optional [label] is shown on one line and ellipsized when
+  /// necessary. An optional [icon] precedes it; [busy], false by default,
+  /// replaces the icon with a spinner even when no icon was supplied. With
+  /// neither a label nor a leading item, the content is empty.
+  ///
+  /// [iconSize] and [spinnerSize] default to 18 and 16 logical pixels.
+  /// [gap] defaults to 10 logical pixels between leading content and text.
+  /// [expand] defaults to false; when a label is present, true makes the row
+  /// fill its available width and center its content. [textStyle] defaults
+  /// to the theme's `labelLarge`, with its color overridden by [color].
   const LumenActionContent({
     required this.color,
     super.key,

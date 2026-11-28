@@ -11,6 +11,12 @@ import 'package:material_ui/material_ui.dart';
 /// Generic in [T] to match the caller's `groupValue`.
 class LumenRadio<T> extends StatelessWidget {
   /// Creates a radio option for values ​​of type [T].
+  ///
+  /// The option is selected when [value] equals [groupValue]. Activating it
+  /// calls [onChanged] with [value]; a null callback disables it. The caller
+  /// owns and updates the group value. [label] optionally appears beside the
+  /// control, and [accentColor] defaults to the palette's primary color.
+  /// [key] identifies the widget.
   const LumenRadio({
     required this.value,
     required this.groupValue,

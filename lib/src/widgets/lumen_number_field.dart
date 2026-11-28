@@ -41,7 +41,27 @@ final RegExp _trailingZeros = RegExp(r'0+$');
 class LumenNumberField extends StatefulWidget {
   /// Creates a numeric field.
   ///
-  /// With [onChanged] `null` it is disabled.
+  /// [label] identifies the field and [value] supplies its current number,
+  /// or `null` for empty. [onChanged] receives edits and committed changes;
+  /// passing `null` disables input. The caller must update [value].
+  ///
+  /// [decimals] defaults to 0 and must be between 0 and 20. Typing accepts
+  /// digits, at most one decimal separator when decimals are enabled, and a
+  /// leading minus when [min] is null or negative. [min] and [max] default
+  /// to unbounded and are applied on blur or submission, not while typing.
+  /// Bounds are rounded inward to representable values; if none fits, the
+  /// rounded minimum wins. [padDecimals] defaults to false.
+  ///
+  /// [decimalSeparator] defaults to `.`; optional [groupSeparator] inserts
+  /// grouping. Both must be single, distinct characters. [prefixText],
+  /// [suffixText], [hint], and [helperText] provide optional decoration.
+  /// [validator] validates the parsed number in a form and takes precedence
+  /// over [errorText]. [accentColor] defaults to the palette's primary color.
+  ///
+  /// [focusNode] optionally supplies external focus control; [autofocus]
+  /// defaults to false. [textInputAction] configures the keyboard action and
+  /// [onSubmitted] receives the committed value. [textAlign] defaults to
+  /// [TextAlign.start], and [key] identifies the widget.
   const LumenNumberField({
     required this.label,
     required this.value,

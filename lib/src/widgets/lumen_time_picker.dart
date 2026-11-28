@@ -87,6 +87,20 @@ Future<TimeOfDay?> showLumenTimePicker({
 /// Pair of `LumenDatePicker` for scheduling forms.
 class LumenTimePicker extends StatelessWidget {
   /// Creates a read-only field that opens a time picker on touch.
+  ///
+  /// [value] is the current selection, or `null` for an empty field. The
+  /// required [onChanged] may be `null` to disable the field; otherwise it
+  /// receives a confirmed selection, but not a cancellation. The picker
+  /// starts at [value], or the current time when it is `null`.
+  ///
+  /// [label] and [hint] are optional, with the hint shown for an empty
+  /// value. [accentColor] defaults to the palette's primary color.
+  /// [format] optionally formats the field text; otherwise Material
+  /// localizations format it. [use24HourFormat] defaults to `null`, using
+  /// the inherited setting; `true` forces 24-hour formatting and `false`
+  /// uses the locale's format. It also applies to the picker, while [format]
+  /// takes precedence for the field text. Optional parameters default to
+  /// `null`. [key] identifies the widget.
   const LumenTimePicker({
     required this.value,
     required this.onChanged,

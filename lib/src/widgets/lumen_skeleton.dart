@@ -13,6 +13,12 @@ import 'package:material_ui/material_ui.dart';
 /// ```
 class LumenSkeleton extends StatefulWidget {
   /// Creates a rectangular skeleton.
+  ///
+  /// [width] defaults to null, allowing the parent to determine its width;
+  /// [height] defaults to 14 and [borderRadius] to 8 logical pixels.
+  /// [baseColor] defaults to a translucent palette surface and
+  /// [highlightColor] to the primary color at 25% opacity. The shimmer
+  /// remains stationary under reduced motion. [key] identifies the widget.
   const LumenSkeleton({
     super.key,
     this.width,
@@ -23,6 +29,10 @@ class LumenSkeleton extends StatefulWidget {
   }) : shape = BoxShape.rectangle;
 
   /// Creates a circular skeleton with width and height equal to [size].
+  ///
+  /// [baseColor] defaults to a translucent palette surface and
+  /// [highlightColor] to the primary color at 25% opacity. The shimmer
+  /// remains stationary under reduced motion. [key] identifies the widget.
   const LumenSkeleton.circle({required double size, super.key, this.baseColor, this.highlightColor})
     : width = size,
       height = size,

@@ -78,6 +78,19 @@ class LumenList extends StatelessWidget {
   final Axis scrollDirection;
 
   /// Creates a scrollable list that builds items on demand.
+  ///
+  /// [itemCount] and [itemBuilder] specify the items. When the count is zero,
+  /// [empty] is shown, or an empty box if it is null. A non-null
+  /// [separatorBuilder] builds widgets between items. [controller], [padding],
+  /// and [physics] are optional and passed to the underlying list view.
+  ///
+  /// [scrollDirection] defaults to [Axis.vertical], [reverse] to `false`,
+  /// and [shrinkWrap] to `false`; unbounded constraints along the scroll axis
+  /// require shrink wrapping. [addAutomaticKeepAlives],
+  /// [addRepaintBoundaries], and [addSemanticIndexes] all default to `true`.
+  /// [clipBehavior] defaults to [Clip.hardEdge], [dragStartBehavior] to
+  /// [DragStartBehavior.start], and [keyboardDismissBehavior] to
+  /// [ScrollViewKeyboardDismissBehavior.manual]. [key] identifies the widget.
   const LumenList({
     required this.itemCount,
     required this.itemBuilder,

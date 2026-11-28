@@ -12,6 +12,12 @@ class LumenChip extends StatelessWidget {
   /// Create a chip.
   ///
   /// With [onSelected] `null` is disabled.
+  ///
+  /// [label] is the text and [selected] is controlled by the caller;
+  /// [onSelected] receives the requested opposite state. [icon] is optional.
+  /// [showCheckmark] defaults to false; when true, a selected chip replaces
+  /// the icon with a check. [accentColor] defaults to the palette's primary
+  /// color. [key] identifies the widget in the tree.
   const LumenChip({
     required this.label,
     required this.selected,
@@ -103,6 +109,9 @@ class LumenChip extends StatelessWidget {
 /// Option of [LumenChoiceChips] and [LumenFilterChips].
 class LumenChipItem<T> {
   /// Creates an option with [value] and [label].
+  ///
+  /// [icon] optionally precedes the label. [enabled] defaults to true; set
+  /// it to false to disable this option in a chip group.
   const LumenChipItem({required this.value, required this.label, this.icon, this.enabled = true});
 
   /// Option value.
@@ -125,6 +134,13 @@ class LumenChoiceChips<T> extends StatelessWidget {
   /// Create the group.
   ///
   /// With [onChanged] `null`, all are disabled.
+  ///
+  /// [items] define the options and [value] is the caller-controlled
+  /// selection. [onChanged] receives the requested value. [allowDeselect]
+  /// defaults to false; when true, tapping the selected item requests null.
+  /// Disabled items remain disabled. [accentColor] defaults to the palette's
+  /// primary color; [spacing] and [runSpacing] each default to 8 logical
+  /// pixels. [key] identifies the widget in the tree.
   const LumenChoiceChips({
     required this.items,
     required this.value,
@@ -191,6 +207,13 @@ class LumenFilterChips<T> extends StatelessWidget {
   /// Create the group.
   ///
   /// With [onChanged] `null`, all are disabled.
+  ///
+  /// [items] define the options and [values] is the caller-controlled set
+  /// of selected values. [onChanged] receives a new set without modifying
+  /// [values]; disabled items remain disabled. [showCheckmark] defaults to
+  /// true, and [accentColor] defaults to the palette's primary color.
+  /// [spacing] and [runSpacing] each default to 8 logical pixels.
+  /// [key] identifies the widget in the tree.
   const LumenFilterChips({
     required this.items,
     required this.values,

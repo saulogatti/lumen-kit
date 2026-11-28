@@ -6,6 +6,14 @@ import 'package:material_ui/material_ui.dart';
 /// Slider with a solid accent track and a thumb that follows the shadow style.
 class LumenSlider extends StatelessWidget {
   /// Creates a neon slider.
+  ///
+  /// [value] is visually clamped to [min] and [max], which default to 0 and
+  /// 1. [onChanged] receives user changes; null disables the slider. The
+  /// caller owns and updates the value.
+  ///
+  /// [divisions] optionally makes the range discrete, and [label] supplies
+  /// value-indicator text. [accentColor] defaults to the palette's primary
+  /// color. [key] identifies the widget.
   const LumenSlider({
     required this.value,
     required this.onChanged,
@@ -148,6 +156,17 @@ void _paintGlowThumb(Canvas canvas, Offset center, Color glow, {required bool sh
 /// ```
 class LumenRangeSlider extends StatelessWidget {
   /// Creates a neon interval slider.
+  ///
+  /// [values] supplies the selected range, visually clamped to [min] and
+  /// [max], which default to 0 and 1. [onChanged] receives changes while
+  /// dragging; null disables the slider. The caller owns the values.
+  /// [onChangeStart] and [onChangeEnd] optionally report the start and end
+  /// of an interaction.
+  ///
+  /// [divisions] optionally makes the range discrete, and [labels] supplies
+  /// value-indicator text for discrete values. [semanticFormatterCallback]
+  /// formats values for screen readers. [accentColor] defaults to the
+  /// palette's primary color. [key] identifies the widget.
   const LumenRangeSlider({
     required this.values,
     required this.onChanged,

@@ -8,7 +8,11 @@ import 'package:material_ui/material_ui.dart';
 class LumenLabeled extends StatelessWidget {
   /// Creates a labeled control.
   ///
-  /// Without [label], returns only [control].
+  /// [control] is followed by [label] when supplied; without a label, only
+  /// the control is returned. [key] identifies this widget in the tree.
+  /// [enabled] defaults to true and selects the palette's primary text color;
+  /// false uses the muted text color without disabling [control]. [gap]
+  /// defaults to 10 logical pixels between the control and label.
   const LumenLabeled({
     required this.control,
     super.key,

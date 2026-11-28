@@ -29,6 +29,11 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showDivider;
 
   /// Create a neon bar app compatible with [Scaffold.appBar].
+  ///
+  /// [title] is required; [subtitle], [leading], and [actions] are optional.
+  /// [height] defaults to 64 logical pixels. [showDivider] defaults to true;
+  /// its [accentGradient] defaults to the palette's accent gradient.
+  /// [key] identifies the widget in the tree.
   const LumenAppBar({
     required this.title,
     super.key,

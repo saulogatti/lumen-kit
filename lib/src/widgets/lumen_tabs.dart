@@ -7,7 +7,10 @@ import 'package:material_ui/material_ui.dart';
 
 /// Item from [LumenTabs] / [LumenSegmentedControl].
 class LumenTabItem {
-  /// Creates a tab item with optional text and icon.
+  /// Creates a tab item with a required [label] and an optional [icon].
+  ///
+  /// The icon defaults to `null`; tabs place it above the label, while
+  /// segmented controls place it before the label.
   const LumenTabItem({required this.label, this.icon});
 
   /// Text displayed in the tab.
@@ -23,6 +26,12 @@ class LumenTabItem {
 /// through [onChanged].
 class LumenTabs extends StatefulWidget {
   /// Creates a tab bar controlled by [selectedIndex].
+  ///
+  /// [items] must contain at least one item. [selectedIndex] is clamped to
+  /// its valid range, and [onChanged] reports the index tapped; the caller
+  /// must update the selection. [accentColor] defaults to the palette's
+  /// primary color. [isScrollable] defaults to `false`; set it to `true`
+  /// to allow horizontal scrolling. [key] identifies the widget in the tree.
   const LumenTabs({
     required this.items,
     required this.selectedIndex,
@@ -114,6 +123,12 @@ class _LumenTabsState extends State<LumenTabs> with TickerProviderStateMixin {
 /// Items share width equally.
 class LumenSegmentedControl extends StatelessWidget {
   /// Creates a segmented control with index selection.
+  ///
+  /// [items] supplies the equally sized segments, [selectedIndex] selects
+  /// one by index, and [onChanged] reports taps for the caller to update
+  /// the selection. An out-of-range index selects nothing. [accentColor]
+  /// defaults to the palette's primary color. [key] identifies the widget
+  /// in the tree.
   const LumenSegmentedControl({
     required this.items,
     required this.selectedIndex,

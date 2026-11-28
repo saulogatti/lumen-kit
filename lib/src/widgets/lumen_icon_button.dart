@@ -20,6 +20,17 @@ enum LumenIconButtonVariant {
 /// Circular/square button containing just one icon, in neon style.
 class LumenIconButton extends StatelessWidget {
   /// Creates an icon button in the [variant] variant.
+  ///
+  /// [icon] is required; a null [onPressed] disables the button. [variant]
+  /// defaults to [LumenIconButtonVariant.outline]. [busy] defaults to `false`;
+  /// when true it replaces the icon with a spinner and blocks presses.
+  ///
+  /// [accentColor] defaults to the palette's primary color for outline and
+  /// ghost buttons, or its secondary shadow color for solid buttons, whose
+  /// fill uses the palette's accent gradient. [size] defaults to 44,
+  /// [iconSize] to 20, and [shape] to [LumenIconButtonShape.circle].
+  /// [tooltip], if supplied, provides the tooltip and accessibility label;
+  /// otherwise [semanticLabel] can label the button. [key] identifies it.
   const LumenIconButton({
     required this.icon,
     required this.onPressed,
@@ -35,6 +46,15 @@ class LumenIconButton extends StatelessWidget {
   });
 
   /// Shortcut for [LumenIconButtonVariant.solid].
+  ///
+  /// [icon] is required; a null [onPressed] disables the button. [busy]
+  /// defaults to `false` and shows a spinner while blocking presses when true.
+  /// The fill uses the palette's accent gradient; [accentColor] overrides
+  /// the shadow color, which defaults to the palette's secondary color.
+  /// [size] defaults to 44, [iconSize] to 20, and [shape] to
+  /// [LumenIconButtonShape.circle]. [tooltip], if supplied, provides the
+  /// tooltip and accessibility label; otherwise [semanticLabel] can label
+  /// the button. [key] identifies it in the tree.
   const LumenIconButton.solid({
     required this.icon,
     required this.onPressed,
@@ -49,6 +69,14 @@ class LumenIconButton extends StatelessWidget {
   }) : variant = LumenIconButtonVariant.solid;
 
   /// Shortcut for [LumenIconButtonVariant.ghost].
+  ///
+  /// [icon] is required; a null [onPressed] disables the button. [busy]
+  /// defaults to `false` and shows a spinner while blocking presses when true.
+  /// [accentColor] colors the icon and defaults to the palette's primary
+  /// color. [size] defaults to 44, [iconSize] to 20, and [shape] to
+  /// [LumenIconButtonShape.circle]. [tooltip], if supplied, provides the
+  /// tooltip and accessibility label; otherwise [semanticLabel] can label
+  /// the button. [key] identifies it in the tree.
   const LumenIconButton.ghost({
     required this.icon,
     required this.onPressed,

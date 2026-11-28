@@ -8,6 +8,14 @@ import 'package:material_ui/material_ui.dart';
 /// Can be used directly via [showLumenDialog].
 class LumenDialog extends StatelessWidget {
   /// Creates a neon dialog with custom content.
+  ///
+  /// [title] is displayed in the header and [content] in a vertically
+  /// scrollable body. The body has unbounded height, so lists should use
+  /// `shrinkWrap: true` and [content] should not be a direct [Expanded].
+  /// [actions] defaults to an empty list and appears in the footer; [icon]
+  /// optionally precedes the title. [accent] defaults to the palette's
+  /// primary color, and [maxWidth] to 460 logical pixels. [key] identifies
+  /// the widget in the tree.
   const LumenDialog({
     required this.title,
     required this.content,

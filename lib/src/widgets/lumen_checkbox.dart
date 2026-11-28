@@ -9,6 +9,12 @@ import 'package:material_ui/material_ui.dart';
 /// Square checkbox with accent border and gradient marker when active.
 class LumenCheckbox extends StatelessWidget {
   /// Creates a neon checkbox.
+  ///
+  /// [value] is controlled by the caller; [onChanged] receives the next
+  /// value, or disables the checkbox when null. [tristate] defaults to false;
+  /// when true, null represents the indeterminate state. [label] is optional,
+  /// and [accentColor] defaults to the palette's primary color.
+  /// [key] identifies the widget in the tree.
   const LumenCheckbox({
     required this.value,
     required this.onChanged,

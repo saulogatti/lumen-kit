@@ -111,6 +111,13 @@ class LumenContextMenu<T> extends StatelessWidget {
   final Color? accentColor;
 
   /// Creates the context menu region.
+  ///
+  /// [child] receives right-click and long-press gestures that open [items]
+  /// at the pointer position; an accessibility long press opens them at the
+  /// child's center. [items] must be non-empty when the menu is opened.
+  /// [onSelected] receives a chosen non-null value; pass `null` to return
+  /// [child] without a menu. [accentColor] defaults to the current palette's
+  /// primary color, and [key] identifies the widget in the tree.
   const LumenContextMenu({
     required this.items,
     required this.onSelected,
@@ -200,6 +207,15 @@ class LumenMenuButton<T> extends StatelessWidget {
   /// Creates the menu button.
   ///
   /// With [onSelected] `null` is disabled.
+  /// [items] must be non-empty when the menu is opened; [onSelected] receives
+  /// the chosen non-null value, while [onCanceled] is called when it closes
+  /// without one. [initialValue], if non-null, marks a matching item with a
+  /// check. [onCanceled] and [initialValue] default to `null`.
+  ///
+  /// [icon] defaults to [Icons.more_vert_rounded], [variant] to
+  /// [LumenIconButtonVariant.ghost], and [size] to 40. [tooltip] defaults to
+  /// the localized Material show-menu label. [accentColor] defaults to the
+  /// palette's primary color. [key] identifies the widget in the tree.
   const LumenMenuButton({
     required this.items,
     required this.onSelected,
@@ -246,11 +262,19 @@ class LumenMenuButton<T> extends StatelessWidget {
 /// Line separating groups of actions.
 class LumenMenuDivider<T> extends LumenMenuEntry<T> {
   /// Creates a separator.
+  ///
+  /// Place it between [LumenMenuItem] entries to divide groups; it has no
+  /// selectable value or configuration. [T] is the menu's value type.
   const LumenMenuDivider();
 }
 
 /// Entering a neon menu: [LumenMenuItem] or [LumenMenuDivider].
 sealed class LumenMenuEntry<T> {
+  /// Creates a base menu entry of value type [T].
+  ///
+  /// Entries are represented by [LumenMenuItem] actions and
+  /// [LumenMenuDivider] separators; this sealed base cannot be instantiated
+  /// directly and takes no parameters.
   const LumenMenuEntry();
 }
 
@@ -274,6 +298,12 @@ class LumenMenuItem<T> extends LumenMenuEntry<T> {
   final bool destructive;
 
   /// Creates an action with [value] returned when chosen.
+  ///
+  /// [label] is the displayed text and [icon], when provided, appears before
+  /// it. [enabled] defaults to `true`; when false the action is dimmed and
+  /// cannot be chosen. [destructive] defaults to `false`; when true it uses
+  /// the danger color for the icon and unselected label. A selected label and
+  /// its checkmark use the selection accent instead.
   const LumenMenuItem({
     required this.value,
     required this.label,

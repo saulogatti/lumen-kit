@@ -53,7 +53,16 @@ class LumenQuantityStepper extends StatelessWidget {
 
   /// Creates the stepper.
   ///
-  /// With [onChanged] `null` is disabled.
+  /// [value] is displayed clamped to [min] and [max]; [onChanged] receives
+  /// the clamped result of each adjustment. Passing `null` disables the
+  /// control; the caller must update [value]. [min] defaults to 0, [max]
+  /// defaults to no upper limit, and [step] defaults to 1 and must be positive.
+  /// If supplied, [max] must be at least [min].
+  ///
+  /// [buttonSize] defaults to 36 logical pixels and [accentColor] to the
+  /// palette's primary color. [format] customizes the displayed and semantic
+  /// values; [semanticLabel] optionally labels the control for screen
+  /// readers. [key] identifies the widget.
   const LumenQuantityStepper({
     required this.value,
     required this.onChanged,

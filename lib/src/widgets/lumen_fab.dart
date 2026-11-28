@@ -11,6 +11,17 @@ import 'package:material_ui/material_ui.dart';
 /// extended layout also shows [label]. Both use the active style's radius.
 class LumenFab extends StatelessWidget {
   /// Creates a compact or extended FAB when [label] is entered.
+  ///
+  /// [icon] is required; a non-null [label] adds text and makes the button
+  /// extended. A null [onPressed] disables it. [busy] defaults to `false`;
+  /// when true it shows a spinner and blocks presses.
+  ///
+  /// [gradient] defaults to the palette's accent gradient, [glowColor] to
+  /// its secondary color, and [foregroundColor] to a contrasting color.
+  /// [size] defaults to 56 and sets the compact diameter or extended height.
+  /// A non-null [heroTag] wraps the button in a hero. [semanticLabel] labels
+  /// the icon-only button and is ignored when [label] is present.
+  /// [key] identifies the widget in the tree.
   const LumenFab({
     required this.icon,
     required this.onPressed,
@@ -26,6 +37,15 @@ class LumenFab extends StatelessWidget {
   });
 
   /// Explicit constructor for extended mode.
+  ///
+  /// [icon] and [label] provide the button content. A null [onPressed]
+  /// disables it; [busy] defaults to `false` and, when true, shows a spinner
+  /// and blocks presses. The height is fixed at 56.
+  ///
+  /// [gradient] defaults to the palette's accent gradient, [glowColor] to
+  /// its secondary color, and [foregroundColor] to a contrasting color.
+  /// A non-null [heroTag] wraps the button in a hero. [key] identifies the
+  /// widget in the tree.
   const LumenFab.extended({
     required this.icon,
     required this.onPressed,

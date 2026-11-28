@@ -7,6 +7,14 @@ import 'package:material_ui/material_ui.dart';
 /// accent when opened.
 class LumenExpansionTile extends StatefulWidget {
   /// Creates an expandable tile with [children] revealed when opened.
+  ///
+  /// [title] is the header text; [subtitle] and [leading] optionally add
+  /// supporting text and a widget before it. [initiallyExpanded] defaults to
+  /// `false` and sets the initial internal state, not a controlled value.
+  /// Toggling the header calls [onExpansionChanged], if supplied, with the
+  /// new state. Collapsed children are excluded from focus and semantics.
+  /// [accentColor] defaults to the current palette's primary color.
+  /// [key] identifies the widget in the tree.
   const LumenExpansionTile({
     required this.title,
     required this.children,

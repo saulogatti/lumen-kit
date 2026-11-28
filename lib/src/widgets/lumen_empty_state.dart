@@ -36,6 +36,11 @@ class LumenEmptyState extends StatelessWidget {
   final VoidCallback? onPressed;
 
   /// Creates the empty state with [title].
+  ///
+  /// [icon] appears above the title and [message] below it; both default to
+  /// `null` and are omitted. The action button is shown only when both
+  /// [actionLabel] and [onPressed] are non-null, and invokes [onPressed].
+  /// [key] identifies the widget in the tree.
   const LumenEmptyState({
     required this.title,
     super.key,

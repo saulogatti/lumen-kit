@@ -131,6 +131,21 @@ Future<Color?> showLumenColorPicker({
 /// ```
 class LumenColorField extends StatelessWidget {
   /// Creates a read-only field that opens a color picker on touch.
+  ///
+  /// [value] is the current color, or null to show [hint]. [label] is
+  /// optional. A null [onChanged] disables the field; otherwise it receives
+  /// the confirmed color, not a cancellation. [accentColor] defaults to the
+  /// palette's primary color and also seeds the picker when [value] is null.
+  ///
+  /// [swatches] defaults to the dialog palette's accents; an empty list hides
+  /// them. [showAlpha] defaults to false. [title], [okLabel], and
+  /// [cancelLabel] default to "Color", "OK", and "Cancel". [hueLabel],
+  /// [saturationLabel], [brightnessLabel], and [alphaLabel] name the
+  /// accessible controls and default to "Hue", "Saturation", "Brightness",
+  /// and "Opacity". [hexLabel] defaults to "Hex"; [originalLabel] and
+  /// [selectedLabel] default to "Original color" and "Selected color".
+  /// [key] identifies the widget in the tree. See [showLumenColorPicker]
+  /// for alpha handling and route theme resolution.
   const LumenColorField({
     required this.value,
     required this.onChanged,

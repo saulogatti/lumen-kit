@@ -30,6 +30,11 @@ class LumenNavigationCard extends StatefulWidget {
   final String actionLabel;
 
   /// Creates a navigation card with visual highlighting and hover.
+  ///
+  /// [title] and [subtitle] describe the destination, [icon] appears in the
+  /// badge, and [accent] colors the card's highlights. [onTap] activates the
+  /// card. An optional [tag] appears at the top; [actionLabel] is the footer
+  /// text and defaults to `OPEN MODULE`. [key] identifies the widget.
   const LumenNavigationCard({
     required this.title,
     required this.subtitle,
