@@ -8,6 +8,7 @@ import 'package:lumen_kit_example/sections/date_time_section.dart';
 import 'package:lumen_kit_example/sections/file_upload_panel_section.dart';
 import 'package:lumen_kit_example/sections/file_upload_section.dart';
 import 'package:lumen_kit_example/sections/foundation_section.dart';
+import 'package:lumen_kit_example/sections/grid_section.dart';
 import 'package:lumen_kit_example/sections/stepper_section.dart';
 import 'package:lumen_kit_example/sections/transitions_section.dart';
 import 'package:material_ui/material_ui.dart';
@@ -730,6 +731,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
                 ],
               ),
             ),
+            _section('Grid', const GridSection()),
             _section(
               'Feedback (snackbar, toast, dialog, bottom sheet)',
               Wrap(

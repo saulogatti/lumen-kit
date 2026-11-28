@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- Added `LumenGrid`, a scrollable grid that builds cells on demand. Use a
+  fixed `crossAxisCount`, or `LumenGrid.extent` to fit as many columns as the
+  width allows. It shows `empty` for zero items and takes the same scroll
+  options as `LumenList`.
+  ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
+- Added `LumenGridTile`, the vertical counterpart of `LumenListTile`:
+  `leading` on top, then `title` and `subtitle`, with selection glow,
+  `accentColor`, and text cut by an ellipsis.
+  ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
+
 ## 1.6.0
 
 - Solid actions and badge labels choose a foreground that contrasts with their

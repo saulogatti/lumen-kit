@@ -18,7 +18,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
 | Feedback | `LumenStatusChip`, `LumenBanner`, `LumenDialog`, `showLumenSnackBar`, `showLumenToast`, `LumenLinearProgress`, `LumenCircularProgress`, `LumenSkeleton`, `LumenTooltip`, `LumenLoadingPanel`, `LumenLoadingOverlay` (+ `showLumenLoading`) |
 | Navigation | `LumenNavigationCard`, `LumenTabs`, `LumenSegmentedControl`, `LumenBottomNavBar`, `LumenNavRail`, `showLumenBottomSheet`, `LumenDrawer`, `LumenStepper`, `LumenPageIndicator`, `LumenCarousel` |
-| Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenActionList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow`, `LumenTimeline` |
+| Display | `LumenBadge`, `LumenTag`, `LumenAvatar`, `LumenAvatarGroup`, `LumenListTile`, `LumenList`, `LumenGridTile`, `LumenGrid`, `LumenActionList`, `LumenEmptyState`, `LumenDivider`, `LumenExpansionTile`, `LumenDataTable`, `LumenTableRow`, `LumenTimeline` |
 
 The widgets take data, callbacks, and theme tokens so the app owns its business rules.
 
@@ -391,6 +391,28 @@ LumenList(
   itemBuilder: (context, i) => LumenListTile(
     title: events[i].title,
     onTap: () => open(events[i]),
+  ),
+)
+```
+
+`LumenGrid` does the same for cells. The default constructor takes a fixed
+`crossAxisCount`; `LumenGrid.extent` fits as many columns as the width allows,
+each at most `maxCrossAxisExtent` wide. Cells are square unless you set
+`childAspectRatio` or `mainAxisExtent`. `LumenGridTile` is the vertical
+counterpart of `LumenListTile`: `leading` on top, then `title` and `subtitle`,
+with long text cut by an ellipsis.
+
+```dart
+LumenGrid.extent(
+  maxCrossAxisExtent: 160,
+  mainAxisExtent: 124,
+  itemCount: modules.length,
+  itemBuilder: (context, i) => LumenGridTile(
+    title: modules[i].name,
+    subtitle: modules[i].summary,
+    leading: Icon(modules[i].icon),
+    selected: modules[i] == current,
+    onTap: () => open(modules[i]),
   ),
 )
 ```
