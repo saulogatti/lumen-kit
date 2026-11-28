@@ -176,6 +176,34 @@ void main() {
     expect(container.duration, Duration.zero);
   });
 
+  testWidgets('LumenSliverAppBar pinta títulos e subtítulos com o texto da paleta do LumenScope', (
+    tester,
+  ) async {
+    // Paleta clara dentro de um app escuro: o texto do tema de fora seria
+    // claro sobre o fundo claro da barra.
+    final palette = LumenPalette.light();
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(brightness: Brightness.dark),
+        home: Scaffold(
+          body: LumenScope(
+            palette: palette,
+            child: _scroll(
+              const LumenSliverAppBar(title: 'Pedidos', subtitle: 'abertos', expandedHeight: 160),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    Color? color(Finder text) => tester.widget<Text>(text).style?.color;
+    // first = barra recolhida, last = título grande.
+    expect(color(find.text('Pedidos').first), palette.textPrimary);
+    expect(color(find.text('Pedidos').last), palette.textPrimary);
+    expect(color(find.text('abertos').first), palette.textMuted);
+    expect(color(find.text('abertos').last), palette.textSecondary);
+  });
+
   testWidgets('LumenSliverAppBar segue o LumenScope e some com a linha sem showDivider', (
     tester,
   ) async {

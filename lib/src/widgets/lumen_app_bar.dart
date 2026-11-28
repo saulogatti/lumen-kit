@@ -52,7 +52,8 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final style = LumenStyle.of(context);
     final text = Theme.of(context).textTheme;
-    final g = accentGradient ?? LumenThemeExt.of(context).palette.accentGradient;
+    final p = LumenThemeExt.of(context).palette;
+    final g = accentGradient ?? p.accentGradient;
 
     return Material(
       color: Colors.transparent,
@@ -72,10 +73,10 @@ class LumenAppBar extends StatelessWidget implements PreferredSizeWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(title, style: text.titleLarge),
+                        Text(title, style: text.titleLarge?.copyWith(color: p.textPrimary)),
                         if (subtitle != null) ...<Widget>[
                           const SizedBox(height: 2),
-                          Text(subtitle!, style: text.bodySmall),
+                          Text(subtitle!, style: text.bodySmall?.copyWith(color: p.textMuted)),
                         ],
                       ],
                     ),

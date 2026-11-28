@@ -17,6 +17,9 @@
   toolbar. It pads the status bar and gains a background once content scrolls
   under it.
   ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
+- `LumenAppBar` takes its title and subtitle colors from the active palette,
+  so a `LumenScope` with a different brightness from the app theme keeps the
+  text readable.
 - Added `LumenSliverList` and `LumenSliverGrid`, the sliver versions of
   `LumenList` and `LumenGrid`, with `empty` and `padding`.
   ([#54](https://github.com/saulogatti/lumen-kit/issues/54))

@@ -27,4 +27,27 @@ void main() {
     expect(taps, 1);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('LumenAppBar pinta título e subtítulo com o texto da paleta do LumenScope', (
+    tester,
+  ) async {
+    // Paleta clara dentro de um app escuro: o texto do tema de fora seria
+    // claro sobre o fundo claro.
+    final palette = LumenPalette.light();
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(brightness: Brightness.dark),
+        home: LumenScope(
+          palette: palette,
+          child: const Scaffold(
+            appBar: LumenAppBar(title: 'Painel', subtitle: 'agora'),
+            body: SizedBox.shrink(),
+          ),
+        ),
+      ),
+    );
+
+    expect(tester.widget<Text>(find.text('Painel')).style?.color, palette.textPrimary);
+    expect(tester.widget<Text>(find.text('agora')).style?.color, palette.textMuted);
+  });
 }

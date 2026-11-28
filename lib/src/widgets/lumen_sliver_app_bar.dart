@@ -182,8 +182,8 @@ class _LumenSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                           child: _Titles(
                             title: title,
                             subtitle: subtitle,
-                            titleStyle: text.titleLarge,
-                            subtitleStyle: text.bodySmall,
+                            titleStyle: text.titleLarge?.copyWith(color: p.textPrimary),
+                            subtitleStyle: text.bodySmall?.copyWith(color: p.textMuted),
                           ),
                         ),
                       ),
@@ -210,8 +210,8 @@ class _LumenSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                           child: _Titles(
                             title: title,
                             subtitle: subtitle,
-                            titleStyle: text.headlineMedium,
-                            subtitleStyle: text.bodyMedium,
+                            titleStyle: text.headlineMedium?.copyWith(color: p.textPrimary),
+                            subtitleStyle: text.bodyMedium?.copyWith(color: p.textSecondary),
                           ),
                         ),
                       ),
