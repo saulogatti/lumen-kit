@@ -37,7 +37,7 @@ enum LumenBackgroundKind {
 /// Kit visual effect tokens: shadow, fill, surface, border and background.
 ///
 /// Independent of colors ([LumenPalette]) — any style works with any palette.
-/// Use a preset ([neon], [flat], [glass], [soft], [brutal]) or adjust via
+/// Use a preset ([neon], [vivid], [flat], [glass], [soft], [brutal]) or adjust via
 /// [copyWith]:
 /// ```dart
 /// AppTheme.fromPreset(LumenPreset.matrix, style: LumenStyle.flat);
@@ -156,9 +156,17 @@ class LumenStyle {
     orbs: false,
   );
 
+  /// Neon turned up: stronger glow and thicker, brighter borders.
+  static const LumenStyle vivid = LumenStyle(
+    shadowStrength: 1.8,
+    borderScale: 1.5,
+    borderOpacity: 1.6,
+  );
+
   /// All presets, in displayed order.
   static const Map<String, LumenStyle> presets = <String, LumenStyle>{
     'neon': neon,
+    'vivid': vivid,
     'flat': flat,
     'glass': glass,
     'soft': soft,

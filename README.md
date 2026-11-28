@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/saulogatti/lumen-kit/graph/badge.svg?token=oU4zJUQCy9)](https://codecov.io/gh/saulogatti/lumen-kit)
 
 A Flutter widget kit with independently configurable colors and visual styles.
-Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
+Choose a palette and pair it with neon, vivid, flat, glass, soft, or brutal styling.
 
 ## What's inside
 
@@ -205,7 +205,10 @@ Widgets that use Lumen color tokens resolve the active palette. Explicit color
 overrides and typography supplied by the Material theme keep their own values.
 
 ```dart
-// 1. Preset ready: neon (default), matrix, synthwave, ultraviolet, ember.
+// 1. Preset ready.
+//    Intense (LumenPreset.intense): neon (default), matrix, synthwave,
+//    ultraviolet, ember, plasma, volt, aurora.
+//    Soft, with pastel accents (LumenPreset.soft): peach, sky, sage, lavender.
 MaterialApp(theme: AppTheme.fromPreset(LumenPreset.matrix), home: ...);
 
 // 2. One or two colors: backgrounds, surfaces, texts, glows and gradients
@@ -268,6 +271,7 @@ shadow, fill, surface, border and background, and matches any palette:
 | Style | Visual |
 | ---------- | --------------------------------------------------------------- |
 | `neon` | Colorful glow, gradients, grid + orbs (default) |
+| `vivid` | Neon turned up: stronger glow and thicker, brighter borders |
 | `flat` | Neutral shadows and solid fills where the style is applied. The decorative background keeps its gradient and omits the grid and default orbs. |
 | `glass` | Translucent surfaces with blur, soft glow |
 | `soft` | Very round corners, diffuse shadows, and a dotted background. Removes borders drawn through `LumenStyle.borderAll`. |

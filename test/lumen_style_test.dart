@@ -10,6 +10,24 @@ void main() {
       expect(out!.first.color, _glow.first.color);
     });
 
+    test('vivid reforça o glow e engrossa a borda em relação ao neon', () {
+      final neon = LumenStyle.neon.shadows(_glow)!;
+      final vivid = LumenStyle.vivid.shadows(_glow)!;
+      expect(vivid, hasLength(neon.length));
+      expect(vivid.first.color.a, greaterThan(neon.first.color.a));
+      expect(vivid.first.blurRadius, neon.first.blurRadius);
+
+      const color = Color(0x5500E5FF);
+      final neonBorder = LumenStyle.neon.borderAll(color: color).top;
+      final vividBorder = LumenStyle.vivid.borderAll(color: color).top;
+      expect(vividBorder.width, 1.5);
+      expect(vividBorder.color.a, greaterThan(neonBorder.color.a));
+      // O resto continua neon: gradientes, grade e orbs.
+      expect(LumenStyle.vivid.gradients, isTrue);
+      expect(LumenStyle.vivid.background, LumenBackgroundKind.grid);
+      expect(LumenStyle.vivid.orbs, isTrue);
+    });
+
     test('elevation troca glow por sombra neutra e descarta glows pequenos', () {
       final out = LumenStyle.flat.shadows(_glow);
       expect(out, hasLength(1));

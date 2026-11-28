@@ -59,5 +59,5 @@ state; the main gallery composes them and supplies the theme.
 
 From the repository root, run `flutter analyze` and `flutter test`. Run
 `flutter test` from `example/` for gallery interaction and smoke tests. The
-section layout tests cover all five styles in light and dark modes at a narrow
+section layout tests cover all six styles in light and dark modes at a narrow
 viewport with enlarged text and reduced motion.
