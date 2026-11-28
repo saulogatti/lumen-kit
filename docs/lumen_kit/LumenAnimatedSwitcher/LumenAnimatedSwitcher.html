@@ -65,6 +65,13 @@
     
 <section class="desc markdown">
   <p>Creates a content transition.</p>
+<p><code>child</code> is the current content; use distinct child keys for logical
+states to animate between them. <code>duration</code> defaults to
+<a href="../../lumen_kit/kLumenMediumDuration-constant.html">kLumenMediumDuration</a> for both directions, <code>curve</code> to
+<a href="https://api.flutter.dev/flutter/animation/Curves/easeOutCubic-constant.html">Curves.easeOutCubic</a>, <code>offset</code> to <code>Offset(0, 0.08)</code> relative to the
+child's size, and <code>alignment</code> to <a href="https://api.flutter.dev/flutter/painting/Alignment/center-constant.html">Alignment.center</a>. Outgoing children
+cannot receive pointer input, focus, or accessibility actions. Reduced
+motion builds only the current child. <code>key</code> identifies the switcher.</p>
 </section>
 
 

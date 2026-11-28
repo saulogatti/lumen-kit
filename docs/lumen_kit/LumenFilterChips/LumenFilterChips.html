@@ -68,6 +68,12 @@
 <section class="desc markdown">
   <p>Create the group.</p>
 <p>With <code>onChanged</code> <code>null</code>, all are disabled.</p>
+<p><code>items</code> define the options and <code>values</code> is the caller-controlled set
+of selected values. <code>onChanged</code> receives a new set without modifying
+<code>values</code>; disabled items remain disabled. <code>showCheckmark</code> defaults to
+true, and <code>accentColor</code> defaults to the palette's primary color.
+<code>spacing</code> and <code>runSpacing</code> each default to 8 logical pixels.
+<code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

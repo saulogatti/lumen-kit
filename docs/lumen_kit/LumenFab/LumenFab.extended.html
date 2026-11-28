@@ -68,6 +68,13 @@
     
 <section class="desc markdown">
   <p>Explicit constructor for extended mode.</p>
+<p><code>icon</code> and <code>label</code> provide the button content. A null <code>onPressed</code>
+disables it; <code>busy</code> defaults to <code>false</code> and, when true, shows a spinner
+and blocks presses. The height is fixed at 56.</p>
+<p><code>gradient</code> defaults to the palette's accent gradient, <code>glowColor</code> to
+its secondary color, and <code>foregroundColor</code> to a contrasting color.
+A non-null <code>heroTag</code> wraps the button in a hero. <code>key</code> identifies the
+widget in the tree.</p>
 </section>
 
 

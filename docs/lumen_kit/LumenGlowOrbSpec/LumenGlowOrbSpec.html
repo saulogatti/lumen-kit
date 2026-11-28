@@ -65,8 +65,12 @@
     </section>
     
 <section class="desc markdown">
-  <p>Creates a glow orb configuration.
-Position fields follow the same semantics as <a href="https://api.flutter.dev/flutter/widgets/Positioned-class.html">Positioned</a>.</p>
+  <p>Creates a glow orb configuration.</p>
+<p><code>color</code> supplies the center color and <code>size</code> is the nonnegative diameter
+in logical pixels. <code>opacity</code> sets the center's absolute alpha, defaults
+to 0.35, and must be between 0 and 1; the gradient fades to transparent.
+The optional <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code> offsets default to
+null and follow <a href="https://api.flutter.dev/flutter/widgets/Positioned-class.html">Positioned</a> layout semantics.</p>
 </section>
 
 

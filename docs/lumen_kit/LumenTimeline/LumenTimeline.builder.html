@@ -72,6 +72,16 @@
 demand with <code>entryBuilder</code>, for <code>itemCount</code> events.</p>
 <p>Give it a bounded height, or set <code>shrinkWrap</code> when it sits inside
 another scroll view.</p>
+<p>The required <code>itemCount</code> gives the number of events and <code>entryBuilder</code>
+builds events on demand; the list displays them in index order.
+<code>highlightedIndex</code>
+defaults to <code>null</code>; an absent or out-of-range index highlights
+nothing. <code>accentColor</code> defaults to the palette's primary color for
+entries without an accent or tone. <code>spacing</code> defaults to 4 logical
+pixels between events, crossed by the connecting line.</p>
+<p><code>controller</code>, <code>padding</code>, and <code>physics</code> configure the scroll view and
+default to <code>null</code>. <code>shrinkWrap</code> defaults to <code>false</code>. <code>key</code> identifies
+the widget in the tree.</p>
 </section>
 
 

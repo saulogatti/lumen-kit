@@ -47,7 +47,7 @@
 <p><a href="https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml"><img src="https://github.com/saulogatti/lumen-kit/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 <a href="https://codecov.io/gh/saulogatti/lumen-kit"><img src="https://codecov.io/gh/saulogatti/lumen-kit/graph/badge.svg?token=oU4zJUQCy9" alt="codecov"></a></p>
 <p>A Flutter widget kit with independently configurable colors and visual styles.
-Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p>
+Choose a palette and pair it with neon, vivid, flat, glass, soft, or brutal styling.</p>
 <h2 id="whats-inside">What's inside</h2>
 <table>
 <thead>
@@ -67,7 +67,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 </tr>
 <tr>
 <td>Structure</td>
-<td><code>LumenAppBar</code>, <code>LumenCard</code></td>
+<td><code>LumenAppBar</code>, <code>LumenSliverAppBar</code>, <code>LumenSliverList</code>, <code>LumenSliverGrid</code>, <code>LumenCard</code>, <code>LumenPanel</code></td>
 </tr>
 <tr>
 <td>Action</td>
@@ -91,7 +91,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.</p
 </tr>
 <tr>
 <td>Display</td>
-<td><code>LumenBadge</code>, <code>LumenTag</code>, <code>LumenAvatar</code>, <code>LumenAvatarGroup</code>, <code>LumenListTile</code>, <code>LumenList</code>, <code>LumenActionList</code>, <code>LumenEmptyState</code>, <code>LumenDivider</code>, <code>LumenExpansionTile</code>, <code>LumenDataTable</code>, <code>LumenTableRow</code>, <code>LumenTimeline</code></td>
+<td><code>LumenBadge</code>, <code>LumenTag</code>, <code>LumenAvatar</code>, <code>LumenAvatarGroup</code>, <code>LumenListTile</code>, <code>LumenList</code>, <code>LumenGridTile</code>, <code>LumenGrid</code>, <code>LumenActionList</code>, <code>LumenEmptyState</code>, <code>LumenDivider</code>, <code>LumenExpansionTile</code>, <code>LumenDataTable</code>, <code>LumenTableRow</code>, <code>LumenTimeline</code></td>
 </tr>
 </tbody>
 </table>
@@ -239,7 +239,10 @@ Routes and overlays can sit above a scope that wraps only the caller.
 <h2 id="changing-colors">Changing colors</h2>
 <p>Widgets that use Lumen color tokens resolve the active palette. Explicit color
 overrides and typography supplied by the Material theme keep their own values.</p>
-<pre class="language-dart"><code class="language-dart">// 1. Preset ready: neon (default), matrix, synthwave, ultraviolet, ember.
+<pre class="language-dart"><code class="language-dart">// 1. Preset ready.
+//    Intense (LumenPreset.intense): neon (default), matrix, synthwave,
+//    ultraviolet, ember, plasma, volt, aurora.
+//    Soft, with pastel accents (LumenPreset.soft): peach, sky, sage, lavender.
 MaterialApp(theme: AppTheme.fromPreset(LumenPreset.matrix), home: ...);
 
 // 2. One or two colors: backgrounds, surfaces, texts, glows and gradients
@@ -299,6 +302,10 @@ shadow, fill, surface, border and background, and matches any palette:</p>
 <tr>
 <td><code>neon</code></td>
 <td>Colorful glow, gradients, grid + orbs (default)</td>
+</tr>
+<tr>
+<td><code>vivid</code></td>
+<td>Neon turned up: stronger glow and thicker, brighter borders</td>
 </tr>
 <tr>
 <td><code>flat</code></td>
@@ -395,6 +402,58 @@ when the system requests reduced motion. Transitions using
   child: child,
 );
 </code></pre>
+<h2 id="panel-with-effects">Panel with effects</h2>
+<p><code>LumenPanel</code> is a surface for a group of components. Without <code>effects</code> it is a
+plain themed surface; each <code>LumenPanelEffect</code> adds one decorative layer behind
+the content:</p>
+<table>
+<thead>
+<tr>
+<th>Effect</th>
+<th>Visual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>grid</code></td>
+<td>Line grid in the accent color</td>
+</tr>
+<tr>
+<td><code>dots</code></td>
+<td>Dot grid in the accent color (<code>grid</code> wins when both are set)</td>
+</tr>
+<tr>
+<td><code>orb</code></td>
+<td>Soft light at the top right corner</td>
+</tr>
+<tr>
+<td><code>gradientBorder</code></td>
+<td>Border painted with the accent gradient</td>
+</tr>
+<tr>
+<td><code>glow</code></td>
+<td>Glow around the panel, adapted to the active style</td>
+</tr>
+</tbody>
+</table>
+<p>Styles without gradients (<code>flat</code>, <code>brutal</code>) skip the orb and draw the plain
+accent border. <code>accentColor</code> tints the border and every effect, and <code>onTap</code>
+makes the panel pressable.</p>
+<pre class="language-dart"><code class="language-dart">LumenPanel(
+  effects: const &lt;LumenPanelEffect&gt;{
+    LumenPanelEffect.grid,
+    LumenPanelEffect.orb,
+    LumenPanelEffect.gradientBorder,
+  },
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: &lt;Widget&gt;[
+      const Text('Sales today'),
+      LumenButton.outline(label: 'OPEN REPORT', onPressed: open),
+    ],
+  ),
+)
+</code></pre>
 <h2 id="action-list">Action list</h2>
 <p><code>LumenActionList</code> takes a list of <code>LumenActionListItem</code> widgets. Each row can
 show a leading icon and up to two icon buttons. The action label serves as
@@ -441,6 +500,54 @@ viewport for large data sets. Scroll options such as <code>shrinkWrap</code>, <c
   itemBuilder: (context, i) =&gt; LumenListTile(
     title: events[i].title,
     onTap: () =&gt; open(events[i]),
+  ),
+)
+</code></pre>
+<p><code>LumenGrid</code> does the same for cells. The default constructor takes a fixed
+<code>crossAxisCount</code>; <code>LumenGrid.extent</code> fits as many columns as the width allows,
+each at most <code>maxCrossAxisExtent</code> wide. Cells are square unless you set
+<code>childAspectRatio</code> or <code>mainAxisExtent</code>. <code>LumenGridTile</code> is the vertical
+counterpart of <code>LumenListTile</code>: <code>leading</code> on top, then <code>title</code> and <code>subtitle</code>,
+with long text cut by an ellipsis.</p>
+<pre class="language-dart"><code class="language-dart">LumenGrid.extent(
+  maxCrossAxisExtent: 160,
+  mainAxisExtent: 124,
+  itemCount: modules.length,
+  itemBuilder: (context, i) =&gt; LumenGridTile(
+    title: modules[i].name,
+    subtitle: modules[i].summary,
+    leading: Icon(modules[i].icon),
+    selected: modules[i] == current,
+    onTap: () =&gt; open(modules[i]),
+  ),
+)
+</code></pre>
+<p>To scroll the app bar together with the body, use the sliver versions inside
+a <code>CustomScrollView</code>. <code>LumenSliverAppBar</code> stays at the top by default
+(<code>pinned</code>); set <code>floating</code> to bring it back as soon as the user scrolls up,
+and <code>expandedHeight</code> to start with a large title that collapses into the
+toolbar. It pads the status bar itself, so leave <code>Scaffold.appBar</code> empty, and
+set <code>primary: false</code> when the scroll view is not at the top of the screen.
+<code>LumenSliverList</code> and <code>LumenSliverGrid</code> take the same builders, <code>empty</code>, and
+grid options as <code>LumenList</code> and <code>LumenGrid</code>, plus a <code>padding</code>.</p>
+<pre class="language-dart"><code class="language-dart">Scaffold(
+  body: CustomScrollView(
+    slivers: &lt;Widget&gt;[
+      const LumenSliverAppBar(
+        title: 'Orders',
+        subtitle: '12 open',
+        expandedHeight: 140,
+      ),
+      LumenSliverList(
+        padding: const EdgeInsets.all(16),
+        itemCount: orders.length,
+        separatorBuilder: (context, i) =&gt; const SizedBox(height: 8),
+        itemBuilder: (context, i) =&gt; LumenListTile(
+          title: orders[i].name,
+          onTap: () =&gt; open(orders[i]),
+        ),
+      ),
+    ],
   ),
 )
 </code></pre>

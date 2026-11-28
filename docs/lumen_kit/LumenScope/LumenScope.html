@@ -63,7 +63,9 @@
     
 <section class="desc markdown">
   <p>Applies <code>palette</code> and <code>style</code> to <code>child</code>.</p>
-<p>The default <code>style</code> is <a href="../../lumen_kit/LumenStyle/neon-constant.html">LumenStyle.neon</a>.</p>
+<p><code>palette</code> and <code>child</code> are required; <code>key</code> identifies the scope.
+<code>style</code> defaults to <a href="../../lumen_kit/LumenStyle/neon-constant.html">LumenStyle.neon</a>. Descendants resolve this scope
+before a theme extension, until another scope overrides it.</p>
 </section>
 
 

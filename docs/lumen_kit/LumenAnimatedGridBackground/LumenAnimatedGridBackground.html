@@ -66,9 +66,16 @@
     </section>
     
 <section class="desc markdown">
-  <p>Creates a decorative background to surround <code>child</code>.
-When it doesn't receive customizations, it uses the kit's default gradient
-and orbs.</p>
+  <p>Creates a decorative background to surround <code>child</code>.</p>
+<p><code>child</code> fills bounded axes and determines the size on unbounded axes.
+<code>key</code> identifies this widget in the tree. When <code>gradient</code> is null, the
+current palette's background gradient is used. When <code>orbs</code> is null,
+default primary and secondary orbs are shown if the current style enables
+them; an explicit list, including an empty one, overrides that choice.</p>
+<p><code>showGrid</code> defaults to true, but the current style still chooses a grid,
+dots, or no pattern. <code>gridSpacing</code> defaults to 56 logical pixels and
+must be positive. <code>gridColor</code> defaults to the palette's primary color;
+<code>gridOpacity</code> defaults to 0.05 and must be between 0 and 1.</p>
 </section>
 
 

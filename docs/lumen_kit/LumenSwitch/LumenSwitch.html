@@ -64,6 +64,11 @@
     
 <section class="desc markdown">
   <p>Creates a neon switch.</p>
+<p><code>value</code> controls the on/off state. Activating the switch calls
+<code>onChanged</code> with the opposite value; a null callback disables it. The
+caller owns and updates <code>value</code>. <code>label</code> optionally appears beside the
+control, and <code>accentColor</code> defaults to the palette's primary color.
+<code>key</code> identifies the widget.</p>
 </section>
 
 

@@ -67,6 +67,19 @@
     
 <section class="desc markdown">
   <p>Creates a neon card with <code>child</code> as content.</p>
+<p><code>key</code> identifies the widget in the tree.</p>
+<p><code>accent</code> sets the border and glow color and defaults to the current
+palette's primary color. <code>padding</code> defaults to 20 logical pixels on all
+sides, and <code>borderRadius</code> defaults to 20 logical pixels.</p>
+<p><code>onTap</code> makes the card interactive; without it, the card is not tappable.
+<code>borderOpacity</code> defaults to 0.35, and <code>glow</code> defaults to false. The
+current Lumen style controls how the border, corners, and glow are drawn.</p>
+<pre class="language-dart"><code class="language-dart">final card = LumenCard(
+  onTap: () {},
+  glow: true,
+  child: const Text('Card content'),
+);
+</code></pre>
 </section>
 
 

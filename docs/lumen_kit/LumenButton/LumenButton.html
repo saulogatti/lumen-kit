@@ -69,6 +69,16 @@
     
 <section class="desc markdown">
   <p>Creates a neon button on the informed <code>variant</code>.</p>
+<p><code>label</code> is the button text, and <code>icon</code> is an optional leading icon.
+A null <code>onPressed</code> disables the button; <code>busy</code> defaults to false and,
+when true, shows a progress indicator and disables interaction.</p>
+<p><code>variant</code> defaults to <a href="../../lumen_kit/LumenButtonVariant.html">LumenButtonVariant.solid</a>. <code>tone</code> optionally
+selects a semantic palette color. <code>accentColor</code> overrides the outline
+or ghost color, or the solid shadow, but not the solid fill. Without an
+override these use the tone color, or the palette's primary color
+(secondary for the solid shadow) when no tone is set.
+<code>borderRadius</code> defaults to 14 logical pixels; <code>expand</code> defaults to false.
+<code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

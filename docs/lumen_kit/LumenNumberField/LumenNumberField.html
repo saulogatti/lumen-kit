@@ -81,7 +81,24 @@
     
 <section class="desc markdown">
   <p>Creates a numeric field.</p>
-<p>With <code>onChanged</code> <code>null</code> it is disabled.</p>
+<p><code>label</code> identifies the field and <code>value</code> supplies its current number,
+or <code>null</code> for empty. <code>onChanged</code> receives edits and committed changes;
+passing <code>null</code> disables input. The caller must update <code>value</code>.</p>
+<p><code>decimals</code> defaults to 0 and must be between 0 and 20. Typing accepts
+digits, at most one decimal separator when decimals are enabled, and a
+leading minus when <code>min</code> is null or negative. <code>min</code> and <code>max</code> default
+to unbounded and are applied on blur or submission, not while typing.
+Bounds are rounded inward to representable values; if none fits, the
+rounded minimum wins. <code>padDecimals</code> defaults to false.</p>
+<p><code>decimalSeparator</code> defaults to <code>.</code>; optional <code>groupSeparator</code> inserts
+grouping. Both must be single, distinct characters. <code>prefixText</code>,
+<code>suffixText</code>, <code>hint</code>, and <code>helperText</code> provide optional decoration.
+<code>validator</code> validates the parsed number in a form and takes precedence
+over <code>errorText</code>. <code>accentColor</code> defaults to the palette's primary color.</p>
+<p><code>focusNode</code> optionally supplies external focus control; <code>autofocus</code>
+defaults to false. <code>textInputAction</code> configures the keyboard action and
+<code>onSubmitted</code> receives the committed value. <code>textAlign</code> defaults to
+<a href="https://api.flutter.dev/flutter/dart-ui/TextAlign.html">TextAlign.start</a>, and <code>key</code> identifies the widget.</p>
 </section>
 
 

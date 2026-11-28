@@ -70,6 +70,15 @@
     
 <section class="desc markdown">
   <p>Create the carousel.</p>
+<p><code>itemCount</code> is the number of pages and <code>itemBuilder</code> builds each page.
+An external <code>controller</code> takes precedence over the internally owned
+controller, whose <code>viewportFraction</code> defaults to 0.88. <code>height</code> defaults
+to 200 logical pixels, excluding the indicator.</p>
+<p><code>onPageChanged</code> reports the page index. <code>showIndicator</code> defaults to true;
+the indicator is shown only for multiple pages and its dots navigate.
+<code>accentColor</code> defaults to the palette's primary color, <code>radius</code> to 18,
+and <code>inactiveScale</code> to 0.92; a scale of 1 or more disables scaling.
+<code>key</code> identifies the widget.</p>
 </section>
 
 

@@ -65,6 +65,13 @@
     
 <section class="desc markdown">
   <p>Creates a neon stepper controlled by <code>currentStep</code>.</p>
+<p><code>steps</code> supplies the definitions and <code>currentStep</code> is the zero-based
+current index; earlier steps appear completed. <code>direction</code> defaults to
+<a href="../../lumen_kit/LumenStepperDirection.html">LumenStepperDirection.horizontal</a>; vertical mode also shows subtitles
+and the current step's content. <code>onStepTapped</code>, when provided, receives
+the tapped index; the caller owns and updates <code>currentStep</code>.
+<code>accentColor</code> defaults to the palette's primary color, and <code>key</code>
+identifies the widget.</p>
 </section>
 
 

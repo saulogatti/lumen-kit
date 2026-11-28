@@ -64,7 +64,11 @@
     
 <section class="desc markdown">
   <p>Creates a labeled control.</p>
-<p>Without <code>label</code>, returns only <code>control</code>.</p>
+<p><code>control</code> is followed by <code>label</code> when supplied; without a label, only
+the control is returned. <code>key</code> identifies this widget in the tree.
+<code>enabled</code> defaults to true and selects the palette's primary text color;
+false uses the muted text color without disabling <code>control</code>. <code>gap</code>
+defaults to 10 logical pixels between the control and label.</p>
 </section>
 
 

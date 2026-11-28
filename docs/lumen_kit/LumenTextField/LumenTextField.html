@@ -85,6 +85,25 @@
     
 <section class="desc markdown">
   <p>Creates a neon text field.</p>
+<p><code>label</code> is required. Without a <code>controller</code>, an internal controller
+starts with <code>initialValue</code>, which defaults to the empty string. The
+caller owns an external controller; removing it restores the previous
+internal controller, or copies the last external value if none existed.
+<code>focusNode</code> optionally supplies external focus control. <code>onChanged</code>
+reports edits and <code>onSubmitted</code> reports keyboard submission.</p>
+<p><code>hint</code>, <code>helperText</code>, <code>icon</code>, and <code>suffix</code> add optional decoration.
+<code>errorText</code> supplies an error, overridden by a non-null result from
+<code>validator</code>; <code>autovalidateMode</code> controls automatic validation. All
+default to <code>null</code>.</p>
+<p><code>enabled</code> defaults to <code>true</code>; <code>readOnly</code> and <code>autofocus</code> default to
+<code>false</code>. <code>obscure</code> defaults to <code>false</code> and forces one line when true.
+<code>minLines</code> defaults to <code>null</code>, <code>maxLines</code> to 1 (or <code>null</code> for growth
+as layout permits), and <code>maxLength</code> to <code>null</code> (no character limit).</p>
+<p><code>keyboardType</code>, <code>textInputAction</code>, <code>inputFormatters</code>, and <code>autofillHints</code>
+are optional input settings passed to the underlying field. Optional
+parameters not otherwise specified default to <code>null</code>; a null
+<code>accentColor</code> uses the palette's primary color. <code>key</code> identifies the
+widget in the tree.</p>
 </section>
 
 
