@@ -13,10 +13,10 @@ class LumenLinearProgress extends StatelessWidget {
   /// [height] defaults to 6 and [borderRadius] to 999 logical pixels.
   ///
   /// [gradient] defaults to the palette's accent gradient, [glowColor] to
-  /// its secondary color, and [trackColor] to its surface outline. The active
-  /// style controls gradient and glow rendering. [semanticsLabel] optionally
-  /// labels the indicator, which announces determinate progress as a
-  /// percentage. [key] identifies the widget.
+  /// its secondary color, and [trackColor] to its surface outline with
+  /// `outlineAlpha(0.4)` applied. The active style controls gradient and glow
+  /// rendering. [semanticsLabel] optionally labels the indicator, which
+  /// announces determinate progress as a percentage. [key] identifies the widget.
   const LumenLinearProgress({
     super.key,
     this.value,
@@ -198,10 +198,11 @@ class LumenCircularProgress extends StatefulWidget {
   /// [size] defaults to 32 and [strokeWidth] to 3 logical pixels.
   ///
   /// [gradient] defaults to the palette's accent gradient and [trackColor] to
-  /// its surface outline. [glowColor] overrides the glow, which otherwise
-  /// follows the arc gradient and appears only in glow shadow styles.
-  /// [semanticsLabel] optionally labels the indicator, which announces
-  /// determinate progress as a percentage. [key] identifies the widget.
+  /// its surface outline with `outlineAlpha(0.4)` applied. [glowColor]
+  /// overrides the glow, which otherwise follows the arc gradient and appears
+  /// only in glow shadow styles. [semanticsLabel] optionally labels the
+  /// indicator, which announces determinate progress as a percentage. [key]
+  /// identifies the widget.
   const LumenCircularProgress({
     super.key,
     this.value,
