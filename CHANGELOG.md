@@ -23,6 +23,11 @@
 - Added `LumenSliverList` and `LumenSliverGrid`, the sliver versions of
   `LumenList` and `LumenGrid`, with `empty` and `padding`.
   ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
+- Added `LumenPanel`, a surface for a group of components with optional
+  decorative layers behind the content. `LumenPanelEffect` offers `grid`,
+  `dots`, `orb`, `gradientBorder`, and `glow`. Styles without gradients skip
+  the orb and draw the plain accent border.
+  ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
 
 ## 1.6.0
 

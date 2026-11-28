@@ -12,7 +12,7 @@ Choose a palette and pair it with neon, flat, glass, soft, or brutal styling.
 | ------------- | -------------------------------------------------------------------- |
 | Theme | `AppColors`, `LumenPalette`, `LumenPreset`, `LumenStyle`, `LumenThemeExt`, `LumenScope`, `AppTheme` |
 | Background | `LumenAnimatedGridBackground`, `LumenGlowOrbSpec` |
-| Structure | `LumenAppBar`, `LumenSliverAppBar`, `LumenSliverList`, `LumenSliverGrid`, `LumenCard` |
+| Structure | `LumenAppBar`, `LumenSliverAppBar`, `LumenSliverList`, `LumenSliverGrid`, `LumenCard`, `LumenPanel` |
 | Action | `LumenCta`, `LumenButton`, `LumenIconButton`, `LumenFab`, `LumenMenuButton`, `LumenContextMenu` |
 | Input | `LumenTextField`, `LumenSwitch`, `LumenCheckbox`, `LumenRadio`, `LumenSlider`, `LumenRangeSlider`, `LumenDropdown`, `LumenSearchBar`, `LumenDatePicker`, `LumenTimePicker`, `showLumenColorPicker`, `LumenColorField`, `LumenFileUpload`, `LumenFileUploadPanel`, `LumenChip` (+ `LumenChoiceChips`, `LumenFilterChips`), `LumenQuantityStepper`, `LumenNumberField`, `LumenRating`, `LumenPinField` |
 | Motion | `LumenEntrance`, `LumenAnimatedSwitcher` |
@@ -336,6 +336,41 @@ LumenAnimatedGridBackground(
   ],
   child: child,
 );
+```
+
+## Panel with effects
+
+`LumenPanel` is a surface for a group of components. Without `effects` it is a
+plain themed surface; each `LumenPanelEffect` adds one decorative layer behind
+the content:
+
+| Effect | Visual |
+| ---------------- | ------------------------------------------------------ |
+| `grid` | Line grid in the accent color |
+| `dots` | Dot grid in the accent color (`grid` wins when both are set) |
+| `orb` | Soft light at the top right corner |
+| `gradientBorder` | Border painted with the accent gradient |
+| `glow` | Glow around the panel, adapted to the active style |
+
+Styles without gradients (`flat`, `brutal`) skip the orb and draw the plain
+accent border. `accentColor` tints the border and every effect, and `onTap`
+makes the panel pressable.
+
+```dart
+LumenPanel(
+  effects: const <LumenPanelEffect>{
+    LumenPanelEffect.grid,
+    LumenPanelEffect.orb,
+    LumenPanelEffect.gradientBorder,
+  },
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      const Text('Sales today'),
+      LumenButton.outline(label: 'OPEN REPORT', onPressed: open),
+    ],
+  ),
+)
 ```
 
 ## Action list

@@ -9,6 +9,7 @@ import 'package:lumen_kit_example/sections/file_upload_panel_section.dart';
 import 'package:lumen_kit_example/sections/file_upload_section.dart';
 import 'package:lumen_kit_example/sections/foundation_section.dart';
 import 'package:lumen_kit_example/sections/grid_section.dart';
+import 'package:lumen_kit_example/sections/panel_section.dart';
 import 'package:lumen_kit_example/sections/slivers_section.dart';
 import 'package:lumen_kit_example/sections/stepper_section.dart';
 import 'package:lumen_kit_example/sections/transitions_section.dart';
@@ -214,6 +215,7 @@ class _GalleryScreenState extends State<_GalleryScreen> {
             _section('Foundation', const FoundationSection()),
             _section('Control states', const ControlStatesSection()),
             _section('Transitions', const TransitionsSection()),
+            _section('Panel with effects', const PanelSection()),
             _section(
               'Cards & status',
               const LumenCard(
