@@ -17,6 +17,14 @@
   toolbar. It pads the status bar and gains a background once content scrolls
   under it.
   ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
+- Added seven color presets. `plasma`, `volt`, and `aurora` are intense, like
+  the original neon. `peach`, `sky`, `sage`, and `lavender` use pastel accents
+  for a calmer look on the same components. `LumenPreset.intense` and
+  `LumenPreset.soft` list each group.
+  ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
+- Added `LumenStyle.vivid`, neon with a stronger glow and thicker, brighter
+  borders. It is listed in `LumenStyle.presets`.
+  ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
 - `LumenAppBar` takes its title and subtitle colors from the active palette,
   so a `LumenScope` with a different brightness from the app theme keeps the
   text readable.

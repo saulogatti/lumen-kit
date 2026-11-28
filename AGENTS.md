@@ -111,7 +111,7 @@ effects for him:
 | `surface.withValues(alpha: a)`| `surface.withValues(alpha: s.surfaceAlpha(a))` |
 | floating panel | `s.frost(child: ..., borderRadius: ...)` + `LumenDecorations.panel(p, s, accent: a)` |
 
-Otherwise, the widget looks the same in the five styles (neon, flat, glass, soft, brutal).
+Otherwise, the widget looks the same in the six styles (neon, vivid, flat, glass, soft, brutal).
 
 **Theme resolution.** `LumenThemeExt.of(context)` searches, in this order:
 nearest `LumenScope` → `LumenThemeExt` in `ThemeData` → default palette
@@ -181,7 +181,7 @@ findings without modifying files unless fixes are explicitly requested.
   Review the changed code and relevant callers to establish the impact.
 - For changes affecting theme resolution or rendering, check behavior without
   a registered theme, with a local `LumenScope`, in light and dark modes, and
-  across the five visual styles. Use the Theme rules above as the reference.
+  across the six visual styles. Use the Theme rules above as the reference.
 - For interactive or animated widgets, check controlled state, disabled and
   busy behavior, keyboard interaction, accessibility semantics, and respect
   for reduced motion. Check that relevant tests cover the changed behavior.

@@ -378,7 +378,43 @@ enum LumenPreset {
   ultraviolet(Color(0xFF8C5BFF), Color(0xFF2E9BFF)),
 
   /// Red and amber.
-  ember(Color(0xFFFF3B3B), Color(0xFFFFB020));
+  ember(Color(0xFFFF3B3B), Color(0xFFFFB020)),
+
+  /// Intense: hot magenta against electric cyan.
+  plasma(Color(0xFFFF2BD6), Color(0xFF00F0FF)),
+
+  /// Intense: electric yellow and lime.
+  volt(Color(0xFFE6FF00), Color(0xFF7CFF00)),
+
+  /// Intense: neon mint against violet.
+  aurora(Color(0xFF00FFA3), Color(0xFF7B61FF)),
+
+  /// Soft: pastel orange and coral.
+  peach(Color(0xFFFFB38A), Color(0xFFFF9AA2)),
+
+  /// Soft: pastel blue and periwinkle.
+  sky(Color(0xFF8EC5FF), Color(0xFFB5B9FF)),
+
+  /// Soft: pastel green and teal.
+  sage(Color(0xFFA8D5BA), Color(0xFF8FCFC4)),
+
+  /// Soft: pastel violet and pink.
+  lavender(Color(0xFFC9B6FF), Color(0xFFF0B6E8));
+
+  /// Presets with saturated accents, close to the kit's original neon look.
+  static const List<LumenPreset> intense = <LumenPreset>[
+    neon,
+    matrix,
+    synthwave,
+    ultraviolet,
+    ember,
+    plasma,
+    volt,
+    aurora,
+  ];
+
+  /// Presets with pastel accents, for a calmer look on the same components.
+  static const List<LumenPreset> soft = <LumenPreset>[peach, sky, sage, lavender];
 
   /// Preset's primary accent.
   final Color primary;
