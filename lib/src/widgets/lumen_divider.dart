@@ -8,6 +8,12 @@ import 'package:material_ui/material_ui.dart';
 /// accent when gradients are disabled. A horizontal divider can show [label].
 class LumenDivider extends StatelessWidget {
   /// Creates a horizontal or vertical neon divider.
+  ///
+  /// [thickness] defaults to 1 logical pixel; [indent] and [endIndent]
+  /// default to zero on the main axis. [vertical] defaults to false.
+  /// [label] optionally centers text on a horizontal divider and is ignored
+  /// for a vertical one. [accentColor] defaults to the palette's primary
+  /// color. [key] identifies the widget in the tree.
   const LumenDivider({
     super.key,
     this.thickness = 1,

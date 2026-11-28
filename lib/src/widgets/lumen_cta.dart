@@ -10,6 +10,14 @@ import 'package:material_ui/material_ui.dart';
 /// Reused on all screens.
 class LumenCta extends StatelessWidget {
   /// Create a primary CTA with a gradient.
+  ///
+  /// [label] is the button text and [icon] is an optional leading icon.
+  /// A null [onPressed] disables the CTA. [busy] defaults to false and, when
+  /// true, shows a progress indicator and prevents interaction.
+  /// [gradient] defaults to the palette's accent gradient, [glowColor] to
+  /// its secondary color, and [foregroundColor] to a contrasting color for
+  /// the styled gradient. [borderRadius] defaults to 14 logical pixels.
+  /// [key] identifies the widget in the tree.
   const LumenCta({
     required this.label,
     required this.onPressed,

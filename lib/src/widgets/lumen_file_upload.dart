@@ -55,6 +55,9 @@ class LumenUploadItem {
   /// range, including `NaN`, throws an assertion error when assertions are
   /// enabled. Otherwise the row clamps the value it displays. [status] defaults
   /// to [LumenUploadStatus.pending]. [statusLabel] defaults to an empty string.
+  /// [name] is displayed and announced with the progress. [status] determines
+  /// the label color, not its text; [statusLabel] is supplied by the app.
+  /// [progress] defaults to `0` and is independent of [status].
   const LumenUploadItem({
     required this.name,
     this.status = LumenUploadStatus.pending,
@@ -133,6 +136,13 @@ class LumenFileUpload extends StatelessWidget {
   ///
   /// [removeLabel] and [retryLabel] default to English text; pass localized
   /// strings when the app uses another language.
+  /// [items] supplies the rows in display order. [onRemove], when provided,
+  /// shows a remove button on every row; [onRetry] shows a retry button only
+  /// for failed rows. Each callback receives the row index, and the app owns
+  /// the resulting list or upload updates. Both callbacks default to `null`.
+  /// The labels default to `Remove` and `Retry` respectively, serve as
+  /// tooltips, and are announced with the file name. [key] identifies the
+  /// widget in the tree.
   const LumenFileUpload({
     required this.items,
     super.key,

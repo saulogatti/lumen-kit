@@ -6,6 +6,10 @@ import 'package:material_ui/material_ui.dart';
 /// An icon action displayed by a [LumenActionListItem].
 class LumenListAction {
   /// Creates an action with a tooltip and an accessible label.
+  ///
+  /// [icon] is displayed on the button and [label] describes its action.
+  /// [onPressed] defaults to null, disabling the button; [accentColor]
+  /// defaults to the active palette's primary color.
   const LumenListAction({
     required this.icon,
     required this.label,
@@ -54,6 +58,10 @@ class LumenListAction {
 /// ```
 class LumenActionList extends StatelessWidget {
   /// Creates a list that renders [items] in order.
+  ///
+  /// An empty list renders no space. [primary] defaults to false;
+  /// [padding] defaults to [EdgeInsets.zero] and [spacing] to 8 logical
+  /// pixels. [key] identifies the widget in the tree.
   const LumenActionList({
     required this.items,
     super.key,
@@ -104,6 +112,10 @@ class LumenActionList extends StatelessWidget {
 /// actions move below the text. Each button is independently focusable.
 class LumenActionListItem extends StatelessWidget {
   /// Creates a list row with zero, one or two actions.
+  ///
+  /// [title] is the main text; [subtitle] and the leading [icon] are
+  /// optional. [primaryAction] and [secondaryAction] appear in that order.
+  /// [key] identifies the widget in the tree.
   const LumenActionListItem({
     required this.title,
     super.key,

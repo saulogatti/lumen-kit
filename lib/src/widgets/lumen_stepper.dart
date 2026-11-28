@@ -8,6 +8,10 @@ import 'package:material_ui/material_ui.dart';
 /// Definition of each step.
 class LumenStep {
   /// Creates a [LumenStepper] one-step definition.
+  ///
+  /// [title] is displayed in both orientations. Optional [subtitle] appears
+  /// in vertical mode, and optional [content] appears there only while this
+  /// step is active.
   const LumenStep({required this.title, this.subtitle, this.content});
 
   /// Title displayed on the step.
@@ -36,6 +40,14 @@ enum LumenStepperDirection {
 /// Both modes accept taps when [onStepTapped] is provided.
 class LumenStepper extends StatelessWidget {
   /// Creates a neon stepper controlled by [currentStep].
+  ///
+  /// [steps] supplies the definitions and [currentStep] is the zero-based
+  /// current index; earlier steps appear completed. [direction] defaults to
+  /// [LumenStepperDirection.horizontal]; vertical mode also shows subtitles
+  /// and the current step's content. [onStepTapped], when provided, receives
+  /// the tapped index; the caller owns and updates [currentStep].
+  /// [accentColor] defaults to the palette's primary color, and [key]
+  /// identifies the widget.
   const LumenStepper({
     required this.steps,
     required this.currentStep,

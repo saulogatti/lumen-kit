@@ -61,10 +61,23 @@ class LumenPalette {
   final LinearGradient? _accentGradient;
 
   /// Creates a complete palette for the neon theme.
-  /// Gradients are optional: when omitted, they are derived from the background
-  /// and accents, and monitor any changes made via [copyWith].
-  /// [accentCyan], [accentMagenta] and [accentBlue] are old aliases of [primary],
-  /// [secondary] and [tertiary], maintained for compatibility only.
+  ///
+  /// The required [backgroundDeep], [backgroundMid], and [backgroundSoft]
+  /// provide background tones; [surface], [surfaceOutline], and
+  /// [surfaceHighlight] provide surface tokens. [textPrimary], [textSecondary],
+  /// and [textMuted] supply text colors, while [success], [warning], and
+  /// [danger] supply semantic colors.
+  ///
+  /// Supply each of [primary], [secondary], and [tertiary], or its deprecated
+  /// alias [accentCyan], [accentMagenta], or [accentBlue], respectively.
+  /// The modern name takes precedence when both are given. Missing accents
+  /// trigger an assertion in debug mode and fall back to transparent in
+  /// release mode.
+  ///
+  /// Optional `backgroundGradient` and `accentGradient` override the derived
+  /// gradients. When omitted, the gradients are derived from the corresponding
+  /// background tones or accents. [copyWith] recalculates a gradient when its
+  /// corresponding colors change unless a replacement gradient is provided.
   const LumenPalette({
     required this.backgroundDeep,
     required this.backgroundMid,
@@ -97,6 +110,9 @@ class LumenPalette {
        tertiary = tertiary ?? accentBlue ?? const Color(0x00000000);
 
   /// Default palette — same colors displayed in [AppColors].
+  ///
+  /// Takes no arguments and uses the kit's dark background, surface, accent,
+  /// text, and semantic colors, along with its background and accent gradients.
   factory LumenPalette.defaultDark() => const LumenPalette(
     backgroundDeep: AppColors.backgroundDeep,
     backgroundMid: AppColors.backgroundMid,
@@ -122,7 +138,8 @@ class LumenPalette {
   /// When omitted, [secondary] keeps the hue and saturation of [primary] at
   /// 80% of its HSL lightness. By default,
   /// [tertiary] blends the two along the shorter hue arc. Background and text
-  /// tones use the tertiary hue and the requested [brightness]. Success,
+  /// tones use the tertiary hue and the requested [brightness], which defaults
+  /// to [Brightness.dark]. Success,
   /// warning, and danger use the kit defaults.
   ///
   /// ```dart
@@ -138,9 +155,9 @@ class LumenPalette {
   /// [AppColors.dangerLight] in light mode.
   ///
   /// A custom [danger] becomes 20% more saturated only when both of these
-  /// hold: its hue is within 30 degrees of [primary] on the shorter arc, and
+  /// hold: its hue is less than 30 degrees from [primary] on the shorter arc, and
   /// its saturation is below 50%. Colors at or above 50% saturation, and colors
-  /// farther than 30 degrees, are kept as given.
+  /// 30 degrees or farther away, are kept as given.
   factory LumenPalette.fromSeed({
     required Color primary,
     Color? secondary,
@@ -209,6 +226,10 @@ class LumenPalette {
   }
 
   /// Clear variant with default accents.
+  ///
+  /// Takes no arguments and uses light background, surface, and text colors
+  /// with the kit's default accents and accent gradient. Its background
+  /// gradient is derived from the light background tones.
   ///
   /// Uses [AppColors.dangerLight] for [danger], which keeps AA contrast on the
   /// light surfaces.
@@ -365,6 +386,10 @@ enum LumenPreset {
   /// Secondary accent of the preset.
   final Color secondary;
 
+  /// Defines a preset's [primary] and [secondary] accent colors.
+  ///
+  /// Enum values use these colors to generate palettes; the neon value instead
+  /// selects the kit's exact dark or light default palette.
   LumenPreset(this.primary, this.secondary);
 
   /// Generates the preset palette.
@@ -397,7 +422,9 @@ class LumenScope extends InheritedWidget {
 
   /// Applies [palette] and [style] to [child].
   ///
-  /// The default [style] is [LumenStyle.neon].
+  /// [palette] and [child] are required; [key] identifies the scope.
+  /// [style] defaults to [LumenStyle.neon]. Descendants resolve this scope
+  /// before a theme extension, until another scope overrides it.
   LumenScope({
     required LumenPalette palette,
     required super.child,
@@ -426,6 +453,10 @@ class LumenThemeExt extends ThemeExtension<LumenThemeExt> {
   final LumenStyle style;
 
   /// Creates a theme extension that carries [palette] and [style].
+  ///
+  /// [palette] is required; [style] defaults to [LumenStyle.neon]. Register
+  /// the extension in [ThemeData] to provide these values to descendants
+  /// without a nearer [LumenScope].
   const LumenThemeExt({required this.palette, this.style = LumenStyle.neon});
 
   @override

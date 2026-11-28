@@ -51,6 +51,17 @@ class LumenRating extends StatelessWidget {
   final String? semanticLabel;
 
   /// Create the assessment.
+  ///
+  /// [value] is displayed clamped between 0 and [max], including fractional
+  /// fills. [max] defaults to 5 and must be positive. [onChanged] receives
+  /// selections, or leaves the rating read-only when null; the caller owns
+  /// the value. [allowHalf] defaults to false; when true, tapping a leading
+  /// half selects a half-star value and semantic adjustments use half steps.
+  ///
+  /// [size] defaults to 28 and [spacing] to 2 logical pixels. [color]
+  /// defaults to the palette's warning color; [icon] and [emptyIcon] default
+  /// to rounded filled and outlined stars. [semanticLabel] optionally labels
+  /// the rating for screen readers. [key] identifies the widget.
   const LumenRating({
     required this.value,
     super.key,

@@ -42,6 +42,17 @@ class LumenListTile extends StatelessWidget {
   final EdgeInsets contentPadding;
 
   /// Creates a neon list item.
+  ///
+  /// [title] is the main text. [subtitle], [leading], and [trailing] are
+  /// optional supporting content. [onTap] and [onLongPress] are optional;
+  /// with neither callback, the tile is informational and is dimmed when
+  /// not selected.
+  ///
+  /// [selected] defaults to `false` and controls the highlight and selection
+  /// semantics. [accentColor] defaults to the palette's primary color.
+  /// [dense] defaults to `false` and reduces vertical spacing when true.
+  /// [contentPadding] defaults to [EdgeInsets.zero] around the tile's
+  /// surface and interactive area. [key] identifies the widget in the tree.
   const LumenListTile({
     required this.title,
     super.key,

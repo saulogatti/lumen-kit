@@ -82,6 +82,14 @@ Future<DateTime?> showLumenDatePicker({
 /// The picker opens on [value] or today's date, adjusted to the allowed range.
 class LumenDatePicker extends StatelessWidget {
   /// Creates a read-only field that opens a date picker on touch.
+  ///
+  /// [value] is the current date, or null to show [hint]. [firstDate] and
+  /// [lastDate] define the inclusive range; the first must not be after the
+  /// last. A null [onChanged] disables the field; otherwise it receives the
+  /// selected date. [label] is optional, and [accentColor] defaults to the
+  /// palette's primary color. [format] overrides the displayed date format,
+  /// which defaults to a two-digit day and month followed by the year.
+  /// [key] identifies the widget in the tree.
   const LumenDatePicker({
     required this.value,
     required this.firstDate,

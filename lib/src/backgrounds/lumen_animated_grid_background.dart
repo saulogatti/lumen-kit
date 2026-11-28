@@ -53,8 +53,17 @@ class LumenAnimatedGridBackground extends StatelessWidget {
   final bool showGrid;
 
   /// Creates a decorative background to surround [child].
-  /// When it doesn't receive customizations, it uses the kit's default gradient
-  /// and orbs.
+  ///
+  /// [child] fills bounded axes and determines the size on unbounded axes.
+  /// [key] identifies this widget in the tree. When [gradient] is null, the
+  /// current palette's background gradient is used. When [orbs] is null,
+  /// default primary and secondary orbs are shown if the current style enables
+  /// them; an explicit list, including an empty one, overrides that choice.
+  ///
+  /// [showGrid] defaults to true, but the current style still chooses a grid,
+  /// dots, or no pattern. [gridSpacing] defaults to 56 logical pixels and
+  /// must be positive. [gridColor] defaults to the palette's primary color;
+  /// [gridOpacity] defaults to 0.05 and must be between 0 and 1.
   const LumenAnimatedGridBackground({
     required this.child,
     super.key,
@@ -149,7 +158,12 @@ class LumenGlowOrbSpec {
   final double opacity;
 
   /// Creates a glow orb configuration.
-  /// Position fields follow the same semantics as [Positioned].
+  ///
+  /// [color] supplies the center color and [size] is the nonnegative diameter
+  /// in logical pixels. [opacity] sets the center's absolute alpha, defaults
+  /// to 0.35, and must be between 0 and 1; the gradient fades to transparent.
+  /// The optional [top], [right], [bottom], and [left] offsets default to
+  /// null and follow [Positioned] layout semantics.
   const LumenGlowOrbSpec({
     required this.color,
     required this.size,

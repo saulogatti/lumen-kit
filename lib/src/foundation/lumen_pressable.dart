@@ -14,8 +14,20 @@ import 'package:material_ui/material_ui.dart';
 class LumenPressable extends StatelessWidget {
   /// Creates a touchable area.
   ///
-  /// It is disabled when [onTap] and [onLongPress] are `null` or [enabled] is
-  /// `false`.
+  /// [onTap] and [onLongPress] are optional callbacks for their respective
+  /// gestures; both default to null. The area is disabled when both are null
+  /// or [enabled] is false. [enabled] defaults to true; [dimWhenDisabled]
+  /// defaults to true and applies [kLumenDisabledOpacity] when disabled.
+  /// [child] supplies the visual content, and [key] identifies the widget.
+  ///
+  /// [borderRadius] shapes the Material and ripple; [customBorder]
+  /// provides an alternative shape and takes precedence for the Material.
+  /// Both default to null. [semanticLabel], null by default, adds an
+  /// accessibility label. [button] defaults to true, but button semantics are
+  /// omitted when [checked] or [toggled] is supplied. [selected], [checked],
+  /// and [toggled] default to null and expose the corresponding states.
+  /// [mergeSemantics] defaults to true; set it to false when descendants need
+  /// separate semantics nodes.
   const LumenPressable({
     required this.child,
     super.key,

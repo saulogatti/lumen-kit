@@ -10,6 +10,10 @@ import 'package:material_ui/material_ui.dart';
 /// widgets — usually a custom header followed by [LumenDrawerItem]s.
 class LumenDrawer extends StatelessWidget {
   /// Creates a neon drawer with list of [children].
+  ///
+  /// [children] occupy the scrollable area between the optional [header]
+  /// and [footer]. [width] defaults to 300 logical pixels and [accentColor]
+  /// to the palette's primary color. [key] identifies the widget in the tree.
   const LumenDrawer({
     required this.children,
     super.key,
@@ -85,6 +89,11 @@ class LumenDrawer extends StatelessWidget {
 /// Item defaults to [LumenDrawer], with glow in the selected state.
 class LumenDrawerItem extends StatelessWidget {
   /// Creates an interactive item for use within [LumenDrawer].
+  ///
+  /// [icon] and [label] describe the item; [trailing] is optional.
+  /// A null [onTap] disables interaction. [selected] defaults to false;
+  /// [accentColor] defaults to the palette's primary color. [key] identifies
+  /// the widget in the tree.
   const LumenDrawerItem({
     required this.icon,
     required this.label,

@@ -9,6 +9,12 @@ import 'package:material_ui/material_ui.dart';
 /// Stylized switch with translucent track, thumb accent and glow when active.
 class LumenSwitch extends StatelessWidget {
   /// Creates a neon switch.
+  ///
+  /// [value] controls the on/off state. Activating the switch calls
+  /// [onChanged] with the opposite value; a null callback disables it. The
+  /// caller owns and updates [value]. [label] optionally appears beside the
+  /// control, and [accentColor] defaults to the palette's primary color.
+  /// [key] identifies the widget.
   const LumenSwitch({
     required this.value,
     required this.onChanged,

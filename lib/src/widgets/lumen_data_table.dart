@@ -10,6 +10,11 @@ import 'package:material_ui/material_ui.dart';
 /// [LumenTableRow] widgets inside a [Column].
 class LumenDataTable extends StatelessWidget {
   /// Creates a [DataTable] styled with the active Lumen theme.
+  ///
+  /// [columns] and [rows] are passed to the underlying table. [sortColumnIndex]
+  /// defaults to null, and [sortAscending] defaults to true; these describe
+  /// the current sort rather than sorting the rows. [accentColor] defaults to
+  /// the palette's primary color. [key] identifies the widget in the tree.
   const LumenDataTable({
     required this.columns,
     required this.rows,
@@ -83,6 +88,12 @@ class LumenDataTable extends StatelessWidget {
 /// Each cell is a widget and configurable flex.
 class LumenTableRow extends StatelessWidget {
   /// Creates a flexible row for manual table composition.
+  ///
+  /// [cells] are laid out in order. [flex] supplies a flex value for each
+  /// cell and defaults to 1 for every cell. [isHeader] defaults to false;
+  /// when true it applies header styling and ignores [onTap]. Otherwise a
+  /// non-null [onTap] makes the row interactive. [accentColor] defaults to
+  /// the palette's primary color. [key] identifies the widget in the tree.
   const LumenTableRow({
     required this.cells,
     super.key,

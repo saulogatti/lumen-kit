@@ -22,6 +22,11 @@ import 'package:material_ui/material_ui.dart';
 /// ```
 class LumenBanner extends StatelessWidget {
   /// Create an inline alert with [message].
+  ///
+  /// [tone] defaults to [LumenStatusTone.info]; [icon] defaults to the
+  /// tone's icon. An action appears only when both [actionLabel] and
+  /// [onAction] are supplied. [onDismiss] adds a close button; the caller
+  /// must remove the banner. [key] identifies the widget in the tree.
   const LumenBanner({
     required this.message,
     super.key,

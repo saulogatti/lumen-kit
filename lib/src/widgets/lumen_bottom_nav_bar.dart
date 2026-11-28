@@ -9,6 +9,9 @@ import 'package:material_ui/material_ui.dart';
 /// Item from [LumenBottomNavBar] / [LumenNavRail].
 class LumenNavItem {
   /// Creates an item shared by bottom and side navigation.
+  ///
+  /// [icon] and [label] describe the destination; [badge] optionally adds
+  /// a short indicator over the icon.
   const LumenNavItem({required this.icon, required this.label, this.badge});
 
   /// Icon displayed in the navigation item.
@@ -25,6 +28,10 @@ class LumenNavItem {
 class LumenBottomNavBar extends StatelessWidget {
   /// Creates a bottom navigation bar.
   /// Use between 3 and 5 [items] to keep reading and touching comfortable.
+  ///
+  /// [selectedIndex] identifies the selected item, and [onChanged] receives
+  /// the tapped index; the caller updates the selection. [accentColor]
+  /// defaults to the palette's primary color. [key] identifies the widget.
   const LumenBottomNavBar({
     required this.items,
     required this.selectedIndex,
@@ -99,6 +106,12 @@ class LumenBottomNavBar extends StatelessWidget {
 /// Side variant (tablet/desktop).
 class LumenNavRail extends StatelessWidget {
   /// Creates the side variant of the neon navigation.
+  ///
+  /// [items] provide destinations, [selectedIndex] identifies the current
+  /// one, and [onChanged] receives the tapped index. The caller updates the
+  /// selection. [leading] and [trailing] are optional widgets above and below
+  /// the list; [accentColor] defaults to the palette's primary color.
+  /// [key] identifies the widget in the tree.
   const LumenNavRail({
     required this.items,
     required this.selectedIndex,

@@ -14,6 +14,17 @@ import 'package:material_ui/material_ui.dart';
 /// ```
 class LumenPageIndicator extends StatelessWidget {
   /// Creates the bookmark for [count] pages.
+  ///
+  /// [count] must be non-negative. [controller], when supplied, takes
+  /// precedence over [index] and tracks fractional page movement; otherwise
+  /// [index] defaults to 0. [onDotTapped] receives a zero-based index, or
+  /// leaves the dots display-only when null.
+  ///
+  /// [dotSize] defaults to 8, [activeWidth] to 24 and [spacing] to 8 logical
+  /// pixels; the active width must be at least the dot size. [accentColor]
+  /// defaults to the palette's primary color. [semanticsLabel] can format a
+  /// zero-based index and count; by default the label is one-based, such as
+  /// `2/5`. [key] identifies the widget.
   const LumenPageIndicator({
     required this.count,
     super.key,
@@ -146,6 +157,17 @@ class LumenPageIndicator extends StatelessWidget {
 /// ```
 class LumenCarousel extends StatefulWidget {
   /// Create the carousel.
+  ///
+  /// [itemCount] is the number of pages and [itemBuilder] builds each page.
+  /// An external [controller] takes precedence over the internally owned
+  /// controller, whose [viewportFraction] defaults to 0.88. [height] defaults
+  /// to 200 logical pixels, excluding the indicator.
+  ///
+  /// [onPageChanged] reports the page index. [showIndicator] defaults to true;
+  /// the indicator is shown only for multiple pages and its dots navigate.
+  /// [accentColor] defaults to the palette's primary color, [radius] to 18,
+  /// and [inactiveScale] to 0.92; a scale of 1 or more disables scaling.
+  /// [key] identifies the widget.
   const LumenCarousel({
     required this.itemCount,
     required this.itemBuilder,

@@ -7,6 +7,16 @@ import 'package:material_ui/material_ui.dart';
 /// If [value] is `null`, displays indeterminate animation.
 class LumenLinearProgress extends StatelessWidget {
   /// Creates a linear progress bar.
+  ///
+  /// [value] defaults to null for an indeterminate animation; a non-null
+  /// value is clamped to 0–1 for display. Reduced motion stops the animation.
+  /// [height] defaults to 6 and [borderRadius] to 999 logical pixels.
+  ///
+  /// [gradient] defaults to the palette's accent gradient, [glowColor] to
+  /// its secondary color, and [trackColor] to its surface outline. The active
+  /// style controls gradient and glow rendering. [semanticsLabel] optionally
+  /// labels the indicator, which announces determinate progress as a
+  /// percentage. [key] identifies the widget.
   const LumenLinearProgress({
     super.key,
     this.value,
@@ -182,6 +192,16 @@ class _IndeterminateBarState extends State<_IndeterminateBar> with SingleTickerP
 /// to the progress.
 class LumenCircularProgress extends StatefulWidget {
   /// Creates a circular progress indicator.
+  ///
+  /// [value] defaults to null for an indeterminate rotating arc; a non-null
+  /// value is clamped to 0–1 for display. Reduced motion stops rotation.
+  /// [size] defaults to 32 and [strokeWidth] to 3 logical pixels.
+  ///
+  /// [gradient] defaults to the palette's accent gradient and [trackColor] to
+  /// its surface outline. [glowColor] overrides the glow, which otherwise
+  /// follows the arc gradient and appears only in glow shadow styles.
+  /// [semanticsLabel] optionally labels the indicator, which announces
+  /// determinate progress as a percentage. [key] identifies the widget.
   const LumenCircularProgress({
     super.key,
     this.value,

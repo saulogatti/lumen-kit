@@ -18,6 +18,17 @@ typedef LumenTimelineEntryBuilder = LumenTimelineEntry Function(BuildContext con
 /// app (`'Nov 12, 10:42'`, `'2 h ago'`…).
 class LumenTimelineEntry {
   /// Creates a timeline event with [title].
+  ///
+  /// [subtitle] and [description] add optional text below the title;
+  /// [timestamp] is app-formatted text shown on the title line. [icon]
+  /// defaults to `null`, producing a dot marker. [accentColor] overrides
+  /// [tone], which otherwise resolves a color from the palette; if neither
+  /// is set, the timeline's accent and then the palette's primary color
+  /// are used.
+  ///
+  /// [child] adds optional content below the text, with its controls kept
+  /// as separate screen-reader nodes. [onTap] makes the event interactive;
+  /// when `null`, it is informational. Optional parameters default to `null`.
   const LumenTimelineEntry({
     required this.title,
     this.subtitle,
@@ -106,6 +117,13 @@ class LumenTimelineEntry {
 /// ```
 class LumenTimeline extends StatelessWidget {
   /// Creates a non-scrolling timeline that shows every event in `entries`.
+  ///
+  /// The required `entries` are displayed in the supplied order.
+  /// [highlightedIndex] defaults to `null`; an absent or out-of-range index
+  /// highlights nothing. [accentColor] defaults to the palette's primary
+  /// color for entries without an accent or tone. [spacing] defaults to 4
+  /// logical pixels between events, crossed by the connecting line.
+  /// [key] identifies the widget in the tree.
   const LumenTimeline({
     required List<LumenTimelineEntry> this._entries,
     super.key,
@@ -124,6 +142,18 @@ class LumenTimeline extends StatelessWidget {
   ///
   /// Give it a bounded height, or set [shrinkWrap] when it sits inside
   /// another scroll view.
+  ///
+  /// The required `itemCount` gives the number of events and `entryBuilder`
+  /// builds events on demand; the list displays them in index order.
+  /// [highlightedIndex]
+  /// defaults to `null`; an absent or out-of-range index highlights
+  /// nothing. [accentColor] defaults to the palette's primary color for
+  /// entries without an accent or tone. [spacing] defaults to 4 logical
+  /// pixels between events, crossed by the connecting line.
+  ///
+  /// [controller], [padding], and [physics] configure the scroll view and
+  /// default to `null`. [shrinkWrap] defaults to `false`. [key] identifies
+  /// the widget in the tree.
   const LumenTimeline.builder({
     required int this._itemCount,
     required LumenTimelineEntryBuilder this._entryBuilder,

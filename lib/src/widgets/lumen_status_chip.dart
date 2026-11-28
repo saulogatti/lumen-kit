@@ -44,6 +44,10 @@ extension LumenStatusToneColor on LumenStatusTone {
 /// Compact chip that communicates status by color semantics.
 class LumenStatusChip extends StatelessWidget {
   /// Creates a status chip with [label] and [tone].
+  ///
+  /// [tone] determines the color from the active palette. [icon], when
+  /// provided, appears before [label]; otherwise a colored dot is shown.
+  /// [key] identifies the widget.
   const LumenStatusChip({required this.label, required this.tone, super.key, this.icon});
 
   /// Text displayed on the chip.

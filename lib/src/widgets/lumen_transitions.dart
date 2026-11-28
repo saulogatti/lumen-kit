@@ -8,6 +8,12 @@ import 'package:material_ui/material_ui.dart';
 /// theme, focus behavior, and semantics.
 class LumenEntrance extends StatefulWidget {
   /// Creates an entrance transition.
+  ///
+  /// [child] fades and slides into place once; provide a new [key] to
+  /// replay it. [duration] defaults to [kLumenMediumDuration], [curve] to
+  /// [Curves.easeOutCubic], and [offset] to `Offset(0, 0.08)` relative to
+  /// the child's size. Reduced motion or a zero duration reveals the child
+  /// immediately.
   const LumenEntrance({
     required this.child,
     super.key,
@@ -89,6 +95,14 @@ class _LumenEntranceState extends State<LumenEntrance> with SingleTickerProvider
 /// actions. With reduced motion, only the current child is built.
 class LumenAnimatedSwitcher extends StatelessWidget {
   /// Creates a content transition.
+  ///
+  /// [child] is the current content; use distinct child keys for logical
+  /// states to animate between them. [duration] defaults to
+  /// [kLumenMediumDuration] for both directions, [curve] to
+  /// [Curves.easeOutCubic], [offset] to `Offset(0, 0.08)` relative to the
+  /// child's size, and [alignment] to [Alignment.center]. Outgoing children
+  /// cannot receive pointer input, focus, or accessibility actions. Reduced
+  /// motion builds only the current child. [key] identifies the switcher.
   const LumenAnimatedSwitcher({
     required this.child,
     super.key,

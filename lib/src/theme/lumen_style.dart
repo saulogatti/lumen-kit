@@ -46,7 +46,20 @@ enum LumenBackgroundKind {
 class LumenStyle {
   /// Creates a custom style.
   ///
-  /// Prefer to start from a preset with [copyWith].
+  /// Defaults reproduce [neon]; alternatively, start from a preset with
+  /// [copyWith]. [shadow] defaults to [LumenShadowKind.glow], and
+  /// [shadowStrength] defaults to 1 for glow and elevation opacity.
+  /// [gradients] defaults to true; false makes [fill] use the first gradient
+  /// color, but does not affect gradients drawn directly.
+  ///
+  /// [surfaceOpacity] defaults to 1 and scales [surfaceAlpha]; [blurSigma]
+  /// defaults to 0, disabling [frost]'s background blur. [radiusScale],
+  /// [borderScale], and [borderOpacity] default to 1 and scale radii, border
+  /// widths, and border alpha respectively. A zero border scale omits borders
+  /// made by [borderAll], but does not change input outline widths.
+  ///
+  /// [background] defaults to [LumenBackgroundKind.grid]; [orbs] defaults to
+  /// true and controls the background's default orbs, not an explicit list.
   const LumenStyle({
     this.shadow = LumenShadowKind.glow,
     this.shadowStrength = 1,

@@ -39,6 +39,18 @@ enum LumenButtonVariant {
 /// ```
 class LumenButton extends StatelessWidget {
   /// Creates a neon button on the informed [variant].
+  ///
+  /// [label] is the button text, and [icon] is an optional leading icon.
+  /// A null [onPressed] disables the button; [busy] defaults to false and,
+  /// when true, shows a progress indicator and disables interaction.
+  ///
+  /// [variant] defaults to [LumenButtonVariant.solid]. [tone] optionally
+  /// selects a semantic palette color. [accentColor] overrides the outline
+  /// or ghost color, or the solid shadow, but not the solid fill. Without an
+  /// override these use the tone color, or the palette's primary color
+  /// (secondary for the solid shadow) when no tone is set.
+  /// [borderRadius] defaults to 14 logical pixels; [expand] defaults to false.
+  /// [key] identifies the widget in the tree.
   const LumenButton({
     required this.label,
     required this.onPressed,
@@ -53,6 +65,13 @@ class LumenButton extends StatelessWidget {
   });
 
   /// Shortcut for [LumenButtonVariant.outline].
+  ///
+  /// [label] is the button text and [icon] is optional. A null [onPressed]
+  /// disables the button; [busy] defaults to false and shows a spinner and
+  /// disables interaction when true. [tone] supplies a semantic color, and
+  /// [accentColor] overrides it, defaulting to the palette's primary color
+  /// when neither is set. [borderRadius] defaults to 14 logical pixels;
+  /// [expand] defaults to false. [key] identifies the widget in the tree.
   const LumenButton.outline({
     required this.label,
     required this.onPressed,
@@ -66,6 +85,13 @@ class LumenButton extends StatelessWidget {
   }) : variant = LumenButtonVariant.outline;
 
   /// Shortcut for [LumenButtonVariant.ghost].
+  ///
+  /// [label] is the button text and [icon] is optional. A null [onPressed]
+  /// disables the button; [busy] defaults to false and shows a spinner and
+  /// disables interaction when true. [tone] supplies a semantic color, and
+  /// [accentColor] overrides it, defaulting to the palette's primary color
+  /// when neither is set. [borderRadius] defaults to 14 logical pixels;
+  /// [expand] defaults to false. [key] identifies the widget in the tree.
   const LumenButton.ghost({
     required this.label,
     required this.onPressed,
@@ -82,6 +108,12 @@ class LumenButton extends StatelessWidget {
   ///
   /// Use it for destructive actions, such as the confirm button of a delete
   /// dialog.
+  ///
+  /// [label] is the button text and [icon] is optional. A null [onPressed]
+  /// disables the button; [busy] defaults to false and shows a spinner and
+  /// disables interaction when true. [accentColor] overrides the shadow
+  /// color, not the danger-colored fill. [borderRadius] defaults to 14
+  /// logical pixels; [expand] defaults to false. [key] identifies the widget.
   const LumenButton.danger({
     required this.label,
     required this.onPressed,

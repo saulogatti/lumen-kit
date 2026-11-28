@@ -9,6 +9,12 @@ import 'package:material_ui/material_ui.dart';
 /// Thin wrapper over the Material [Tooltip].
 class LumenTooltip extends StatelessWidget {
   /// Creates a neon tooltip to wrap around [child].
+  ///
+  /// [message] is the displayed text and [child] triggers the tooltip.
+  /// [accentColor] defaults to the palette's primary color. [waitDuration]
+  /// defaults to 300 milliseconds and [showDuration] to 1800 milliseconds.
+  /// [preferBelow] is passed to [Tooltip] and defaults to `null`, leaving
+  /// positioning to its defaults. [key] identifies the widget in the tree.
   const LumenTooltip({
     required this.message,
     required this.child,

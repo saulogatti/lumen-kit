@@ -94,6 +94,20 @@ class LumenFileUploadPanel extends StatelessWidget {
   ///
   /// [onPick] is required so the app states whether adding is available;
   /// pass `null` to disable it.
+  /// [title] is the heading and [actionLabel] labels the add button.
+  /// [hint] is optional; [icon] defaults to [Icons.cloud_upload_outlined]
+  /// and [actionIcon] to [Icons.add]. [busy] defaults to `false` and shows
+  /// a spinner while blocking presses when true. [highlighted] defaults to
+  /// `false` and displays the drag-over appearance when set by the app.
+  ///
+  /// [items] defaults to an empty list, which hides the upload list.
+  /// [onRemove] and [onRetry] default to `null`; when provided they receive
+  /// row indices, with retry available only for failed rows. [removeLabel]
+  /// and [retryLabel] default to `Remove` and `Retry` and are used for row
+  /// tooltips and, with file names, accessibility labels. Localize them as
+  /// needed. [accentColor] defaults to the palette's primary color, and [key]
+  /// identifies the widget in the tree. File picking and drop handling are
+  /// supplied by the app.
   const LumenFileUploadPanel({
     required this.title,
     required this.actionLabel,

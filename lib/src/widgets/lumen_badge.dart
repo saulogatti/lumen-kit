@@ -9,6 +9,11 @@ import 'package:material_ui/material_ui.dart';
 /// An anchored badge appears at the child's upper-right corner.
 class LumenBadge extends StatelessWidget {
   /// Creates a badge with text or anchored to [child].
+  ///
+  /// [label] is shown unless [dot] is true (default false). [dense] defaults
+  /// to false and selects a smaller badge. [color] defaults to the palette's
+  /// danger color; [child] optionally anchors the badge. [key] identifies
+  /// the widget in the tree.
   const LumenBadge({
     required this.label,
     super.key,
@@ -19,6 +24,10 @@ class LumenBadge extends StatelessWidget {
   });
 
   /// "Dot" mode (no text), useful for indicating activity.
+  ///
+  /// [color] defaults to the palette's danger color; [child] optionally
+  /// anchors the dot. [key] identifies the widget in the tree. The badge
+  /// has an empty label and is not dense.
   const LumenBadge.dot({super.key, this.color, this.child}) : label = '', dot = true, dense = false;
 
   /// Text displayed inside the badge when [dot] is `false`.
@@ -97,6 +106,10 @@ class LumenBadge extends StatelessWidget {
 /// Good for metadata in lists.
 class LumenTag extends StatelessWidget {
   /// Creates a compact tag for metadata or filters.
+  ///
+  /// [label] is displayed after the optional [icon]. [color] defaults to
+  /// the palette's primary color. [onTap] defaults to null, leaving the tag
+  /// non-interactive; [key] identifies the widget in the tree.
   const LumenTag({required this.label, super.key, this.color, this.icon, this.onTap});
 
   /// Text displayed in the tag.

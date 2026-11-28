@@ -17,9 +17,18 @@ import 'package:material_ui/material_ui.dart';
 /// )
 /// ```
 class LumenPinField extends StatefulWidget {
-  /// Creates a field of [length] houses.
+  /// Creates a one-time code field.
   ///
-  /// Default: 6.
+  /// [length] is the positive number of digits and defaults to 6. [value]
+  /// defaults to an empty string; non-digits and digits beyond [length] are
+  /// ignored. [onChanged] receives filtered user input, and `null` disables
+  /// the field. The caller must update [value].
+  ///
+  /// [onCompleted] fires when user input goes from incomplete to complete,
+  /// including a pasted code, but not for programmatic updates. [obscure]
+  /// defaults to false; when true, digits are masked and omitted from the
+  /// semantic value. [semanticLabel] defaults to `N-digit code`, with [length]
+  /// substituted for N. [key] identifies the widget.
   const LumenPinField({
     super.key,
     this.length = 6,

@@ -20,6 +20,17 @@ import 'package:material_ui/material_ui.dart';
 /// ```
 class LumenAvatarGroup extends StatelessWidget {
   /// Create the group.
+  ///
+  /// [avatars] are displayed in order, up to [maxVisible] (default 4,
+  /// greater than zero). [total] defaults to the list length and determines
+  /// the overflow count; [onOverflowTap] makes that badge interactive.
+  ///
+  /// [radius] defaults to 18 logical pixels and replaces each avatar's radius;
+  /// individual status indicators are not displayed. [overlap] defaults to
+  /// 0.3 and must be at least 0 and less than 1. [accentColor] defaults to
+  /// the palette's primary color, and [ringColor] to its deep background.
+  /// [semanticLabel] supplies a screen-reader label for the group.
+  /// [key] identifies the widget in the tree.
   const LumenAvatarGroup({
     required this.avatars,
     super.key,
