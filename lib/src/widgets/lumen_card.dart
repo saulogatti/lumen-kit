@@ -9,6 +9,24 @@ import 'package:material_ui/material_ui.dart';
 /// Use as a fundamental piece for any screen — cards, panels, sections.
 class LumenCard extends StatelessWidget {
   /// Creates a neon card with [child] as content.
+  ///
+  /// [key] identifies the widget in the tree.
+  ///
+  /// [accent] sets the border and glow color and defaults to the current
+  /// palette's primary color. [padding] defaults to 20 logical pixels on all
+  /// sides, and [borderRadius] defaults to 20 logical pixels.
+  ///
+  /// [onTap] makes the card interactive; without it, the card is not tappable.
+  /// [borderOpacity] defaults to 0.35, and [glow] defaults to false. The
+  /// current Lumen style controls how the border, corners, and glow are drawn.
+  ///
+  /// ```dart
+  /// final card = LumenCard(
+  ///   onTap: () {},
+  ///   glow: true,
+  ///   child: const Text('Card content'),
+  /// );
+  /// ```
   const LumenCard({
     required this.child,
     super.key,
