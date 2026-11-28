@@ -69,7 +69,8 @@
 <p>When omitted, <code>secondary</code> keeps the hue and saturation of <code>primary</code> at
 80% of its HSL lightness. By default,
 <code>tertiary</code> blends the two along the shorter hue arc. Background and text
-tones use the tertiary hue and the requested <code>brightness</code>. Success,
+tones use the tertiary hue and the requested <code>brightness</code>, which defaults
+to <a href="https://api.flutter.dev/flutter/dart-ui/Brightness.html">Brightness.dark</a>. Success,
 warning, and danger use the kit defaults.</p>
 <pre class="language-dart"><code class="language-dart">AppTheme.fromPalette(
   LumenPalette.fromSeed(primary: Colors.greenAccent),
@@ -81,9 +82,9 @@ set. Omitted values stay <a href="../../lumen_kit/AppColors/success-constant.htm
 <code>danger</code> defaults to <a href="../../lumen_kit/AppColors/danger-constant.html">AppColors.danger</a> in dark mode and
 <a href="../../lumen_kit/AppColors/dangerLight-constant.html">AppColors.dangerLight</a> in light mode.</p>
 <p>A custom <code>danger</code> becomes 20% more saturated only when both of these
-hold: its hue is within 30 degrees of <code>primary</code> on the shorter arc, and
+hold: its hue is less than 30 degrees from <code>primary</code> on the shorter arc, and
 its saturation is below 50%. Colors at or above 50% saturation, and colors
-farther than 30 degrees, are kept as given.</p>
+30 degrees or farther away, are kept as given.</p>
 </section>
 
 

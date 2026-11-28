@@ -66,7 +66,14 @@
 <section class="desc markdown">
   <p>Creates an upload progress list.</p>
 <p><code>removeLabel</code> and <code>retryLabel</code> default to English text; pass localized
-strings when the app uses another language.</p>
+strings when the app uses another language.
+<code>items</code> supplies the rows in display order. <code>onRemove</code>, when provided,
+shows a remove button on every row; <code>onRetry</code> shows a retry button only
+for failed rows. Each callback receives the row index, and the app owns
+the resulting list or upload updates. Both callbacks default to <code>null</code>.
+The labels default to <code>Remove</code> and <code>Retry</code> respectively, serve as
+tooltips, and are announced with the file name. <code>key</code> identifies the
+widget in the tree.</p>
 </section>
 
 

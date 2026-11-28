@@ -75,7 +75,20 @@
 <section class="desc markdown">
   <p>Creates an upload panel.</p>
 <p><code>onPick</code> is required so the app states whether adding is available;
-pass <code>null</code> to disable it.</p>
+pass <code>null</code> to disable it.
+<code>title</code> is the heading and <code>actionLabel</code> labels the add button.
+<code>hint</code> is optional; <code>icon</code> defaults to <a href="https://pub.dev/documentation/material_ui/1.11.1/material_ui/Icons/cloud_upload_outlined-constant.html">Icons.cloud_upload_outlined</a>
+and <code>actionIcon</code> to <a href="https://pub.dev/documentation/material_ui/1.11.1/material_ui/Icons/add-constant.html">Icons.add</a>. <code>busy</code> defaults to <code>false</code> and shows
+a spinner while blocking presses when true. <code>highlighted</code> defaults to
+<code>false</code> and displays the drag-over appearance when set by the app.</p>
+<p><code>items</code> defaults to an empty list, which hides the upload list.
+<code>onRemove</code> and <code>onRetry</code> default to <code>null</code>; when provided they receive
+row indices, with retry available only for failed rows. <code>removeLabel</code>
+and <code>retryLabel</code> default to <code>Remove</code> and <code>Retry</code> and are used for row
+tooltips and, with file names, accessibility labels. Localize them as
+needed. <code>accentColor</code> defaults to the palette's primary color, and <code>key</code>
+identifies the widget in the tree. File picking and drop handling are
+supplied by the app.</p>
 </section>
 
 

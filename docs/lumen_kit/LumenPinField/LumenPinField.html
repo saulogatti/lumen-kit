@@ -65,8 +65,16 @@
     </section>
     
 <section class="desc markdown">
-  <p>Creates a field of <code>length</code> houses.</p>
-<p>Default: 6.</p>
+  <p>Creates a one-time code field.</p>
+<p><code>length</code> is the positive number of digits and defaults to 6. <code>value</code>
+defaults to an empty string; non-digits and digits beyond <code>length</code> are
+ignored. <code>onChanged</code> receives filtered user input, and <code>null</code> disables
+the field. The caller must update <code>value</code>.</p>
+<p><code>onCompleted</code> fires when user input goes from incomplete to complete,
+including a pasted code, but not for programmatic updates. <code>obscure</code>
+defaults to false; when true, digits are masked and omitted from the
+semantic value. <code>semanticLabel</code> defaults to <code>N-digit code</code>, with <code>length</code>
+substituted for N. <code>key</code> identifies the widget.</p>
 </section>
 
 

@@ -71,6 +71,15 @@
     
 <section class="desc markdown">
   <p>Creates the bookmark for <code>count</code> pages.</p>
+<p><code>count</code> must be non-negative. <code>controller</code>, when supplied, takes
+precedence over <code>index</code> and tracks fractional page movement; otherwise
+<code>index</code> defaults to 0. <code>onDotTapped</code> receives a zero-based index, or
+leaves the dots display-only when null.</p>
+<p><code>dotSize</code> defaults to 8, <code>activeWidth</code> to 24 and <code>spacing</code> to 8 logical
+pixels; the active width must be at least the dot size. <code>accentColor</code>
+defaults to the palette's primary color. <code>semanticsLabel</code> can format a
+zero-based index and count; by default the label is one-based, such as
+<code>2/5</code>. <code>key</code> identifies the widget.</p>
 </section>
 
 

@@ -69,7 +69,18 @@
     
 <section class="desc markdown">
   <p>Creates a custom style.</p>
-<p>Prefer to start from a preset with <a href="../../lumen_kit/LumenStyle/copyWith.html">copyWith</a>.</p>
+<p>Defaults reproduce <a href="../../lumen_kit/LumenStyle/neon-constant.html">neon</a>; alternatively, start from a preset with
+<a href="../../lumen_kit/LumenStyle/copyWith.html">copyWith</a>. <code>shadow</code> defaults to <a href="../../lumen_kit/LumenShadowKind.html">LumenShadowKind.glow</a>, and
+<code>shadowStrength</code> defaults to 1 for glow and elevation opacity.
+<code>gradients</code> defaults to true; false makes <a href="../../lumen_kit/LumenStyle/fill.html">fill</a> use the first gradient
+color, but does not affect gradients drawn directly.</p>
+<p><code>surfaceOpacity</code> defaults to 1 and scales <a href="../../lumen_kit/LumenStyle/surfaceAlpha.html">surfaceAlpha</a>; <code>blurSigma</code>
+defaults to 0, disabling <a href="../../lumen_kit/LumenStyle/frost.html">frost</a>'s background blur. <code>radiusScale</code>,
+<code>borderScale</code>, and <code>borderOpacity</code> default to 1 and scale radii, border
+widths, and border alpha respectively. A zero border scale omits borders
+made by <a href="../../lumen_kit/LumenStyle/borderAll.html">borderAll</a>, but does not change input outline widths.</p>
+<p><code>background</code> defaults to <a href="../../lumen_kit/LumenBackgroundKind.html">LumenBackgroundKind.grid</a>; <code>orbs</code> defaults to
+true and controls the background's default orbs, not an explicit list.</p>
 </section>
 
 

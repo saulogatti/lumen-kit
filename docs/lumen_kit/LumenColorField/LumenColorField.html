@@ -77,6 +77,19 @@
     
 <section class="desc markdown">
   <p>Creates a read-only field that opens a color picker on touch.</p>
+<p><code>value</code> is the current color, or null to show <code>hint</code>. <code>label</code> is
+optional. A null <code>onChanged</code> disables the field; otherwise it receives
+the confirmed color, not a cancellation. <code>accentColor</code> defaults to the
+palette's primary color and also seeds the picker when <code>value</code> is null.</p>
+<p><code>swatches</code> defaults to the dialog palette's accents; an empty list hides
+them. <code>showAlpha</code> defaults to false. <code>title</code>, <code>okLabel</code>, and
+<code>cancelLabel</code> default to "Color", "OK", and "Cancel". <code>hueLabel</code>,
+<code>saturationLabel</code>, <code>brightnessLabel</code>, and <code>alphaLabel</code> name the
+accessible controls and default to "Hue", "Saturation", "Brightness",
+and "Opacity". <code>hexLabel</code> defaults to "Hex"; <code>originalLabel</code> and
+<code>selectedLabel</code> default to "Original color" and "Selected color".
+<code>key</code> identifies the widget in the tree. See <a href="../../lumen_kit/showLumenColorPicker.html">showLumenColorPicker</a>
+for alpha handling and route theme resolution.</p>
 </section>
 
 

@@ -70,6 +70,15 @@
     
 <section class="desc markdown">
   <p>Create the assessment.</p>
+<p><code>value</code> is displayed clamped between 0 and <code>max</code>, including fractional
+fills. <code>max</code> defaults to 5 and must be positive. <code>onChanged</code> receives
+selections, or leaves the rating read-only when null; the caller owns
+the value. <code>allowHalf</code> defaults to false; when true, tapping a leading
+half selects a half-star value and semantic adjustments use half steps.</p>
+<p><code>size</code> defaults to 28 and <code>spacing</code> to 2 logical pixels. <code>color</code>
+defaults to the palette's warning color; <code>icon</code> and <code>emptyIcon</code> default
+to rounded filled and outlined stars. <code>semanticLabel</code> optionally labels
+the rating for screen readers. <code>key</code> identifies the widget.</p>
 </section>
 
 

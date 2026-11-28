@@ -73,8 +73,19 @@
     
 <section class="desc markdown">
   <p>Creates a touchable area.</p>
-<p>It is disabled when <code>onTap</code> and <code>onLongPress</code> are <code>null</code> or <code>enabled</code> is
-<code>false</code>.</p>
+<p><code>onTap</code> and <code>onLongPress</code> are optional callbacks for their respective
+gestures; both default to null. The area is disabled when both are null
+or <code>enabled</code> is false. <code>enabled</code> defaults to true; <code>dimWhenDisabled</code>
+defaults to true and applies <a href="../../lumen_kit/kLumenDisabledOpacity-constant.html">kLumenDisabledOpacity</a> when disabled.
+<code>child</code> supplies the visual content, and <code>key</code> identifies the widget.</p>
+<p><code>borderRadius</code> shapes the Material and ripple; <code>customBorder</code>
+provides an alternative shape and takes precedence for the Material.
+Both default to null. <code>semanticLabel</code>, null by default, adds an
+accessibility label. <code>button</code> defaults to true, but button semantics are
+omitted when <code>checked</code> or <code>toggled</code> is supplied. <code>selected</code>, <code>checked</code>,
+and <code>toggled</code> default to null and expose the corresponding states.
+<code>mergeSemantics</code> defaults to true; set it to false when descendants need
+separate semantics nodes.</p>
 </section>
 
 

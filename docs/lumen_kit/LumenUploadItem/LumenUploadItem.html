@@ -66,7 +66,10 @@
 <p><code>progress</code> must be from <code>0.0</code> to <code>1.0</code> inclusive. A value outside that
 range, including <code>NaN</code>, throws an assertion error when assertions are
 enabled. Otherwise the row clamps the value it displays. <code>status</code> defaults
-to <a href="../../lumen_kit/LumenUploadStatus.html">LumenUploadStatus.pending</a>. <code>statusLabel</code> defaults to an empty string.</p>
+to <a href="../../lumen_kit/LumenUploadStatus.html">LumenUploadStatus.pending</a>. <code>statusLabel</code> defaults to an empty string.
+<code>name</code> is displayed and announced with the progress. <code>status</code> determines
+the label color, not its text; <code>statusLabel</code> is supplied by the app.
+<code>progress</code> defaults to <code>0</code> and is independent of <code>status</code>.</p>
 </section>
 
 

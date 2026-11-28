@@ -66,6 +66,13 @@
     
 <section class="desc markdown">
   <p>Creates a neon dialog with custom content.</p>
+<p><code>title</code> is displayed in the header and <code>content</code> in a vertically
+scrollable body. The body has unbounded height, so lists should use
+<code>shrinkWrap: true</code> and <code>content</code> should not be a direct <a href="https://api.flutter.dev/flutter/widgets/Expanded-class.html">Expanded</a>.
+<code>actions</code> defaults to an empty list and appears in the footer; <code>icon</code>
+optionally precedes the title. <code>accent</code> defaults to the palette's
+primary color, and <code>maxWidth</code> to 460 logical pixels. <code>key</code> identifies
+the widget in the tree.</p>
 </section>
 
 

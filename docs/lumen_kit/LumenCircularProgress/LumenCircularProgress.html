@@ -67,6 +67,15 @@
     
 <section class="desc markdown">
   <p>Creates a circular progress indicator.</p>
+<p><code>value</code> defaults to null for an indeterminate rotating arc; a non-null
+value is clamped to 0–1 for display. Reduced motion stops rotation.
+<code>size</code> defaults to 32 and <code>strokeWidth</code> to 3 logical pixels.</p>
+<p><code>gradient</code> defaults to the palette's accent gradient and <code>trackColor</code> to
+its surface outline with <code>outlineAlpha(0.4)</code> applied. <code>glowColor</code>
+overrides the glow, which otherwise follows the arc gradient and appears
+only in glow shadow styles. <code>semanticsLabel</code> optionally labels the
+indicator, which announces determinate progress as a percentage. <code>key</code>
+identifies the widget.</p>
 </section>
 
 

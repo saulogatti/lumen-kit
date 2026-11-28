@@ -68,6 +68,18 @@
     
 <section class="desc markdown">
   <p>Creates a read-only field that opens a time picker on touch.</p>
+<p><code>value</code> is the current selection, or <code>null</code> for an empty field. The
+required <code>onChanged</code> may be <code>null</code> to disable the field; otherwise it
+receives a confirmed selection, but not a cancellation. The picker
+starts at <code>value</code>, or the current time when it is <code>null</code>.</p>
+<p><code>label</code> and <code>hint</code> are optional, with the hint shown for an empty
+value. <code>accentColor</code> defaults to the palette's primary color.
+<code>format</code> optionally formats the field text; otherwise Material
+localizations format it. <code>use24HourFormat</code> defaults to <code>null</code>, using
+the inherited setting; <code>true</code> forces 24-hour formatting and <code>false</code>
+uses the locale's format. It also applies to the picker, while <code>format</code>
+takes precedence for the field text. Optional parameters default to
+<code>null</code>. <code>key</code> identifies the widget.</p>
 </section>
 
 

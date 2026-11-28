@@ -67,6 +67,14 @@
     
 <section class="desc markdown">
   <p>Creates a neon slider.</p>
+<p><code>value</code> is visually clamped to <code>min</code> and <code>max</code>, which default to 0 and</p>
+<ol>
+<li><code>onChanged</code> receives user changes; null disables the slider. The
+caller owns and updates the value.</li>
+</ol>
+<p><code>divisions</code> optionally makes the range discrete, and <code>label</code> supplies
+value-indicator text. <code>accentColor</code> defaults to the palette's primary
+color. <code>key</code> identifies the widget.</p>
 </section>
 
 

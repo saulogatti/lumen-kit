@@ -70,7 +70,15 @@
     
 <section class="desc markdown">
   <p>Creates the stepper.</p>
-<p>With <code>onChanged</code> <code>null</code> is disabled.</p>
+<p><code>value</code> is displayed clamped to <code>min</code> and <code>max</code>; <code>onChanged</code> receives
+the clamped result of each adjustment. Passing <code>null</code> disables the
+control; the caller must update <code>value</code>. <code>min</code> defaults to 0, <code>max</code>
+defaults to no upper limit, and <code>step</code> defaults to 1 and must be positive.
+If supplied, <code>max</code> must be at least <code>min</code>.</p>
+<p><code>buttonSize</code> defaults to 36 logical pixels and <code>accentColor</code> to the
+palette's primary color. <code>format</code> customizes the displayed and semantic
+values; <code>semanticLabel</code> optionally labels the control for screen
+readers. <code>key</code> identifies the widget.</p>
 </section>
 
 

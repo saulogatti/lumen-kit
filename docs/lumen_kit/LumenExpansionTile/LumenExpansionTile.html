@@ -67,6 +67,13 @@
     
 <section class="desc markdown">
   <p>Creates an expandable tile with <code>children</code> revealed when opened.</p>
+<p><code>title</code> is the header text; <code>subtitle</code> and <code>leading</code> optionally add
+supporting text and a widget before it. <code>initiallyExpanded</code> defaults to
+<code>false</code> and sets the initial internal state, not a controlled value.
+Toggling the header calls <code>onExpansionChanged</code>, if supplied, with the
+new state. Collapsed children are excluded from focus and semantics.
+<code>accentColor</code> defaults to the current palette's primary color.
+<code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

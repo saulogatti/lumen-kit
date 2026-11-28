@@ -70,6 +70,15 @@
     
 <section class="desc markdown">
   <p>Creates a neon interval slider.</p>
+<p><code>values</code> supplies the selected range, visually clamped to <code>min</code> and
+<code>max</code>, which default to 0 and 1. <code>onChanged</code> receives changes while
+dragging; null disables the slider. The caller owns the values.
+<code>onChangeStart</code> and <code>onChangeEnd</code> optionally report the start and end
+of an interaction.</p>
+<p><code>divisions</code> optionally makes the range discrete, and <code>labels</code> supplies
+value-indicator text for discrete values. <code>semanticFormatterCallback</code>
+formats values for screen readers. <code>accentColor</code> defaults to the
+palette's primary color. <code>key</code> identifies the widget.</p>
 </section>
 
 

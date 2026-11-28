@@ -68,6 +68,12 @@
 <section class="desc markdown">
   <p>Create the group.</p>
 <p>With <code>onChanged</code> <code>null</code>, all are disabled.</p>
+<p><code>items</code> define the options and <code>value</code> is the caller-controlled
+selection. <code>onChanged</code> receives the requested value. <code>allowDeselect</code>
+defaults to false; when true, tapping the selected item requests null.
+Disabled items remain disabled. <code>accentColor</code> defaults to the palette's
+primary color; <code>spacing</code> and <code>runSpacing</code> each default to 8 logical
+pixels. <code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

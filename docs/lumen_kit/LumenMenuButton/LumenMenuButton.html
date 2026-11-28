@@ -69,7 +69,15 @@
     
 <section class="desc markdown">
   <p>Creates the menu button.</p>
-<p>With <code>onSelected</code> <code>null</code> is disabled.</p>
+<p>With <code>onSelected</code> <code>null</code> is disabled.
+<code>items</code> must be non-empty when the menu is opened; <code>onSelected</code> receives
+the chosen non-null value, while <code>onCanceled</code> is called when it closes
+without one. <code>initialValue</code>, if non-null, marks a matching item with a
+check. <code>onCanceled</code> and <code>initialValue</code> default to <code>null</code>.</p>
+<p><code>icon</code> defaults to <a href="https://pub.dev/documentation/material_ui/1.11.1/material_ui/Icons/more_vert_rounded-constant.html">Icons.more_vert_rounded</a>, <code>variant</code> to
+<a href="../../lumen_kit/LumenIconButtonVariant.html">LumenIconButtonVariant.ghost</a>, and <code>size</code> to 40. <code>tooltip</code> defaults to
+the localized Material show-menu label. <code>accentColor</code> defaults to the
+palette's primary color. <code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

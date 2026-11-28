@@ -65,6 +65,11 @@
     
 <section class="desc markdown">
   <p>Creates a tab bar controlled by <code>selectedIndex</code>.</p>
+<p><code>items</code> must contain at least one item. <code>selectedIndex</code> is clamped to
+its valid range, and <code>onChanged</code> reports the index tapped; the caller
+must update the selection. <code>accentColor</code> defaults to the palette's
+primary color. <code>isScrollable</code> defaults to <code>false</code>; set it to <code>true</code>
+to allow horizontal scrolling. <code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

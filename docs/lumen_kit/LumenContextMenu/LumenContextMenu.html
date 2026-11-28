@@ -64,6 +64,12 @@
     
 <section class="desc markdown">
   <p>Creates the context menu region.</p>
+<p><code>child</code> receives right-click and long-press gestures that open <code>items</code>
+at the pointer position; an accessibility long press opens them at the
+child's center. <code>items</code> must be non-empty when the menu is opened.
+<code>onSelected</code> receives a chosen non-null value; pass <code>null</code> to return
+<code>child</code> without a menu. <code>accentColor</code> defaults to the current palette's
+primary color, and <code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

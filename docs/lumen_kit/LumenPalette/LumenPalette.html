@@ -78,11 +78,21 @@
     </section>
     
 <section class="desc markdown">
-  <p>Creates a complete palette for the neon theme.
-Gradients are optional: when omitted, they are derived from the background
-and accents, and monitor any changes made via <a href="../../lumen_kit/LumenPalette/copyWith.html">copyWith</a>.
-<code>accentCyan</code>, <code>accentMagenta</code> and <code>accentBlue</code> are old aliases of <code>primary</code>,
-<code>secondary</code> and <code>tertiary</code>, maintained for compatibility only.</p>
+  <p>Creates a complete palette for the neon theme.</p>
+<p>The required <code>backgroundDeep</code>, <code>backgroundMid</code>, and <code>backgroundSoft</code>
+provide background tones; <code>surface</code>, <code>surfaceOutline</code>, and
+<code>surfaceHighlight</code> provide surface tokens. <code>textPrimary</code>, <code>textSecondary</code>,
+and <code>textMuted</code> supply text colors, while <code>success</code>, <code>warning</code>, and
+<code>danger</code> supply semantic colors.</p>
+<p>Supply each of <code>primary</code>, <code>secondary</code>, and <code>tertiary</code>, or its deprecated
+alias <code>accentCyan</code>, <code>accentMagenta</code>, or <code>accentBlue</code>, respectively.
+The modern name takes precedence when both are given. Missing accents
+trigger an assertion in debug mode and fall back to transparent in
+release mode.</p>
+<p>Optional <code>backgroundGradient</code> and <code>accentGradient</code> override the derived
+gradients. When omitted, the gradients are derived from the corresponding
+background tones or accents. <a href="../../lumen_kit/LumenPalette/copyWith.html">copyWith</a> recalculates a gradient when its
+corresponding colors change unless a replacement gradient is provided.</p>
 </section>
 
 

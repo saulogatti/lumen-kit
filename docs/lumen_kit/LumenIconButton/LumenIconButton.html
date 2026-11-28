@@ -70,6 +70,15 @@
     
 <section class="desc markdown">
   <p>Creates an icon button in the <code>variant</code> variant.</p>
+<p><code>icon</code> is required; a null <code>onPressed</code> disables the button. <code>variant</code>
+defaults to <a href="../../lumen_kit/LumenIconButtonVariant.html">LumenIconButtonVariant.outline</a>. <code>busy</code> defaults to <code>false</code>;
+when true it replaces the icon with a spinner and blocks presses.</p>
+<p><code>accentColor</code> defaults to the palette's primary color for outline and
+ghost buttons, or its secondary shadow color for solid buttons, whose
+fill uses the palette's accent gradient. <code>size</code> defaults to 44,
+<code>iconSize</code> to 20, and <code>shape</code> to <a href="../../lumen_kit/LumenIconButtonShape.html">LumenIconButtonShape.circle</a>.
+<code>tooltip</code>, if supplied, provides the tooltip and accessibility label;
+otherwise <code>semanticLabel</code> can label the button. <code>key</code> identifies it.</p>
 </section>
 
 

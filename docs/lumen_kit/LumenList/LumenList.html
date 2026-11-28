@@ -80,6 +80,17 @@
     
 <section class="desc markdown">
   <p>Creates a scrollable list that builds items on demand.</p>
+<p><code>itemCount</code> and <code>itemBuilder</code> specify the items. When the count is zero,
+<code>empty</code> is shown, or an empty box if it is null. A non-null
+<code>separatorBuilder</code> builds widgets between items. <code>controller</code>, <code>padding</code>,
+and <code>physics</code> are optional and passed to the underlying list view.</p>
+<p><code>scrollDirection</code> defaults to <a href="https://api.flutter.dev/flutter/painting/Axis.html">Axis.vertical</a>, <code>reverse</code> to <code>false</code>,
+and <code>shrinkWrap</code> to <code>false</code>; unbounded constraints along the scroll axis
+require shrink wrapping. <code>addAutomaticKeepAlives</code>,
+<code>addRepaintBoundaries</code>, and <code>addSemanticIndexes</code> all default to <code>true</code>.
+<code>clipBehavior</code> defaults to <a href="https://api.flutter.dev/flutter/dart-ui/Clip.html">Clip.hardEdge</a>, <code>dragStartBehavior</code> to
+<a href="https://api.flutter.dev/flutter/gestures/DragStartBehavior.html">DragStartBehavior.start</a>, and <code>keyboardDismissBehavior</code> to
+<a href="https://api.flutter.dev/flutter/widgets/ScrollViewKeyboardDismissBehavior.html">ScrollViewKeyboardDismissBehavior.manual</a>. <code>key</code> identifies the widget.</p>
 </section>
 
 

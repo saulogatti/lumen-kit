@@ -70,6 +70,15 @@
     
 <section class="desc markdown">
   <p>Creates a compact or extended FAB when <code>label</code> is entered.</p>
+<p><code>icon</code> is required; a non-null <code>label</code> adds text and makes the button
+extended. A null <code>onPressed</code> disables it. <code>busy</code> defaults to <code>false</code>;
+when true it shows a spinner and blocks presses.</p>
+<p><code>gradient</code> defaults to the palette's accent gradient, <code>glowColor</code> to
+its secondary color, and <code>foregroundColor</code> to a contrasting color.
+<code>size</code> defaults to 56 and sets the compact diameter or extended height.
+A non-null <code>heroTag</code> wraps the button in a hero. <code>semanticLabel</code> labels
+the icon-only button and is ignored when <code>label</code> is present.
+<code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

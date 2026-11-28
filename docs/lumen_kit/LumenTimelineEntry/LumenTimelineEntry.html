@@ -68,6 +68,15 @@
     
 <section class="desc markdown">
   <p>Creates a timeline event with <code>title</code>.</p>
+<p><code>subtitle</code> and <code>description</code> add optional text below the title;
+<code>timestamp</code> is app-formatted text shown on the title line. <code>icon</code>
+defaults to <code>null</code>, producing a dot marker. <code>accentColor</code> overrides
+<code>tone</code>, which otherwise resolves a color from the palette; if neither
+is set, the timeline's accent and then the palette's primary color
+are used.</p>
+<p><code>child</code> adds optional content below the text, with its controls kept
+as separate screen-reader nodes. <code>onTap</code> makes the event interactive;
+when <code>null</code>, it is informational. Optional parameters default to <code>null</code>.</p>
 </section>
 
 

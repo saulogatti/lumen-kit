@@ -69,6 +69,13 @@
     
 <section class="desc markdown">
   <p>Creates a read-only field that opens a date picker on touch.</p>
+<p><code>value</code> is the current date, or null to show <code>hint</code>. <code>firstDate</code> and
+<code>lastDate</code> define the inclusive range; the first must not be after the
+last. A null <code>onChanged</code> disables the field; otherwise it receives the
+selected date. <code>label</code> is optional, and <code>accentColor</code> defaults to the
+palette's primary color. <code>format</code> overrides the displayed date format,
+which defaults to a two-digit day and month followed by the year.
+<code>key</code> identifies the widget in the tree.</p>
 </section>
 
 

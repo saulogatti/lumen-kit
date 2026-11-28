@@ -69,6 +69,16 @@
     
 <section class="desc markdown">
   <p>Creates the content of an action.</p>
+<p><code>color</code> applies to the text, icon, and spinner; <code>key</code> identifies this
+widget. An optional <code>label</code> is shown on one line and ellipsized when
+necessary. An optional <code>icon</code> precedes it; <code>busy</code>, false by default,
+replaces the icon with a spinner even when no icon was supplied. With
+neither a label nor a leading item, the content is empty.</p>
+<p><code>iconSize</code> and <code>spinnerSize</code> default to 18 and 16 logical pixels.
+<code>gap</code> defaults to 10 logical pixels between leading content and text.
+<code>expand</code> defaults to false; when a label is present, true makes the row
+fill its available width and center its content. <code>textStyle</code> defaults
+to the theme's <code>labelLarge</code>, with its color overridden by <code>color</code>.</p>
 </section>
 
 

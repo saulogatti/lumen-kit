@@ -66,6 +66,15 @@
     
 <section class="desc markdown">
   <p>Creates the loading layer over <code>child</code>.</p>
+<p>When <code>loading</code> is true, the overlay blocks pointer input, focus, and
+semantics for <code>child</code>. When loading ends, focus and semantics return
+immediately, but the outgoing layer can block pointers until its
+transition finishes. <code>message</code> is optional text below the spinner and
+is announced as a live region.</p>
+<p><code>accentColor</code> defaults to the palette's primary color, and
+<code>barrierColor</code> to its background-deep color at 60% opacity.
+<code>borderRadius</code> optionally clips the veil; by default it is not clipped.
+<code>key</code> identifies the widget in the tree.</p>
 </section>
 
 
