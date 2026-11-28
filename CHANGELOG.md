@@ -11,6 +11,18 @@
   `leading` on top, then `title` and `subtitle`, with selection glow,
   `accentColor`, and text cut by an ellipsis.
   ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
+- Added `LumenSliverAppBar`, an app bar for `CustomScrollView` that scrolls
+  with the body. It can stay pinned, float back when the user scrolls up, and
+  start at `expandedHeight` with a large title that collapses into the
+  toolbar. It pads the status bar and gains a background once content scrolls
+  under it.
+  ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
+- `LumenAppBar` takes its title and subtitle colors from the active palette,
+  so a `LumenScope` with a different brightness from the app theme keeps the
+  text readable.
+- Added `LumenSliverList` and `LumenSliverGrid`, the sliver versions of
+  `LumenList` and `LumenGrid`, with `empty` and `padding`.
+  ([#54](https://github.com/saulogatti/lumen-kit/issues/54))
 
 ## 1.6.0
 
